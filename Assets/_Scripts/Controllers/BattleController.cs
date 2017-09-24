@@ -4,11 +4,13 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
+[RequireComponent(typeof(BattleValues))]
 public class BattleController : MonoBehaviour {
 
 	public BattleValues bv;
 	private BackgroundChanger backchange;
 	private StoryValues storyValues;
+	private AudioController audioController;
 
 	private bool initiated = false;
 	public bool pause = false;
@@ -20,6 +22,7 @@ public class BattleController : MonoBehaviour {
 	public SpiritGridController spiritController;
 	public CharacterHealthGUI characterHealth;
 	public PlayerStats playerStats;
+	public AudioClip pauseClip;
 
 	public Transform saveValues;
 
@@ -32,6 +35,7 @@ public class BattleController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		storyValues = MainControllerScript.instance.storyValues;
+		audioController = AudioController.instance;
 		playerStats = PlayerStats.instance;
 		bv = storyValues.GetBattleValues();
 
@@ -57,8 +61,7 @@ public class BattleController : MonoBehaviour {
 			Debug.Log("Waiting");
 			yield return null;
 		}
-		enemyController.CreateEnemies(bv.removeSide != BattleValues.RemoveSide.RIGHT,
-			bv.removeSide != BattleValues.RemoveSide.LEFT);
+		enemyController.CreateEnemies(bv.removeSide != BattleValues.RemoveSide.RIGHT, bv.removeSide != BattleValues.RemoveSide.LEFT);
 		initiated = true;
 	}
 	
@@ -155,11 +158,15 @@ public class BattleController : MonoBehaviour {
 			pause = true;
 			battleMenu.SetActive(true);
 			SetActiveGame(false);
+			audioController.PauseBackgroundMusic();
+			audioController.PlaySingle(pauseClip);
 		}
 		else {
 			pause = false;
 			battleMenu.SetActive(false);
 			SetActiveGame(true);
+			audioController.PauseBackgroundMusic();
+			audioController.PlaySingle(pauseClip);
 		}
 	}
 

@@ -30,7 +30,7 @@ public static class BattleConstants {
 	public enum SCENE_INDEXES {
 		STARTUP = 0,
 		MAINMENU = 1,
-		OVERWORLD = 2,
+		TUTORIAL = 2,
 		DIALOGUE = 3,
 		BATTLE = 4,
 		SCORE = 5,

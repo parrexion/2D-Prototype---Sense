@@ -23,6 +23,8 @@ public class AudioController : MonoBehaviour {
 
 	[MinMaxRangeAttribute(0.75f,1.5f)]
 	public RangedFloat pitchRange = new RangedFloat(0.95f,1.05f);
+	
+	private bool playingBkg = false;
 
 
 	/// <summary>
@@ -30,11 +32,30 @@ public class AudioController : MonoBehaviour {
 	/// </summary>
 	/// <param name="clip">Clip.</param>
 	public void PlayBackgroundMusic(AudioClip clip) {
-		if (clip == null)
+		if (clip == null) {
 			musicSource.Stop();
+		}
 		else {
 			musicSource.clip = clip;
 			musicSource.Play();
+			playingBkg = true;
+		}
+	}
+
+	/// <summary>
+	/// Playes the background music or stops the music if clip is null.
+	/// </summary>
+	/// <param name="clip">Clip.</param>
+	public void PauseBackgroundMusic() {
+		if (musicSource.clip == null)
+			return;
+		if( playingBkg) {
+			musicSource.Pause();
+			playingBkg = false;
+		}
+		else {
+			musicSource.Play();
+			playingBkg = true;
 		}
 	}
 

@@ -47,6 +47,9 @@ public class BasicGUIButtons : MonoBehaviour {
 		case "tower":
 			SceneManager.LoadScene((int)BattleConstants.SCENE_INDEXES.BATTLETOWER);
 			break;
+		case "tutorial":
+			SceneManager.LoadScene((int)BattleConstants.SCENE_INDEXES.TUTORIAL);
+			break;
 		default:
 			Debug.Log("Failed to find a scene to move to");
 			break;

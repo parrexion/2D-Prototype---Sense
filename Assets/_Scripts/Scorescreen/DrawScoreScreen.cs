@@ -71,7 +71,7 @@ public class DrawScoreScreen : BasicGUIButtons {
 		if (MainControllerScript.instance.storyValues.battleType != StoryValues.BattleType.RANDOM)
 			SceneManager.LoadScene((int)BattleConstants.SCENE_INDEXES.BATTLETOWER);
 		else
-			SceneManager.LoadScene((int)BattleConstants.SCENE_INDEXES.OVERWORLD);
+			SceneManager.LoadScene((int)BattleConstants.SCENE_INDEXES.TUTORIAL);
 	}
 
 }

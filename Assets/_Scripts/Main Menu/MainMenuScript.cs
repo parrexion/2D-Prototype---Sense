@@ -14,6 +14,12 @@ public class MainMenuScript : BasicGUIButtons {
 		recordText.text = "Highest level: "+SaveController.instance.bestLevel;
 	}
 
+	public void TutorialClicked(){
+		MainControllerScript.instance.storyValues.battleType = StoryValues.BattleType.STORY;
+		PlayButtonClick();
+		SceneManager.LoadScene((int)BattleConstants.SCENE_INDEXES.TUTORIAL);
+	}
+
 	public void BattleClicked(){
 		MainControllerScript.instance.storyValues.clearedTutorial = true;
 		MainControllerScript.instance.storyValues.bv.scenarioName = "";
