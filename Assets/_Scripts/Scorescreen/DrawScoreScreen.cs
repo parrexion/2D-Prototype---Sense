@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class DrawScoreScreen : MonoBehaviour {
+public class DrawScoreScreen : BasicGUIButtons {
 
 	public ScoreScreenValues values;
 	public GameObject canvas;
@@ -16,9 +16,10 @@ public class DrawScoreScreen : MonoBehaviour {
 	public Text moneyText;
 
 	// Use this for initialization
-	void Start () {
-		values = GameObject.Find("SaveValues").GetComponent<ScoreScreenValues>();
+	protected override void Start () {
+		base.Start();
 
+		values = GameObject.Find("SaveValues").GetComponent<ScoreScreenValues>();
 		canvas = GameObject.Find("Canvas - Victory");
 
 		if (values.lostBattle) {
@@ -64,13 +65,13 @@ public class DrawScoreScreen : MonoBehaviour {
 
 	public void LeaveScoreScreen(){
 		MainControllerScript.instance.storyValues.AdvanceStory();
-
+		PlayButtonClick();
 		Destroy(values.gameObject);
 
-		if (MainControllerScript.instance.storyValues.battleType == StoryValues.BattleType.SPECIFIC)
-			SceneManager.LoadScene(BattleConstants.SCENE_BATTLETOWER);
+		if (MainControllerScript.instance.storyValues.battleType != StoryValues.BattleType.RANDOM)
+			SceneManager.LoadScene((int)BattleConstants.SCENE_INDEXES.BATTLETOWER);
 		else
-			SceneManager.LoadScene(BattleConstants.SCENE_OVERWORLD);
+			SceneManager.LoadScene((int)BattleConstants.SCENE_INDEXES.OVERWORLD);
 	}
 
 }

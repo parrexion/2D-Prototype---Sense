@@ -26,9 +26,9 @@ public class OutsidePlayerController : MonoBehaviour {
 			titleSet = true;
 			StoryValues.BattleType type = MainControllerScript.instance.storyValues.battleType;
 			if (type == StoryValues.BattleType.STORY) {
-				titleText.text = MainControllerScript.instance.battleValues.scenarioName;
+				titleText.text = MainControllerScript.instance.storyValues.bv.scenarioName;
 			}
-			else if (type == StoryValues.BattleType.SPECIFIC) {
+			else if (type != StoryValues.BattleType.RANDOM) {
 				towerPrev.text = (MainControllerScript.instance.storyValues.towerLevel -1).ToString();
 				towerNext.text = MainControllerScript.instance.storyValues.towerLevel.ToString();
 			}

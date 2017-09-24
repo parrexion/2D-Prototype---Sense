@@ -23,7 +23,7 @@ public class GameStartScript : MonoBehaviour {
 
 		Debug.Log("Maincontroller now initiated");
 
-		SceneManager.LoadScene(BattleConstants.SCENE_MAINMENU);
+		SceneManager.LoadScene((int)BattleConstants.SCENE_INDEXES.MAINMENU);
 
 		yield return null;
 	}

@@ -25,6 +25,6 @@ public class InitiateBattleScript : MonoBehaviour {
 		fightText.text = "FIGHT!";
 		GetComponent<OutsidePlayerController>().SetActive(false);
 		yield return new WaitForSeconds(time);
-		SceneManager.LoadScene(BattleConstants.SCENE_BATTLE);
+		SceneManager.LoadScene((int)BattleConstants.SCENE_INDEXES.BATTLE);
 	}
 }

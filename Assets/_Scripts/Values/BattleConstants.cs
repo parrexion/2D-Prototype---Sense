@@ -26,14 +26,24 @@ public static class BattleConstants {
 	public static int BALANCE_IMAGES = 9;
 
 
-
-	public static int SCENE_STARTUP = 0;
-	public static int SCENE_MAINMENU = 1;
-	public static int SCENE_OVERWORLD = 2;
-	public static int SCENE_DIALOGUE = 3;
-	public static int SCENE_BATTLE = 4;
-	public static int SCENE_SCORE = 5;
-	public static int SCENE_INVENTORY = 6;
-	public static int SCENE_BATTLETOWER = 7;
+	//Enum for all the scenes
+	public enum SCENE_INDEXES {
+		STARTUP = 0,
+		MAINMENU = 1,
+		OVERWORLD = 2,
+		DIALOGUE = 3,
+		BATTLE = 4,
+		SCORE = 5,
+		INVENTORY = 6,
+		BATTLETOWER = 7
+	}
+//	public static int SCENE_STARTUP = 0;
+//	public static int SCENE_MAINMENU = 1;
+//	public static int SCENE_OVERWORLD = 2;
+//	public static int SCENE_DIALOGUE = 3;
+//	public static int SCENE_BATTLE = 4;
+//	public static int SCENE_SCORE = 5;
+//	public static int SCENE_INVENTORY = 6;
+//	public static int SCENE_BATTLETOWER = 7;
 }
 

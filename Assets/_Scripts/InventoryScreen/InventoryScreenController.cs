@@ -22,7 +22,4 @@ public class InventoryScreenController : MonoBehaviour {
 		kanjiButton.interactable = !kanjiButton.interactable;
 	}
 
-	public void ReturnToGame() {
-		SceneManager.LoadScene(BattleConstants.SCENE_OVERWORLD);
-	}
 }

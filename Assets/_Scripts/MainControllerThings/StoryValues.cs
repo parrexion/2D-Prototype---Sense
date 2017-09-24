@@ -6,9 +6,8 @@ using System.Linq;
 [RequireComponent(typeof(BattleValues))]
 public class StoryValues : MonoBehaviour {
 
-	public enum BattleType { STORY,SPECIFIC,RANDOM }
+	public enum BattleType { STORY,SPECIFIC,TOWER,RANDOM }
 
-	private SaveController saveController;
 	private Inventory inv;
 
 	public bool initiated = false;
@@ -23,7 +22,6 @@ public class StoryValues : MonoBehaviour {
 
 
 	void Start(){
-		saveController = SaveController.instance;
 		inv = MainControllerScript.instance.inventory;
 
 		BattleValues[] gofika = GetComponents<BattleValues>();
@@ -38,7 +36,7 @@ public class StoryValues : MonoBehaviour {
 	public void AdvanceStory(){
 		if (battleType == BattleType.STORY)
 			storyInt++;
-		else if (battleType == BattleType.SPECIFIC)
+		else if (battleType != BattleType.RANDOM)
 			RandomBattle("towerNormal");
 		else if (battleType == BattleType.RANDOM)
 			RandomBattle("start");
@@ -67,6 +65,7 @@ public class StoryValues : MonoBehaviour {
 		case BattleType.RANDOM:
 			Debug.Log("Random battle start");
 			return bvRandom;
+		case BattleType.TOWER:
 		case BattleType.SPECIFIC:
 			Debug.Log("Tower battle start");
 			return bvTower;
@@ -84,6 +83,7 @@ public class StoryValues : MonoBehaviour {
 		case BattleType.RANDOM:
 			Debug.Log("Random battle kanji");
 			return inv.GetEquippedKanji();
+		case BattleType.TOWER:
 		case BattleType.SPECIFIC:
 			Debug.Log("Tower battle kanji");
 			return inv.GetEquippedKanji();

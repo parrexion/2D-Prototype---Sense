@@ -209,13 +209,13 @@ public class BattleController : MonoBehaviour {
 		values.money = enemyController.GetTotalMoney();
 		values.treasures = enemyController.GetTreasures();
 
-		if (storyValues.battleType == StoryValues.BattleType.SPECIFIC)
+		if (storyValues.battleType == StoryValues.BattleType.SPECIFIC || storyValues.battleType == StoryValues.BattleType.TOWER)
 			SaveController.instance.Save();
 
 		Debug.Log("Won");
 
 		yield return new WaitForSeconds(time);
-		SceneManager.LoadScene(BattleConstants.SCENE_SCORE);
+		SceneManager.LoadScene((int)BattleConstants.SCENE_INDEXES.SCORE);
 	}
 
 	public IEnumerator EscapedBattle(float time){
@@ -239,7 +239,7 @@ public class BattleController : MonoBehaviour {
 
 		winText.text = "ESCAPED!";
 		yield return new WaitForSeconds(time);
-		SceneManager.LoadScene(BattleConstants.SCENE_SCORE);
+		SceneManager.LoadScene((int)BattleConstants.SCENE_INDEXES.SCORE);
 		yield return 0;
 	}
 
@@ -259,7 +259,7 @@ public class BattleController : MonoBehaviour {
 		values.time = currentTime;
 
 		yield return new WaitForSeconds(time);
-		SceneManager.LoadScene(BattleConstants.SCENE_SCORE);
+		SceneManager.LoadScene((int)BattleConstants.SCENE_INDEXES.SCORE);
 		yield return 0;
 	}
 

@@ -36,12 +36,12 @@ public class DrawGameOverScreen : MonoBehaviour {
 
 	public void RetryBattle(){
 
-		SceneManager.LoadScene(BattleConstants.SCENE_BATTLE);
+		SceneManager.LoadScene((int)BattleConstants.SCENE_INDEXES.BATTLE);
 	}
 
 	public void ReturnToMainScreen(){
 		Destroy(values.gameObject);
-		SceneManager.LoadScene(BattleConstants.SCENE_MAINMENU);
+		SceneManager.LoadScene((int)BattleConstants.SCENE_INDEXES.MAINMENU);
 	}
 
 }

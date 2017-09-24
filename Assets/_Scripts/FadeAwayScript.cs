@@ -5,15 +5,22 @@ using UnityEngine;
 public class FadeAwayScript : MonoBehaviour {
 
 	public float fadeDuration = 0.3f;
+
+	private AudioController audioController;
 	private SpriteRenderer rend;
 	private Color alphaColor;
 	private float colorValue;
+	private AudioList audioList;
 
 	// Use this for initialization
 	void Start () {
+		audioController = AudioController.instance;
 		rend = GetComponent<SpriteRenderer>();
+		audioList = GetComponent<AudioList>();
+
 		alphaColor = rend.color;
 		colorValue = 1.0f;
+		audioController.RandomizeSfx(audioList.audioClips);
 	}
 	
 	// Update is called once per frame
