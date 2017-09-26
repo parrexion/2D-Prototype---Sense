@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class KanjiFire : Kanji {
+public class KanjiFire : KanjiMono {
 
 	public float area = 1.0f;
 	public float reduction = 1.0f;

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class KanjiThunder : Kanji {
+public class KanjiThunder : KanjiMono {
 
 	public float area = 1.0f;
 	private const float coneL = -Mathf.PI*3.0f / 4.0f;

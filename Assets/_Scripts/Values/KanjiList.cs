@@ -5,5 +5,5 @@ using UnityEngine;
 public class KanjiList : MonoBehaviour {
 
 
-	public List<Kanji> kanjiList;
+	public List<KanjiMono> kanjiList;
 }

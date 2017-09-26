@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class KanjiNone: Kanji {
+public class KanjiNone: KanjiMono {
 
 	public override bool Activate (MouseInformation info){
 

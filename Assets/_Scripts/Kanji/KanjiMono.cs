@@ -1,17 +1,14 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Kanji : MonoBehaviour {
+public abstract class KanjiMono : MonoBehaviour {
 
 	protected WeaponContainer weaponContainer;
 	public Transform projectile;
 	public Transform effect;
 
 	public Texture2D sprite;
-	[HideInInspector] public Texture2D emptySprite;
-	[HideInInspector] public Texture2D filledSprite;
-	[HideInInspector] public Texture2D chargingSprite;
 	[HideInInspector] public Rect slotPos;
 	[HideInInspector] public Rect slotFilled;
 //	private Rect slotName;
@@ -39,15 +36,6 @@ public abstract class Kanji : MonoBehaviour {
 			active = false;
 		}
 
-		emptySprite = new Texture2D(1,1);
-		emptySprite.SetPixel(0,0,Color.grey);
-		emptySprite.Apply();
-		filledSprite = new Texture2D(1,1);
-		filledSprite.SetPixel(0,0,Color.white);
-		filledSprite.Apply();
-		chargingSprite = new Texture2D(1,1);
-		chargingSprite.SetPixel(0,0,Color.yellow);
-		chargingSprite.Apply();
 
 		//		slotName = new Rect(BattleConstants.kanjiXPos+slot*80,BattleConstants.kanjiYPos-16,400,100);
 	}
@@ -66,31 +54,6 @@ public abstract class Kanji : MonoBehaviour {
 
 	abstract public bool Activate (MouseInformation info);
 
-//	public virtual void RenderKanji() {
-//
-//		float size = 64*512/Screen.height;
-//
-//		//slotName = new Rect(BattleConstants.kanjiXPos+slot*80,BattleConstants.kanjiYPos-16,400,100);
-//		slotPos = new Rect(Screen.width*kanji_width+slot*size*1.25f,Screen.height*kanji_height,size,size);
-//		slotFilled = new Rect(Screen.width*kanji_width+slot*size*1.25f,Screen.height*kanji_height+size,size,size);
-//
-//
-//		GUI.DrawTexture(slotPos,emptySprite);
-//		//GUI.Label(slotName,kanjiName);
-//		if (active) {
-//			slotFilled.height = size*(float)currentCharge/(float)charge;
-//			slotFilled.y = Screen.height*kanji_height+size-slotFilled.height;
-//			//Debug.Log("Hieght: "+slotFilled.height);
-//			GUI.DrawTexture(slotFilled,chargingSprite);
-//		}
-//		else {
-//			slotFilled.height = size*(float)(cooldown-currentCooldown)/(float)cooldown;
-//			slotFilled.y = Screen.height*kanji_height+size-slotFilled.height;
-//			//Debug.Log("Hieght: "+slotFilled.height);
-//			GUI.DrawTexture(slotFilled,filledSprite);
-//		}
-//		GUI.DrawTexture(slotPos,sprite);
-//	}
 
 	protected void reduceCharge(float amount) {
 		currentCharge -= amount;

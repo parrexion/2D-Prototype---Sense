@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class KanjiEarth : Kanji {
+public class KanjiEarth : KanjiMono {
 
 	public float holdDuration = 1.5f;
 	public float area = 1.0f;
