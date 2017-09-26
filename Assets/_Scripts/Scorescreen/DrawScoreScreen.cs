@@ -27,12 +27,12 @@ public class DrawScoreScreen : BasicGUIButtons {
 			return;
 		}
 
-		escapedText = canvas.transform.FindChild("Escaped").GetComponent<Text>();
-		timeText = canvas.transform.FindChild("Time").GetComponent<Text>();
-		healthText = canvas.transform.FindChild("Health").GetComponent<Text>();
-		noEnemiesText = canvas.transform.FindChild("NoEnemies").GetComponent<Text>();
-		expText = canvas.transform.FindChild("EXP").GetComponent<Text>();
-		moneyText = canvas.transform.FindChild("Money").GetComponent<Text>();
+		escapedText = canvas.transform.Find("Escaped").GetComponent<Text>();
+		timeText = canvas.transform.Find("Time").GetComponent<Text>();
+		healthText = canvas.transform.Find("Health").GetComponent<Text>();
+		noEnemiesText = canvas.transform.Find("NoEnemies").GetComponent<Text>();
+		expText = canvas.transform.Find("EXP").GetComponent<Text>();
+		moneyText = canvas.transform.Find("Money").GetComponent<Text>();
 
 		SetValues();
 	}

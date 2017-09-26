@@ -15,7 +15,7 @@ public class DrawGameOverScreen : MonoBehaviour {
 		values = GameObject.Find("SaveValues").GetComponent<ScoreScreenValues>();
 
 		canvas = GameObject.Find("Canvas - Game over");
-		timeText = canvas.transform.FindChild("DeadTime").GetComponent<Text>();
+		timeText = canvas.transform.Find("DeadTime").GetComponent<Text>();
 
 		if (!values.lostBattle) {
 			canvas.SetActive(false);
