@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+/// <summary>
+/// Basic class which can be used to transition between scenes. 
+/// Can be overridden to add additional features.
+/// </summary>
 [RequireComponent(typeof(AudioList))]
 public class BasicGUIButtons : MonoBehaviour {
 
