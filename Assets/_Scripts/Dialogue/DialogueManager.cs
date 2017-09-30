@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(DialogueScene))]
 public class DialogueManager : MonoBehaviour {
 
 	DialogueParser parser;

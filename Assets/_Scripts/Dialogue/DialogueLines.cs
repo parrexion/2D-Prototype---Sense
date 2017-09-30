@@ -75,8 +75,6 @@ public class DialogueLines {
 		else {
 			CompareScenes(scene,dataList[pos]);
 			pos++;
-
-//			Debug.Log("PosPOS: "+pos);
 		}
 	}
 

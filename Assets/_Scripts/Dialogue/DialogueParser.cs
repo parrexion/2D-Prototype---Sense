@@ -30,60 +30,6 @@ public class DialogueParser : MonoBehaviour {
 			dialogues = JsonUtility.FromJson<DialogueDialogues>(dataAsJson);
 
 			Debug.Log("Number of dialogues: "+dialogues.lines.Length);
-//			DialogueLines line;
-//			DialogueAction da = null;
-//			DialogueJsonItem data = null;
-//
-//			for (int d = 0; d < dialogues.lines.Length; d++) {
-//				line = dialogues.lines[d];
-//				line.Setup();
-//				Debug.Log("Number of actions: "+line.dataList.Length);
-//				Debug.Log("Number of filled: "+line.getFilled());
-//				for (int a = 0; a < line.dataList.Length; a++) {
-//					switch (line.dataList[a].type)
-//					{
-//					case DialogueJsonItem.actionType.ADDCHAR:
-//						da = (DAAddCharacter)ScriptableObject.CreateInstance("DAAddCharacter");
-//						data = line.dataList[a];
-//						break;
-//					case DialogueJsonItem.actionType.REMOVECHAR:
-//						data = line.dataList[a];
-//						da = (DARemoveCharacter)ScriptableObject.CreateInstance("DARemoveCharacter");
-//						break;
-//					case DialogueJsonItem.actionType.CHANGEPOS:
-//						da = (DAChangePosition)ScriptableObject.CreateInstance("DAChangePosition");
-//						data = line.dataList[a];
-//						break;
-//					case DialogueJsonItem.actionType.SETBACKGROUND:
-//						da = (DASetBackground)ScriptableObject.CreateInstance("DASetBackground");
-//						data = line.dataList[a];
-//						break;
-//					case DialogueJsonItem.actionType.CHANGETALKING:
-//						da = (DAChangeTalking)ScriptableObject.CreateInstance("DAChangeTalking");
-//						data = line.dataList[a];
-//						break;
-//					case DialogueJsonItem.actionType.SETNAME:
-//						da = (DASetName)ScriptableObject.CreateInstance("DASetName");
-//						data = line.dataList[a];
-//						break;
-//					case DialogueJsonItem.actionType.SETTEXT:
-//						da = (DASetText)ScriptableObject.CreateInstance("DASetText");
-//						data = line.dataList[a];
-//						Debug.Log(a+"  Read text: "+line.dataList[a].text);
-//						break;
-//					case DialogueJsonItem.actionType.ENDTEXT:
-//						da = (DAEndText)ScriptableObject.CreateInstance("DAEndText");
-//						data = line.dataList[a];
-//						break;
-//					case DialogueJsonItem.actionType.ENDDIALOGUE:
-//						da = (DAEndDialogue)ScriptableObject.CreateInstance("DAEndDialogue");
-//						data = line.dataList[a];
-//						break;
-//					}
-//
-//					dialogues.lines[d].AddAction(da, data);
-//				}
-//			}
 		}
 		else {
 			Debug.LogError("Could not open file: "+filename);
