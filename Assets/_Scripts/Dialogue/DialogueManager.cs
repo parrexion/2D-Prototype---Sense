@@ -113,16 +113,9 @@ public class DialogueManager : MonoBehaviour {
 		backgroundImage.sprite = backgrounds[scene.background];
 
 		for(int i = 0; i < scene.characters.Length; i++){
-			if (scene.positions[i] == -1)
-				scene.characters[i].sprite.sprite = null;
-			else 
-				scene.characters[i].sprite.sprite = characters[scene.positions[i]].characterPoses[scene.currentPoses[i]];
+			scene.characters[i].SetCharacterPose(scene.positions[i],scene.currentPoses[i]);
 		}
-
-		if (scene.talkingCharacter == -1 || scene.talkingCharacter == 4)
-			scene.closeup.sprite.sprite = null;
-		else 
-			scene.closeup.sprite.sprite = characters[scene.talkingCharacter].characterPoses[scene.talkingPose];
+		scene.closeup.SetCharacterPose(scene.talkingCharacter, scene.talkingPose);
 	}
 
 
