@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Component which updates the phone's clock to reflect the current one.
+/// </summary>
 public class PhoneMenuController : MonoBehaviour {
 
 	public Text clockText;
@@ -11,7 +14,11 @@ public class PhoneMenuController : MonoBehaviour {
 
 	void Update() {
 		currentDate = System.DateTime.Now;
-		clockText.text = currentDate.Hour+":"+currentDate.Minute;
+		if (currentDate.Minute < 10)
+			clockText.text = currentDate.Hour+":0"+currentDate.Minute;
+		else
+			clockText.text = currentDate.Hour+":"+currentDate.Minute;
+
 		switch (currentDate.DayOfWeek) {
 		case System.DayOfWeek.Monday:
 			dateText.text = "Mon";

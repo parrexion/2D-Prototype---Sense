@@ -3,17 +3,14 @@ using UnityEngine;
 
 public class Character : MonoBehaviour {
 
-	private SpriteRenderer characterSprite = null;
-	private SpriteRenderer poseSprite = null;
+	[SerializeField] private SpriteRenderer characterSprite = null;
+	[SerializeField] private SpriteRenderer poseSprite = null;
+	public Sprite[] characterChars = null;
 	public Sprite[] characterPoses = null;
-	public Sprite[] characterCloseups = null;
 
 	// Use this for initialization
 	void Start () {
-		characterSprite = GetComponent<SpriteRenderer>();
 		characterSprite.sprite = null;
-
-		poseSprite = transform.GetChild(0).GetComponent<SpriteRenderer>();
 		poseSprite.sprite = null;
 	}
 
@@ -25,8 +22,13 @@ public class Character : MonoBehaviour {
 			return;
 		}
 
-		characterSprite.sprite = null;
-		poseSprite.sprite = null;
+		if (character == 4){
+			Debug.LogWarning("Found a 4 as the character :/");
+			return;
+		}
+
+		characterSprite.sprite = characterChars[character-1];
+		poseSprite.sprite = characterPoses[pose];
 
 		characterSprite.enabled = true;
 		poseSprite.enabled = true;

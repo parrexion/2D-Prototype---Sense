@@ -13,8 +13,7 @@ public class DialogueParser : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		string file = "Assets/Resources/Dialogue1.txt";
-		file = "Assets/Resources/test.json";
+		string file = "Assets/Resources/test.json";
 		dialogues = new DialogueDialogues(1);
 			
 //		TemporaryParse();

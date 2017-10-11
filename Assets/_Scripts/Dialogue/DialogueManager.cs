@@ -49,24 +49,31 @@ public class DialogueManager : MonoBehaviour {
 		UpdateUI();
 	}
 
+	/// <summary>
+	/// Shows the current line of dialogue.
+	/// </summary>
 	public void ShowDialogue() {
 		if (!initiated) {
 			currentLines = parser.dialogues.lines[0];
 			initiated = true;
 		}
 
-		ResetImages();
+		ResetCharacters();
 		ParseLine();
 	}
 
-	void ResetImages() {
-		if (scene.characterName != "") {
-//			GameObject character = GameObject.Find(scene.characterName);
-//			SpriteRenderer currSprite = character.GetComponent<SpriteRenderer>();
-//			currSprite = null;
+	/// <summary>
+	/// Removes all the characters from the current scene.
+	/// </summary>
+	void ResetCharacters() {
+		for (int i = 0; i < scene.characters.Length; i++) {
+			scene.characters[i].SetCharacterPose(-1,-1);
 		}
 	}
 
+	/// <summary>
+	/// Parses the current dialogue line and splits it into words and sets the characters.
+	/// </summary>
 	void ParseLine() {
 		currentLines.NextDialogue(scene);
 
@@ -78,6 +85,10 @@ public class DialogueManager : MonoBehaviour {
 		DisplayImages();
 	}
 
+	/// <summary>
+	/// Updates the current dialogue line, character by character
+	/// </summary>
+	/// <returns></returns>
 	IEnumerator TextUpdate() {
 		float timeInSeconds = .02f;
 		textUpdating = true;
@@ -99,6 +110,11 @@ public class DialogueManager : MonoBehaviour {
 		finishNow = false;
 	}
 
+	/// <summary>
+	/// Calculates whether the next word will need a newline. True if a newline is required.
+	/// </summary>
+	/// <param name="nextWord"></param>
+	/// <returns></returns>
 	private bool FitNextWord(string nextWord){
 		string word = nextWord.Split('\n')[0];
 		TextGenerationSettings settings = dialogueBox.GetGenerationSettings(dialogueBox.rectTransform.rect.size);
@@ -108,6 +124,9 @@ public class DialogueManager : MonoBehaviour {
 		return newHeight > originalHeight;
 	}
 
+	/// <summary>
+	/// Sets the characters and their poses.
+	/// </summary>
 	void DisplayImages() {
 
 		backgroundImage.sprite = backgrounds[scene.background];
@@ -115,10 +134,15 @@ public class DialogueManager : MonoBehaviour {
 		for(int i = 0; i < scene.characters.Length; i++){
 			scene.characters[i].SetCharacterPose(scene.positions[i],scene.currentPoses[i]);
 		}
+		Debug.Log("Displayed: " + scene.talkingCharacter + ", " + scene.talkingPose);
 		scene.closeup.SetCharacterPose(scene.talkingCharacter, scene.talkingPose);
+
 	}
 
 
+	/// <summary>
+	/// Creates choice buttons in the dialogue
+	/// </summary>
 	void CreateButtons() {
 //		for(int i = 0 ; i < options.Length; i++) {
 //			GameObject button = (GameObject)Instantiate(choiceBox);
@@ -134,6 +158,9 @@ public class DialogueManager : MonoBehaviour {
 //		}
 	}
 
+	/// <summary>
+	/// Sets the name of the talker and current dialogue text.
+	/// </summary>
 	void UpdateUI() {
 //		if (!playerTalking) {
 //			ClearButtons();
@@ -143,6 +170,9 @@ public class DialogueManager : MonoBehaviour {
 //		dialogueBox.text = dialogue;
 	}
 
+	/// <summary>
+	/// Removes the dialogue buttons.
+	/// </summary>
 	void ClearButtons() {
 //		for (int i = 0; i < buttons.Count; i++) {
 //			Button b = buttons[i];
