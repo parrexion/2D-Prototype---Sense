@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Abstract class containing the base animation information needed for the animations.
+/// </summary>
 public abstract class AnimationScript : MonoBehaviour {
 
 	protected Animator animator;

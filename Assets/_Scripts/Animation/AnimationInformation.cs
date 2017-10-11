@@ -1,6 +1,8 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 
+/// <summary>
+/// Info class containing which states the animation currently uses.
+/// </summary>
 public class AnimationInformation {
 
 	public int mouseDirection = 0;

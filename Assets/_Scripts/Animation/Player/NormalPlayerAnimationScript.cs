@@ -1,7 +1,10 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Implementation of the animation script used as the default animation for the characters
+/// in the game.
+/// </summary>
 public class NormalPlayerAnimationScript : AnimationScript {
 
 	enum State { IDLE, WALK_LEFT, WALK_RIGHT, ATTACK }
