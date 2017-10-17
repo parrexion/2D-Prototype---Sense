@@ -79,9 +79,9 @@ public class DialogueManager : MonoBehaviour {
 
 		currentDialogue = "";
 		dialogue = scene.dialogue;
-//		Debug.Log(dialogue);
+
 		words = dialogue.Split(' ');
-		StartCoroutine("TextUpdate");
+		StartCoroutine(TextUpdate());
 		DisplayImages();
 	}
 
@@ -102,6 +102,10 @@ public class DialogueManager : MonoBehaviour {
 				}
 				currentDialogue += words[j][i];
 				yield return new WaitForSeconds(timeInSeconds);
+			}
+			if (finishNow) {
+				currentDialogue = dialogue;
+				break;
 			}
 			currentDialogue += ' ';
 			yield return new WaitForSeconds(timeInSeconds);

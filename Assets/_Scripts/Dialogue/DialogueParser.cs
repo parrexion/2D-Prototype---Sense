@@ -45,37 +45,6 @@ public class DialogueParser : MonoBehaviour {
 		}
 	}
 
-//	private void TemporaryParse(){
-//
-//		DialogueLines lineEntry = new DialogueLines(24);
-//		dialogues.lines[0] = lineEntry;
-//
-//		ParseAction(lineEntry, "AddChar", 0, 0, 0, "");
-//		ParseAction(lineEntry, "AddChar", 1, 1, 1, "");
-//		ParseAction(lineEntry, "ChangeTalking", 1, 1, 0, "");
-//		ParseAction(lineEntry, "SetName", 0, 0, 0, "Orien");
-//		ParseAction(lineEntry, "SetText", 0, 0, 0, "Hello there!");
-//		ParseAction(lineEntry, "EndText", 0, 0, 0, "");
-//		ParseAction(lineEntry, "SetBackground", 1, 0, 0, "");
-//		ParseAction(lineEntry, "ChangePos", 0, 2, 0, "");
-//		ParseAction(lineEntry, "ChangePos", 1, 0, 0, "");
-//		ParseAction(lineEntry, "ChangePos", 2, 0, 0, "");
-//		ParseAction(lineEntry, "ChangeTalking", 3, 1, 0, "");
-//		ParseAction(lineEntry, "SetName", 0, 0, 0, "Joe");
-//		ParseAction(lineEntry, "SetText", 0, 0, 0, "Hello to you as well!");
-//		ParseAction(lineEntry, "AddChar", 1, 2, 2, "");
-//		ParseAction(lineEntry, "AddChar", 3, 3, 0, "");
-//		ParseAction(lineEntry, "EndText", 0, 0, 0, "");
-//		ParseAction(lineEntry, "SetBackground", 2, 0, 0, "");
-//		ParseAction(lineEntry, "ChangeTalking", -1, 0, 0, "");
-//		ParseAction(lineEntry, "SetName", 0, 0, 0, "");
-//		ParseAction(lineEntry, "SetText", 0, 0, 0, "This is a long text.");
-//		ParseAction(lineEntry, "RemoveChar", 0, 0, 0, "");
-//		ParseAction(lineEntry, "RemoveChar", 2, 0, 0, "");
-//		ParseAction(lineEntry, "EndText", 0, 0, 0, "");
-//		ParseAction(lineEntry, "EndDialogue", 0, 0, 0, "");
-//	}
-
 //	private void ParseAction(DialogueLines line, string action, int val1, int val2, int val3, string text1) {
 //
 //		DialogueAction da = null;

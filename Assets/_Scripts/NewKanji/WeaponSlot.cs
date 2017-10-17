@@ -11,7 +11,7 @@ public class WeaponSlot : MonoBehaviour {
 	public List<ProjectileEffect> projectileEffects;
 
 	private float currentCharge = 0;
-	private float currentCooldown = 0;
+	// private float currentCooldown = 0;
 
 	// Use this for initialization
 	void Start () {
@@ -28,7 +28,7 @@ public class WeaponSlot : MonoBehaviour {
 
 		if (currentCharge <= 0) {
 			active = false;
-			currentCooldown = kanji.values.cooldown;
+			// currentCooldown = kanji.values.cooldown;
 		}
 	}
 }

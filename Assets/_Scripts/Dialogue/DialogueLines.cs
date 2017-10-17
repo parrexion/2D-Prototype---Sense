@@ -17,47 +17,6 @@ public class DialogueLines {
 		dataList = new DialogueJsonScene[size];
 	}
 
-	public void Setup(){
-//		actions = new DialogueAction[size];
-//		DialogueAction da = null;
-//
-//		for (int a = 0; a < dataList.Length; a++) {
-//			switch (dataList[a].type)
-//			{
-//			case DialogueJsonItem.actionType.ADDCHAR:
-//				da = (DAAddCharacter)ScriptableObject.CreateInstance("DAAddCharacter");
-//				break;
-//			case DialogueJsonItem.actionType.REMOVECHAR:
-//				da = (DARemoveCharacter)ScriptableObject.CreateInstance("DARemoveCharacter");
-//				break;
-//			case DialogueJsonItem.actionType.CHANGEPOS:
-//				da = (DAChangePosition)ScriptableObject.CreateInstance("DAChangePosition");
-//				break;
-//			case DialogueJsonItem.actionType.SETBACKGROUND:
-//				da = (DASetBackground)ScriptableObject.CreateInstance("DASetBackground");
-//				break;
-//			case DialogueJsonItem.actionType.CHANGETALKING:
-//				da = (DAChangeTalking)ScriptableObject.CreateInstance("DAChangeTalking");
-//				break;
-//			case DialogueJsonItem.actionType.SETNAME:
-//				da = (DASetName)ScriptableObject.CreateInstance("DASetName");
-//				break;
-//			case DialogueJsonItem.actionType.SETTEXT:
-//				da = (DASetText)ScriptableObject.CreateInstance("DASetText");
-//				Debug.Log(a+"  Read text: "+dataList[a].text);
-//				break;
-//			case DialogueJsonItem.actionType.ENDTEXT:
-//				da = (DAEndText)ScriptableObject.CreateInstance("DAEndText");
-//				break;
-//			case DialogueJsonItem.actionType.ENDDIALOGUE:
-//				da = (DAEndDialogue)ScriptableObject.CreateInstance("DAEndDialogue");
-//				break;
-//			}
-//
-//			actions[a] = da;
-//		}
-	}
-
 
 //	public void AddAction(DialogueAction action, DialogueJsonScene data){
 //		dataList[filled] = data;
