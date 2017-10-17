@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+/// <summary>
+/// Collider which absorbs and destroys projectiles. Used for walls and boundaries.
+/// </summary>
 public class HurtableAbsorbScript : MonoBehaviour {
 
 

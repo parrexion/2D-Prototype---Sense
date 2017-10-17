@@ -2,6 +2,10 @@
 using System.Collections;
 using System.Collections.Generic;
 
+/// <summary>
+/// Projectile class which is used by all kinds of projectiles and attacks.
+/// Contains the information needed to deal damage and trigger effects.
+/// </summary>
 public class Projectile : MonoBehaviour {
 
 	private bool active = true;
@@ -20,6 +24,9 @@ public class Projectile : MonoBehaviour {
 		move = GetComponent<MoveScript>();
 	}
 
+	/// <summary>
+	/// Update the current lifetime of the projectile.
+	/// </summary>
 	void Update() {
 		if (active) {
 			currentTime += Time.deltaTime;
@@ -29,20 +36,25 @@ public class Projectile : MonoBehaviour {
 		}
 	}
 
+	/// <summary>
+	/// Set the damage for the projectile.
+	/// </summary>
+	/// <param name="attackValue"></param>
 	public void SetDamage(int attackValue){
 		Debug.Log("Added some damage: " + (int)(attackScaling*attackValue));
 		damage += (int)(attackScaling*attackValue);
 	}
 
-
+	/// <summary>
+	/// Enabling the movement of the projectile if there is something.
+	/// </summary>
+	/// <param name="state"></param>
 	public void SetActive(bool state) {
 
 		active = state;
 		if (move) {
 			move.active = state;
-//			Debug.Log("Move active = " + move.active);
 		}
-//		else
-//			Debug.Log("Move active = is null");
+
 	}
 }

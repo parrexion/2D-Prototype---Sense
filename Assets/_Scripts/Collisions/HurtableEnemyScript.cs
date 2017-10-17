@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Collider script for enemies which reacts to player projectiles.
+/// </summary>
 [RequireComponent(typeof(StateController),typeof(Collider2D))]
 [RequireComponent(typeof(SpriteRenderer),typeof(Rigidbody2D))]
 public class HurtableEnemyScript : MonoBehaviour {
@@ -24,32 +27,40 @@ public class HurtableEnemyScript : MonoBehaviour {
 		collider2d = GetComponent<Collider2D>();
 	}
 
+	/// <summary>
+	/// When colliding with player projectiles, take damage if it hasn't been hit by it yet.
+	/// </summary>
+	/// <param name="otherCollider"></param>
 	void OnTriggerEnter2D(Collider2D otherCollider){
 
 		Projectile projectile = otherCollider.gameObject.GetComponent<Projectile>();
-		if (projectile != null) {
-
-			if (!projectile.isEnemy) {
-				if (!projectile.hitEnemies.Contains(group.enemyId)) {
-					group.TakeDamage(projectile.damage);
-					projectile.hitEnemies.Add(group.enemyId);
-
-					if (projectile.maxHits != -1 && projectile.hitEnemies.Count >= projectile.maxHits) {
-						Destroy(projectile.gameObject);
-					}
-
-					Transform t = Instantiate(damageNumbers);
-					t.position = transform.position;
-					DamageNumberDisplay dnd = t.GetComponent<DamageNumberDisplay>();
-					dnd.damage = projectile.damage;
-					battleGUI.damages.Add(dnd);
-				}
-			}
-		} 
-		else
+		if (projectile == null) {
 			Debug.Log("Null");
+			return;
+		}
+		if (projectile.isEnemy)
+			return;
+
+		if (projectile.hitEnemies.Contains(group.enemyId))
+			return;
+
+		group.TakeDamage(projectile.damage);
+		projectile.hitEnemies.Add(group.enemyId);
+
+		if (projectile.maxHits != -1 && projectile.hitEnemies.Count >= projectile.maxHits) {
+			Destroy(projectile.gameObject);
+		}
+
+		Transform t = Instantiate(damageNumbers);
+		t.position = transform.position;
+		DamageNumberDisplay dnd = t.GetComponent<DamageNumberDisplay>();
+		dnd.damage = projectile.damage;
+		battleGUI.damages.Add(dnd);
 	}
 
+	/// <summary>
+	/// Removes the dead enemy and spawns a dead version of it.
+	/// </summary>
 	public void Die(){
 		spriteRenderer.enabled = false;
 		stateController.enabled = false;
