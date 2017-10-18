@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
 
+/// <summary>
+/// The UI component of the inventory screen containing all the images of the inventory.
+/// </summary>
 public class InventoryUI : MonoBehaviour {
 
 	public Transform gearEquipItemsParent;
@@ -48,16 +51,16 @@ public class InventoryUI : MonoBehaviour {
 		UpdateUI();
 	}
 
-	void OnEnable() {
-//		inventory = Inventory.instance;
-//		inventory.onItemChangedCallback += UpdateUI;
-	}
-
+	/// <summary>
+	/// Remove the events when leaving the screen.
+	/// </summary>
 	void OnDisable() {
 		inventory.onItemChangedCallback -= UpdateUI;
 	}
 
-
+	/// <summary>
+	/// Update function for the UI. Uses the inventory to update the images of all the inventory slots.
+	/// </summary>
 	void UpdateUI() {
 		if (!inventory.initialized) {
 			return;

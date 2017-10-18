@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Class for displaying the information of the selected item.
+/// </summary>
 public class SelectedItemUI : MonoBehaviour {
 
 	public Transform[] statsTextList;
@@ -41,21 +44,16 @@ public class SelectedItemUI : MonoBehaviour {
 			changes[i].text = "+0";
 		}
 
-		//Add some events
-//		inventory.onEquipmentChangedCallback += UpdateValues;
-	}
-
-	void OnDisable(){
-//		inventory.onEquipmentChangedCallback -= UpdateValues;
 	}
 
 	void Update () {
-
 		//Update values
 		UpdateValues();
 	}
 
-
+	/// <summary>
+	/// Updates the information text of the currently selected item.
+	/// </summary>
 	void UpdateValues(){
 		values[0].text = playerStats.attack.GetValue().ToString();
 		values[1].text = playerStats.defense.GetValue().ToString();

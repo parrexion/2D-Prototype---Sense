@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Class for displaying the information of the selected kanji.
+/// </summary>
 public class SelectedKanjiUI : MonoBehaviour {
 
 	public Transform[] statsTextList;
@@ -35,12 +38,14 @@ public class SelectedKanjiUI : MonoBehaviour {
 	}
 
 	void Update () {
-
 		//Update values
 		UpdateValues();
 	}
 
 
+	/// <summary>
+	/// Updates the information text of the currently selected kanji.
+	/// </summary>
 	void UpdateValues(){
 
 		selectedKanji = inventory.equippedKanji;
