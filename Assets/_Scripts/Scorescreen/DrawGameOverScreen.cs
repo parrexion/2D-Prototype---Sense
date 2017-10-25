@@ -24,7 +24,6 @@ public class DrawGameOverScreen : MonoBehaviour {
 
 		Debug.Log("Oh noes!");
 		SetValues();
-
 	}
 
 
