@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class WeaponContainer : MonoBehaviour {
 
+	public static List<GameObject> projectileList = new List<GameObject>();
+
 	private bool active = true;
 	private bool showKanji = true;
-	public KanjiMono[] equipped;
+	public KanjiBaseClass[] equipped;
 	public List<Projectile> projectiles;
 	public List<ProjectileEffect> projectileEffects;
 
@@ -69,12 +71,13 @@ public class WeaponContainer : MonoBehaviour {
 
 	public void SetEquippedKanji(){
 		int[] kanjiIndex;
-		kanjiIndex = MainControllerScript.instance.storyValues.GetEquippedKanji();
+		MainControllerScript mainController = MainControllerScript.instance;
+		kanjiIndex = mainController.storyValues.GetEquippedKanji();
 
-		equipped = new KanjiMono[kanjiIndex.Length];
+		equipped = new KanjiBaseClass[kanjiIndex.Length];
 		for (int i = 0; i < kanjiIndex.Length; i++) {
 			Debug.Log("Equipped: "+kanjiIndex[i]);
-			equipped[i] = MainControllerScript.instance.kanjiList.kanjiList[kanjiIndex[i]];
+			// equipped[i] = mainController.kanjiList.kanjiList[kanjiIndex[i]];
 		}
 	}
 
@@ -99,17 +102,14 @@ public class WeaponContainer : MonoBehaviour {
 				continue; //TODO actually make an empty slot sprite
 
 			GUI.DrawTexture(equipped[i].slotPos,emptySprite);
-			//GUI.Label(slotName,kanjiName);
 			if (equipped[i].active) {
 				equipped[i].slotFilled.height = size*equipped[i].GetCharge();
 				equipped[i].slotFilled.y = Screen.height*kanji_height+size-equipped[i].slotFilled.height;
-//				Debug.Log("Hieght: "+equipped[i].slotFilled.height);
 				GUI.DrawTexture(equipped[i].slotFilled,chargingSprite);
 			}
 			else {
 				equipped[i].slotFilled.height = size*equipped[i].GetCharge();
 				equipped[i].slotFilled.y = Screen.height*kanji_height+size-equipped[i].slotFilled.height;
-//				Debug.Log("Hieght: "+equipped[i].GetCharge());
 				GUI.DrawTexture(equipped[i].slotFilled,filledSprite);
 			}
 			GUI.DrawTexture(equipped[i].slotPos,equipped[i].sprite);
@@ -126,14 +126,6 @@ public class WeaponContainer : MonoBehaviour {
 		foreach (Projectile p in projectiles) {
 			if (p != null) {
 				p.SetActive(state);
-			}
-			else {
-				Debug.Log("So null");
-			}
-		}
-		foreach (ProjectileEffect pe in projectileEffects) {
-			if (pe != null) {
-				pe.active = state;
 			}
 			else {
 				Debug.Log("So null");

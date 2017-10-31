@@ -5,15 +5,13 @@ using UnityEngine;
 public class BattleGUIController : MonoBehaviour {
 
 	public List<DamageNumberDisplay> damages = new List<DamageNumberDisplay>();
-	public List<Projectile> projectiles = new List<Projectile>();
-	public List<ProjectileEffect> projectileEffects = new List<ProjectileEffect>();
+	public List<Effect> effectList = new List<Effect>();
 
 	
 	// Update is called once per frame
 	void Update () {
 		damages.RemoveAll(item => (item == null));
-		projectiles.RemoveAll(item => (item == null));
-		projectileEffects.RemoveAll(item => (item == null));
+		effectList.RemoveAll(item => (item == null));
 	}
 
 
@@ -28,9 +26,9 @@ public class BattleGUIController : MonoBehaviour {
 			}
 		}
 
-		foreach (Projectile p in projectiles) {
-			if (p != null) {
-				p.SetActive(state);
+		foreach (Effect eff in effectList) {
+			if (eff != null) {
+				eff.SetActive(state);
 			}
 			else {
 //				Debug.Log("So null");

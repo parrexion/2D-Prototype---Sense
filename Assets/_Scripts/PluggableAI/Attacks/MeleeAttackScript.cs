@@ -13,11 +13,11 @@ public class MeleeAttackScript : AttackScript {
 
 			var shotTransform = Instantiate(projectile) as Transform;
 			shotTransform.position = ncon.thisTransform.position;
-			bgui.projectiles.Add(shotTransform.GetComponent<Projectile>());
+			bgui.effectList.Add(shotTransform.GetComponent<Projectile>());
 
 			shotTransform = Instantiate(effect) as Transform;
 			shotTransform.position = ncon.thisTransform.position;
-			bgui.projectileEffects.Add(shotTransform.GetComponent<ProjectileEffect>());
+			bgui.effectList.Add(shotTransform.GetComponent<ProjectileEffect>());
 		}
 		else if (controller is SStateController) {
 
@@ -25,11 +25,11 @@ public class MeleeAttackScript : AttackScript {
 
 			var shotTransform = Instantiate(projectile) as Transform;
 			shotTransform.position = scon.thisTransform.position;
-			bgui.projectiles.Add(shotTransform.GetComponent<Projectile>());
+			bgui.effectList.Add(shotTransform.GetComponent<Projectile>());
 
 			shotTransform = Instantiate(effect) as Transform;
 			shotTransform.position = scon.thisTransform.position;
-			bgui.projectileEffects.Add(shotTransform.GetComponent<ProjectileEffect>());
+			bgui.effectList.Add(shotTransform.GetComponent<ProjectileEffect>());
 		}
 	}
 }

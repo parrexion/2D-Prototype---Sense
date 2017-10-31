@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class KanjiMono : MonoBehaviour {
+public abstract class KanjiBaseClass : MonoBehaviour {
 
 	protected WeaponContainer weaponContainer;
 	public Transform projectile;

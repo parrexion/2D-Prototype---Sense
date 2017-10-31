@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class KanjiWater : KanjiMono {
+public class KanjiWater : KanjiBaseClass {
 
 	public float area = 1.0f;
 	private float coneL = Mathf.PI / 4.0f;

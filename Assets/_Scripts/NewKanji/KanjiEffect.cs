@@ -5,5 +5,5 @@ using UnityEngine;
 public abstract class KanjiEffect : ScriptableObject {
 
 
-	abstract public bool Use(WeaponSlot slot, KanjiValues values, MouseInformation info);
+	abstract public bool Use(KanjiValues values, MouseInformation info);
 }

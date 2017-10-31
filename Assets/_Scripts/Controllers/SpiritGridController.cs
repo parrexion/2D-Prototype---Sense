@@ -254,7 +254,7 @@ public class SpiritGridController : MonoBehaviour {
 		barrierTransform.parent = transform.parent;
 		barrierTransform.localPosition = transform.localPosition;
 		ProjectileEffect effect = barrierTransform.GetComponent<ProjectileEffect>();
-		blockTime = effect.time;
+		blockTime = effect.lifeTime;
 		currentBlockTime = 0;
 	}
 }

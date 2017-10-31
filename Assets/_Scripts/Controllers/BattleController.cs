@@ -53,7 +53,7 @@ public class BattleController : MonoBehaviour {
 
 		SetupBackgrounds();
 		SetActiveGame(false);
-		StartCoroutine("CreateEnemies");
+		StartCoroutine(CreateEnemies());
 	}
 
 	IEnumerator CreateEnemies(){

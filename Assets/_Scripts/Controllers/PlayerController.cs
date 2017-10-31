@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour {
 	private Rigidbody2D rigidbodyComponent;
 	private Collider2D coll2D;
     private MouseInformation mouseInfo;
-	private WeaponContainer weaponContainer;
+	public WeaponSlot weapon;
 
 	public AnimationScript animScript;
 	private AnimationInformation animInfo;
@@ -32,8 +32,6 @@ public class PlayerController : MonoBehaviour {
 			coll2D = GetComponent<Collider2D>();
 		if (moveToPosition == null)
 			moveToPosition = GetComponent<MoveHomingScript>();
-		if (weaponContainer == null)
-			weaponContainer = GetComponent<WeaponContainer>();
 
 		mouseInfo = new MouseInformation();
 		startX = transform.position.x;
@@ -42,7 +40,6 @@ public class PlayerController : MonoBehaviour {
 		mouseInfo.holding = false;
 		mouseInfo.holdDuration = -1;
 		animInfo = new AnimationInformation();
-		weaponContainer.SetEquippedKanji();
 	}
 	
 	// Update is called once per frame
@@ -83,7 +80,7 @@ public class PlayerController : MonoBehaviour {
 				mouseInfo.clicked = true;
 			}
 
-			if (weaponContainer.Activate(mouseInfo)) {
+			if (weapon.Activate(mouseInfo)) {
 				attacking = 20;
 			}
 
@@ -103,12 +100,11 @@ public class PlayerController : MonoBehaviour {
 	public void SetActive(bool state) {
 		active = state;
 		moveToPosition.active = state;
-		weaponContainer.SetActive(state);
+		weapon.SetVisible(state);
 	}
 
 
 	public void UpdateAnimation() {
-
 
 		if (hurtScript.beenHurt) {
 			hurtScript.beenHurt = false;

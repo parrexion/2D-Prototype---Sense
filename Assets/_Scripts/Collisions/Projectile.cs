@@ -6,34 +6,18 @@ using System.Collections.Generic;
 /// Projectile class which is used by all kinds of projectiles and attacks.
 /// Contains the information needed to deal damage and trigger effects.
 /// </summary>
-public class Projectile : MonoBehaviour {
+public class Projectile : Effect {
 
-	private bool active = true;
     public int damage = 1;
 	public float attackScaling = 1f;
-	public float time = 10;
 	public bool isEnemy = false;
 	public int maxHits = -1;
 	public List<int> hitEnemies = new List<int>();
 	public MoveScript move;
 
-	private float currentTime = 0f;
-
 
 	void Start() {
 		move = GetComponent<MoveScript>();
-	}
-
-	/// <summary>
-	/// Update the current lifetime of the projectile.
-	/// </summary>
-	void Update() {
-		if (active) {
-			currentTime += Time.deltaTime;
-
-			if (currentTime >= time)
-				Destroy(gameObject);
-		}
 	}
 
 	/// <summary>
@@ -46,15 +30,13 @@ public class Projectile : MonoBehaviour {
 	}
 
 	/// <summary>
-	/// Enabling the movement of the projectile if there is something.
+	/// Enabling the movement of the projectile if there is any.
 	/// </summary>
 	/// <param name="state"></param>
-	public void SetActive(bool state) {
-
-		active = state;
+	public override void SetActive(bool state) {
+		base.SetActive(state);
 		if (move) {
 			move.active = state;
 		}
-
 	}
 }

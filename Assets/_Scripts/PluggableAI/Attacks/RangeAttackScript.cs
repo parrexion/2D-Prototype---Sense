@@ -18,7 +18,7 @@ public class RangeAttackScript : AttackScript {
 
 		var shotTransform = Instantiate(projectile) as Transform;
 		shotTransform.position = controller.thisTransform.position;
-		bgui.projectiles.Add(shotTransform.GetComponent<Projectile>());
+		bgui.effectList.Add(shotTransform.GetComponent<Projectile>());
 
 		MoveScript move = shotTransform.gameObject.GetComponent<MoveScript>();
 		if (move != null) {

@@ -56,6 +56,7 @@ public class EnemyController : MonoBehaviour {
 		if (MainControllerScript.instance.storyValues.battleType != StoryValues.BattleType.SPECIFIC) {
 			for (int i = 0; i < numberOfEnemies; i++) {
 				r = Random.Range(0,enemySelection.Count);
+				Debug.Log("r = " + r + ", enemySelection: " + enemySelection.Count);
 				index = enemySelection[r];
 				groups.Add(CreateGroup(index));
 			}

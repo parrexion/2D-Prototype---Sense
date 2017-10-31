@@ -11,7 +11,7 @@ public class BackgroundChanger : MonoBehaviour {
 
 	public Button escapeBattleButton;
 
-	public WeaponContainer weapons;
+	public WeaponSlot weapons;
 	public SpiritGridController gridController;
 	public SpiritGrid spiritGrid;
 

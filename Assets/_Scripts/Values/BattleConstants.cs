@@ -4,6 +4,11 @@ public static class BattleConstants {
 
 	public enum Direction {NEUTRAL,LEFT,RIGHT,UP,DOWN};
 
+	//Screen
+	public const int screenWidth = 1200;
+	public const int screenHeight = 512;
+
+	//Battle arena
 	public static float NormalBorderWidth = 6.0f;
 	public static float NormalBorderHeight = 3f;
 	public static float NormalStartX = -5.0f;
@@ -14,8 +19,8 @@ public static class BattleConstants {
 	public static float SpiritStartY = 0f;
 
 
-	public static float cameraBorderWidth = 6.0f;
-	public static float cameraBorderHeight = 2.9f;
+	public const float cameraBorderWidth = 6.0f;
+	public const float cameraBorderHeight = 2.9f;
 
 
 	//Spirit grid
@@ -25,6 +30,10 @@ public static class BattleConstants {
 	public static int SPIRIT_IMAGES = 18;
 	public static int BALANCE_IMAGES = 9;
 
+	//Weapon container
+	public const int kanjiSize = 64;
+	public const float kanjiGuiOffsetWidth = 0.55f;
+	public const float kanjiGuiOffsetHeight = 0.05f;
 
 	//Enum for all the scenes
 	public enum SCENE_INDEXES {

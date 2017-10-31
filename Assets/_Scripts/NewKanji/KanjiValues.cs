@@ -5,6 +5,11 @@ using UnityEngine;
 [System.Serializable]
 public class KanjiValues {
 
+	[Header("GUI graphics")]
+	public Texture2D icon;
+
+	[Space(10)]
+
 	[Header("Projectile")]
 	public Transform projectile;
 	public Transform effect;
@@ -14,7 +19,7 @@ public class KanjiValues {
 	[Header("Kanji values")]
 	public string kanjiName = "";
 	public float startCooldownPercent = 0f;
-	public float charge = 10f;
+	public float maxCharges = 10f;
 	public float delay = 0.1f;
 	public float cooldown = 5.0f;
 	public int damage = 10;
