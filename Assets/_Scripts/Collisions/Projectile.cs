@@ -13,21 +13,7 @@ public class Projectile : Effect {
 	public bool isEnemy = false;
 	public int maxHits = -1;
 	public List<int> hitEnemies = new List<int>();
-	public MoveScript move;
 
-
-	void Start() {
-		move = GetComponent<MoveScript>();
-	}
-
-	/// <summary>
-	/// Set the damage for the projectile.
-	/// </summary>
-	/// <param name="attackValue"></param>
-	public void SetDamage(int attackValue){
-		Debug.Log("Added some damage: " + (int)(attackScaling*attackValue));
-		damage += (int)(attackScaling*attackValue);
-	}
 
 	/// <summary>
 	/// Enabling the movement of the projectile if there is any.
@@ -38,5 +24,14 @@ public class Projectile : Effect {
 		if (move) {
 			move.active = state;
 		}
+	}
+
+	/// <summary>
+	/// Set the damage for the projectile.
+	/// </summary>
+	/// <param name="attackValue"></param>
+	public void SetDamage(int attackValue){
+		Debug.Log("Added some damage: " + (int)(attackScaling*attackValue));
+		damage += (int)(attackScaling*attackValue);
 	}
 }

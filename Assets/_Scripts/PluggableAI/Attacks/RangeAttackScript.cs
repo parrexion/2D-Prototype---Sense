@@ -25,7 +25,7 @@ public class RangeAttackScript : AttackScript {
 			float direction = Mathf.Atan2(
 				playerPos.y-controller.thisTransform.position.y,
 				playerPos.x-controller.thisTransform.position.x);
-			move.setSpeedFromRotation(direction);
+			move.setSpeed(new Vector2(0,0), direction);
 		}
 	}
 }

@@ -16,7 +16,7 @@ public class KanjiList : MonoBehaviour {
 	/// <param name="index"></param>
 	/// <returns></returns>
 	public Kanji GetKanji(int index) {
-		if (index > newKanjiList.Length || index < 0)
+		if (index >= newKanjiList.Length || index < 0)
 			index = 0;
 
 		return newKanjiList[index];

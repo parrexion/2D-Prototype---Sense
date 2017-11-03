@@ -13,6 +13,8 @@ public class KanjiValues {
 	[Header("Projectile")]
 	public Transform projectile;
 	public Transform effect;
+	public Vector2 projectileSpeed;
+	public float projectileLifetime;
 
 	[Space(10)]
 

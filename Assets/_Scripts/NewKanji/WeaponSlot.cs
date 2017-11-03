@@ -60,7 +60,8 @@ public class WeaponSlot : MonoBehaviour {
 		while(mainController.storyValues.initiated == false)
 			yield return null;
 
-		kanjiIndex = mainController.storyValues.GetEquippedKanji();
+		// kanjiIndex = mainController.storyValues.GetEquippedKanji();
+		kanjiIndex = new int[]{0,1,2,3};
 
 		float width = BattleConstants.kanjiGuiOffsetWidth;
 		kanjiHeight = BattleConstants.kanjiGuiOffsetHeight;

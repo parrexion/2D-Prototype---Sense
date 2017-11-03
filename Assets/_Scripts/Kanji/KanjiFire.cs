@@ -22,7 +22,7 @@ public class KanjiFire : KanjiBaseClass {
 
 		MoveScript move = shotTransform.gameObject.GetComponent<MoveScript>();
 		if (move != null) {
-			move.setSpeedFromRotation(info.rotationPlayer);
+			move.setSpeed(new Vector2(0,0),info.rotationPlayer);
 		}
 
 		base.reduceCharge(reduction);
