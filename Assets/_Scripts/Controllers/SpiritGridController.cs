@@ -249,7 +249,6 @@ public class SpiritGridController : MonoBehaviour {
 
 	//Blocks all attacks for a moment
 	public void Block(){
-
 		var barrierTransform = Instantiate(barrier) as Transform;
 		barrierTransform.parent = transform.parent;
 		barrierTransform.localPosition = transform.localPosition;

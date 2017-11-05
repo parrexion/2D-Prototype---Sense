@@ -8,8 +8,7 @@ using System.Collections.Generic;
 /// </summary>
 public class Projectile : Effect {
 
-    public int damage = 1;
-	public float attackScaling = 1f;
+    public int damage = -1;
 	public bool isEnemy = false;
 	public int maxHits = -1;
 	public List<int> hitEnemies = new List<int>();
@@ -30,8 +29,8 @@ public class Projectile : Effect {
 	/// Set the damage for the projectile.
 	/// </summary>
 	/// <param name="attackValue"></param>
-	public void SetDamage(int attackValue){
-		Debug.Log("Added some damage: " + (int)(attackScaling*attackValue));
-		damage += (int)(attackScaling*attackValue);
+	public void SetDamage(int baseDamage, int attackValue, float damageScale){
+		Debug.Log("Added some damage: " + (int)(damageScale*attackValue));
+		damage = baseDamage + (int)(damageScale*attackValue);
 	}
 }

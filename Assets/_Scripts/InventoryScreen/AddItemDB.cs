@@ -9,13 +9,14 @@ using UnityEngine;
 public class AddItemDB : MonoBehaviour {
 
 	Inventory inventory;
-	public ItemKanji[] kanjiList;
+	KanjiList kanjiList;
 	public ItemEquip[] equipList;
 
 
 	// Use this for initialization
 	void Start () {
 		inventory = Inventory.instance;
+		kanjiList = MainControllerScript.instance.kanjiList;
 	}
 
 	/// <summary>
@@ -24,9 +25,9 @@ public class AddItemDB : MonoBehaviour {
 	/// <param name="id"></param>
 	/// <param name="equip"></param>
 	public void AddSpecificKanji(int id, bool equip){
-		if (id >= kanjiList.Length)
+		if (id >= kanjiList.ListSize())
 			return;
-		ItemKanji item = ScriptableObject.Instantiate(kanjiList[id]);
+		ItemKanji item = kanjiList.GetKanji(id).extractKanjiInformation(id);
 		bool added;
 		if (equip)
 			added = inventory.AddEquip(item);
@@ -50,7 +51,7 @@ public class AddItemDB : MonoBehaviour {
 	}
 
 	public void AddRandomKanji() {
-		int r = Random.Range(1,kanjiList.Length);
+		int r = Random.Range(1,kanjiList.ListSize());
 		AddSpecificKanji(r,false);
 	}
 

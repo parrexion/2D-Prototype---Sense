@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// The main controller class which contains a reference to most of the global modules 
+/// used in the game. 
+/// </summary>
 public class MainControllerScript : MonoBehaviour {
 
 	public static MainControllerScript instance { get; private set;}
@@ -12,7 +16,10 @@ public class MainControllerScript : MonoBehaviour {
 	public Inventory inventory { get; private set;}
 	public KanjiList kanjiList { get; private set;}
 
-	// Use this for initialization
+	
+	/// <summary>
+	/// Loads all the modules.
+	/// </summary>
 	void Awake () {
 
 		if (instance != null) {
@@ -30,6 +37,10 @@ public class MainControllerScript : MonoBehaviour {
 		StartCoroutine("WaitForInitiate");
 	}
 
+	/// <summary>
+	/// Waits to make sure that the necessary modules are loaded before the last modules are initiated.
+	/// </summary>
+	/// <returns></returns>
 	IEnumerator WaitForInitiate(){
 		while (!storyValues.initiated) {
 			Debug.Log("Waiting");

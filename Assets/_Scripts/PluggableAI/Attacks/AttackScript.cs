@@ -2,16 +2,29 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class AttackScript : MonoBehaviour {
+public class AttackScript : MonoBehaviour {
 
-	protected BattleGUIController bgui;
+	[HideInInspector] public BattleGUIController bgui;
+	public AttackEffect[] projectileEffect;
 	public Transform projectile;
 	public Transform effect;
-
-	public abstract void Attack(StateController controller);
+	public int damage;
+	public float lifeTime;
+	public Vector2 speed;
 
 
 	void Start() {
 		bgui = MainControllerScript.instance.battleGUI;
+	}
+
+	/// <summary>
+	/// Call this to 
+	/// Implement this 
+	/// </summary>
+	/// <param name="controller"></param>
+	public void Attack(StateController controller) {
+		for (int i = 0; i < projectileEffect.Length; i++) {
+			projectileEffect[i].Attack(controller, this);
+		}
 	}
 }

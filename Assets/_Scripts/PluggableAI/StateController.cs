@@ -5,37 +5,47 @@ using UnityEngine;
 public abstract class StateController : MonoBehaviour {
 
 	public enum WaitStates {MOVE,CHASE,FLEE,RANGE}
-	public WaitStates currentWaitState;
 
 	public int enemyid;
-	public State currentState;
-	public bool aiActive;
-	public State remainState;
+
+	[Space(10)]
+
+	[Header("Transforms")]
 	public Transform nPlayer;
 	public Transform sPlayer;
 	public Transform thisTransform;
 	public Rigidbody2D rigidBody;
 	public Vector2 startPosition;
 
-	[HideInInspector] public float stateTimeElapsed = 0;
-
-	//Most of the stats
-	public EnemyValues values;
 	//
+	//Animation
+	public AnimationScript animScript;
+	public AnimationInformation animInfo;
 
+	[Space(10)]
+
+	[Header("AI State Machine")]
+	public WaitStates currentWaitState;
+	public State currentState;
+	public bool aiActive;
+	public State remainState;
+	[HideInInspector] public float stateTimeElapsed = 0;
+	//Waiting
+	public bool finishedWaiting = false;
+	public float waitTime = 0;
 	//Attacking
 	[HideInInspector] public AttackScript attack;
 	public bool hasAttacked = false;
 	//
 
-	//Waiting
-	public bool finishedWaiting = false;
-	public float waitTime = 0;
+	[Space(10)]
+
+	[Header("Enemy Values")]
+	//Most of the stats
+	public EnemyValues values;
 	//
 
-	//Animation
-	public AnimationScript animScript;
-	public AnimationInformation animInfo;
+
 
 
 	/// /////////////////////////////////////////////////////

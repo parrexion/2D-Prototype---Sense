@@ -55,6 +55,8 @@ public class CharacterHealthGUI : MonoBehaviour {
 		active = state;
 	}
 	public void SetInvulnerable(bool state) {
+		if (!playerStats)
+			playerStats = PlayerStats.instance;
 		playerStats.SetInvincible(state);
 	}
 

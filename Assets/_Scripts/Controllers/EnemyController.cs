@@ -48,6 +48,11 @@ public class EnemyController : MonoBehaviour {
 		Debug.Log("EnemyController is ready");
 	}
 
+	/// <summary>
+	/// Spawns all the enemies and groups them into enemy groups.
+	/// </summary>
+	/// <param name="enableBottom"></param>
+	/// <param name="enableTop"></param>
 	public void CreateEnemies(bool enableBottom, bool enableTop){
 		spawnBottom = enableBottom;
 		spawnTop = enableTop;
@@ -68,6 +73,11 @@ public class EnemyController : MonoBehaviour {
 		}
 	}
 
+	/// <summary>
+	/// Creates an enemy group with the given enemy index.
+	/// </summary>
+	/// <param name="index"></param>
+	/// <returns></returns>
 	private EnemyGroup CreateGroup(int index){
 		EnemyValues values = EnemyLibrary.enemyData[enemyModelNames[index]];
 		EnemyGroup group = new EnemyGroup(enemyId, values.maxhp);
@@ -78,6 +88,12 @@ public class EnemyController : MonoBehaviour {
 		return group;
 	}
 
+	/// <summary>
+	/// Creates an enemy for the normal side of the battlefield.
+	/// </summary>
+	/// <param name="values"></param>
+	/// <param name="group"></param>
+	/// <param name="index"></param>
 	private void CreateN(EnemyValues values, EnemyGroup group, int index){
 		if (!spawnBottom)
 			return;
@@ -97,6 +113,12 @@ public class EnemyController : MonoBehaviour {
 		group.nAttackScript = attack;
 	}
 
+	/// <summary>
+	/// Creates an enemy for the spirit side of the battlefield.
+	/// </summary>
+	/// <param name="values"></param>
+	/// <param name="group"></param>
+	/// <param name="index"></param>
 	private void CreateS(EnemyValues values, EnemyGroup group, int index){
 		if (!spawnTop)
 			return;
@@ -123,8 +145,11 @@ public class EnemyController : MonoBehaviour {
 		group.sAttackScript = attack;
 	}
 
+	/// <summary>
+	/// Sets the active state for all AI groups.
+	/// </summary>
+	/// <param name="active"></param>
 	public void SetAllAIActive(bool active) {
-//		Debug.Log("Groups");
 		foreach (EnemyGroup eg in groups) {
 			if (eg.alive) {
 				eg.SetActiveAI(active);
@@ -132,8 +157,12 @@ public class EnemyController : MonoBehaviour {
 		}
 	}
 
+	/// <summary>
+	/// Checks if the enemy is on the left side of the spirit side.
+	/// </summary>
+	/// <param name="leftside"></param>
+	/// <returns></returns>
 	public bool CheckIfEnemiesAtSide(bool leftside) {
-
 		foreach (EnemyGroup eg in groups) {
 			if (eg.alive && (eg.sStateController.leftSide == leftside)) {
 				return true;
@@ -143,8 +172,11 @@ public class EnemyController : MonoBehaviour {
 		return false;
 	}
 
+	/// <summary>
+	/// Checks if all the enemies are dead.
+	/// </summary>
+	/// <returns></returns>
 	public bool CheckAllEnemiesDead(){
-		
 		foreach (EnemyGroup eg in groups) {
 			if (eg.alive) {
 				return false;
@@ -153,7 +185,15 @@ public class EnemyController : MonoBehaviour {
 		return true;
 	}
 		
-
+	/// <summary>
+	/// Selects a group of enemies to hit with the spirit side final attack and returns the 
+	/// damage numbers for the attack.
+	/// </summary>
+	/// <param name="hits"></param>
+	/// <param name="baseDamage"></param>
+	/// <param name="top"></param>
+	/// <param name="leftside"></param>
+	/// <returns></returns>
 	public List<DamageValues> GetRandomEnemies(int hits, int baseDamage, bool top, bool leftside) {
 
 		List<DamageValues> values = new List<DamageValues>();
@@ -193,7 +233,10 @@ public class EnemyController : MonoBehaviour {
 		return values;
 	}
 
-
+	/// <summary>
+	/// Summarises the exp for all the enemies defeated.
+	/// </summary>
+	/// <returns></returns>
 	public int GetTotalExp(){
 		int exp = 0;
 		foreach (EnemyGroup eg in groups) {
@@ -205,6 +248,10 @@ public class EnemyController : MonoBehaviour {
 		return exp;
 	}
 
+	/// <summary>
+	/// Summarises the money for all the enemies defeated.
+	/// </summary>
+	/// <returns></returns>
 	public int GetTotalMoney(){
 		int money = 0;
 		foreach (EnemyGroup eg in groups) {
@@ -216,6 +263,10 @@ public class EnemyController : MonoBehaviour {
 		return money;
 	}
 
+	/// <summary>
+	/// Returns a list of the names of the enemies defeated.
+	/// </summary>
+	/// <returns></returns>
 	public List<string> GetEnemiesDefeated(){
 		List<string> names = new List<string>();
 		foreach (EnemyGroup eg in groups) {
@@ -227,6 +278,10 @@ public class EnemyController : MonoBehaviour {
 		return names;
 	}
 
+	/// <summary>
+	/// Returns a list of the loot dropped by the enemies defeated.
+	/// </summary>
+	/// <returns></returns>
 	public List<string> GetTreasures(){
 		return new List<string>();
 	}

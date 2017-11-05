@@ -3,12 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
+/// <summary>
+/// Class which contains the information for the battles. 
+/// Both random battles as well as tutorial and story battles.
+/// </summary>
 [RequireComponent(typeof(BattleValues))]
 public class StoryValues : MonoBehaviour {
 
 	public enum BattleType { STORY,SPECIFIC,TOWER,RANDOM }
 
 	private Inventory inv;
+	private KanjiList kanjiList;
 
 	public bool initiated = false;
 	public int storyInt = 0;
@@ -20,9 +25,12 @@ public class StoryValues : MonoBehaviour {
 	[HideInInspector] public BattleValues bvTower;
 
 
-
+	/// <summary>
+	/// Sets up the battlevalues.
+	/// </summary>
 	void Start(){
 		inv = MainControllerScript.instance.inventory;
+		kanjiList = MainControllerScript.instance.kanjiList;
 
 		BattleValues[] gofika = GetComponents<BattleValues>();
 		bv = gofika[0];
@@ -30,9 +38,11 @@ public class StoryValues : MonoBehaviour {
 		bvTower = gofika[2];
 		Story();
 		StartCoroutine(SetupRandomBattle("start"));
-
 	}
 
+	/// <summary>
+	/// Advances the story to the next battle and sets it up.
+	/// </summary>
 	public void AdvanceStory(){
 		if (battleType == BattleType.STORY)
 			storyInt++;
@@ -43,6 +53,11 @@ public class StoryValues : MonoBehaviour {
 		Story();
 	}
 
+	/// <summary>
+	/// Sets up the random battle for the given area.
+	/// </summary>
+	/// <param name="area"></param>
+	/// <returns></returns>
 	public IEnumerator SetupRandomBattle(string area){
 		while (!EnemyLibrary.initialized) {
 			yield return null;
@@ -56,6 +71,10 @@ public class StoryValues : MonoBehaviour {
 		yield break;
 	}
 
+	/// <summary>
+	/// Returns the battlevalues which defines the battle from the story type used.
+	/// </summary>
+	/// <returns></returns>
 	public BattleValues GetBattleValues(){
 		switch (battleType) 
 		{
@@ -74,6 +93,11 @@ public class StoryValues : MonoBehaviour {
 		return null;
 	}
 
+	/// <summary>
+	/// Returns an index list of the kanji which are equipped, 
+	/// either from the story or the inventory.
+	/// </summary>
+	/// <returns></returns>
 	public int[] GetEquippedKanji(){
 		switch (battleType) 
 		{
@@ -91,7 +115,32 @@ public class StoryValues : MonoBehaviour {
 
 		return null;
 	}
+	
+	/// <summary>
+	/// Picks enemies until the quota is filled. Avoids overfilling the quota with more than 100.
+	/// </summary>
+	/// <param name="quota"></param>
+	private void FillQuota(int quota) {
+		bvTower.numberOfEnemies = 0;
+		Dictionary<string,EnemyValues> enemyData = EnemyLibrary.enemyData;
+		List<string> list = enemyData.Keys.ToList();
+		int length = list.Count;
+		int r, hp;
+		while (quota > 0) {
+			r = Random.Range(0,length);
+			hp = enemyData[list[r]].maxhp;
+			if (hp < quota+100) {
+				Debug.Log("Added "+r);
+				bvTower.enemyTypes.Add(r);
+				bvTower.numberOfEnemies++;
+				quota -= hp;
+			}
+		}
+	}
 
+	/// <summary>
+	/// A list of all the tutorial battles in the game which contains what kanji and enemies to use.
+	/// </summary>
 	private void Story(){
 		switch(storyInt)
 		{
@@ -129,7 +178,7 @@ public class StoryValues : MonoBehaviour {
 			bv.storyBattle = true;
 			bv.healthEnabled = false;
 
-			bv.equippedKanji = new int[]{5,0,0,0};
+			bv.equippedKanji = new int[]{kanjiList.GetKanjiIndex("FireOP"),0,0,0};
 			break;
 		case 2:
 			bv.scenarioName = "Second Wind";
@@ -147,7 +196,7 @@ public class StoryValues : MonoBehaviour {
 			bv.storyBattle = true;
 			bv.healthEnabled = false;
 
-			bv.equippedKanji = new int[]{1,0,0,0};
+			bv.equippedKanji = new int[]{kanjiList.GetKanjiIndex("FireDelay"),0,0,0};
 			break;
 		case 3:
 			bv.scenarioName = "Wind the Second";
@@ -165,7 +214,7 @@ public class StoryValues : MonoBehaviour {
 			bv.storyBattle = true;
 			bv.healthEnabled = false;
 
-			bv.equippedKanji = new int[]{0,2,0,0};
+			bv.equippedKanji = new int[]{0,kanjiList.GetKanjiIndex("Wind"),0,0};
 			break;
 		case 4:
 			bv.scenarioName = "Ice the Third";
@@ -183,7 +232,7 @@ public class StoryValues : MonoBehaviour {
 			bv.storyBattle = true;
 			bv.healthEnabled = false;
 
-			bv.equippedKanji = new int[]{0,0,3,0};
+			bv.equippedKanji = new int[]{0,0,kanjiList.GetKanjiIndex("Ice"),0};
 			break;
 		case 5:
 			bv.scenarioName = "Gathering Power";
@@ -201,7 +250,7 @@ public class StoryValues : MonoBehaviour {
 			bv.storyBattle = true;
 			bv.healthEnabled = false;
 
-			bv.equippedKanji = new int[]{0,0,0,4};
+			bv.equippedKanji = new int[]{0,0,0,kanjiList.GetKanjiIndex("Earth")};
 			break;
 		case 6:
 			bv.scenarioName = "Follow the Arrows";
@@ -273,7 +322,10 @@ public class StoryValues : MonoBehaviour {
 			bv.storyBattle = true;
 			bv.healthEnabled = false;
 
-			bv.equippedKanji = new int[]{1,2,3,4};
+			bv.equippedKanji = new int[]{kanjiList.GetKanjiIndex("Fire")
+										,kanjiList.GetKanjiIndex("Wind")
+										,kanjiList.GetKanjiIndex("Ice")
+										,kanjiList.GetKanjiIndex("Earth")};
 			break;
 
 		case 10:
@@ -294,7 +346,10 @@ public class StoryValues : MonoBehaviour {
 			bv.storyBattle = false;
 			bv.healthEnabled = true;
 
-			bv.equippedKanji = new int[]{ 1, 2, 3, 4 };
+			bv.equippedKanji = new int[]{kanjiList.GetKanjiIndex("Fire")
+										,kanjiList.GetKanjiIndex("Wind")
+										,kanjiList.GetKanjiIndex("Ice")
+										,kanjiList.GetKanjiIndex("Earth")};
 			break;
 
 		default:
@@ -317,7 +372,10 @@ public class StoryValues : MonoBehaviour {
 			bv.storyBattle = false;
 			bv.healthEnabled = true;
 
-			bv.equippedKanji = new int[]{1,2,3,4};
+			bv.equippedKanji = new int[]{kanjiList.GetKanjiIndex("Fire")
+										,kanjiList.GetKanjiIndex("Wind")
+										,kanjiList.GetKanjiIndex("Ice")
+										,kanjiList.GetKanjiIndex("Earth")};
 			break;
 		}
 
@@ -325,6 +383,10 @@ public class StoryValues : MonoBehaviour {
 			bv.scenarioName = "";
 	}
 
+	/// <summary>
+	/// Takes the given area and fills the battlevalues with random enemies.
+	/// </summary>
+	/// <param name="area"></param>
 	public void RandomBattle(string area) {
 
 		//Settings which are always the same
@@ -370,21 +432,5 @@ public class StoryValues : MonoBehaviour {
 			break;
 		}
 		Debug.Log("BV tower: "+bvTower.numberOfEnemies);
-	}
-
-
-	private void FillQuota(int quota) {
-		Dictionary<string,EnemyValues> enemyData = EnemyLibrary.enemyData;
-		List<string> list = enemyData.Keys.ToList();
-		int r, hp;
-		while (quota > 0) {
-			r = Random.Range(0,3);
-			hp = enemyData[list[r]].maxhp;
-			if (quota-hp > -100) {
-				Debug.Log("Added "+r);
-				bvTower.enemyTypes.Add(r);
-				quota -= hp;
-			}
-		}
 	}
 }

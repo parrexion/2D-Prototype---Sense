@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RangeAttackScript : AttackScript {
+public class RangeAttackScript : AttackEffect {
 
 
-	public override void Attack(StateController controller){
+	public override void Attack(StateController controller, AttackScript attackScript){
 
 		Vector2 playerPos = new Vector2(0,0);
 
@@ -16,9 +16,9 @@ public class RangeAttackScript : AttackScript {
 			playerPos = controller.sPlayer.position;
 		}
 
-		var shotTransform = Instantiate(projectile) as Transform;
+		var shotTransform = Instantiate(attackScript.projectile) as Transform;
 		shotTransform.position = controller.thisTransform.position;
-		bgui.effectList.Add(shotTransform.GetComponent<Projectile>());
+		attackScript.bgui.effectList.Add(shotTransform.GetComponent<Projectile>());
 
 		MoveScript move = shotTransform.gameObject.GetComponent<MoveScript>();
 		if (move != null) {

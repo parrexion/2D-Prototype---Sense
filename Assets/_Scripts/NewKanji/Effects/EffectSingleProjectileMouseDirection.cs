@@ -8,12 +8,17 @@ public class EffectSingleProjectileMouseDirection : KanjiEffect {
     public override bool Use(KanjiValues values, MouseInformation info) {
 		
 		var shotTransform = Instantiate(values.projectile) as Transform;
-		shotTransform.position = info.playerPosition;
 		Projectile projectile = shotTransform.GetComponent<Projectile>();
 		MainControllerScript.instance.battleGUI.effectList.Add(projectile);
 
+		shotTransform.position = info.playerPosition;
+		if (setRotation) {
+			float rotation = info.rotationPlayer*180/Mathf.PI;
+			shotTransform.localRotation = Quaternion.AngleAxis(rotation,Vector3.forward);
+		}
+
 		projectile.lifeTime = values.projectileLifetime;
-		projectile.SetDamage(PlayerStats.instance.attack.GetValue());
+		projectile.SetDamage(values.damage, PlayerStats.instance.attack.GetValue(), values.baseDamageScale);
 		projectile.SetMovement(values.projectileSpeed, info.rotationPlayer);
 
 		return true;

@@ -1,5 +1,9 @@
 ﻿using UnityEngine;
 
+/// <summary>
+/// Class which moves the object towards a position or to follow an object and 
+/// stay within the boundaries. Also allows for dashing
+/// </summary>
 public class MoveHomingScript : MonoBehaviour {
 
 	public bool active = true;
@@ -24,6 +28,9 @@ public class MoveHomingScript : MonoBehaviour {
 		currentDashTime = dashTime;
 	}
 
+	/// <summary>
+	/// Lets the player dash if not currently dashing.
+	/// </summary>
 	public void startDash() {
 		if (dashing)
 			return;
@@ -31,8 +38,6 @@ public class MoveHomingScript : MonoBehaviour {
 		dashSpeed = speed*1.5f;
 		currentDashTime = 0f;
 
-//		Debug.Log("Moveto pos:  "+moveToPosition.x);
-//		Debug.Log("Transform pos:  "+transform.position.x);
 		if (moveToPosition.x < transform.position.x)
 			moveDirection = -1;
 		else
@@ -43,12 +48,12 @@ public class MoveHomingScript : MonoBehaviour {
 		vvv = vvv.normalized;
 		vvv *= 10;
 		moveToPosition += vvv;
-
-//		Debug.Log("Moveto pos:  "+moveToPosition);
 	}
 
+	/// <summary>
+	/// Moves the transform towards the position or the object to follow.
+	/// </summary>
 	void FixedUpdate() {
-
 		if (!active)
 			return;
 
@@ -92,7 +97,10 @@ public class MoveHomingScript : MonoBehaviour {
 		rigidbodyComponent.MovePosition(movement);
 	}
 
-
+	/// <summary>
+	/// Calculates how much is left of the dash in percent.
+	/// </summary>
+	/// <returns></returns>
 	public float GetDashPercent(){
 		return currentDashTime/dashTime;
 	}

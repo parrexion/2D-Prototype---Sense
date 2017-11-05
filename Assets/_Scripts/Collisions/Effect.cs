@@ -8,11 +8,10 @@ using UnityEngine;
 /// </summary>
 public class Effect : MonoBehaviour {
 
-	public float lifeTime = 1f;
-
 	protected MoveScript move;
 
 	private bool active = true;
+	[HideInInspector] public float lifeTime = 1f;
 	private float currentTime = 0f;
 
 

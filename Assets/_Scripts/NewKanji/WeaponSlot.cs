@@ -8,8 +8,6 @@ public class WeaponSlot : MonoBehaviour {
 	private bool showKanji = true;
 	public ContainerKanji[] kanji;
 
-	private bool attacking = false;
-
 	private float size;
 	private float kanjiHeight;
 	private Texture2D emptySprite;
@@ -27,6 +25,9 @@ public class WeaponSlot : MonoBehaviour {
 		StartCoroutine(SetEquippedKanji());
 	}
 
+	/// <summary>
+	/// Generates the colors used to render the current states of the kanji.
+	/// </summary>
 	void SetupTextures(){
 		emptySprite = new Texture2D(1,1);
 		emptySprite.SetPixel(0,0,Color.grey);
@@ -39,8 +40,10 @@ public class WeaponSlot : MonoBehaviour {
 		chargingSprite.Apply();
 	}
 
+	/// <summary>
+	/// Reduces the shotcooldown and checks if the kanji should be activated.
+	/// </summary>
 	void Update() {
-
 		if (!active)
 			return;
 
@@ -49,10 +52,15 @@ public class WeaponSlot : MonoBehaviour {
 		}
 
 		for (int i = 0; i < 4; i++) {
-			kanji[i].Update();
+			kanji[i].LowerCooldown();
 		}
 	}
 
+	/// <summary>
+	/// Retrieves the equipped kanji indexes to be used in the battle and assigns a kanji to each 
+	/// containerKanji in the WeaponSlot.
+	/// </summary>
+	/// <returns></returns>
 	IEnumerator SetEquippedKanji(){
 		int[] kanjiIndex;
 		MainControllerScript mainController = MainControllerScript.instance;
@@ -61,7 +69,7 @@ public class WeaponSlot : MonoBehaviour {
 			yield return null;
 
 		// kanjiIndex = mainController.storyValues.GetEquippedKanji();
-		kanjiIndex = new int[]{0,1,2,3};
+		kanjiIndex = new int[]{1,2,3,4};
 
 		float width = BattleConstants.kanjiGuiOffsetWidth;
 		kanjiHeight = BattleConstants.kanjiGuiOffsetHeight;
@@ -81,6 +89,9 @@ public class WeaponSlot : MonoBehaviour {
 		}
 	}
 
+	/// <summary>
+	/// Renders the current state of all the kanji in the weapon slot.
+	/// </summary>
 	void OnGUI(){
 		if (!showKanji || !active)
 			return;
@@ -88,7 +99,7 @@ public class WeaponSlot : MonoBehaviour {
 		for (int i = 0; i < 4; i++) {
 
 			if (kanji[i].GetValues().icon == null)
-				continue; //TODO actually make an empty slot sprite
+				continue;
 
 			GUI.DrawTexture(kanji[i].slotPos,emptySprite);
 			if (kanji[i].active) {
@@ -101,17 +112,22 @@ public class WeaponSlot : MonoBehaviour {
 				kanji[i].slotFilled.y = Screen.height*kanjiHeight+size-kanji[i].slotFilled.height;
 				GUI.DrawTexture(kanji[i].slotFilled,filledSprite);
 			}
-			GUI.DrawTexture(kanji[i].slotPos,kanji[i].GetValues().icon);
+			GUI.DrawTexture(kanji[i].slotPos,kanji[i].GetValues().icon.texture);
 		}
 	}
 
+	/// <summary>
+	/// Returns if the player is currently attacking.
+	/// </summary>
+	/// <returns></returns>
 	public bool IsAttacking(){
-		bool IsAttacking = attacking;
-		if (IsAttacking)
-			attacking = false;
-		return IsAttacking;
+		return (shootCooldown > 0);
 	}
 
+	/// <summary>
+	/// Sets if the kanji rendering should be visible.
+	/// </summary>
+	/// <param name="state"></param>
 	public void SetVisible(bool state) {
 		showKanji = state;
 	}

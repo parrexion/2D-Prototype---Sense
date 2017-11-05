@@ -29,11 +29,13 @@ public class ActivateDrawLine : KanjiActivation {
 			return true;
 		}
 
-		lCone = lCone - (Mathf.PI * Mathf.Sign(lCone));
-		hCone = hCone - (Mathf.PI * Mathf.Sign(hCone));
+		if (bothDirections) {
+			lCone = lCone - (Mathf.PI * Mathf.Sign(lCone));
+			hCone = hCone - (Mathf.PI * Mathf.Sign(hCone));
 
-		if (hCone < info.rotationInternal || info.rotationInternal < lCone) {
-			return true;
+			if (lCone < info.rotationInternal || info.rotationInternal < hCone) {
+				return true;
+			}
 		}
 
 		return false;

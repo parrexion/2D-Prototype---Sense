@@ -10,27 +10,31 @@ public class ContainerKanji : MonoBehaviour {
 	[HideInInspector] public Rect slotPos;
 	[HideInInspector] public Rect slotFilled;
 
-	private float currentCooldown;
+	private float currentCooldown, maxCooldown;
 	private float currentCharge;
+	private float tickCooldown;
 
 	// Use this for initialization
 	public void Initialize (int slot) {
 		currentCharge = kanji.values.maxCharges;
-		currentCooldown = kanji.values.cooldown;
+		currentCooldown = maxCooldown = kanji.values.cooldown;
+		if (kanji.values.startCooldownTime > 0){
+			currentCharge = 0;
+			currentCooldown = maxCooldown = kanji.values.startCooldownTime;
+		}
 
 		if (currentCharge == 0) {
 			active = false;
 		}
 	}
 	
-	// Update is called once per frame
-	public void Update () {
+	public void LowerCooldown() {
 		if (!active) {
 			currentCooldown -= Time.deltaTime;
 			if (currentCooldown <= 0f) {
 				active = true;
 				currentCooldown = 0f;
-				currentCharge = kanji.values.maxCharges;
+				currentCharge = maxCooldown = kanji.values.maxCharges;
 			}
 		}
 	}
@@ -38,6 +42,9 @@ public class ContainerKanji : MonoBehaviour {
 	public bool CanActivate (MouseInformation info) {
 
 		if (!active)
+			return false;
+
+		if (currentCharge <= 0)
 			return false;
 
 		return kanji.CanActivate(info);
@@ -51,12 +58,21 @@ public class ContainerKanji : MonoBehaviour {
 		return kanji.values;
 	}
 
+	/// <summary>
+	/// Reduces the amount of charges left in the kanji.
+	/// If cooldown is negative then it means there is no rechages.
+	/// If cooldown is 0 then no charges are removed.
+	/// </summary>
+	/// <param name="amount"></param>
 	public void reduceCharge(float amount = 1) {
+		if (kanji.values.cooldown == 0)
+			return;
+
 		currentCharge -= amount;
 
-		if (currentCharge <= 0) {
+		if (currentCharge <= 0 && kanji.values.cooldown > 0) {
 			active = false;
-			currentCooldown = kanji.values.cooldown;
+			currentCooldown = maxCooldown = kanji.values.cooldown;
 		}
 	}
 
@@ -64,7 +80,7 @@ public class ContainerKanji : MonoBehaviour {
 		if (active)
 			return (float)currentCharge/(float)kanji.values.maxCharges;
 		else
-			return (float)(kanji.values.cooldown-currentCooldown)/(float)kanji.values.cooldown;
+			return (float)(maxCooldown-currentCooldown)/(float)maxCooldown;
 	}
 
 }

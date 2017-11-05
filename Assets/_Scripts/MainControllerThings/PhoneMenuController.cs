@@ -12,6 +12,9 @@ public class PhoneMenuController : MonoBehaviour {
 	private System.DateTime currentDate;
 
 
+	/// <summary>
+	/// Updates the phone's clock to current time.
+	/// </summary>
 	void Update() {
 		currentDate = System.DateTime.Now;
 		if (currentDate.Minute < 10)

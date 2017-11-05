@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
 
+/// <summary>
+/// Makes the transform stay on top of the given position or object to follow.
+/// </summary>
 public class OnTopHover : MonoBehaviour {
 
 	public float borderWidth = 3.5f;
@@ -19,6 +22,9 @@ public class OnTopHover : MonoBehaviour {
 		startY = transform.position.y;
 	}
 
+	/// <summary>
+	/// Moves the transform towards to the position.
+	/// </summary>
 	void FixedUpdate() {
 
 		if (objectToFollow == null)

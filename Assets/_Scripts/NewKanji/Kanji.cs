@@ -25,4 +25,23 @@ public class Kanji : ScriptableObject {
 			effects[i].Use(values, info);
 		}
 	}
+
+	/// <summary>
+	/// Create a simpler version of the values to be used in the inventory.
+	/// </summary>
+	/// <param name="id"></param>
+	/// <returns></returns>
+	public ItemKanji extractKanjiInformation(int id){
+		ItemKanji item = ScriptableObject.CreateInstance("ItemKanji") as ItemKanji;
+
+		item.charges = values.maxCharges;
+		item.damage = values.damage;
+		item.icon = values.icon;
+		item.item_id = id;
+		item.item_name = values.kanjiName;
+		item.item_type = Item.ItemType.KANJI;
+		item.rechargeTime = values.cooldown;
+
+		return item;
+	}
 }

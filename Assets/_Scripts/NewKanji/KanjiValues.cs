@@ -5,8 +5,14 @@ using UnityEngine;
 [System.Serializable]
 public class KanjiValues {
 
+	public enum KanjiType {
+		CLICK,SLASH,RISE,HOLD,DOWN,OTHER
+	}
+
 	[Header("GUI graphics")]
-	public Texture2D icon;
+	public string kanjiName = "";
+	public Sprite icon;
+	public KanjiType kanjiType;
 
 	[Space(10)]
 
@@ -19,9 +25,8 @@ public class KanjiValues {
 	[Space(10)]
 
 	[Header("Kanji values")]
-	public string kanjiName = "";
-	public float startCooldownPercent = 0f;
-	public float maxCharges = 10f;
+	public float startCooldownTime = 0f;
+	public int maxCharges = 10;
 	public float delay = 0.1f;
 	public float cooldown = 5.0f;
 	public int damage = 10;

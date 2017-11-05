@@ -5,28 +5,25 @@ using UnityEngine;
 [CreateAssetMenu (menuName = "Kanji/Effect/Projectile/SingleAtPosition")]
 public class EffectSingleProjectileAtPosition : KanjiEffect {
 
-	[SerializeField]
-	private bool positionInMiddle = true;
-
     public override bool Use(KanjiValues values, MouseInformation info) {
 		
-		var shotTransform = Instantiate(values.effect) as Transform;
-		shotTransform.position = info.playerPosition;
+		var shotTransform = Instantiate(values.projectile) as Transform;
 		Projectile projectile = shotTransform.GetComponent<Projectile>();
-if (!projectile)
-	Debug.Log("asdasdasdsa");
-		if (positionInMiddle) {
+
+		if (placeInMiddle) {
 			Vector3 pos = new Vector3(info.position1.x+info.distX*0.5f,info.position1.y+info.distY*0.5f,0);
-			projectile.transform.position = pos;
+			shotTransform.position = pos;
 		}
 		else
-			projectile.transform.position = info.position2;
+			shotTransform.position = info.position2;
 
-		float rotation = info.rotationInternal*180/Mathf.PI;
-		projectile.transform.localRotation = Quaternion.AngleAxis(rotation,Vector3.forward);
+		if (setRotation) {
+			float rotation = info.rotationInternal*180/Mathf.PI;
+			shotTransform.localRotation = Quaternion.AngleAxis(rotation,Vector3.forward);
+		}
 
 		projectile.lifeTime = values.projectileLifetime;
-		projectile.SetDamage(values.damage);
+		projectile.SetDamage(values.damage, PlayerStats.instance.attack.GetValue(), values.baseDamageScale);
 		projectile.SetMovement(values.projectileSpeed, info.rotationInternal);
 
 		MainControllerScript.instance.battleGUI.effectList.Add(projectile);
