@@ -8,7 +8,7 @@ public class HitPlayerDecision : Decision {
 	public override bool Decide(StateController controller) {
 
 		float dist = Vector2.Distance(controller.nPlayer.position,controller.thisTransform.position);
-		if (dist <= 0.75f) {
+		if (dist <= controller.thisTransform.localScale.x/2 +0.1f) {
 //			Debug.Log("Hit the player");
 			return true;
 		}

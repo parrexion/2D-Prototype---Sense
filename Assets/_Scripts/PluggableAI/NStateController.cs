@@ -5,6 +5,7 @@ using UnityEngine;
 public class NStateController : StateController {
 
 	//Moving
+	private int lastTime = 0;
 	[HideInInspector] public int moveDirection;
 
 	//Chasing
@@ -18,8 +19,19 @@ public class NStateController : StateController {
 
 	/// /////////////////////////////////////////////////////
 
+	override protected void Start() {
+		base.Start();
+		if (thisTransform.position.x < nPlayer.position.x)
+			moveDirection = 1;
+		else
+			moveDirection = -1;
+	}
 
 	override protected void OnExitState() {
+		if (thisTransform.position.x < nPlayer.position.x)
+			moveDirection = 1;
+		else
+			moveDirection = -1;
 		moveToPoint = new Vector2(-5*BattleConstants.NormalBorderWidth,-5*BattleConstants.NormalBorderHeight);
 	}
 
@@ -35,16 +47,25 @@ public class NStateController : StateController {
 		switch (currentState.stateString.ToString()) 
 		{
 		case "Idle":
+			if (lastTime != moveDirection){
+				animInfo.mouseDirection = moveDirection;
+				lastTime = moveDirection;
+			}
+			else
+				animInfo.mouseDirection = 0;
 			break;
 		case "WalkLeft":
+			lastTime = moveDirection;
 			animInfo.mouseDirection = moveDirection;
 			break;
 		case "Chase":
 			animInfo.chasing = true;
+			lastTime = moveDirection;
 			animInfo.mouseDirection = moveDirection;
 			break;
 		case "Attack":
 			animInfo.attacking = true;
+			lastTime = moveDirection;
 			animInfo.mouseDirection = moveDirection;
 			break;
 		default:

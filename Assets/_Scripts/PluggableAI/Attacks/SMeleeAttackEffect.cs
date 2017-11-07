@@ -21,12 +21,13 @@ public class SMeleeAttackEffect : AttackEffect {
 		shotTransform.position = scon.thisTransform.position;
 		MouseInformation info = new MouseInformation();
 		info.position1 = controller.thisTransform.position;
-		info.position2 = controller.sPlayer.position;
+		info.setPosition2(controller.sPlayer.position);
 		if (setRotation) {
 			float rotation = info.rotationInternal * 180 / Mathf.PI;
 			shotTransform.localRotation = Quaternion.AngleAxis(rotation, Vector3.forward);
 		}
 
+		projectile.isEnemy = true;
 		projectile.lifeTime = attackScript.lifeTime;
 		projectile.SetDamage(attackScript.damage, 0, 1);
 		projectile.SetMovement(attackScript.speed, info.rotationInternal);

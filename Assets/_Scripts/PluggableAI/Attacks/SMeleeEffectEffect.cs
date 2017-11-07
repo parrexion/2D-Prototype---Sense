@@ -21,7 +21,7 @@ public class SMeleeEffectEffect : AttackEffect {
 		effectTransform.position = ncon.thisTransform.position;
 		MouseInformation info = new MouseInformation();
 		info.position1 = controller.thisTransform.position;
-		info.position2 = controller.sPlayer.position;
+		info.setPosition2(controller.sPlayer.position);
 		if (setRotation) {
 			float rotation = info.rotationInternal*180/Mathf.PI;
 			effectTransform.localRotation = Quaternion.AngleAxis(rotation,Vector3.forward);

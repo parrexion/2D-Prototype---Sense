@@ -50,12 +50,12 @@ public class PlayerStats : CharacterStats {
 	}
 
 	public override int TakeDamage(bool normal, int damage) {
-		int s = base.TakeDamage(normal, damage);
+		int dmg = base.TakeDamage(normal, damage);
 		if (normal)
-			normalDamageTaken += s;
+			normalDamageTaken += dmg;
 		else
-			spiritDamageTaken += s;
-		return s;
+			spiritDamageTaken += dmg;
+		return dmg;
 	}
 
 

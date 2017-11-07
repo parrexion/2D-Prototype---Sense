@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class SStateController : StateController {
 
-	[HideInInspector] public bool leftSide = false;
+	public bool leftSide = false;
+	public int lastTime = 0;
 
 	/// /////////////////////////////////////////////////////
 
@@ -27,7 +28,11 @@ public class SStateController : StateController {
 		{
 		case "Idle":
 //			Debug.Log("IDLE");
-			animInfo.mouseDirection = 0;
+			if (lastTime != animInfo.mouseDirection){
+				lastTime = animInfo.mouseDirection;
+			}
+			else
+				animInfo.mouseDirection = 0;
 			break;
 		case "WalkLeft":
 //			Debug.Log("WLAK");

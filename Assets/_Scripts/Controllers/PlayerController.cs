@@ -75,13 +75,13 @@ public class PlayerController : MonoBehaviour {
 		}
 
 		if (mouseInfo.holding) {
-			mouseInfo.position2 = screenCamera.ScreenToWorldPoint(Input.mousePosition);
+			mouseInfo.setPosition2(screenCamera.ScreenToWorldPoint(Input.mousePosition));
 			mouseInfo.holdDuration += Time.deltaTime;
 		}
 	
 		if (Input.GetMouseButtonUp(0)) {
 			mouseInfo.holding = false;
-			mouseInfo.setPosition2(pos.x,pos.y);
+			mouseInfo.setPosition2(pos);
 			mouseInfo.clicked = true;
 		}
 

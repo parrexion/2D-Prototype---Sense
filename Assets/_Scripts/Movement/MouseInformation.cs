@@ -8,7 +8,7 @@ public class MouseInformation {
     
 	public Vector2 mousePosition;
 	public Vector2 position1;
-	public Vector2 position2;
+	public Vector2 position2 ;//{ get; private set; }
 
     public float distX;
     public float distY;
@@ -28,6 +28,15 @@ public class MouseInformation {
 
     public Vector2 playerPosition;
     
+
+	/// <summary>
+	/// Sets the position for the second mouse position as well as calculating the distances 
+	/// in the information.
+	/// </summary>
+	/// <param name="position"></param>
+	public void setPosition2(Vector2 position) {
+		setPosition2(position.x, position.y);
+	}
 
 	/// <summary>
 	/// Sets the position for the second mouse position as well as calculating the distances 
@@ -74,4 +83,8 @@ public class MouseInformation {
 		return Vector2.Distance (position1, position2);
 	}
 
+
+	public void PrintInfo() {
+		Debug.Log("Info: " + JsonUtility.ToJson(this));
+	}
 }

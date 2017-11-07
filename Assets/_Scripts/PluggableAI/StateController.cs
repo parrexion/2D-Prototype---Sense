@@ -50,7 +50,7 @@ public abstract class StateController : MonoBehaviour {
 
 	/// /////////////////////////////////////////////////////
 
-	void Start(){
+	protected virtual void Start(){
 		if (values == null) {
 			Debug.LogError("No enemy values could be found");
 		}
