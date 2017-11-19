@@ -9,6 +9,7 @@ public class HurtablePlayerScript : MonoBehaviour {
 
 	private PlayerStats playerStats;
 	public bool normalPlayer;
+	public bool canBeHurt = true;
 	public bool beenHurt = false;
 
 
@@ -29,8 +30,10 @@ public class HurtablePlayerScript : MonoBehaviour {
 		}
 
 		if (projectile.isEnemy) {
-			playerStats.TakeDamage(normalPlayer, projectile.damage);
 			Destroy(projectile.gameObject);
+
+			if (canBeHurt)
+				playerStats.TakeDamage(normalPlayer, projectile.damage);
 		}
 	}
 }

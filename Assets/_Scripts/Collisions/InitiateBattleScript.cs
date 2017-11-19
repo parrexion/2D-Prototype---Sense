@@ -23,7 +23,7 @@ public class InitiateBattleScript : MonoBehaviour {
 			return;
 		}
 
-		Debug.Log("Random is: "+battle.battleType);
+		Debug.Log("Battle is: "+ battle.battleType);
 		MainControllerScript.instance.storyValues.battleType = battle.battleType;
 		StartCoroutine(StartBattle(2f));
 	}

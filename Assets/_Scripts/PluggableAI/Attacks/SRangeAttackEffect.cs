@@ -21,17 +21,14 @@ public class SRangeAttackEffect : AttackEffect {
 		MouseInformation info = new MouseInformation();
 		info.position1 = controller.thisTransform.position;
 		info.setPosition2(controller.sPlayer.position);
-		float rotation = info.rotationInternal;
 		if (setRotation) {
-			float r = info.rotationInternal * 180 / Mathf.PI;
-			shotTransform.localRotation = Quaternion.AngleAxis(rotation, Vector3.forward);
-			info.PrintInfo();
+			shotTransform.localRotation = Quaternion.AngleAxis(info.rotationInternal, Vector3.forward);
 		}
 
 		projectile.isEnemy = true;
 		projectile.lifeTime = attackScript.lifeTime;
 		projectile.SetDamage(attackScript.damage, 0, 1);
-		projectile.SetMovement(attackScript.speed, rotation);
+		projectile.SetMovement(attackScript.speed, info.rotationInternal);
 
 		attackScript.bgui.effectList.Add(projectile);
 	}

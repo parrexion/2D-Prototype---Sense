@@ -37,6 +37,7 @@ public class Kanji : ScriptableObject {
 		item.charges = values.maxCharges;
 		item.damage = values.damage;
 		item.icon = values.icon;
+		item.type = values.kanjiType;
 		item.item_id = id;
 		item.item_name = values.kanjiName;
 		item.item_type = Item.ItemType.KANJI;

@@ -42,115 +42,121 @@ public class SpiritGridController : MonoBehaviour {
 	}
 
 	void Update () {
-
 		if (!active)
 			return;
 		
-		if (!grid.locked) {
+		UpdateInput();
+		UpdateAnimation();
+	}
 
-			if (blockTime != 0) {
-				currentBlockTime += Time.deltaTime;
-				if (currentBlockTime >= blockTime)
-					blockTime = 0;
+	void UpdateInput() {
+		if (grid.locked)
+			return;
+
+		if (attacking > 5)
+			return;
+
+		if (blockTime != 0) {
+			currentBlockTime += Time.deltaTime;
+			if (currentBlockTime >= blockTime) {
+				blockTime = 0;
+				hurtScript.canBeHurt = true;
 			}
-			else {
+			return;
+		}
 
-				if (grid.attackDirection != BattleConstants.Direction.NEUTRAL) {
-					currentAttackTimeLimit += Time.deltaTime;
-					if (currentAttackTimeLimit >= AttackTimeLimit) {
-						grid.CancelGrid();
-						return;
-					}
+		if (grid.attackDirection != BattleConstants.Direction.NEUTRAL) {
+			currentAttackTimeLimit += Time.deltaTime;
+			if (currentAttackTimeLimit >= AttackTimeLimit) {
+				grid.CancelGrid();
+				return;
+			}
+		}
+		else {
+			currentAttackTimeLimit = 0;
+		}
+
+		int endReached = 0;
+		if (Input.GetKeyDown(KeyCode.Space)) {
+			if (rigid.IsTouching(ground)) {
+				rigid.AddForce(new Vector2(0f,jumpForce));
+				grid.CancelGrid();
+			}
+		}
+		else if (Input.GetKeyDown(KeyCode.W)) {
+			// if (grid.attackDirection == BattleConstants.Direction.NEUTRAL) {
+			// 	if (rigid.IsTouching(ground)) {
+			// 		rigid.AddForce(new Vector2(0f,jumpForce));
+			// 	}
+			// }
+			/*else*/ if (grid.MoveGrid(BattleConstants.Direction.UP))
+				endReached = 1;
+			// else if (rigid.IsTouching(ground)) {
+			// 	rigid.AddForce(new Vector2(0f,jumpForce));
+			// 	grid.CancelGrid();
+			// }
+		}
+		else if (Input.GetKeyDown(KeyCode.S)) {
+			if (grid.attackDirection == BattleConstants.Direction.NEUTRAL)
+				endReached = 0;
+			else if (grid.MoveGrid(BattleConstants.Direction.DOWN))
+				endReached = 1;
+		}
+		else if (Input.GetKeyDown(KeyCode.D)) {
+			if (grid.attackDirection == BattleConstants.Direction.LEFT) {
+				endReached = 3;
+				grid.CancelGrid();
+			}
+			else if (rigid.IsTouching(ground)) {
+				if (battleController.enemyController.CheckIfEnemiesAtSide(false)) {
+					currentAttackTimeLimit = 0;
+					if (grid.MoveGrid(BattleConstants.Direction.RIGHT))
+						endReached = 2;
+					else
+						endReached = 1;
+				}
+				else if (grid.attackDirection == BattleConstants.Direction.NEUTRAL) {
+					//endReached = 3;
 				}
 				else {
+					grid.CancelGrid();
+				}
+			}
+		}
+		else if (Input.GetKeyDown(KeyCode.A)) {
+			if (grid.attackDirection == BattleConstants.Direction.RIGHT) {
+				endReached = 3;
+				grid.CancelGrid();
+			}
+			else if (rigid.IsTouching(ground)) {
+				if (battleController.enemyController.CheckIfEnemiesAtSide(true)) {
 					currentAttackTimeLimit = 0;
-				}
-
-				int endReached = 0;
-				if (Input.GetKeyDown(KeyCode.Space)) {
-					if (rigid.IsTouching(ground)) {
-						rigid.AddForce(new Vector2(0f,jumpForce));
-						grid.CancelGrid();
-					}
-				}
-				else if (Input.GetKeyDown(KeyCode.W)) {
-//					if (grid.attackDirection == BattleConstants.Direction.NEUTRAL) {
-//						if (rigid.IsTouching(ground)) {
-//							rigid.AddForce(new Vector2(0f,jumpForce));
-//						}
-//					}
-					/*else*/ if (grid.MoveGrid(BattleConstants.Direction.UP))
-						endReached = 1;
-//					else if (rigid.IsTouching(ground)) {
-//						rigid.AddForce(new Vector2(0f,jumpForce));
-//						grid.CancelGrid();
-//					}
-				}
-				else if (Input.GetKeyDown(KeyCode.S)) {
-					if (grid.attackDirection == BattleConstants.Direction.NEUTRAL)
-						endReached = 0;
-					else if (grid.MoveGrid(BattleConstants.Direction.DOWN))
+					if (grid.MoveGrid(BattleConstants.Direction.LEFT))
+						endReached = 2;
+					else
 						endReached = 1;
 				}
-				else if (Input.GetKeyDown(KeyCode.D)) {
-					if (grid.attackDirection == BattleConstants.Direction.LEFT) {
-						endReached = 3;
-						grid.CancelGrid();
-					}
-					else if (rigid.IsTouching(ground)) {
-						if (battleController.enemyController.CheckIfEnemiesAtSide(false)) {
-							currentAttackTimeLimit = 0;
-							if (grid.MoveGrid(BattleConstants.Direction.RIGHT))
-								endReached = 2;
-							else
-								endReached = 1;
-						}
-						else if (grid.attackDirection == BattleConstants.Direction.NEUTRAL) {
-							//endReached = 3;
-						}
-						else {
-							grid.CancelGrid();
-						}
-					}
+				else if (grid.attackDirection == BattleConstants.Direction.NEUTRAL) {
+					//endReached = 3;
 				}
-				else if (Input.GetKeyDown(KeyCode.A)) {
-					if (grid.attackDirection == BattleConstants.Direction.RIGHT) {
-						endReached = 3;
-						grid.CancelGrid();
-					}
-					else if (rigid.IsTouching(ground)) {
-						if (battleController.enemyController.CheckIfEnemiesAtSide(true)) {
-							currentAttackTimeLimit = 0;
-							if (grid.MoveGrid(BattleConstants.Direction.LEFT))
-								endReached = 2;
-							else
-								endReached = 1;
-						}
-						else if (grid.attackDirection == BattleConstants.Direction.NEUTRAL) {
-							//endReached = 3;
-						}
-						else {
-							grid.CancelGrid();
-						}
-					}
+				else {
+					grid.CancelGrid();
 				}
-
-				if (endReached == 1) {
-					Attack();
-					attacking = 20;
-				}
-				else if (endReached == 2) {
-					EndAttack();
-					attacking = 20;
-				}
-				else if (endReached == 3) {
-					Block();
-				}
-
 			}
 		}
 
-		UpdateAnimation();
+		if (endReached == 1) {
+			Attack();
+			attacking = 15;
+		}
+		else if (endReached == 2) {
+			EndAttack();
+			attacking = 40;
+		}
+		else if (endReached == 3) {
+			Block();
+		}
+
 	}
 
 	public void UpdateAnimation() {
@@ -207,6 +213,9 @@ public class SpiritGridController : MonoBehaviour {
 
 		foreach (DamageValues dv in dmgs) {
 			
+			if (dmgs == null)
+				continue;
+
 			Transform shotTransform = Instantiate(starProjectile) as Transform;
 			shotTransform.GetComponent<Projectile>().damage = dv.GetDamage();
 			shotTransform.position = dv.entityHit.position;
@@ -250,10 +259,11 @@ public class SpiritGridController : MonoBehaviour {
 	//Blocks all attacks for a moment
 	public void Block(){
 		var barrierTransform = Instantiate(barrier) as Transform;
-		barrierTransform.parent = transform.parent;
+		barrierTransform.SetParent(transform.parent);
 		barrierTransform.localPosition = transform.localPosition;
 		ProjectileEffect effect = barrierTransform.GetComponent<ProjectileEffect>();
 		blockTime = effect.lifeTime;
 		currentBlockTime = 0;
+		hurtScript.canBeHurt = false;
 	}
 }

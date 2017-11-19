@@ -256,6 +256,8 @@ public class BattleController : MonoBehaviour {
 	}
 
 	public IEnumerator LostBattle(float time) {
+		winText.text = "YOU DIED";
+
 		Transform t = Instantiate(saveValues);
 		t.name = "SaveValues";
 		DontDestroyOnLoad(t);

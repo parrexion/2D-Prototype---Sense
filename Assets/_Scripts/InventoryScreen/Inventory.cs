@@ -58,11 +58,14 @@ public class Inventory : MonoBehaviour {
 	}
 
 	public void FillDefault(){
+		db.AddSpecificKanji(1,true);
+		db.AddSpecificKanji(2,true);
 		db.AddSpecificKanji(3,true);
-		//		db.AddSpecificKanji(6,true);
-		db.AddSpecificKanji(7,true);
-		db.AddSpecificKanji(7,true);
-		db.AddSpecificKanji(8,true);
+		db.AddSpecificKanji(4,true);
+		db.AddSpecificKanji(7,false);
+		db.AddSpecificKanji(8,false);
+		db.AddSpecificKanji(9,false);
+		db.AddSpecificKanji(10,false);
 
 //		db.AddSpecificEquip(1,true);
 //		db.AddSpecificEquip(2,true);
@@ -78,7 +81,7 @@ public class Inventory : MonoBehaviour {
 		return ids;
 	}
 
-	public bool Add(Item item) {
+	public bool AddBag(Item item) {
 		Item[] bagItems;
 		if (item.item_type == Item.ItemType.KANJI) {
 			bagItems = kanjiBagItems;

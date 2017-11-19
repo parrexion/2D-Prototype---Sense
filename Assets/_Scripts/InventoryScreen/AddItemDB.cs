@@ -25,14 +25,16 @@ public class AddItemDB : MonoBehaviour {
 	/// <param name="id"></param>
 	/// <param name="equip"></param>
 	public void AddSpecificKanji(int id, bool equip){
-		if (id >= kanjiList.ListSize())
+		if (id >= kanjiList.ListSize()){
+			Debug.LogWarning("Kanji index " + id + " does not exist!");
 			return;
+		}
 		ItemKanji item = kanjiList.GetKanji(id).extractKanjiInformation(id);
 		bool added;
 		if (equip)
 			added = inventory.AddEquip(item);
 		else
-			added = inventory.Add(item);
+			added = inventory.AddBag(item);
 		if (!added)
 			Destroy(item);
 	}
@@ -45,7 +47,7 @@ public class AddItemDB : MonoBehaviour {
 		if (equip)
 			added = inventory.AddEquip(item);
 		else
-			added = inventory.Add(item);
+			added = inventory.AddBag(item);
 		if (!added)
 			Destroy(item);
 	}

@@ -68,17 +68,17 @@ public class WeaponSlot : MonoBehaviour {
 		while(mainController.storyValues.initiated == false)
 			yield return null;
 
-		// kanjiIndex = mainController.storyValues.GetEquippedKanji();
-		kanjiIndex = new int[]{1,2,3,4};
+		kanjiIndex = mainController.storyValues.GetEquippedKanji();
+		// kanjiIndex = new int[]{1,2,3,4};
 
 		float width = BattleConstants.kanjiGuiOffsetWidth;
 		kanjiHeight = BattleConstants.kanjiGuiOffsetHeight;
 		for (int i = 0; i < 4; i++) {
-			if (kanjiIndex.Length <= i) {
+			if (i >= kanjiIndex.Length) {
 				kanji[i].kanji = mainController.kanjiList.GetKanji(0);
 			}
 			else {
-				Debug.Log("Equipped: "+kanjiIndex[i]);
+				// Debug.Log("Equipped: "+kanjiIndex[i]);
 				kanji[i].kanji = mainController.kanjiList.GetKanji(kanjiIndex[i]);
 			}
 			kanji[i].Initialize(i);

@@ -130,7 +130,7 @@ public class StoryValues : MonoBehaviour {
 			r = Random.Range(0,length);
 			hp = enemyData[list[r]].maxhp;
 			if (hp < quota+100) {
-				Debug.Log("Added "+r);
+				// Debug.Log("Added "+r);
 				bvTower.enemyTypes.Add(r);
 				bvTower.numberOfEnemies++;
 				quota -= hp;
@@ -400,6 +400,9 @@ public class StoryValues : MonoBehaviour {
 		bvRandom.storyBattle = false;
 		bvRandom.healthEnabled = true;
 		bvRandom.enemyTypes = new List<int>();
+		bvRandom.enemyTypes.Add(0);
+		bvRandom.enemyTypes.Add(1);
+		bvRandom.enemyTypes.Add(2);
 
 		bvTower.removeSide = BattleValues.RemoveSide.NONE;
 		bvTower.backgroundHintLeft = -1;
@@ -431,6 +434,6 @@ public class StoryValues : MonoBehaviour {
 		case "towerBoss":
 			break;
 		}
-		Debug.Log("BV tower: "+bvTower.numberOfEnemies);
+
 	}
 }

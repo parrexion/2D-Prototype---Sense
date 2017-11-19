@@ -30,7 +30,7 @@ public class Projectile : Effect {
 	/// </summary>
 	/// <param name="attackValue"></param>
 	public void SetDamage(int baseDamage, int attackValue, float damageScale){
-		Debug.Log("Added some damage: " + (int)(damageScale*attackValue));
+		// Debug.Log("Added some damage: " + (int)(damageScale*attackValue));
 		damage = baseDamage + (int)(damageScale*attackValue);
 	}
 }

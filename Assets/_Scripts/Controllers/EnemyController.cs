@@ -56,7 +56,7 @@ public class EnemyController : MonoBehaviour {
 	public void CreateEnemies(bool enableBottom, bool enableTop){
 		spawnBottom = enableBottom;
 		spawnTop = enableTop;
-		Debug.Log("Number: "+bv.numberOfEnemies);
+		
 		int index, r;
 		if (MainControllerScript.instance.storyValues.battleType != StoryValues.BattleType.SPECIFIC) {
 			for (int i = 0; i < numberOfEnemies; i++) {
