@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class SpiritGridController : MonoBehaviour {
 
+	public BoolVariable paused;
 	public SpiritGrid grid;
 	public BattleController battleController;
 	[HideInInspector] public Rigidbody2D rigid;
@@ -11,7 +12,6 @@ public class SpiritGridController : MonoBehaviour {
 	private float blockTime;
 	private float currentBlockTime;
 	public Collider2D ground;
-	private bool active = true;
 
 	public Transform starProjectile;
 	public Transform starEffect;
@@ -35,14 +35,9 @@ public class SpiritGridController : MonoBehaviour {
 		animInfo = new AnimationInformation();
 		blockTime = 0f;
 	}
-		
-	public void SetActive(bool state) {
-		active = state;
-		grid.active = state;
-	}
 
 	void Update () {
-		if (!active)
+		if (paused.value)
 			return;
 		
 		UpdateInput();

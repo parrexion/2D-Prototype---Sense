@@ -35,7 +35,7 @@ public class SpiritGridUI : MonoBehaviour {
 
 	void OnGUI() {
 
-		if (!grid.active)
+		if (grid.paused.value)
 			return;
 
 		Rect r = new Rect();

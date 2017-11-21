@@ -9,7 +9,7 @@ public class MoveStraightLine : MoveScript {
     /// Calculates the straight line the projectile should move in.
     /// </summary>
     protected override void CalculateMovement() {
-        if (!active)
+        if (paused.value)
 			movement = new Vector2(0,0);
 		else {
 			movement = new Vector2(

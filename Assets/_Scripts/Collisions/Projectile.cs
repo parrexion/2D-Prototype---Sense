@@ -15,17 +15,6 @@ public class Projectile : Effect {
 
 
 	/// <summary>
-	/// Enabling the movement of the projectile if there is any.
-	/// </summary>
-	/// <param name="state"></param>
-	public override void SetActive(bool state) {
-		base.SetActive(state);
-		if (move) {
-			move.active = state;
-		}
-	}
-
-	/// <summary>
 	/// Set the damage for the projectile.
 	/// </summary>
 	/// <param name="attackValue"></param>

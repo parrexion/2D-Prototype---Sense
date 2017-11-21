@@ -6,7 +6,7 @@
 /// </summary>
 public class MoveHomingScript : MonoBehaviour {
 
-	public bool active = true;
+	public BoolVariable paused;
 	public Vector2 speed = new Vector2(5, 5);
 	public Vector2 moveToPosition = new Vector2(0, 0);
 	public Transform objectToFollow;
@@ -54,7 +54,7 @@ public class MoveHomingScript : MonoBehaviour {
 	/// Moves the transform towards the position or the object to follow.
 	/// </summary>
 	void FixedUpdate() {
-		if (!active)
+		if (paused.value)
 			return;
 
 		if (objectToFollow == null) {

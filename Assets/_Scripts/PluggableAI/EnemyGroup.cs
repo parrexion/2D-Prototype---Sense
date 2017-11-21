@@ -47,13 +47,4 @@ public class EnemyGroup {
 		deadEnemies.Add(t);
 	}
 
-	public void SetActiveAI(bool active) {
-		if (nTransform != null) {
-			nTransform.GetComponent<NStateController>().aiActive = active;
-		}
-		if (sTransform != null) {
-			sTransform.GetComponent<SStateController>().aiActive = active;
-		}
-		MainControllerScript.instance.battleGUI.SetActive(active);
-	}
 }

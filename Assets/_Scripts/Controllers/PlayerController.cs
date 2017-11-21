@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour {
     private enum Type { NORMAL,SPIRIT };
 
 	public Camera screenCamera;
-	private bool active = true;
+	public BoolVariable paused;
 
 	private float startX;
 	private float startY;
@@ -51,7 +51,7 @@ public class PlayerController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		if (!active)
+		if (paused.value)
 			return;
 
 		coll2D.enabled = (moveToPosition.GetDashPercent() > invulFramesForDash);
@@ -98,16 +98,6 @@ public class PlayerController : MonoBehaviour {
 
 		UpdateAnimation();
     }
-
-	/// <summary>
-	/// Sets the player controller's active state.
-	/// </summary>
-	/// <param name="state"></param>
-	public void SetActive(bool state) {
-		active = state;
-		moveToPosition.active = state;
-		weapon.SetVisible(state);
-	}
 
 	/// <summary>
 	/// Updates the current information from the controller's state and sends it to the animator.

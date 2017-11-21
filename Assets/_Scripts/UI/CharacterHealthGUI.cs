@@ -6,8 +6,10 @@ public class CharacterHealthGUI : MonoBehaviour {
     
 	private enum Side {TOP,BOTTOM};
 
-	private bool active = true;
-	private PlayerStats playerStats;
+	public BoolVariable pause;
+	public FloatVariable playerMaxHp;
+	public FloatVariable normalDamageTaken;
+	public FloatVariable spiritDamageTaken;
 
 	public float bar_xpos = 0.04f;
 	public float bar_ypos = 0.2f;
@@ -25,7 +27,8 @@ public class CharacterHealthGUI : MonoBehaviour {
 	
 	// Use this for initialization
 	void Start () {
-		playerStats = PlayerStats.instance;
+		normalDamageTaken.value = 0;
+		spiritDamageTaken.value = 0;
 
 		healthRect = new Rect(Screen.width * bar_xpos, Screen.height * bar_ypos, Screen.width * bar_width, Screen.height * bar_height);
 		emptyRect = new Rect(Screen.width*(bar_xpos-bar_borderx),Screen.height*(bar_ypos-bar_bordery),Screen.width*(bar_width+2*bar_borderx),Screen.height*(bar_height+2*bar_bordery));
@@ -44,25 +47,16 @@ public class CharacterHealthGUI : MonoBehaviour {
 	}
 
     void OnGUI() {
-		if (!active)
+		if (pause.value)
 			return;
 
         GUI.DrawTexture(emptyRect,emptyTexture);
         GUI.DrawTexture(healthRect,healthTexture);
     }
 
-	public void SetActive(bool state) {
-		active = state;
-	}
-	public void SetInvulnerable(bool state) {
-		if (!playerStats)
-			playerStats = PlayerStats.instance;
-		playerStats.SetInvincible(state);
-	}
-
     void UpdateHealth() {
-		float ratioTop = (float)playerStats.spiritDamageTaken / (float)playerStats.maxHealth.GetValue();
-		float ratioBottom = 1 - ((float)playerStats.normalDamageTaken / (float)playerStats.maxHealth.GetValue());
+		float ratioTop = spiritDamageTaken.value / playerMaxHp.value;
+		float ratioBottom = 1 - (normalDamageTaken.value / playerMaxHp.value);
         
 		healthRect.yMin = Screen.height * (ratioTop * bar_height + bar_ypos);
 		healthRect.yMax = Mathf.Max(Screen.height * (ratioBottom * bar_height + bar_ypos), healthRect.yMin);

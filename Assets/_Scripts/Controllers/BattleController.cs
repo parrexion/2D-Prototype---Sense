@@ -13,7 +13,8 @@ public class BattleController : MonoBehaviour {
 	private AudioController audioController;
 
 	private bool initiated = false;
-	public bool pause = false;
+	public BoolVariable paused;
+	public BoolVariable invincible;
 
 	public GameObject battleMenu;
 	public Text winText;
@@ -21,7 +22,6 @@ public class BattleController : MonoBehaviour {
 	public PlayerController playerController;
 	public SpiritGridController spiritController;
 	public CharacterHealthGUI characterHealth;
-	public PlayerStats playerStats;
 	public AudioClip pauseClip;
 
 	public Transform saveValues;
@@ -36,23 +36,19 @@ public class BattleController : MonoBehaviour {
 	void Start () {
 		storyValues = MainControllerScript.instance.storyValues;
 		audioController = AudioController.instance;
-		playerStats = PlayerStats.instance;
 		bv = storyValues.GetBattleValues();
 
 		escape = bv.escapeTextReq;
-		characterHealth.SetActive(false);
-		characterHealth.SetInvulnerable(true);
+		invincible.value = true;
 
 		backchange = GameObject.Find("Background Background").GetComponent<BackgroundChanger>();
 		backchange.escapeBattleButton.interactable = bv.escapeButtonEnabled;
 		backchange.cameraNormal.enabled = false;
 		backchange.cameraSpirit.enabled = false;
-		backchange.weapons.SetVisible(false);
 		backchange.gridController.enabled = false;
-		backchange.spiritGrid.active = false;
 
 		SetupBackgrounds();
-		SetActiveGame(false);
+		paused.value = true;
 		StartCoroutine(CreateEnemies());
 	}
 
@@ -114,35 +110,31 @@ public class BattleController : MonoBehaviour {
 				bv.backgroundHintLeft = -1;
 			}
 			state = -1;
+			return;
+		}
 
+		if (bv.healthEnabled) {
+			invincible.value = false;
+		}
+		
+		if (bv.removeSide == BattleValues.RemoveSide.RIGHT) {
+			backchange.tutorialNormal.sprite = backchange.tutorialBackgrounds[bv.backgroundRight];
 		}
 		else {
-			if (bv.healthEnabled) {
-				characterHealth.SetActive(true);
-				characterHealth.SetInvulnerable(false);
-			}
-			
-			if (bv.removeSide == BattleValues.RemoveSide.RIGHT) {
-				backchange.tutorialNormal.sprite = backchange.tutorialBackgrounds[bv.backgroundRight];
-			}
-			else {
-				backchange.tutorialNormal.enabled = false;
-				backchange.cameraNormal.enabled = true;
-				backchange.transformNormal.sprite = backchange.normalBackgrounds[bv.backgroundRight];
-				backchange.weapons.SetVisible(true);
-			}
-			if (bv.removeSide == BattleValues.RemoveSide.LEFT)
-				backchange.tutorialSpirit.sprite = backchange.tutorialBackgrounds[bv.backgroundLeft];
-			else {
-				backchange.tutorialSpirit.enabled = false;
-				backchange.cameraSpirit.enabled = true;
-				backchange.transformSpirit.sprite = backchange.spiritBackgrounds[bv.backgroundLeft];
-				backchange.gridController.enabled = true;
-				backchange.spiritGrid.active = true;
-			}
-			winText.text = "GET READY!";
-			state = 0;
+			backchange.tutorialNormal.enabled = false;
+			backchange.cameraNormal.enabled = true;
+			backchange.transformNormal.sprite = backchange.normalBackgrounds[bv.backgroundRight];
 		}
+		if (bv.removeSide == BattleValues.RemoveSide.LEFT)
+			backchange.tutorialSpirit.sprite = backchange.tutorialBackgrounds[bv.backgroundLeft];
+		else {
+			backchange.tutorialSpirit.enabled = false;
+			backchange.cameraSpirit.enabled = true;
+			backchange.transformSpirit.sprite = backchange.spiritBackgrounds[bv.backgroundLeft];
+			backchange.gridController.enabled = true;
+		}
+		winText.text = "GET READY!";
+		state = 0;
 	}
 
 	private void StartBattle() {
@@ -154,17 +146,15 @@ public class BattleController : MonoBehaviour {
 	}
 		
 	public void PauseGame() {
-		if (!pause) {
-			pause = true;
+		if (!paused.value) {
+			paused.value = true;
 			battleMenu.SetActive(true);
-			SetActiveGame(false);
 			audioController.PauseBackgroundMusic();
 			audioController.PlaySingle(pauseClip);
 		}
 		else {
-			pause = false;
+			paused.value = false;
 			battleMenu.SetActive(false);
-			SetActiveGame(true);
 			audioController.PauseBackgroundMusic();
 			audioController.PlaySingle(pauseClip);
 		}
@@ -172,25 +162,12 @@ public class BattleController : MonoBehaviour {
 
 	private void BattleStart() {
 		winText.text = "";
-		SetActiveGame(true);
+		paused.value = false;
 	}
 
 	public void EndBattle(){
-		SetActiveGame(false);
+		paused.value = true;
 		spiritController.grid.CancelGrid();
-	}
-
-	private void SetActiveGame(bool state){
-		if (bv.removeSide != BattleValues.RemoveSide.RIGHT)
-			playerController.SetActive(state);
-		if (bv.removeSide != BattleValues.RemoveSide.LEFT)
-			spiritController.SetActive(state);
-		enemyController.SetAllAIActive(state);
-		if (bv.healthEnabled) {
-			characterHealth.SetActive(state);
-			characterHealth.SetInvulnerable(!state);
-		}
-		MainControllerScript.instance.battleGUI.SetActive(state);
 	}
 
 	public void EscapeBattleButton(float time){
@@ -206,10 +183,6 @@ public class BattleController : MonoBehaviour {
 		values.wonBattle = true;
 		values.lostBattle = false;
 		values.time = currentTime;
-		if (bv.healthEnabled) {
-			values.currentHealth = playerStats.currentHealth;
-			values.maxHealth = playerStats.maxHealth.GetValue();
-		}
 		values.noEnemies = enemyController.numberOfEnemies;
 		values.enemiesDefeated = enemyController.GetEnemiesDefeated();
 		values.exp = enemyController.GetTotalExp();
@@ -234,12 +207,6 @@ public class BattleController : MonoBehaviour {
 		values.wonBattle = false;
 		values.lostBattle = false;
 		values.time = currentTime;
-		if (bv.healthEnabled) {
-			values.currentHealth = playerStats.currentHealth;
-			values.maxHealth = playerStats.maxHealth.GetValue();
-		}
-		else
-			values.maxHealth = 0;
 		values.noEnemies = enemyController.numberOfEnemies;
 
 		Debug.Log("Escaped battle");
@@ -252,7 +219,7 @@ public class BattleController : MonoBehaviour {
 
 	public void GameOverTrigger() {
 		StartCoroutine(LostBattle(3f));
-		SetActiveGame(false);
+		paused.value = true;
 	}
 
 	public IEnumerator LostBattle(float time) {

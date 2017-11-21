@@ -7,8 +7,9 @@ public class ScoreScreenValues : MonoBehaviour {
 	public bool wonBattle;
 	public bool lostBattle;
 	public float time;
-	public int currentHealth;
-	public int maxHealth;
+	public FloatVariable normalHealth;
+	public FloatVariable spiritHealth;
+	public FloatVariable maxHealth;
 	public int noEnemies;
 	public List<string> enemiesDefeated;
 	public int exp;

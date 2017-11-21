@@ -13,7 +13,7 @@ public class CharacterStats : MonoBehaviour {
 	public Stats sAttack;
 	public Stats sDefense;
 
-	private bool invincible = false;
+	public BoolVariable invincible;
 
 
 	protected virtual void Awake() {
@@ -27,8 +27,10 @@ public class CharacterStats : MonoBehaviour {
 
 	public virtual int TakeDamage(bool normal, int damage) {
 
-		if (invincible)
+		if (invincible.value){
+			Debug.Log("I'm invincible!!");
 			return 0;
+		}
 
 		damage -= defense.GetValue();
 		damage = Mathf.Max(0,damage);
@@ -49,10 +51,6 @@ public class CharacterStats : MonoBehaviour {
 		Debug.Log("Healed "+heal+" damage");
 
 		return heal;
-	}
-
-	public void SetInvincible(bool state){
-		invincible = state;
 	}
 	
 	public virtual void Die(){

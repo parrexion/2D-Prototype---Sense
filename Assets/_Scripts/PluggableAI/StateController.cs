@@ -27,7 +27,7 @@ public abstract class StateController : MonoBehaviour {
 	[Header("AI State Machine")]
 	public WaitStates currentWaitState;
 	public State currentState;
-	public bool aiActive;
+	public BoolVariable paused;
 	public State remainState;
 	[HideInInspector] public float stateTimeElapsed = 0;
 	//Waiting
@@ -75,7 +75,7 @@ public abstract class StateController : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		if (!aiActive)
+		if (paused.value)
 			return;
 
 		stateTimeElapsed += Time.deltaTime;

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SpiritGrid : MonoBehaviour {
 
-	public bool active;
+	public BoolVariable paused;
 	public int[,] grid;
 	public int branch;
 	public int pos;

@@ -14,29 +14,6 @@ public class BattleGUIController : MonoBehaviour {
 		effectList.RemoveAll(item => (item == null));
 	}
 
-
-	public void SetActive(bool state) {
-
-		foreach (DamageNumberDisplay dnd in damages) {
-			if (dnd != null) {
-				dnd.active = state;
-			}
-			else {
-//				Debug.Log("So null");
-			}
-		}
-
-		foreach (Effect eff in effectList) {
-			if (eff != null) {
-				eff.SetActive(state);
-			}
-			else {
-//				Debug.Log("So null");
-			}
-		}
-	}
-
-
 	//
 	//	public bool removeNullCompare(Projectile p){
 	//		bool res = (p == null);

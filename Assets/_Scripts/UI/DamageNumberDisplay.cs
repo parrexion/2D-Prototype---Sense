@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class DamageNumberDisplay : MonoBehaviour {
 
-	public bool active = true;
+	public BoolVariable paused;
 	public int damage;
 	public float time = 1f;
 	private float currentTime;
@@ -45,7 +45,7 @@ public class DamageNumberDisplay : MonoBehaviour {
 
 	void Update() {
 
-		if (!active)
+		if (paused.value)
 			return;
 
 		currentTime += Time.deltaTime;
@@ -79,7 +79,7 @@ public class DamageNumberDisplay : MonoBehaviour {
 
 	void OnGUI() {
 
-		if (!active)
+		if (paused.value)
 			return;
 
 		GUI.Label(rN,damage.ToString(),styleOutline);

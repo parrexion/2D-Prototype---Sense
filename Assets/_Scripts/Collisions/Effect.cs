@@ -10,7 +10,7 @@ public class Effect : MonoBehaviour {
 
 	protected MoveScript move;
 
-	private bool active = true;
+	public BoolVariable paused;
 	[HideInInspector] public float lifeTime = 1f;
 	private float currentTime = 0f;
 
@@ -19,21 +19,13 @@ public class Effect : MonoBehaviour {
 	/// Update the current lifetime of the effect.
 	/// </summary>
 	void Update() {
-		if (active) {
-			currentTime += Time.deltaTime;
+		if (paused.value)
+			return;
 
-			if (currentTime >= lifeTime)
-				Destroy(gameObject);
-		}
-	}
+		currentTime += Time.deltaTime;
 
-	/// <summary>
-	/// Enables or disables the effect.
-	/// Override to add additional things to activate.
-	/// </summary>
-	/// <param name="state"></param>
-	public virtual void SetActive(bool state) {
-		active = state;
+		if (currentTime >= lifeTime)
+			Destroy(gameObject);
 	}
 
 	/// <summary>

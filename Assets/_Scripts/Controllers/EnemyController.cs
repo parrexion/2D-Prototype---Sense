@@ -146,18 +146,6 @@ public class EnemyController : MonoBehaviour {
 	}
 
 	/// <summary>
-	/// Sets the active state for all AI groups.
-	/// </summary>
-	/// <param name="active"></param>
-	public void SetAllAIActive(bool active) {
-		foreach (EnemyGroup eg in groups) {
-			if (eg.alive) {
-				eg.SetActiveAI(active);
-			}
-		}
-	}
-
-	/// <summary>
 	/// Checks if the enemy is on the left side of the spirit side.
 	/// </summary>
 	/// <param name="leftside"></param>

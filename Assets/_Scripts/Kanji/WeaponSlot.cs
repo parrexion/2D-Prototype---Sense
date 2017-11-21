@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class WeaponSlot : MonoBehaviour {
 
-	public bool active = true;
-	private bool showKanji = true;
+	public BoolVariable paused;
 	public ContainerKanji[] kanji;
 
 	private float size;
@@ -44,7 +43,7 @@ public class WeaponSlot : MonoBehaviour {
 	/// Reduces the shotcooldown and checks if the kanji should be activated.
 	/// </summary>
 	void Update() {
-		if (!active)
+		if (paused.value)
 			return;
 
 		if (shootCooldown > 0) {
@@ -93,7 +92,7 @@ public class WeaponSlot : MonoBehaviour {
 	/// Renders the current state of all the kanji in the weapon slot.
 	/// </summary>
 	void OnGUI(){
-		if (!showKanji || !active)
+		if (paused.value)
 			return;
 
 		for (int i = 0; i < 4; i++) {
@@ -122,14 +121,6 @@ public class WeaponSlot : MonoBehaviour {
 	/// <returns></returns>
 	public bool IsAttacking(){
 		return (shootCooldown > 0);
-	}
-
-	/// <summary>
-	/// Sets if the kanji rendering should be visible.
-	/// </summary>
-	/// <param name="state"></param>
-	public void SetVisible(bool state) {
-		showKanji = state;
 	}
 
 	public bool Activate(MouseInformation mouseInfo) {

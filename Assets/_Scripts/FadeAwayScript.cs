@@ -5,6 +5,7 @@ using UnityEngine;
 public class FadeAwayScript : MonoBehaviour {
 
 	public float fadeDuration = 0.3f;
+	public BoolVariable paused;
 
 	private AudioController audioController;
 	private SpriteRenderer rend;
@@ -25,6 +26,9 @@ public class FadeAwayScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		if (paused.value)
+			return;
+			
 		colorValue -= fadeDuration*Time.deltaTime;
 		if (colorValue <= 0)
 			Destroy(gameObject);

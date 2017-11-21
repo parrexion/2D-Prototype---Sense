@@ -5,7 +5,7 @@
 /// </summary>
 public abstract class MoveScript : MonoBehaviour {
 
-	public bool active = true;
+	public BoolVariable paused;
 
     protected Vector2 speed;
     protected Vector2 direction;

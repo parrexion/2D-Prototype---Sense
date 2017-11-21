@@ -44,11 +44,13 @@ public class DrawScoreScreen : BasicGUIButtons {
 			escapedText.text = "";
 		}
 		timeText.text = "Time:    "+ values.time.ToString("F2") + "s";
-		if (values.maxHealth == 0) {
+		if (values.maxHealth.value == 0) {
 			healthText.text = "";
 		}
-		else
-			healthText.text = "Health left:    "+((float)(values.currentHealth)/(float)(values.maxHealth) * 100) + "%";
+		else {
+			float currentHealth = values.normalHealth.value + values.spiritHealth.value;
+			healthText.text = "Health left:    "+((currentHealth)/(values.maxHealth.value) * 100) + "%";
+		}
 		if (values.wonBattle) {
 			noEnemiesText.text = "Enemies defeated:   "+values.noEnemies;
 			//Add what type of enemies was defeated

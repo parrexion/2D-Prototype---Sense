@@ -19,8 +19,8 @@ public class PlayerStats : CharacterStats {
 	#endregion
 
 	public BattleController battleController;
-	public int spiritDamageTaken { get; private set; }
-	public int normalDamageTaken { get; private set; }
+	public FloatVariable spiritDamageTaken;
+	public FloatVariable normalDamageTaken;
 
 	// Use this for initialization
 	void Start () {
@@ -52,9 +52,9 @@ public class PlayerStats : CharacterStats {
 	public override int TakeDamage(bool normal, int damage) {
 		int dmg = base.TakeDamage(normal, damage);
 		if (normal)
-			normalDamageTaken += dmg;
+			normalDamageTaken.value += dmg;
 		else
-			spiritDamageTaken += dmg;
+			spiritDamageTaken.value += dmg;
 		return dmg;
 	}
 

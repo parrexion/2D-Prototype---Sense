@@ -15,7 +15,7 @@ public class DestroyOnStandalone : MonoBehaviour {
 	void OnEnable() {
 #if !UNITY_EDITOR
 		Debug.Log("Destroying object " + name);
-		gameObject.setActive(false);
+		gameObject.SetActive(false);
 #endif
 	}
 }
