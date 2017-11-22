@@ -3,11 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using UnityEngine.Events;
 
 public class MainMenuScript : BasicGUIButtons {
-
-	public UnityEvent buttonClickEvent;
 
 	public Text recordText;
 

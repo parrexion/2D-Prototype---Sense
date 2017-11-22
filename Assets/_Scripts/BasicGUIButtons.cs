@@ -11,7 +11,7 @@ using UnityEngine.Events;
 [RequireComponent(typeof(AudioList))]
 public class BasicGUIButtons : MonoBehaviour {
 
-	public UnityEvent buttonClick;
+	public UnityEvent buttonClickEvent;
 
 
 	/// <summary>
@@ -19,8 +19,8 @@ public class BasicGUIButtons : MonoBehaviour {
 	/// </summary>
 	/// <param name="scene">Scene.</param>
 	public void SimpleMoveToScene(string scene) {
-		buttonClick.Invoke();
-		
+		buttonClickEvent.Invoke();
+
 		switch (scene) {
 		case "battle":
 			SceneManager.LoadScene((int)BattleConstants.SCENE_INDEXES.BATTLE);
