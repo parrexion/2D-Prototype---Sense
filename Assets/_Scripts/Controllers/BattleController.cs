@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(BattleValues))]
 public class BattleController : MonoBehaviour {
@@ -16,7 +17,7 @@ public class BattleController : MonoBehaviour {
 	public BoolVariable paused;
 	public BoolVariable invincible;
 
-	public GameObject battleMenu;
+	public UnityEvent pauseEvent;
 	public Text winText;
 	public EnemyController enemyController;
 	public PlayerController playerController;
@@ -148,13 +149,13 @@ public class BattleController : MonoBehaviour {
 	public void PauseGame() {
 		if (!paused.value) {
 			paused.value = true;
-			battleMenu.SetActive(true);
+			pauseEvent.Invoke();
 			audioController.PauseBackgroundMusic();
 			audioController.PlaySingle(pauseClip);
 		}
 		else {
 			paused.value = false;
-			battleMenu.SetActive(false);
+			pauseEvent.Invoke();
 			audioController.PauseBackgroundMusic();
 			audioController.PlaySingle(pauseClip);
 		}
