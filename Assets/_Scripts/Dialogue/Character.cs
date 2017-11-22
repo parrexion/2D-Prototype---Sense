@@ -5,8 +5,6 @@ public class Character : MonoBehaviour {
 
 	[SerializeField] private SpriteRenderer characterSprite = null;
 	[SerializeField] private SpriteRenderer poseSprite = null;
-	public Sprite[] characterChars = null;
-	public Sprite[] characterPoses = null;
 
 	// Use this for initialization
 	void Start () {
@@ -15,22 +13,30 @@ public class Character : MonoBehaviour {
 	}
 
 
-	public void SetCharacterPose(int character, int pose) {
-		if (character == -1) {
+	public void SetCharacterPose(Sprite character, Sprite pose) {
+		if (character == null) {
 			characterSprite.enabled = false;
 			poseSprite.enabled = false;
 			return;
 		}
 
-		if (character == 4){
-			Debug.LogWarning("Found a 4 as the character :/");
-			return;
-		}
-
-		characterSprite.sprite = characterChars[character-1];
-		poseSprite.sprite = characterPoses[pose];
-
+		characterSprite.sprite = character;
+		poseSprite.sprite = pose;
 		characterSprite.enabled = true;
 		poseSprite.enabled = true;
+	}
+
+	public Sprite GetCharacterSprite(){
+		if (characterSprite.enabled)
+			return characterSprite.sprite;
+		
+		return null;
+	}
+
+	public Sprite GetPoseSprite(){
+		if (poseSprite.enabled)
+			return poseSprite.sprite;
+		
+		return null;
 	}
 }

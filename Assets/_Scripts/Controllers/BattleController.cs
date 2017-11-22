@@ -16,8 +16,8 @@ public class BattleController : MonoBehaviour {
 	private bool initiated = false;
 	public BoolVariable paused;
 	public BoolVariable invincible;
-
 	public UnityEvent pauseEvent;
+
 	public Text winText;
 	public EnemyController enemyController;
 	public PlayerController playerController;
@@ -147,18 +147,9 @@ public class BattleController : MonoBehaviour {
 	}
 		
 	public void PauseGame() {
-		if (!paused.value) {
-			paused.value = true;
-			pauseEvent.Invoke();
-			audioController.PauseBackgroundMusic();
-			audioController.PlaySingle(pauseClip);
-		}
-		else {
-			paused.value = false;
-			pauseEvent.Invoke();
-			audioController.PauseBackgroundMusic();
-			audioController.PlaySingle(pauseClip);
-		}
+		paused.value = !paused.value;
+		pauseEvent.Invoke();
+		audioController.PauseBackgroundMusic();
 	}
 
 	private void BattleStart() {

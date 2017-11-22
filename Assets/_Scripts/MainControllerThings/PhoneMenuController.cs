@@ -13,32 +13,19 @@ public class PhoneMenuController : MonoBehaviour {
 	private System.DateTime currentDate;
 
 	public Button equipButton;
+	public BoolVariable equipButtonAvailable;
+	public StringVariable currentLocation;
 
 
 	void Start() {
-		StoryValues.BattleType battleType = MainControllerScript.instance.storyValues.battleType;
-		switch (battleType)
-		{
-			case StoryValues.BattleType.STORY:
-				locationText.text = "Location: Tutorial";
-				equipButton.interactable = false;
-				break;
-			case StoryValues.BattleType.RANDOM:
-				locationText.text = "Location: Random battles";
-				equipButton.interactable = true;
-				break;
-			case StoryValues.BattleType.TOWER:
-			case StoryValues.BattleType.SPECIFIC:
-				locationText.text = "Location: Battle Tower";
-				equipButton.interactable = true;
-				break;
-		}
+		equipButton.interactable = equipButtonAvailable.value;
 	}
 
 	/// <summary>
 	/// Updates the phone's clock to current time.
 	/// </summary>
 	void Update() {
+		locationText.text = currentLocation.value;
 		currentDate = System.DateTime.Now;
 		SetCurrentTimeDate();
 		if (Input.GetKeyDown(KeyCode.Escape)) {

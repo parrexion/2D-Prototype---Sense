@@ -2,6 +2,36 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+[System.Serializable]
+public class DialogueCollection {
+	public Dialogue[] dialogues;
+
+	public DialogueCollection(int size){
+		dialogues = new Dialogue[size];
+	}
+}
+
+
+[System.Serializable]
+public class Dialogue {
+	public string name;
+	public int size;
+	public List<Frame> frames;
+}
+
+
+[System.Serializable]
+public class Frame {
+	public int background;
+	public int[] currentCharacters;
+	public int[] currentPoses;
+	public string characterName;
+	public string dialogueText;
+	public int talkingPosition;
+}
+
+
 [System.Serializable]
 public class DialogueJsonItem {
 
@@ -13,29 +43,4 @@ public class DialogueJsonItem {
 	public int position1;
 	public int position2;
 	public string text;
-}
-
-
-
-[System.Serializable]
-public class DialogueDialogues {
-	public DialogueLines[] lines;
-
-	public DialogueDialogues(int size){
-		lines = new DialogueLines[size];
-	}
-}
-
-
-
-[System.Serializable]
-public class DialogueJsonScene {
-
-	public int background = 0;
-	public int[] positions = new int[]{-1,-1,-1,-1,-1};
-	public int[] currentPoses = new int[5];
-	public string characterName = "";
-	public string dialogue = "";
-	public int talkingCharacter = -1;
-	public int talkingPose = -1;
 }

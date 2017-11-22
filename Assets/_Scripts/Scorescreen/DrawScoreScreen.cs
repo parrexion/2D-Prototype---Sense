@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.Events;
 
 public class DrawScoreScreen : BasicGUIButtons {
 
+	public UnityEvent buttonClickEvent;
 	public ScoreScreenValues values;
 	public GameObject canvas;
 	public Text escapedText;
@@ -16,9 +18,7 @@ public class DrawScoreScreen : BasicGUIButtons {
 	public Text moneyText;
 
 	// Use this for initialization
-	protected override void Start () {
-		base.Start();
-
+	void Start () {
 		values = GameObject.Find("SaveValues").GetComponent<ScoreScreenValues>();
 		canvas = GameObject.Find("Canvas - Victory");
 
@@ -67,7 +67,7 @@ public class DrawScoreScreen : BasicGUIButtons {
 
 	public void LeaveScoreScreen(){
 		MainControllerScript.instance.storyValues.AdvanceStory();
-		PlayButtonClick();
+		buttonClickEvent.Invoke();
 		Destroy(values.gameObject);
 
 		if (MainControllerScript.instance.storyValues.battleType == StoryValues.BattleType.SPECIFIC)

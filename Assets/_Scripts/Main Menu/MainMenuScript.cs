@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.Events;
 
 public class MainMenuScript : BasicGUIButtons {
+
+	public UnityEvent buttonClickEvent;
 
 	public Text recordText;
 
@@ -17,14 +20,13 @@ public class MainMenuScript : BasicGUIButtons {
 	public Text levelMinus5Text;
 
 
-	protected override void Start(){
-		base.Start();
+	void Start(){
 		recordText.text = "Highest level: "+SaveController.instance.bestLevel;
 	}
 
 	public void TutorialClicked(){
 		MainControllerScript.instance.storyValues.battleType = StoryValues.BattleType.STORY;
-		PlayButtonClick();
+		buttonClickEvent.Invoke();
 		SceneManager.LoadScene((int)BattleConstants.SCENE_INDEXES.BATTLE);
 	}
 
@@ -54,7 +56,7 @@ public class MainMenuScript : BasicGUIButtons {
 		MainControllerScript.instance.storyValues.clearedTutorial = true;
 		MainControllerScript.instance.storyValues.bv.scenarioName = "";
 		MainControllerScript.instance.storyValues.battleType = StoryValues.BattleType.TOWER;
-		PlayButtonClick();
+		buttonClickEvent.Invoke();
 		SceneManager.LoadScene((int)BattleConstants.SCENE_INDEXES.BATTLETOWER);
 	}
 

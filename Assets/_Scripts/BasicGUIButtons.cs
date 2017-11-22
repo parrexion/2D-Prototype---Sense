@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Events;
 
 /// <summary>
 /// Basic class which can be used to transition between scenes. 
@@ -10,28 +11,16 @@ using UnityEngine.SceneManagement;
 [RequireComponent(typeof(AudioList))]
 public class BasicGUIButtons : MonoBehaviour {
 
-	public AudioClip backgroundMusic = null;
-	public AudioClip buttonClick;
+	public UnityEvent buttonClick;
 
-	protected AudioController audioController;
-
-
-	// Use this for initialization
-	protected virtual void Start () {
-		audioController = AudioController.instance;
-		audioController.PlayBackgroundMusic(backgroundMusic);
-	}
-
-	protected void PlayButtonClick(){
-		audioController.PlaySingle(buttonClick);
-	}
 
 	/// <summary>
 	/// Simple way to move to the next scene. Write a new method if more functionality is needed.
 	/// </summary>
 	/// <param name="scene">Scene.</param>
 	public void SimpleMoveToScene(string scene) {
-		PlayButtonClick();
+		buttonClick.Invoke();
+		
 		switch (scene) {
 		case "battle":
 			SceneManager.LoadScene((int)BattleConstants.SCENE_INDEXES.BATTLE);

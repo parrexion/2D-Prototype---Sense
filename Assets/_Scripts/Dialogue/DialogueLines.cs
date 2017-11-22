@@ -8,74 +8,64 @@ public class DialogueLines {
 	public int pos = 0;
 	private int filled = 0;
 	
-	public DialogueJsonScene[] dataList;
-	public int size = 0;
+	public Dialogue dialogue;
 
-
-	public DialogueLines(int size){
-		this.size = size;
-		dataList = new DialogueJsonScene[size];
+	public DialogueLines(Dialogue dialogue){
+		this.dialogue = dialogue;
 	}
-
-
-//	public void AddAction(DialogueAction action, DialogueJsonScene data){
-//		dataList[filled] = data;
-//		actions[filled] = action;
-//		filled++;
-//	}
 
 	public void NextDialogue(DialogueScene scene){
 		
-		if (pos >= size) {
+		if (pos >= dialogue.size) {
 			Debug.Log("Reached the end");
 			DialogueAction da = (DAEndDialogue)ScriptableObject.CreateInstance("DAEndDialogue");
 			da.Act(scene,null);
 		}
 		else {
-			CompareScenes(scene,dataList[pos]);
+			CompareScenes(scene,dialogue.frames[pos]);
 			pos++;
 		}
 	}
 
-	public void CompareScenes(DialogueScene scene, DialogueJsonScene json) {
+	public void CompareScenes(DialogueScene scene, Frame frame) {
 		DialogueAction da;
 		DialogueJsonItem data;
-		if (scene.background != json.background) {
+		if (scene.background != frame.background) {
 			da = (DASetBackground)ScriptableObject.CreateInstance("DASetBackground");
 			data = new DialogueJsonItem();
-			data.character = json.background;
+			data.character = frame.background;
 			da.Act(scene,data);
 		}
 		for (int i = 0; i < 4; i++) {
-			if (scene.positions[i] != json.positions[i] || scene.currentPoses[i] != json.currentPoses[i]) {
+			if (scene.positions[i] != frame.currentCharacters[i] || scene.currentPoses[i] != frame.currentPoses[i]) {
 				da = (DAAddCharacter)ScriptableObject.CreateInstance("DAAddCharacter");
 				data = new DialogueJsonItem();
 				data.position1 = i;
-				data.character = json.positions[i];
-				data.pose = json.currentPoses[i];
+				data.character = frame.currentCharacters[i];
+				data.pose = frame.currentPoses[i];
 				da.Act(scene,data);
 			}
 		}
 
-		if (scene.talkingCharacter != json.talkingCharacter || scene.talkingPose != json.talkingPose) {
+		if (scene.talkingCharacter != frame.talkingPosition || scene.talkingPose != frame.currentCharacters[frame.talkingPosition]) {
 			da = (DAChangeTalking)ScriptableObject.CreateInstance("DAChangeTalking");
 			data = new DialogueJsonItem();
-			data.character = json.talkingCharacter;
-			data.pose = json.talkingPose;
+			data.character = frame.talkingPosition;
+			data.pose = frame.currentCharacters[frame.talkingPosition];
 			da.Act(scene,data);
 		}
 
-		if (scene.characterName != json.characterName) {
+		if (scene.characterName != frame.characterName) {
 			da = (DASetName)ScriptableObject.CreateInstance("DASetName");
 			data = new DialogueJsonItem();
-			data.text = json.characterName;
+			data.text = frame.characterName;
 			da.Act(scene,data);
 		}
 
-		if (scene.dialogue != json.dialogue) {
+		if (scene.dialogue != frame.dialogueText) {
 			da = (DASetText)ScriptableObject.CreateInstance("DASetText");
 			data = new DialogueJsonItem();
-			data.text = json.dialogue;
+			data.text = frame.dialogueText;
 			da.Act(scene,data);
 		}
 	}

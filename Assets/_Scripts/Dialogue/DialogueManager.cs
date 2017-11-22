@@ -11,7 +11,9 @@ public class DialogueManager : MonoBehaviour {
 	public DialogueLines currentLines;
 
 	public Sprite[] backgrounds;
-	public Character[] characters;
+	public string[] characterNames;
+	public Sprite[] characterChars;
+	public Sprite[] characterPoses;
 
 	public string currentDialogue = "";
 	public string dialogue = "";
@@ -54,7 +56,7 @@ public class DialogueManager : MonoBehaviour {
 	/// </summary>
 	public void ShowDialogue() {
 		if (!initiated) {
-			currentLines = parser.dialogues.lines[0];
+			currentLines = new DialogueLines(parser.dialogues.dialogues[0]);
 			initiated = true;
 		}
 
@@ -67,7 +69,7 @@ public class DialogueManager : MonoBehaviour {
 	/// </summary>
 	void ResetCharacters() {
 		for (int i = 0; i < scene.characters.Length; i++) {
-			scene.characters[i].SetCharacterPose(-1,-1);
+			scene.characters[i].SetCharacterPose(null, null);
 		}
 	}
 
@@ -136,10 +138,19 @@ public class DialogueManager : MonoBehaviour {
 		backgroundImage.sprite = backgrounds[scene.background];
 
 		for(int i = 0; i < scene.characters.Length; i++){
-			scene.characters[i].SetCharacterPose(scene.positions[i],scene.currentPoses[i]);
+			if (scene.positions[i] == -1)
+				scene.characters[i].SetCharacterPose(null, null);
+			else
+				scene.characters[i].SetCharacterPose(characterChars[scene.positions[i]],characterPoses[scene.currentPoses[i]]);
 		}
 		Debug.Log("Displayed: " + scene.talkingCharacter + ", " + scene.talkingPose);
-		scene.closeup.SetCharacterPose(scene.talkingCharacter, scene.talkingPose);
+		if (scene.talkingCharacter == -1 || scene.talkingPose == -1)
+			scene.closeup.SetCharacterPose(null, null);
+		else{
+			Sprite charchar = scene.characters[scene.talkingCharacter].GetCharacterSprite();
+			Sprite charpose = scene.characters[scene.talkingCharacter].GetPoseSprite();
+			scene.closeup.SetCharacterPose(charchar, charpose);
+		}
 
 	}
 
