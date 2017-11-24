@@ -19,25 +19,30 @@ public class AudioController : MonoBehaviour {
 	}
 	#endregion
 
+	public AudioVariable backgroundMusic;
 	public AudioSource efxSource;
 	public AudioSource musicSource;
 
-	[MinMaxRangeAttribute(0.75f,1.5f)]
+	[MinMaxRange(0.75f,1.5f)]
 	public RangedFloat pitchRange = new RangedFloat(0.95f,1.05f);
 	
 	private bool playingBkg = false;
 
+	public void OnEnable() {
+		PlayBackgroundMusic();
+	}
 
 	/// <summary>
 	/// Playes the background music or stops the music if clip is null.
 	/// </summary>
 	/// <param name="clip">Clip.</param>
-	public void PlayBackgroundMusic(AudioClip clip) {
-		if (clip == null) {
+	public void PlayBackgroundMusic() {
+		if (backgroundMusic.value == null) {
 			musicSource.Stop();
+			playingBkg = false;
 		}
 		else {
-			musicSource.clip = clip;
+			musicSource.clip = backgroundMusic.value;
 			musicSource.Play();
 			playingBkg = true;
 		}
