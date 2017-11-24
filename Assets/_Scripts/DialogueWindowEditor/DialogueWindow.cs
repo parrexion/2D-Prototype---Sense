@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEditor;
+using UnityEditor.SceneManagement;
 
 public class DialogueWindow : EditorWindow {
 
@@ -41,6 +43,8 @@ public class DialogueWindow : EditorWindow {
 	Rect[] rectChar;
 	Rect dialogueRect = new Rect();
 
+	string[] talkingLabels = new string[] { "Talk0", "Talk1", "Talk2", "Talk3", "Talk4" };
+
 
 	[MenuItem("Window/DialogueEditor")]
 	public static void ShowWindow() {
@@ -48,10 +52,12 @@ public class DialogueWindow : EditorWindow {
 	}
 
 	void OnEnable() {
-		rectChar = new Rect[5];
-		characters = new IntVariable[] { character0, character1, character2, character3, character4 };
-		poses = new IntVariable[] { pose0, pose1, pose2, pose3, pose4 };
-		InitTextures();
+		EditorSceneManager.sceneOpened += SceneOpenedCallback;
+		InitializeWindow();
+	}
+
+	void OnDisable() {
+		EditorSceneManager.sceneOpened -= SceneOpenedCallback;
 	}
 
 	void OnGUI() {
@@ -59,7 +65,21 @@ public class DialogueWindow : EditorWindow {
 		GUILayout.Label("Character selector", EditorStyles.boldLabel);
 		DrawBackgrounds();
 
+		HeaderStuff();
 		HorizontalStuff();
+		BottomStuff();
+	}
+
+	void SceneOpenedCallback( Scene _scene, OpenSceneMode _mode) {
+		Debug.Log("SCENE LOADED");
+		InitializeWindow();
+	}
+
+	void InitializeWindow() {
+		rectChar = new Rect[5];
+		characters = new IntVariable[] { character0, character1, character2, character3, character4 };
+		poses = new IntVariable[] { pose0, pose1, pose2, pose3, pose4 };
+		InitTextures();
 	}
 
 	void InitTextures() {
@@ -126,6 +146,17 @@ public class DialogueWindow : EditorWindow {
 		GUI.DrawTexture(dialogueRect, dialogueBackground);
 	}
 
+	void HeaderStuff() {
+		GUILayout.BeginArea(headerRect);
+
+		if (GUILayout.Button("Open Dialogue Scene")) {
+			EditorSceneManager.OpenScene("Assets/_Scenes/Dialogue.unity");
+			InitTextures();
+		}
+
+		GUILayout.EndArea();
+	}
+
 	void HorizontalStuff() {
 		for (int i = 0; i < 5; i++) {
 			GUILayout.BeginArea(rectChar[i]);
@@ -133,10 +164,21 @@ public class DialogueWindow : EditorWindow {
 			GUILayout.Label("Character " + i, EditorStyles.boldLabel);
 			GUILayout.Label("Name ");
 			characters[i].value = EditorGUILayout.IntField("Character", characters[i].value);
-			characters[i].value = EditorGUILayout.IntField("Pose", characters[i].value);
+			characters[i].value = EditorGUILayout.IntField("Pose", poses[i].value);
 			GUILayout.Label(charSprites.values[characters[i].value].texture);
 
 			GUILayout.EndArea();
 		}
+	}
+
+	void BottomStuff() {
+		GUILayout.BeginArea(dialogueRect);
+
+		talkingIndex.value = GUILayout.SelectionGrid(talkingIndex.value, talkingLabels, 5);
+		if (GUILayout.Button("NONE")) {
+			talkingIndex.value = -1;
+		}
+
+		GUILayout.EndArea();
 	}
 }

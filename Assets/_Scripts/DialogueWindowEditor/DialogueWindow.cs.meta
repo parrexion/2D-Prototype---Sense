@@ -1,16 +1,25 @@
 fileFormatVersion: 2
 guid: a2c6ac02608b71f40bc75da22cc67d81
-timeCreated: 1511449747
+timeCreated: 1511524642
 licenseType: Free
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
   defaultReferences:
+  - backGroundIndex: {instanceID: 0}
   - character0: {fileID: 11400000, guid: c57aca76dd3752c478c07d5198b1dcb9, type: 2}
   - character1: {fileID: 11400000, guid: c2c040dd256b7084898e8d2961fbd486, type: 2}
   - character2: {fileID: 11400000, guid: f826460763002824eb95f4eb0c05a077, type: 2}
   - character3: {fileID: 11400000, guid: 47737cb15c7753f409afd316bda6075e, type: 2}
   - character4: {fileID: 11400000, guid: 232d83a206530d541b8befc186910d1c, type: 2}
+  - pose0: {fileID: 11400000, guid: 39e4c49404220f540a1854a04e4665de, type: 2}
+  - pose1: {fileID: 11400000, guid: 17cc9e33d248bfd499ae32c9fa925ac9, type: 2}
+  - pose2: {fileID: 11400000, guid: a196e43c51f71a944b49dcc66b602cb2, type: 2}
+  - pose3: {fileID: 11400000, guid: ac4fe95bc0e48214fba12605c9457902, type: 2}
+  - pose4: {fileID: 11400000, guid: 545c59018653a9148bf1b240dff92dc8, type: 2}
+  - talkingName: {fileID: 11400000, guid: 71ff3a55a95c2bd459cd6a2bf6bfa98b, type: 2}
+  - talkingIndex: {fileID: 11400000, guid: 9bd845a1af265f54ab88322b70841fac, type: 2}
+  - talkingPose: {fileID: 11400000, guid: bc6ab626d99b1b242977f7874e0189df, type: 2}
   - charSprites: {fileID: 11400000, guid: 925afad142bbfbb41ade6080cf08f1bf, type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
