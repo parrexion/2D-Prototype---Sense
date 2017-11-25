@@ -6,7 +6,7 @@ public static class BattleConstants {
 
 	//Screen
 	public const int screenWidth = 1200;
-	public const int screenHeight = 512;
+	public const int screenHeight = 525;
 
 	//Battle arena
 	public static float NormalBorderWidth = 6.0f;

@@ -14,12 +14,13 @@ public class AudioController : MonoBehaviour {
 			Destroy(gameObject);
 		else {
 			instance = this;
-			DontDestroyOnLoad(this);
+			// DontDestroyOnLoad(this);
 		}
 	}
 	#endregion
 
 	public AudioVariable backgroundMusic;
+	public FloatVariable musicVolume;
 	public AudioSource efxSource;
 	public AudioSource musicSource;
 
@@ -29,6 +30,7 @@ public class AudioController : MonoBehaviour {
 	private bool playingBkg = false;
 
 	public void OnEnable() {
+		musicSource.volume = Mathf.Clamp01(musicVolume.value);
 		PlayBackgroundMusic();
 	}
 

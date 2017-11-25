@@ -5,8 +5,17 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class DrawScoreScreen : BasicGUIButtons {
-	public ScoreScreenValues values;
+
 	public GameObject canvas;
+	public StringVariable wonBattleState;
+	public FloatVariable battleTime;
+	public FloatVariable playerMaxHealth;
+	public FloatVariable playerNormalDamage;
+	public FloatVariable playerSpiritDamage;
+	public IntVariable enemiesFought;
+	public IntVariable expGained;
+	public IntVariable moneyGained;
+
 	public Text escapedText;
 	public Text timeText;
 	public Text healthText;
@@ -16,10 +25,7 @@ public class DrawScoreScreen : BasicGUIButtons {
 
 	// Use this for initialization
 	void Start () {
-		values = GameObject.Find("SaveValues").GetComponent<ScoreScreenValues>();
-		canvas = GameObject.Find("Canvas - Victory");
-
-		if (values.lostBattle) {
+		if (wonBattleState.value == "lose") {
 			canvas.SetActive(false);
 			return;
 		}
@@ -37,27 +43,27 @@ public class DrawScoreScreen : BasicGUIButtons {
 
 	private void SetValues(){
 
-		if (values.wonBattle) {
+		if (wonBattleState.value == "win") {
 			escapedText.text = "";
 		}
-		timeText.text = "Time:    "+ values.time.ToString("F2") + "s";
-		if (values.maxHealth.value == 0) {
+		timeText.text = "Time:    "+ battleTime.value.ToString("F2") + "s";
+		if (playerMaxHealth.value == 0) {
 			healthText.text = "";
 		}
 		else {
-			float currentHealth = values.normalHealth.value + values.spiritHealth.value;
-			healthText.text = "Health left:    "+((currentHealth)/(values.maxHealth.value) * 100) + "%";
+			float currentHealth = playerMaxHealth.value - playerNormalDamage.value + playerSpiritDamage.value;
+			healthText.text = "Health left:    "+((currentHealth)/(playerMaxHealth.value) * 100) + "%";
 		}
-		if (values.wonBattle) {
-			noEnemiesText.text = "Enemies defeated:   "+values.noEnemies;
+		if (wonBattleState.value == "win") {
+			noEnemiesText.text = "Enemies defeated:   " + enemiesFought.value;
 			//Add what type of enemies was defeated
 		}
 		else {
-			noEnemiesText.text = "Enemies faced:   "+values.noEnemies;
+			noEnemiesText.text = "Enemies faced:   "+enemiesFought.value;
 		}
 
-		expText.text = "Experience gained:    "+ values.exp;
-		moneyText.text = "Money gained:    "+ values.money;
+		expText.text = "Experience gained:    "+ expGained.value;
+		moneyText.text = "Money gained:    "+ moneyGained.value;
 		//Add loot
 	}
 
@@ -65,7 +71,6 @@ public class DrawScoreScreen : BasicGUIButtons {
 	public void LeaveScoreScreen(){
 		MainControllerScript.instance.storyValues.AdvanceStory();
 		buttonClickEvent.Invoke();
-		Destroy(values.gameObject);
 
 		if (MainControllerScript.instance.storyValues.battleType == StoryValues.BattleType.SPECIFIC)
 			SceneManager.LoadScene((int)BattleConstants.SCENE_INDEXES.BATTLETOWER);
