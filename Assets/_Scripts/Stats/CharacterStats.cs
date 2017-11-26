@@ -36,7 +36,7 @@ public class CharacterStats : MonoBehaviour {
 		damage = Mathf.Max(0,damage);
 
 		currentHealth -= damage;
-		Debug.Log("Took "+damage+" damage. HP left: " + currentHealth);
+		// Debug.Log("Took "+damage+" damage. HP left: " + currentHealth);
 
 		if (currentHealth <= 0) {
 			Die();

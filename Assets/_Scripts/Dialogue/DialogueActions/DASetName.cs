@@ -7,7 +7,7 @@ public class DASetName : DialogueAction {
 
 	public override bool Act(DialogueScene scene, DialogueJsonItem data) {
 
-		scene.characterName = data.text;
+		scene.talkingName.value = data.text;
 
 		return true;
 	}

@@ -15,7 +15,7 @@ public static class BattleConstants {
 	public static float NormalStartY = 0f;
 	public static float SpiritBorderWidth = 3.5f;
 	public static float SpiritBorderHeight = 2.25f;
-	public static float SpiritStartX = 10.0f;
+	public static float SpiritStartX = 13.0f;
 	public static float SpiritStartY = 0f;
 
 

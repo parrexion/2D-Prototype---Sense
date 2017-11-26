@@ -4,15 +4,12 @@ using UnityEngine;
 
 public class ScoreScreenValues : MonoBehaviour {
 
-	public bool wonBattle;
-	public bool lostBattle;
-	public float time;
+	public StringVariable wonBattleState;
+	public FloatVariable time;
 	public FloatVariable normalHealth;
 	public FloatVariable spiritHealth;
 	public FloatVariable maxHealth;
-	public int noEnemies;
-	public List<string> enemiesDefeated;
-	public int exp;
-	public int money;
-	public List<string> treasures;
+	public IntVariable noEnemies;
+	public IntVariable exp;
+	public IntVariable money;
 }

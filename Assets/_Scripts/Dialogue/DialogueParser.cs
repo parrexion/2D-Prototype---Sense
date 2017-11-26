@@ -5,12 +5,14 @@ using UnityEngine;
 using System.Text;
 using System.IO;
 using System.Text.RegularExpressions;
+using UnityEngine.Events;
 
 public class DialogueParser : MonoBehaviour {
 
 	public StringVariable currentLocation;
 	public BoolVariable equipMenuAvailable;
 	public DialogueCollection dialogues;
+	public UnityEvent nextFrameEvent;
 
 
 	// Use this for initialization
@@ -33,6 +35,7 @@ public class DialogueParser : MonoBehaviour {
 			dialogues = JsonUtility.FromJson<DialogueCollection>(dataAsJson);
 
 			Debug.Log("Number of dialogues: "+dialogues.dialogues.Length);
+			nextFrameEvent.Invoke();
 		}
 		else {
 			Debug.LogError("Could not open file: "+filename);

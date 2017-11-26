@@ -7,8 +7,7 @@ public class DARemoveCharacter : DialogueAction {
 
 	public override bool Act (DialogueScene scene, DialogueJsonItem data)
 	{
-		scene.positions[data.position1] = -1;
-		Debug.Log("hfhf");
+		scene.characters[data.position1].value = -1;
 		return true;
 	}
 }

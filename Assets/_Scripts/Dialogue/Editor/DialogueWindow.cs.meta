@@ -1,12 +1,12 @@
 fileFormatVersion: 2
 guid: a2c6ac02608b71f40bc75da22cc67d81
-timeCreated: 1511524642
+timeCreated: 1511718995
 licenseType: Free
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
   defaultReferences:
-  - backGroundIndex: {instanceID: 0}
+  - backgroundIndex: {fileID: 11400000, guid: 3fc1a8ac108b1194091ec2a97d09c0c7, type: 2}
   - character0: {fileID: 11400000, guid: c57aca76dd3752c478c07d5198b1dcb9, type: 2}
   - character1: {fileID: 11400000, guid: c2c040dd256b7084898e8d2961fbd486, type: 2}
   - character2: {fileID: 11400000, guid: f826460763002824eb95f4eb0c05a077, type: 2}

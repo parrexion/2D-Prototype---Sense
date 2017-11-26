@@ -11,7 +11,7 @@ public abstract class AnimationScript : MonoBehaviour {
 	protected State currentState;
 	protected Vector3 defaultScale;
 
-	public enum stateString {
+	public enum StateString {
 		Idle,
 		WalkLeft,
 		WalkRight,

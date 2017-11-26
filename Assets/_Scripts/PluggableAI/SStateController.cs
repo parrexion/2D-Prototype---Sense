@@ -24,21 +24,18 @@ public class SStateController : StateController {
 		else
 			animInfo.mouseDirection = -1;
 
-		switch (currentState.stateString.ToString()) 
+		switch (currentState.stateString) 
 		{
-		case "Idle":
-//			Debug.Log("IDLE");
+		case AnimationScript.StateString.Idle:
 			if (lastTime != animInfo.mouseDirection){
 				lastTime = animInfo.mouseDirection;
 			}
 			else
 				animInfo.mouseDirection = 0;
 			break;
-		case "WalkLeft":
-//			Debug.Log("WLAK");
+		case AnimationScript.StateString.WalkLeft:
 			break;
-		case "Attack":
-//			Debug.Log("Attack");
+		case AnimationScript.StateString.Attack:
 			animInfo.attacking = true;
 			break;
 		default:

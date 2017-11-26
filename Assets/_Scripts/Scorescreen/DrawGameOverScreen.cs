@@ -4,9 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class DrawGameOverScreen : MonoBehaviour {
+public class DrawGameOverScreen : BasicGUIButtons {
 
-	public GameObject canvas;
 	public Text timeText;
 
 	public StringVariable wonBattleState;
@@ -14,11 +13,8 @@ public class DrawGameOverScreen : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		canvas = GameObject.Find("Canvas - Game over");
-		timeText = canvas.transform.Find("DeadTime").GetComponent<Text>();
-
-		if (wonBattleState.value == "lost") {
-			canvas.SetActive(false);
+		if (wonBattleState.value != "lose") {
+			gameObject.SetActive(false);
 			return;
 		}
 
@@ -34,11 +30,12 @@ public class DrawGameOverScreen : MonoBehaviour {
 
 
 	public void RetryBattle(){
-
+		buttonClickEvent.Invoke();
 		SceneManager.LoadScene((int)BattleConstants.SCENE_INDEXES.BATTLE);
 	}
 
 	public void ReturnToMainScreen(){
+		buttonClickEvent.Invoke();
 		SceneManager.LoadScene((int)BattleConstants.SCENE_INDEXES.MAINMENU);
 	}
 

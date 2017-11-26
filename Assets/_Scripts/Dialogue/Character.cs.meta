@@ -1,10 +1,17 @@
 fileFormatVersion: 2
 guid: 6caa9959b8b8bfb48955b54fb93f283b
-timeCreated: 1494775326
+timeCreated: 1511712242
 licenseType: Free
 MonoImporter:
+  externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - characterSprites: {fileID: 11400000, guid: 925afad142bbfbb41ade6080cf08f1bf, type: 2}
+  - poseSprites: {fileID: 11400000, guid: be66ce74782dbda43a7c3e4f5be33aab, type: 2}
+  - characterIndex: {instanceID: 0}
+  - poseIndex: {instanceID: 0}
+  - characterSprite: {instanceID: 0}
+  - poseSprite: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

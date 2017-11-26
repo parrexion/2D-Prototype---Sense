@@ -1,76 +1,101 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 [System.Serializable]
-public class DialogueLines {
+[RequireComponent(typeof(DialogueScene))]
+public class DialogueLines : MonoBehaviour {
 
-	public int pos = 0;
-	private int filled = 0;
-	
+	public IntVariable currentFrame;
+	public DialogueParser parser;
 	public Dialogue dialogue;
+	public IntVariable selectedDialogue;
+	private DialogueScene scene;
+	
+	public UnityEvent backgroundChanged;
+	public UnityEvent characterChanged;
+	public UnityEvent closeupChanged;
+	public UnityEvent dialogueTextChanged;
 
-	public DialogueLines(Dialogue dialogue){
-		this.dialogue = dialogue;
+
+	void Start() {
+		scene = GetComponent<DialogueScene>();
 	}
 
-	public void NextDialogue(DialogueScene scene){
-		
-		if (pos >= dialogue.size) {
+	public void NextFrame(){
+
+		if (dialogue.size == 0) {
+			dialogue = parser.dialogues.dialogues[selectedDialogue.value];
+			Debug.Log("Lines: " + dialogue.size);
+		}
+
+		if (currentFrame.value >= dialogue.size) {
 			Debug.Log("Reached the end");
 			DialogueAction da = (DAEndDialogue)ScriptableObject.CreateInstance("DAEndDialogue");
 			da.Act(scene,null);
 		}
 		else {
-			CompareScenes(scene,dialogue.frames[pos]);
-			pos++;
+			CompareScenes(dialogue.frames[currentFrame.value]);
+			currentFrame.value++;
 		}
 	}
 
-	public void CompareScenes(DialogueScene scene, Frame frame) {
+	private void CompareScenes(Frame frame) {
 		DialogueAction da;
 		DialogueJsonItem data;
-		if (scene.background != frame.background) {
+		if (scene.background.value != frame.background) {
 			da = (DASetBackground)ScriptableObject.CreateInstance("DASetBackground");
 			data = new DialogueJsonItem();
 			data.character = frame.background;
 			da.Act(scene,data);
+			backgroundChanged.Invoke();
 		}
+		bool changed = false;
 		for (int i = 0; i < 4; i++) {
-			if (scene.positions[i] != frame.currentCharacters[i] || scene.currentPoses[i] != frame.currentPoses[i]) {
+			if (scene.characters[i].value != frame.currentCharacters[i] || scene.poses[i].value != frame.currentPoses[i]) {
 				da = (DAAddCharacter)ScriptableObject.CreateInstance("DAAddCharacter");
 				data = new DialogueJsonItem();
 				data.position1 = i;
 				data.character = frame.currentCharacters[i];
 				data.pose = frame.currentPoses[i];
 				da.Act(scene,data);
+				changed = true;
 			}
 		}
+		if (changed) {
 
-		if (scene.talkingCharacter != frame.talkingPosition || scene.talkingPose != frame.currentCharacters[frame.talkingPosition]) {
-			da = (DAChangeTalking)ScriptableObject.CreateInstance("DAChangeTalking");
-			data = new DialogueJsonItem();
-			data.character = frame.talkingPosition;
-			data.pose = frame.currentCharacters[frame.talkingPosition];
-			da.Act(scene,data);
+			Debug.Log("current: ");	
+			characterChanged.Invoke();
 		}
 
-		if (scene.characterName != frame.characterName) {
+		changed = false;
+		if (scene.talkingCharacter.value != frame.talkingPosition || scene.talkingPose.value != frame.currentCharacters[frame.talkingPosition]) {
+			da = (DAChangeTalking)ScriptableObject.CreateInstance("DAChangeTalking");
+			data = new DialogueJsonItem();
+			data.character = scene.characters[frame.talkingPosition].value;
+			data.pose = scene.poses[frame.talkingPosition].value;
+			da.Act(scene,data);
+			changed = true;
+		}
+
+		if (scene.talkingName.value != frame.characterName) {
 			da = (DASetName)ScriptableObject.CreateInstance("DASetName");
 			data = new DialogueJsonItem();
 			data.text = frame.characterName;
 			da.Act(scene,data);
+			changed = true;
 		}
 
-		if (scene.dialogue != frame.dialogueText) {
+		if (changed)
+			closeupChanged.Invoke();
+
+		if (scene.dialogueText.value != frame.dialogueText) {
 			da = (DASetText)ScriptableObject.CreateInstance("DASetText");
 			data = new DialogueJsonItem();
 			data.text = frame.dialogueText;
 			da.Act(scene,data);
+			dialogueTextChanged.Invoke();
 		}
-	}
-
-	public int getFilled(){
-		return filled;
 	}
 }

@@ -7,9 +7,8 @@ public class DAAddCharacter : DialogueAction {
 
 	public override bool Act (DialogueScene scene, DialogueJsonItem data)
 	{
-
-		scene.positions[data.position1] = data.character;
-		scene.currentPoses[data.position1] = data.pose;
+		scene.characters[data.position1].value = data.character;
+		scene.poses[data.position1].value = data.pose;
 
 		return true;
 	}

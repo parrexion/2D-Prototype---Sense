@@ -7,8 +7,7 @@ public class DASetText : DialogueAction {
 
 	public override bool Act(DialogueScene scene, DialogueJsonItem data) {
 
-		scene.dialogue = data.text;
-//		Debug.Log("Text:  "+data.text);
+		scene.dialogueText.value = data.text;
 
 		return true;
 	}

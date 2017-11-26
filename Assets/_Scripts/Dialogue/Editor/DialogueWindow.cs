@@ -5,7 +5,7 @@ using UnityEditor.SceneManagement;
 
 public class DialogueWindow : EditorWindow {
 
-	public IntVariable backGroundIndex;
+	public IntVariable backgroundIndex;
 
 	public IntVariable character0;
 	public IntVariable character1;
@@ -164,8 +164,9 @@ public class DialogueWindow : EditorWindow {
 			GUILayout.Label("Character " + i, EditorStyles.boldLabel);
 			GUILayout.Label("Name ");
 			characters[i].value = EditorGUILayout.IntField("Character", characters[i].value);
-			characters[i].value = EditorGUILayout.IntField("Pose", poses[i].value);
-			GUILayout.Label(charSprites.values[characters[i].value].texture);
+			poses[i].value = EditorGUILayout.IntField("Pose", poses[i].value);
+			if (characters[i].value != -1)
+				GUILayout.Label(charSprites.values[characters[i].value].texture);
 
 			GUILayout.EndArea();
 		}

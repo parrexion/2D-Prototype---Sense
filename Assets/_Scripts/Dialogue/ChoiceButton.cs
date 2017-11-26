@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class ChoiceButton : MonoBehaviour {
 
 	public string option;
-	public DialogueManager box;
+	public DialogueTextHandler box;
 
 
 	public void SetText(string newText) {

@@ -167,19 +167,14 @@ public class BattleController : MonoBehaviour {
 	}
 
 	public IEnumerator WonBattle(float time){
-		Transform t = Instantiate(saveValues);
-		t.name = "SaveValues";
-		DontDestroyOnLoad(t);
-
-		ScoreScreenValues values = t.GetComponent<ScoreScreenValues>();
-		values.wonBattle = true;
-		values.lostBattle = false;
-		values.time = currentTime;
-		values.noEnemies = enemyController.numberOfEnemies;
-		values.enemiesDefeated = enemyController.GetEnemiesDefeated();
-		values.exp = enemyController.GetTotalExp();
-		values.money = enemyController.GetTotalMoney();
-		values.treasures = enemyController.GetTreasures();
+		ScoreScreenValues values = GetComponent<ScoreScreenValues>();
+		values.wonBattleState.value = "win";
+		values.time.value = currentTime;
+		values.noEnemies.value = enemyController.numberOfEnemies;
+		// values.enemiesDefeated = enemyController.GetEnemiesDefeated();
+		values.exp.value = enemyController.GetTotalExp();
+		values.money.value = enemyController.GetTotalMoney();
+		// values.treasures = enemyController.GetTreasures();
 
 		if (storyValues.battleType == StoryValues.BattleType.SPECIFIC || storyValues.battleType == StoryValues.BattleType.TOWER)
 			SaveController.instance.Save();
@@ -191,15 +186,10 @@ public class BattleController : MonoBehaviour {
 	}
 
 	public IEnumerator EscapedBattle(float time){
-		Transform t = Instantiate(saveValues);
-		t.name = "SaveValues";
-		DontDestroyOnLoad(t);
-
-		ScoreScreenValues values = t.GetComponent<ScoreScreenValues>();
-		values.wonBattle = false;
-		values.lostBattle = false;
-		values.time = currentTime;
-		values.noEnemies = enemyController.numberOfEnemies;
+		ScoreScreenValues values = GetComponent<ScoreScreenValues>();
+		values.wonBattleState.value = "escape";
+		values.time.value = currentTime;
+		values.noEnemies.value = enemyController.numberOfEnemies;
 
 		Debug.Log("Escaped battle");
 
@@ -217,14 +207,9 @@ public class BattleController : MonoBehaviour {
 	public IEnumerator LostBattle(float time) {
 		winText.text = "YOU DIED";
 
-		Transform t = Instantiate(saveValues);
-		t.name = "SaveValues";
-		DontDestroyOnLoad(t);
-
-		ScoreScreenValues values = t.GetComponent<ScoreScreenValues>();
-		values.wonBattle = false;
-		values.lostBattle = true;
-		values.time = currentTime;
+		ScoreScreenValues values = GetComponent<ScoreScreenValues>();
+		values.wonBattleState.value = "lose";
+		values.time.value = currentTime;
 
 		yield return new WaitForSeconds(time);
 		SceneManager.LoadScene((int)BattleConstants.SCENE_INDEXES.SCORE);

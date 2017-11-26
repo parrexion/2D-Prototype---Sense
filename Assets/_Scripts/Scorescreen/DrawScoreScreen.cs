@@ -6,7 +6,6 @@ using UnityEngine.SceneManagement;
 
 public class DrawScoreScreen : BasicGUIButtons {
 
-	public GameObject canvas;
 	public StringVariable wonBattleState;
 	public FloatVariable battleTime;
 	public FloatVariable playerMaxHealth;
@@ -26,16 +25,9 @@ public class DrawScoreScreen : BasicGUIButtons {
 	// Use this for initialization
 	void Start () {
 		if (wonBattleState.value == "lose") {
-			canvas.SetActive(false);
+			gameObject.SetActive(false);
 			return;
 		}
-
-		escapedText = canvas.transform.Find("Escaped").GetComponent<Text>();
-		timeText = canvas.transform.Find("Time").GetComponent<Text>();
-		healthText = canvas.transform.Find("Health").GetComponent<Text>();
-		noEnemiesText = canvas.transform.Find("NoEnemies").GetComponent<Text>();
-		expText = canvas.transform.Find("EXP").GetComponent<Text>();
-		moneyText = canvas.transform.Find("Money").GetComponent<Text>();
 
 		SetValues();
 	}

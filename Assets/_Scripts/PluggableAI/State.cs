@@ -8,7 +8,7 @@ public class State : ScriptableObject {
 	public Action[] actions;
 	public Transition[] transitions;
 	public Color sceneGizmoColor = Color.grey;
-	public AnimationScript.stateString stateString = AnimationScript.stateString.Idle;
+	public AnimationScript.StateString stateString = AnimationScript.StateString.Idle;
 
 
 	public void UpdateState(StateController controller){

@@ -19,7 +19,7 @@ public class SpiritGridController : MonoBehaviour {
 	public Transform lightningEffect;
 	public Transform barrier;
 
-	public float AttackTimeLimit = 1.5f;
+	public float AttackTimeLimit = 2.0f;
 	private float currentAttackTimeLimit;
 
 	public AnimationScript animScript;
@@ -93,9 +93,13 @@ public class SpiritGridController : MonoBehaviour {
 		}
 		else if (Input.GetKeyDown(KeyCode.S)) {
 			if (grid.attackDirection == BattleConstants.Direction.NEUTRAL)
-				endReached = 0;
+				endReached = 3;
 			else if (grid.MoveGrid(BattleConstants.Direction.DOWN))
 				endReached = 1;
+			else {
+				endReached = 3;
+				grid.CancelGrid();
+			}
 		}
 		else if (Input.GetKeyDown(KeyCode.D)) {
 			if (grid.attackDirection == BattleConstants.Direction.LEFT) {
@@ -142,11 +146,11 @@ public class SpiritGridController : MonoBehaviour {
 
 		if (endReached == 1) {
 			Attack();
-			attacking = 15;
+			attacking = 10;
 		}
 		else if (endReached == 2) {
 			EndAttack();
-			attacking = 40;
+			attacking = 30;
 		}
 		else if (endReached == 3) {
 			Block();

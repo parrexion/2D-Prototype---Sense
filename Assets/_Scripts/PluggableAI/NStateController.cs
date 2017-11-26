@@ -44,9 +44,9 @@ public class NStateController : StateController {
 		animInfo.jumping = false;
 		animInfo.mouseDirection = 0;
 
-		switch (currentState.stateString.ToString()) 
+		switch (currentState.stateString) 
 		{
-		case "Idle":
+		case AnimationScript.StateString.Idle:
 			if (lastTime != moveDirection){
 				animInfo.mouseDirection = moveDirection;
 				lastTime = moveDirection;
@@ -54,16 +54,16 @@ public class NStateController : StateController {
 			else
 				animInfo.mouseDirection = 0;
 			break;
-		case "WalkLeft":
+		case AnimationScript.StateString.WalkLeft:
 			lastTime = moveDirection;
 			animInfo.mouseDirection = moveDirection;
 			break;
-		case "Chase":
+		case AnimationScript.StateString.Chase:
 			animInfo.chasing = true;
 			lastTime = moveDirection;
 			animInfo.mouseDirection = moveDirection;
 			break;
-		case "Attack":
+		case AnimationScript.StateString.Attack:
 			animInfo.attacking = true;
 			lastTime = moveDirection;
 			animInfo.mouseDirection = moveDirection;
