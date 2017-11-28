@@ -5,7 +5,7 @@
 /// </summary>
 public class MoveHomingNoLimit : MonoBehaviour {
 
-	public bool active = true;
+	public BoolVariable paused;
 	public Vector2 speed = new Vector2(5, 5);
 	public Vector2 moveToPosition = new Vector2(0, 0);
 	public Transform objectToFollow;
@@ -24,7 +24,7 @@ public class MoveHomingNoLimit : MonoBehaviour {
 	/// Updates the position to fololow the object or position.
 	/// </summary>
 	void FixedUpdate() {
-		if (!active)
+		if (paused.value)
 			return;
 
 		if (objectToFollow == null) {

@@ -16,6 +16,8 @@ public class MainMenuScript : BasicGUIButtons {
 	public Button levelMinus5Button;
 	public Text levelMinus5Text;
 
+	public IntVariable currentTowerLevel;
+
 
 	void Start(){
 		recordText.text = "Highest level: " + SaveController.instance.bestLevel;
@@ -48,11 +50,11 @@ public class MainMenuScript : BasicGUIButtons {
 	public void LevelSelectClicked(int levelPosition){
 		int bestLevel = SaveController.instance.bestLevel;
 		if (levelPosition == 1) 
-			MainControllerScript.instance.storyValues.towerLevel = 1;
+			currentTowerLevel.value = 1;
 		else if (levelPosition == 3)
-			MainControllerScript.instance.storyValues.towerLevel = bestLevel;
+			currentTowerLevel.value = bestLevel;
 		else
-			MainControllerScript.instance.storyValues.towerLevel = bestLevel - 5;
+			currentTowerLevel.value = bestLevel - 5;
 
 		MainControllerScript.instance.storyValues.clearedTutorial = true;
 		MainControllerScript.instance.storyValues.bv.scenarioName = "";

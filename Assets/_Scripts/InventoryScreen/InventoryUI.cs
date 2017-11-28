@@ -108,12 +108,13 @@ public class InventoryUI : MonoBehaviour {
 
 	public void GoBack() {
 		if (MainControllerScript.instance.storyValues.battleType == StoryValues.BattleType.SPECIFIC ||
-				MainControllerScript.instance.storyValues.battleType == StoryValues.BattleType.TOWER){
-					buttttton.SimpleMoveToScene("tower");
-				}
-				else {
-					buttttton.SimpleMoveToScene("tutorial");
-				}
+			MainControllerScript.instance.storyValues.battleType == StoryValues.BattleType.TOWER){
+
+			buttttton.SimpleMoveToScene("tower");
+		}
+		else {
+			buttttton.SimpleMoveToScene("tutorial");
+		}
 
 	}
 }

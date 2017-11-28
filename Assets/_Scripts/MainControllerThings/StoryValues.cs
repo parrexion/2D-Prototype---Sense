@@ -17,7 +17,7 @@ public class StoryValues : MonoBehaviour {
 
 	public bool initiated = false;
 	public int storyInt = 0;
-	public int towerLevel = 0;
+	public IntVariable towerLevel;
 	public bool clearedTutorial = false;
 	public BoolVariable equipAvailable;
 	public BattleType battleType = BattleType.STORY;
@@ -432,8 +432,8 @@ public class StoryValues : MonoBehaviour {
 		case "towerNormal":
 			bvTower.scenarioName = "Level "+towerLevel;
 			bvTower.numberOfEnemies = -1;
-			FillQuota(30+30*towerLevel);
-			towerLevel++;
+			FillQuota(30+30*towerLevel.value);
+			towerLevel.value++;
 			break;
 		case "towerBoss":
 			break;

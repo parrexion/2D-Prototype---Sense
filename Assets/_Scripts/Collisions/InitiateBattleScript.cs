@@ -10,22 +10,15 @@ using UnityEngine.SceneManagement;
 public class InitiateBattleScript : MonoBehaviour {
 
 	public Text fightText;
-
+	public BoolVariable paused;
 
 	/// <summary>
-	/// When colliding with a BattleTrigger, start the battle.
+	/// Function which starts the start battle animation.
 	/// </summary>
-	/// <param name="otherCollider"></param>
-	void OnTriggerEnter2D(Collider2D otherCollider){
-		BattleTrigger battle = otherCollider.gameObject.GetComponent<BattleTrigger>();
-		if (battle == null) {
-			Debug.Log("Null");
-			return;
-		}
-
-		Debug.Log("Battle is: "+ battle.battleType);
-		MainControllerScript.instance.storyValues.battleType = battle.battleType;
-		StartCoroutine(StartBattle(2f));
+	/// <param name="time"></param>
+	/// <returns></returns>
+	public void StartBattle(float time) {
+		StartCoroutine(BattleDelay(time));
 	}
 
 	/// <summary>
@@ -33,9 +26,9 @@ public class InitiateBattleScript : MonoBehaviour {
 	/// </summary>
 	/// <param name="time"></param>
 	/// <returns></returns>
-	private IEnumerator StartBattle(float time){
+	private IEnumerator BattleDelay(float time){
 		fightText.text = "FIGHT!";
-		GetComponent<OutsidePlayerController>().SetActive(false);
+		paused.value = true;
 		yield return new WaitForSeconds(time);
 		SceneManager.LoadScene((int)BattleConstants.SCENE_INDEXES.BATTLE);
 	}

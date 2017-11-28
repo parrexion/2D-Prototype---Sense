@@ -7,6 +7,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 public class SaveController : MonoBehaviour {
 
 	public int bestLevel = 0;
+	public IntVariable currentTowerLevel;
 	private string filePath = "";
 
 
@@ -14,12 +15,12 @@ public class SaveController : MonoBehaviour {
 	public static SaveController instance;
 
 	void Awake() {
-		filePath = Application.persistentDataPath+"/playerInfo.dat";
 		if (instance != null) {
 			Destroy(gameObject);
 		}
 		else {
 			instance = this;
+			filePath = Application.persistentDataPath+"/playerInfo.dat";
 		}
 	}
 	#endregion
@@ -28,8 +29,7 @@ public class SaveController : MonoBehaviour {
 		BinaryFormatter bf = new BinaryFormatter();
 		FileStream file = File.Open(filePath,FileMode.OpenOrCreate);
 
-		int level = MainControllerScript.instance.storyValues.towerLevel;
-		bestLevel = Mathf.Max(bestLevel,level);
+		bestLevel = Mathf.Max(bestLevel,currentTowerLevel.value);
 
 		bf.Serialize(file,bestLevel);
 		file.Close();

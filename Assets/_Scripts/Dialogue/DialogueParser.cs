@@ -17,7 +17,8 @@ public class DialogueParser : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		string file = "Assets/StreamingAssets/test.json";
+		string file = Path.Combine(Application.streamingAssetsPath,"test.json");
+		// string file = "Assets/StreamingAssets/test.json";
 		dialogues = new DialogueCollection(1);
 
 		currentLocation.value = "Location: Dialogue";
