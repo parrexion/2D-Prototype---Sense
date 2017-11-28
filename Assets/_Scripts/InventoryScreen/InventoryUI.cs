@@ -10,6 +10,7 @@ public class InventoryUI : MonoBehaviour {
 	public Transform kanjiEquipItemsParent;
 	public Transform kanjiBagItemsParent;
 	public Transform destroyTransform;
+	public BasicGUIButtons buttttton;
 
 	Inventory inventory;
 	InventorySlot[] gearEquipSlots;
@@ -103,5 +104,16 @@ public class InventoryUI : MonoBehaviour {
 				kanjiBagSlots[i].ClearSlot();
 			}
 		}
+	}
+
+	public void GoBack() {
+		if (MainControllerScript.instance.storyValues.battleType == StoryValues.BattleType.SPECIFIC ||
+				MainControllerScript.instance.storyValues.battleType == StoryValues.BattleType.TOWER){
+					buttttton.SimpleMoveToScene("tower");
+				}
+				else {
+					buttttton.SimpleMoveToScene("tutorial");
+				}
+
 	}
 }

@@ -38,12 +38,16 @@ public class DrawScoreScreen : BasicGUIButtons {
 		if (wonBattleState.value == "win") {
 			escapedText.text = "";
 		}
+		else if (wonBattleState.value == "escape") {
+			expGained.value = 0;
+			moneyGained.value = 0;
+		}
 		timeText.text = "Time:    "+ battleTime.value.ToString("F2") + "s";
 		if (playerMaxHealth.value == 0) {
 			healthText.text = "";
 		}
 		else {
-			float currentHealth = playerMaxHealth.value - playerNormalDamage.value + playerSpiritDamage.value;
+			float currentHealth = playerMaxHealth.value - (playerNormalDamage.value + playerSpiritDamage.value);
 			healthText.text = "Health left:    "+((currentHealth)/(playerMaxHealth.value) * 100) + "%";
 		}
 		if (wonBattleState.value == "win") {

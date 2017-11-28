@@ -9,8 +9,12 @@ using UnityEngine.SceneManagement;
 /// </summary>
 public class GameStartScript : MonoBehaviour {
 
+	public BoolVariable gameStarted;
+	
+
 	// Use this for initialization
 	void Start () {
+		gameStarted.value = false;
 		StartCoroutine(LoadEverything());
 	}
 

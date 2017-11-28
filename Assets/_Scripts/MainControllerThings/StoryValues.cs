@@ -19,6 +19,7 @@ public class StoryValues : MonoBehaviour {
 	public int storyInt = 0;
 	public int towerLevel = 0;
 	public bool clearedTutorial = false;
+	public BoolVariable equipAvailable;
 	public BattleType battleType = BattleType.STORY;
 	[HideInInspector] public BattleValues bv;
 	[HideInInspector] public BattleValues bvRandom;
@@ -141,7 +142,10 @@ public class StoryValues : MonoBehaviour {
 	/// <summary>
 	/// A list of all the tutorial battles in the game which contains what kanji and enemies to use.
 	/// </summary>
-	private void Story(){
+	public void Story(){
+
+		equipAvailable.value = (battleType != BattleType.STORY || storyInt > 10);
+
 		switch(storyInt)
 		{
 		case 0:

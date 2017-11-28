@@ -25,8 +25,6 @@ public class BattleController : MonoBehaviour {
 	public CharacterHealthGUI characterHealth;
 	public AudioClip pauseClip;
 
-	public Transform saveValues;
-
 	public float startupTime = 3.0f;
 	public int state = 0;
 	public bool escape = false;

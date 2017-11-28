@@ -21,6 +21,11 @@ public class DialogueLines : MonoBehaviour {
 
 	void Start() {
 		scene = GetComponent<DialogueScene>();
+		currentFrame.value = 0;
+		backgroundChanged.Invoke();
+		characterChanged.Invoke();
+		closeupChanged.Invoke();
+		dialogueTextChanged.Invoke();
 	}
 
 	public void NextFrame(){

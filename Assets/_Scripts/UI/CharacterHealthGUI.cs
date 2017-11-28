@@ -7,6 +7,7 @@ public class CharacterHealthGUI : MonoBehaviour {
 	private enum Side {TOP,BOTTOM};
 
 	public BoolVariable pause;
+	public BoolVariable playerImmortal;
 	public FloatVariable playerMaxHp;
 	public FloatVariable normalDamageTaken;
 	public FloatVariable spiritDamageTaken;
@@ -47,7 +48,7 @@ public class CharacterHealthGUI : MonoBehaviour {
 	}
 
     void OnGUI() {
-		if (pause.value)
+		if (pause.value || playerImmortal.value)
 			return;
 
         GUI.DrawTexture(emptyRect,emptyTexture);

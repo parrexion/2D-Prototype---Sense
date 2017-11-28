@@ -18,11 +18,15 @@ public class MainMenuScript : BasicGUIButtons {
 
 
 	void Start(){
-		recordText.text = "Highest level: "+SaveController.instance.bestLevel;
+		recordText.text = "Highest level: " + SaveController.instance.bestLevel;
 	}
 
 	public void TutorialClicked(){
-		MainControllerScript.instance.storyValues.battleType = StoryValues.BattleType.STORY;
+		StoryValues story = MainControllerScript.instance.storyValues;
+		story.battleType = StoryValues.BattleType.STORY;
+		story.storyInt = 0;
+		story.Story();
+
 		buttonClickEvent.Invoke();
 		SceneManager.LoadScene((int)BattleConstants.SCENE_INDEXES.BATTLE);
 	}
