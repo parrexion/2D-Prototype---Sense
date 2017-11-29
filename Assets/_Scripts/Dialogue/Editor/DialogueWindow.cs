@@ -22,6 +22,7 @@ public class DialogueWindow : EditorWindow {
 	public StringVariable talkingName;
 	public IntVariable talkingIndex;
 	public IntVariable talkingPose;
+	public StringVariable dialogueText;
 
 	public SpriteListVariable charSprites;
 
@@ -43,7 +44,7 @@ public class DialogueWindow : EditorWindow {
 	Rect[] rectChar;
 	Rect dialogueRect = new Rect();
 
-	string[] talkingLabels = new string[] { "Talk0", "Talk1", "Talk2", "Talk3", "Talk4" };
+	string[] talkingLabels = new string[] { "Talk0", "Talk2", "Talk4", "Talk3", "Talk1" };
 
 
 	[MenuItem("Window/DialogueEditor")]
@@ -63,11 +64,12 @@ public class DialogueWindow : EditorWindow {
 	void OnGUI() {
 
 		GUILayout.Label("Character selector", EditorStyles.boldLabel);
+		EditorGUIUtility.labelWidth = 70;
 		DrawBackgrounds();
 
 		HeaderStuff();
 		HorizontalStuff();
-		BottomStuff();
+		CharacterBottomStuff();
 	}
 
 	void SceneOpenedCallback( Scene _scene, OpenSceneMode _mode) {
@@ -154,31 +156,56 @@ public class DialogueWindow : EditorWindow {
 			InitTextures();
 		}
 
+		GUILayout.Space(10);
+
+		backgroundIndex.value = EditorGUILayout.IntField("Background", backgroundIndex.value);
+
 		GUILayout.EndArea();
 	}
 
 	void HorizontalStuff() {
+		int[] indexList = new int[]{0,2,4,3,1};
 		for (int i = 0; i < 5; i++) {
 			GUILayout.BeginArea(rectChar[i]);
-
-			GUILayout.Label("Character " + i, EditorStyles.boldLabel);
+			GUILayout.Label("Character " + indexList[i], EditorStyles.boldLabel);
 			GUILayout.Label("Name ");
-			characters[i].value = EditorGUILayout.IntField("Character", characters[i].value);
-			poses[i].value = EditorGUILayout.IntField("Pose", poses[i].value);
-			if (characters[i].value != -1)
-				GUILayout.Label(charSprites.values[characters[i].value].texture);
+
+			if (indexList[i] == 4) {
+				talkingName.value = EditorGUILayout.TextField("", talkingName.value);
+				GUILayout.EndArea();
+				continue;
+			}
+
+			characters[indexList[i]].value = EditorGUILayout.IntField("Character", characters[indexList[i]].value);
+			poses[indexList[i]].value = EditorGUILayout.IntField("Pose", poses[indexList[i]].value);
+			if (characters[indexList[i]].value != -1)
+				GUILayout.Label(charSprites.values[characters[indexList[i]].value].texture);
 
 			GUILayout.EndArea();
 		}
 	}
 
-	void BottomStuff() {
+	void CharacterBottomStuff() {
 		GUILayout.BeginArea(dialogueRect);
 
 		talkingIndex.value = GUILayout.SelectionGrid(talkingIndex.value, talkingLabels, 5);
 		if (GUILayout.Button("NONE")) {
 			talkingIndex.value = -1;
 		}
+
+		GUILayout.BeginHorizontal();
+
+		GUILayout.BeginVertical();
+		GUILayout.Label(talkingName.value);
+		GUILayout.Label("Pose");
+		GUILayout.EndVertical();
+
+		if (talkingIndex.value != -1)
+			GUILayout.Label(charSprites.values[characters[talkingIndex.value].value].texture);
+
+		dialogueText.value = EditorGUILayout.TextArea(dialogueText.value, GUILayout.Height(50));
+
+		GUILayout.EndHorizontal();
 
 		GUILayout.EndArea();
 	}
