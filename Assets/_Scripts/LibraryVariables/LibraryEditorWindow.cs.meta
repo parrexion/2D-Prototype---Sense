@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: a017a9e970e2a9440b5da2e89cdc9b3d
+timeCreated: 1511959864
+licenseType: Free
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - characterLibrary: {fileID: 11400000, guid: e09884b91d0610e46ab9f72700f7f677, type: 2}
+  - charPrefab: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
