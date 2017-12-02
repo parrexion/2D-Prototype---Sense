@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: a017a9e970e2a9440b5da2e89cdc9b3d
+timeCreated: 1512252741
+licenseType: Free
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - battleLibrary: {fileID: 11400000, guid: 9df050c932e95ad4a8d04ba17b99fe4e, type: 2}
+  - battlePrefab: {fileID: 11400000, guid: 84d29a1c27cb59d429d51a3c4dfc7e08, type: 2}
+  - characterLibrary: {fileID: 11400000, guid: e09884b91d0610e46ab9f72700f7f677, type: 2}
+  - charPrefab: {fileID: 11400000, guid: d6d2495589f13de4db0c3705de9feade, type: 2}
+  - enemyLibrary: {fileID: 11400000, guid: 35486eb2ec26012468288b206c04cb41, type: 2}
+  - enemyPrefab: {fileID: 11400000, guid: b5c47667ecc1bb5458ef4172cba1c7cb, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
