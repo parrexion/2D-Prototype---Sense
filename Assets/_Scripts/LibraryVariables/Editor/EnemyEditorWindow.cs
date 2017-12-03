@@ -9,17 +9,22 @@ public class EnemyEditorWindow {
 	public ScrObjListVariable enemyLibrary;
 	public EnemyEntry enemyValues;
 
-	// Display screen
-	Rect dispRect = new Rect();
-	Texture2D dispTex;
-
 	// Selection screen
 	Rect selectRect = new Rect();
 	Texture2D selectTex;
 	Vector2 scrollPos;
+	int selEnemy = -1;
+
+	// Display screen
+	Rect dispRect = new Rect();
+	Texture2D dispTex;
+	Vector2 dispScrollPos;
+	Vector2 floatRangeRep;
+
+	//Creation
 	string enemyUuid;
 	Color repColor = new Color();
-	int selEnemy = -1;
+
 
 	public EnemyEditorWindow(ScrObjListVariable entries, EnemyEntry container){
 		enemyLibrary = entries;
@@ -114,16 +119,46 @@ public class EnemyEditorWindow {
 
 	void DrawDisplayWindow() {
 		GUILayout.BeginArea(dispRect);
-		GUI.skin.textField.margin.right = 20;
+		dispScrollPos = GUILayout.BeginScrollView(dispScrollPos, GUILayout.Width(dispRect.width), 
+					GUILayout.Height(dispRect.height-25));
 
-		GUILayout.Label("Selected Enemy", EditorStyles.boldLabel);
-		EditorGUILayout.SelectableLabel("UUID: " + enemyValues.uuid);
+		EditorGUILayout.SelectableLabel("Selected Enemy    UUID: " + enemyValues.uuid, EditorStyles.boldLabel);
 		enemyValues.repColor = EditorGUILayout.ColorField("List color", enemyValues.repColor);
-
-		GUILayout.Space(20);
-
 		enemyValues.entryName = EditorGUILayout.TextField("Name", enemyValues.entryName);
 
+		GUILayout.Label("General", EditorStyles.boldLabel);
+		enemyValues.maxhp = EditorGUILayout.IntField("Max HP", enemyValues.maxhp);
+		enemyValues.speed = EditorGUILayout.Vector2Field("Movement speed", enemyValues.speed);
+
+		GUILayout.Label("AI values", EditorStyles.boldLabel);
+		var serializedObject = new SerializedObject(enemyValues);
+        var property = serializedObject.FindProperty("waitStates");
+        serializedObject.Update();
+        EditorGUILayout.PropertyField(property, true);
+        serializedObject.ApplyModifiedProperties();
+
+		floatRangeRep = new Vector2(enemyValues.waitTimeLimits.minValue, enemyValues.waitTimeLimits.maxValue);
+        floatRangeRep = EditorGUILayout.Vector2Field("Wait time limits", floatRangeRep);
+        enemyValues.waitTimeLimits.minValue = floatRangeRep.x;
+		enemyValues.waitTimeLimits.maxValue = floatRangeRep.y;
+
+		enemyValues.chaseTimeLimit = EditorGUILayout.FloatField("Chase time limit", enemyValues.chaseTimeLimit);
+        enemyValues.fleeDistance = EditorGUILayout.FloatField("Flee distance", enemyValues.fleeDistance);
+        enemyValues.fleeTimeLimit = EditorGUILayout.FloatField("Flee time limit", enemyValues.fleeTimeLimit);
+
+		GUILayout.Label("AI values", EditorStyles.boldLabel);
+        enemyValues.meleeRange = EditorGUILayout.FloatField("Melee range", enemyValues.meleeRange);
+        enemyValues.attackRate = EditorGUILayout.FloatField("Attack rate", enemyValues.attackRate);
+        enemyValues.attacks = EditorGUILayout.IntField("Attacks", enemyValues.attacks);
+        enemyValues.meleeTimeStartup = EditorGUILayout.FloatField("Melee time startup", enemyValues.meleeTimeStartup);
+        enemyValues.meleeTimeAnimation = EditorGUILayout.FloatField("Melee time animation", enemyValues.meleeTimeAnimation);
+
+        GUILayout.Label("Reward", EditorStyles.boldLabel);
+        enemyValues.exp = EditorGUILayout.IntField("Exp yield", enemyValues.exp);
+        enemyValues.money = EditorGUILayout.IntField("Money yield", enemyValues.money);
+        //Add some kind of loot table
+
+		GUILayout.EndScrollView();
 		GUILayout.EndArea();
 	}
 	
