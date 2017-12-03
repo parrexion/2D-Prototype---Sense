@@ -14,7 +14,7 @@ public class ScrObjListVariable : ScriptableObject {
 	public void GenerateDictionary() {
 		entries.Clear();
 		representations.Clear();
-		for (int i = 0; i < list.Count; i++) {
+		for (int i = list.Count-1; i >= 0 ; i--) {
 			entries.Add(list[i].uuid, list[i]);
 			AddRepresentation(list[i]);
 		}
@@ -58,12 +58,9 @@ public class ScrObjListVariable : ScriptableObject {
 
 	private void AddRepresentation(ScrObjLibraryEntry entry) {
 		GUIContent con = new GUIContent();
-		con.text = entry.entryName;
+		con.text = entry.uuid;
 		Texture2D tex;
-		if (entry.representImage != null){
-			tex = (Texture2D)entry.representImage;
-		}
-		else if (entry.repColor.a != 0){
+		if (entry.repColor.a != 0){
 			tex = GenerateColorTexture(entry.repColor);
 		}
 		else {

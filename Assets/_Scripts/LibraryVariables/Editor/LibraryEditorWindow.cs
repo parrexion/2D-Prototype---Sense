@@ -93,18 +93,9 @@ public class LibraryEditorWindow : EditorWindow {
 		headerTex.SetPixel(0, 0, new Color(0.5f, 0.2f, 0.8f));
 		headerTex.Apply();
 
-		switch ((State)currentWindow)
-		{
-			case State.BATTLE:
-				battleEditor.InitializeWindow();
-				break;
-			case State.CHARACTER:
-				characterEditor.InitializeWindow();
-				break;
-			case State.ENEMY:
-				enemyEditor.InitializeWindow();
-				break;
-		}
+		battleEditor.InitializeWindow();
+		characterEditor.InitializeWindow();
+		enemyEditor.InitializeWindow();
 	}
 
 	void DrawHeader() {

@@ -7,7 +7,7 @@ using System.Collections.Generic;
 public class CharacterEditorWindow {
 
 	public ScrObjListVariable characterLibrary;
-	public CharacterEntry charPrefab;
+	public CharacterEntry charValues;
 
 	// Selection screen
 	Rect selectRect = new Rect();
@@ -20,9 +20,7 @@ public class CharacterEditorWindow {
 	RectOffset dispOffset = new RectOffset();
 	Texture2D dispTex;
 	string charUuid = "";
-	Color charRepColor = new Color();
 	string charName = "";
-	Texture2D entryImage;
 
 	//Creation
 	string uuid = "";
@@ -33,10 +31,10 @@ public class CharacterEditorWindow {
 	/// Constructor
 	/// </summary>
 	/// <param name="entries"></param>
-	/// <param name="prefab"></param>
-	public CharacterEditorWindow(ScrObjListVariable entries, CharacterEntry prefab){
+	/// <param name="container"></param>
+	public CharacterEditorWindow(ScrObjListVariable entries, CharacterEntry container){
 		characterLibrary = entries;
-		charPrefab = prefab;
+		charValues = container;
 		LoadLibrary();
 	}
 
@@ -66,12 +64,20 @@ public class CharacterEditorWindow {
 
 	public void DrawWindow() {
 
+		GUILayout.BeginHorizontal();
 		GUILayout.Label("Character Editor", EditorStyles.boldLabel);
+		if (selCharacter != -1) {
+			if (GUILayout.Button("Save Character")){
+				SaveSelectedCharacter();
+			}
+		}
+		GUILayout.EndHorizontal();
 
 		GenerateAreas();
 		DrawBackgrounds();
 		DrawEntryList();
-		DrawDisplayWindow();
+		if (selCharacter != -1)
+			DrawDisplayWindow();
 	}
 
 	void GenerateAreas() {
@@ -96,7 +102,7 @@ public class CharacterEditorWindow {
 		GUILayout.BeginArea(selectRect);
 
 		scrollPos = EditorGUILayout.BeginScrollView(scrollPos, GUILayout.Width(selectRect.width), 
-						GUILayout.Height(selectRect.height-150));
+						GUILayout.Height(selectRect.height-130));
 
 		int oldSelected = selCharacter;
 		selCharacter = GUILayout.SelectionGrid(selCharacter, characterLibrary.GetRepresentations(),1);
@@ -106,7 +112,7 @@ public class CharacterEditorWindow {
 			SelectCharacter();
 
 		EditorGUIUtility.labelWidth = 110;
-		GUILayout.Label("Create Character", EditorStyles.boldLabel);
+		GUILayout.Label("Create new character", EditorStyles.boldLabel);
 		uuid = EditorGUILayout.TextField("Character Name", uuid);
 		repColor = EditorGUILayout.ColorField("Display Color", repColor);
 		if (GUILayout.Button("Create new")) {
@@ -125,7 +131,7 @@ public class CharacterEditorWindow {
 
 		GUILayout.Label("Selected Character", EditorStyles.boldLabel);
 		EditorGUILayout.SelectableLabel("UUID: " + charUuid);
-		charRepColor = EditorGUILayout.ColorField("List color", charRepColor);
+		charValues.repColor = EditorGUILayout.ColorField("List color", charValues.repColor);
 
 		GUILayout.Space(20);
 
@@ -146,21 +152,21 @@ public class CharacterEditorWindow {
 		// Nothing selected
 		if (selCharacter == -1) {
 			charUuid = "";
-			charRepColor = new Color();
+			charValues.repColor = new Color();
 			charName = "";
 		}
 		else {
 			// Something selected
 			CharacterEntry ce = (CharacterEntry)characterLibrary.GetEntryByIndex(selCharacter);
 			charUuid = ce.uuid;
-			charRepColor = ce.repColor;
+			charValues.repColor = ce.repColor;
 			charName = ce.entryName;
 		}
 	}
 
 	void SaveSelectedCharacter() {
 		CharacterEntry ce = (CharacterEntry)characterLibrary.GetEntryByIndex(selCharacter);
-		ce.repColor = charRepColor;
+		ce.repColor = charValues.repColor;
 		ce.entryName = charName;
 		Undo.RecordObject(ce, "Updated character");
 		EditorUtility.SetDirty(ce);
@@ -175,7 +181,6 @@ public class CharacterEditorWindow {
 		c.name = uuid;
 		c.uuid = uuid;
 		c.entryName = uuid;
-		c.representImage = null;
 		c.repColor = repColor;
 		// c.representImage = characterLibrary.GenerateColorTexture(repColor);
 		string path = "Assets/LibraryData/Characters/" + uuid + ".asset";

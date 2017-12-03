@@ -132,6 +132,7 @@ public class BattleController : MonoBehaviour {
 			backchange.transformSpirit.sprite = backchange.spiritBackgrounds[bv.backgroundLeft];
 			backchange.gridController.enabled = true;
 		}
+		
 		winText.text = "GET READY!";
 		state = 0;
 	}

@@ -31,6 +31,7 @@ public static class BattleConstants {
 	public static int BALANCE_IMAGES = 9;
 
 	//Weapon container
+	public const int MAX_EQUIPPED_KANJI = 4;
 	public const int kanjiSize = 64;
 	public const float kanjiGuiOffsetWidth = 0.55f;
 	public const float kanjiGuiOffsetHeight = 0.05f;
