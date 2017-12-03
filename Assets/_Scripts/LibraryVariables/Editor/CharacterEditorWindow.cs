@@ -19,8 +19,6 @@ public class CharacterEditorWindow {
 	Rect dispRect = new Rect();
 	RectOffset dispOffset = new RectOffset();
 	Texture2D dispTex;
-	string charUuid = "";
-	string charName = "";
 
 	//Creation
 	string uuid = "";
@@ -130,12 +128,12 @@ public class CharacterEditorWindow {
 		GUI.skin.textField.margin.right = 20;
 
 		GUILayout.Label("Selected Character", EditorStyles.boldLabel);
-		EditorGUILayout.SelectableLabel("UUID: " + charUuid);
+		EditorGUILayout.SelectableLabel("UUID: " + charValues.uuid);
 		charValues.repColor = EditorGUILayout.ColorField("List color", charValues.repColor);
 
 		GUILayout.Space(20);
 
-		charName = EditorGUILayout.TextField("Name", charName);
+		charValues.entryName = EditorGUILayout.TextField("Name", charValues.entryName);
 
 		if (selCharacter != -1) {
 			GUILayout.Space(100);
@@ -149,25 +147,20 @@ public class CharacterEditorWindow {
 	}
 
 	void SelectCharacter() {
-		// Nothing selected
 		if (selCharacter == -1) {
-			charUuid = "";
-			charValues.repColor = new Color();
-			charName = "";
+			// Nothing selected
+			charValues.ResetValues();
 		}
 		else {
 			// Something selected
 			CharacterEntry ce = (CharacterEntry)characterLibrary.GetEntryByIndex(selCharacter);
-			charUuid = ce.uuid;
-			charValues.repColor = ce.repColor;
-			charName = ce.entryName;
+			charValues.CopyValues(ce);
 		}
 	}
 
 	void SaveSelectedCharacter() {
 		CharacterEntry ce = (CharacterEntry)characterLibrary.GetEntryByIndex(selCharacter);
-		ce.repColor = charValues.repColor;
-		ce.entryName = charName;
+		ce.CopyValues(charValues);
 		Undo.RecordObject(ce, "Updated character");
 		EditorUtility.SetDirty(ce);
 	}
@@ -182,7 +175,6 @@ public class CharacterEditorWindow {
 		c.uuid = uuid;
 		c.entryName = uuid;
 		c.repColor = repColor;
-		// c.representImage = characterLibrary.GenerateColorTexture(repColor);
 		string path = "Assets/LibraryData/Characters/" + uuid + ".asset";
 
 		AssetDatabase.CreateAsset(c, path);

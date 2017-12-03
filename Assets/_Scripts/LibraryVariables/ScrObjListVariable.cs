@@ -32,7 +32,7 @@ public class ScrObjListVariable : ScriptableObject {
 	}
 
 	public ScrObjLibraryEntry GetEntryByIndex(int index) {
-		return list[index];
+		return list[list.Count - index - 1];
 	}
 
 	public List<string> GetKeys() {
@@ -50,7 +50,7 @@ public class ScrObjListVariable : ScriptableObject {
 	}
 
 	public void RemoveEntryByIndex(int index) {
-		ScrObjLibraryEntry entry = list[index];
+		ScrObjLibraryEntry entry = GetEntryByIndex(index);
 		list.RemoveAt(index);
 		entries.Remove(entry.uuid);
 		representations.RemoveAt(index);

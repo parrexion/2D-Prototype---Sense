@@ -190,7 +190,7 @@ public class BattleEditorWindow {
 	void SaveSelectedBattle() {
 		BattleEntry be = (BattleEntry)battleLibrary.GetEntryByIndex(selBattle);
 		be.CopyValues(battleValues);
-		Undo.RecordObject(be, "Updated character");
+		Undo.RecordObject(be, "Updated battle");
 		EditorUtility.SetDirty(be);
 	}
 
