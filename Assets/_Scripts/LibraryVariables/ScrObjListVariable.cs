@@ -10,13 +10,10 @@ public class ScrObjListVariable : ScriptableObject {
 	[SerializeField] private List<ScrObjLibraryEntry> list = new List<ScrObjLibraryEntry>();
 	[SerializeField] private List<GUIContent> representations = new List<GUIContent>();
 	private Dictionary<string, ScrObjLibraryEntry> entries = new Dictionary<string, ScrObjLibraryEntry>();
-	
-	Texture2D tex;
 
 	public void GenerateDictionary() {
 		entries.Clear();
 		representations.Clear();
-		tex = new Texture2D(1,1);
 		for (int i = 0; i < list.Count; i++) {
 			entries.Add(list[i].uuid, list[i]);
 			AddRepresentation(list[i]);
@@ -34,6 +31,10 @@ public class ScrObjListVariable : ScriptableObject {
 		return entries[uuid];
 	}
 
+	public ScrObjLibraryEntry GetEntryByIndex(int index) {
+		return list[index];
+	}
+
 	public List<string> GetKeys() {
 		return entries.Keys.ToList();
 	}
@@ -48,12 +49,48 @@ public class ScrObjListVariable : ScriptableObject {
 		AddRepresentation(obj);
 	}
 
+	public void RemoveEntryByIndex(int index) {
+		ScrObjLibraryEntry entry = list[index];
+		list.RemoveAt(index);
+		entries.Remove(entry.uuid);
+		representations.RemoveAt(index);
+	}
+
 	private void AddRepresentation(ScrObjLibraryEntry entry) {
 		GUIContent con = new GUIContent();
 		con.text = entry.entryName;
-		tex.SetPixel(0,0,Random.ColorHSV());
-		tex.Apply();
+		Texture2D tex;
+		if (entry.representImage != null){
+			tex = (Texture2D)entry.representImage;
+		}
+		else if (entry.repColor.a != 0){
+			tex = GenerateColorTexture(entry.repColor);
+		}
+		else {
+			tex = GenerateRandomColor();
+		}
 		con.image = tex;
 		representations.Add(con);
+	}
+
+	Texture2D GenerateRandomColor() {
+		Color c = Random.ColorHSV(0f, 1f, 1f, 1f, 0.5f, 1f);
+		return GenerateColorTexture(c);
+	}
+
+	public Texture2D GenerateColorTexture(Color c) {
+		int size = 32;
+		Texture2D tex = new Texture2D(size,size);
+		for (int i = 0; i < size; i++) {
+			for (int j = 0; j < size; j++) {
+				tex.SetPixel(i,j,c);
+			}
+		}
+		tex.Apply();
+		return tex;
+	}
+
+	public Sprite TextureToSprite(Texture2D tex) {
+		return Sprite.Create(tex, new Rect(0.0f, 0.0f, tex.width, tex.height), new Vector2(0.5f, 0.5f), 100.0f);
 	}
 }

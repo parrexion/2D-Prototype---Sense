@@ -7,7 +7,6 @@ using System.Collections.Generic;
 public class EnemyEditorWindow {
 
 	public ScrObjListVariable enemyLibrary;
-
 	public EnemyEntry enemyPrefab;
 
 	// Display screen

@@ -35,7 +35,7 @@ public class LibraryEditorWindow : EditorWindow {
 
 	void OnEnable() {
 		EditorSceneManager.sceneOpened += SceneOpenedCallback;
-		LoadLibrary();
+		LoadLibraries();
 	}
 
 	void OnDisable() {
@@ -73,12 +73,11 @@ public class LibraryEditorWindow : EditorWindow {
 	/// <summary>
 	/// Loads all the libraries for the editors.
 	/// </summary>
-	void LoadLibrary() {
+	void LoadLibraries() {
 		battleEditor = new BattleEditorWindow(battleLibrary, battlePrefab);
 		battleEditor.LoadLibrary();
 		
 		characterEditor = new CharacterEditorWindow(characterLibrary, charPrefab);
-		characterEditor.LoadLibrary();
 		
 		enemyEditor = new EnemyEditorWindow(enemyLibrary, enemyPrefab);
 		enemyEditor.LoadLibrary();

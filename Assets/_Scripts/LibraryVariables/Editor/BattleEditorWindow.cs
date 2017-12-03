@@ -7,7 +7,6 @@ using System.Collections.Generic;
 public class BattleEditorWindow {
 
 	public ScrObjListVariable battleLibrary;
-
 	public BattleEntry battlePrefab;
 
 	// Display screen
@@ -118,4 +117,5 @@ public class BattleEditorWindow {
 		AssetDatabase.Refresh();
 
 	}
+
 }
