@@ -8,6 +8,7 @@ public class CharacterEditorWindow {
 
 	public ScrObjListVariable characterLibrary;
 	public CharacterEntry charValues;
+	public SpriteListVariable poseLibrary;
 
 	// Selection screen
 	Rect selectRect = new Rect();
@@ -19,10 +20,11 @@ public class CharacterEditorWindow {
 	Rect dispRect = new Rect();
 	RectOffset dispOffset = new RectOffset();
 	Texture2D dispTex;
+	Vector2 dispScrollPos;
 
 	//Creation
 	string uuid = "";
-	Color repColor = new Color(0.5f,0.5f,0.5f,1f);
+	Color repColor = new Color();
 
 
 	/// <summary>
@@ -30,9 +32,10 @@ public class CharacterEditorWindow {
 	/// </summary>
 	/// <param name="entries"></param>
 	/// <param name="container"></param>
-	public CharacterEditorWindow(ScrObjListVariable entries, CharacterEntry container){
+	public CharacterEditorWindow(ScrObjListVariable entries, CharacterEntry container, SpriteListVariable poses){
 		characterLibrary = entries;
 		charValues = container;
+		poseLibrary = poses;
 		LoadLibrary();
 	}
 
@@ -57,6 +60,8 @@ public class CharacterEditorWindow {
 		dispTex.Apply();
 
 		dispOffset.right = 10;
+
+		charValues.ResetValues();
 	}
 
 
@@ -125,6 +130,9 @@ public class CharacterEditorWindow {
 
 	void DrawDisplayWindow() {
 		GUILayout.BeginArea(dispRect);
+		dispScrollPos = GUILayout.BeginScrollView(dispScrollPos, GUILayout.Width(dispRect.width), 
+							GUILayout.Height(dispRect.height-25));
+
 		GUI.skin.textField.margin.right = 20;
 
 		GUILayout.Label("Selected Character", EditorStyles.boldLabel);
@@ -134,15 +142,13 @@ public class CharacterEditorWindow {
 		GUILayout.Space(20);
 
 		charValues.entryName = EditorGUILayout.TextField("Name", charValues.entryName);
+		charValues.defaultColor = (Sprite)EditorGUILayout.ObjectField("Default color", charValues.defaultColor, typeof(Sprite),false);
 
-		if (selCharacter != -1) {
-			GUILayout.Space(100);
-
-			if (GUILayout.Button("Save Character")) {
-				SaveSelectedCharacter();
-			}
+		for (int i = 0; i < poseLibrary.values.Length; i++) {
+			EditorGUILayout.ObjectField(poseLibrary.values[i].name, poseLibrary.values[i], typeof(Sprite),false);
 		}
 
+		GUILayout.EndScrollView();
 		GUILayout.EndArea();
 	}
 
@@ -153,13 +159,13 @@ public class CharacterEditorWindow {
 		}
 		else {
 			// Something selected
-			CharacterEntry ce = (CharacterEntry)characterLibrary.GetEntryByIndex(selCharacter);
+			CharacterEntry ce = (CharacterEntry)characterLibrary.GetEntryBySelectedIndex(selCharacter);
 			charValues.CopyValues(ce);
 		}
 	}
 
 	void SaveSelectedCharacter() {
-		CharacterEntry ce = (CharacterEntry)characterLibrary.GetEntryByIndex(selCharacter);
+		CharacterEntry ce = (CharacterEntry)characterLibrary.GetEntryBySelectedIndex(selCharacter);
 		ce.CopyValues(charValues);
 		Undo.RecordObject(ce, "Updated character");
 		EditorUtility.SetDirty(ce);
@@ -183,10 +189,12 @@ public class CharacterEditorWindow {
 		EditorUtility.SetDirty(characterLibrary);
 		AssetDatabase.SaveAssets();
 		AssetDatabase.Refresh();
+
+		SelectCharacter();
 	}
 
 	void DeleteCharacter() {
-		CharacterEntry c = (CharacterEntry)characterLibrary.GetEntryByIndex(selCharacter);
+		CharacterEntry c = (CharacterEntry)characterLibrary.GetEntryBySelectedIndex(selCharacter);
 		string path = "Assets/LibraryData/Characters/" + c.uuid + ".asset";
 
 		characterLibrary.RemoveEntryByIndex(selCharacter);

@@ -14,15 +14,16 @@ public class LibraryEditorWindow : EditorWindow {
 
 	public BattleEditorWindow battleEditor;
 	public ScrObjListVariable battleLibrary;
-	public BattleEntry battlePrefab;
+	public BattleEntry battleContainer;
 
 	public CharacterEditorWindow characterEditor;
 	public ScrObjListVariable characterLibrary;
-	public CharacterEntry charPrefab;
+	public CharacterEntry charContainer;
+	public SpriteListVariable poseList;
 
 	public EnemyEditorWindow enemyEditor;
 	public ScrObjListVariable enemyLibrary;
-	public EnemyEntry enemyPrefab;
+	public EnemyEntry enemyContainer;
 
 	private int currentWindow = (int)State.CHARACTER;
 	private string[] toolbarStrings = new string[] {"Battles", "Characters", "Enemies"};
@@ -74,12 +75,12 @@ public class LibraryEditorWindow : EditorWindow {
 	/// Loads all the libraries for the editors.
 	/// </summary>
 	void LoadLibraries() {
-		battleEditor = new BattleEditorWindow(battleLibrary, battlePrefab);
+		battleEditor = new BattleEditorWindow(battleLibrary, battleContainer);
 		battleEditor.LoadLibrary();
 		
-		characterEditor = new CharacterEditorWindow(characterLibrary, charPrefab);
+		characterEditor = new CharacterEditorWindow(characterLibrary, charContainer, poseList);
 		
-		enemyEditor = new EnemyEditorWindow(enemyLibrary, enemyPrefab);
+		enemyEditor = new EnemyEditorWindow(enemyLibrary, enemyContainer);
 		enemyEditor.LoadLibrary();
 
 		InitializeWindow();

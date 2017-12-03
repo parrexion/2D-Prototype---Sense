@@ -16,7 +16,7 @@ public class ScrObjListVariable : ScriptableObject {
 		representations.Clear();
 		for (int i = list.Count-1; i >= 0 ; i--) {
 			entries.Add(list[i].uuid, list[i]);
-			AddRepresentation(list[i]);
+			AddRepresentation(list[i], false);
 		}
 		if (list.Count != entries.Keys.Count)
 			Debug.Log("One or more uuids are not unique!.");
@@ -32,6 +32,10 @@ public class ScrObjListVariable : ScriptableObject {
 	}
 
 	public ScrObjLibraryEntry GetEntryByIndex(int index) {
+		return list[index];
+	}
+
+	public ScrObjLibraryEntry GetEntryBySelectedIndex(int index) {
 		return list[list.Count - index - 1];
 	}
 
@@ -46,7 +50,7 @@ public class ScrObjListVariable : ScriptableObject {
 	public void AddEntry(ScrObjLibraryEntry obj) {
 		list.Add(obj);
 		entries.Add(obj.entryName, obj);
-		AddRepresentation(obj);
+		AddRepresentation(obj, true);
 	}
 
 	public void RemoveEntryByIndex(int index) {
@@ -56,9 +60,9 @@ public class ScrObjListVariable : ScriptableObject {
 		representations.RemoveAt(index);
 	}
 
-	private void AddRepresentation(ScrObjLibraryEntry entry) {
-		GUIContent con = new GUIContent();
-		con.text = entry.uuid;
+	private void AddRepresentation(ScrObjLibraryEntry entry, bool insert) {
+		GUIContent content = new GUIContent();
+		content.text = entry.uuid;
 		Texture2D tex;
 		if (entry.repColor.a != 0){
 			tex = GenerateColorTexture(entry.repColor);
@@ -66,8 +70,13 @@ public class ScrObjListVariable : ScriptableObject {
 		else {
 			tex = GenerateRandomColor();
 		}
-		con.image = tex;
-		representations.Add(con);
+		content.image = tex;
+		if (insert) {
+			Debug.Log("Inserted");
+			representations.Insert(0,content);
+		}
+		else
+			representations.Add(content);
 	}
 
 	Texture2D GenerateRandomColor() {

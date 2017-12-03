@@ -7,4 +7,18 @@ public class CharacterEntry : ScrObjLibraryEntry {
 
 	public Sprite defaultColor;
 	public Sprite[] poses;
+
+
+	public override void ResetValues() {
+		base.ResetValues();
+
+		defaultColor = null;
+	}
+
+	public override void CopyValues(ScrObjLibraryEntry other) {
+		base.CopyValues(other);
+		CharacterEntry ce = (CharacterEntry)other;
+
+		defaultColor = ce.defaultColor;
+	}
 }

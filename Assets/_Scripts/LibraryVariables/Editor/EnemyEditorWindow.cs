@@ -134,13 +134,13 @@ public class EnemyEditorWindow {
 		}
 		else {
 			// Something selected
-			EnemyEntry ee = (EnemyEntry)enemyLibrary.GetEntryByIndex(selEnemy);
+			EnemyEntry ee = (EnemyEntry)enemyLibrary.GetEntryBySelectedIndex(selEnemy);
 			enemyValues.CopyValues(ee);
 		}
 	}
 
 	void SaveSelectedEnemy() {
-		EnemyEntry ee = (EnemyEntry)enemyLibrary.GetEntryByIndex(selEnemy);
+		EnemyEntry ee = (EnemyEntry)enemyLibrary.GetEntryBySelectedIndex(selEnemy);
 		ee.CopyValues(enemyValues);
 		Undo.RecordObject(ee, "Updated enemy");
 		EditorUtility.SetDirty(ee);
@@ -164,10 +164,12 @@ public class EnemyEditorWindow {
 		AssetDatabase.CreateAsset(ee, path);
 		AssetDatabase.SaveAssets();
 		AssetDatabase.Refresh();
+
+		SelectEnemy();
 	}
 
 	void DeleteEnemy() {
-		EnemyEntry ee = (EnemyEntry)enemyLibrary.GetEntryByIndex(selEnemy);
+		EnemyEntry ee = (EnemyEntry)enemyLibrary.GetEntryBySelectedIndex(selEnemy);
 		string path = "Assets/LibraryData/Enemies/" + ee.uuid + ".asset";
 
 		enemyLibrary.RemoveEntryByIndex(selEnemy);

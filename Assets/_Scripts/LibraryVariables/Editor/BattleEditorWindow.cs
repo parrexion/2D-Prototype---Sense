@@ -182,13 +182,13 @@ public class BattleEditorWindow {
 		}
 		else {
 			// Something selected
-			BattleEntry be = (BattleEntry)battleLibrary.GetEntryByIndex(selBattle);
+			BattleEntry be = (BattleEntry)battleLibrary.GetEntryBySelectedIndex(selBattle);
 			battleValues.CopyValues(be);
 		}
 	}
 
 	void SaveSelectedBattle() {
-		BattleEntry be = (BattleEntry)battleLibrary.GetEntryByIndex(selBattle);
+		BattleEntry be = (BattleEntry)battleLibrary.GetEntryBySelectedIndex(selBattle);
 		be.CopyValues(battleValues);
 		Undo.RecordObject(be, "Updated battle");
 		EditorUtility.SetDirty(be);
@@ -211,10 +211,12 @@ public class BattleEditorWindow {
 		AssetDatabase.CreateAsset(be, path);
 		AssetDatabase.SaveAssets();
 		AssetDatabase.Refresh();
+
+		SelectBattle();
 	}
 
 	void DeleteBattle() {
-		BattleEntry be = (BattleEntry)battleLibrary.GetEntryByIndex(selBattle);
+		BattleEntry be = (BattleEntry)battleLibrary.GetEntryBySelectedIndex(selBattle);
 		string path = "Assets/LibraryData/Battles/" + be.uuid + ".asset";
 
 		battleLibrary.RemoveEntryByIndex(selBattle);
