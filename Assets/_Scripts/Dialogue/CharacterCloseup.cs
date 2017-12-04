@@ -5,9 +5,9 @@ using UnityEngine.UI;
 
 public class CharacterCloseup : MonoBehaviour {
 
-	public StringListVariable characterNameLibrary;
-	public SpriteListVariable characterLibrary;
-	public SpriteListVariable poseLibrary;
+	public ScrObjListVariable charLib;
+	// public SpriteListVariable characterLibrary;
+	// public SpriteListVariable poseLibrary;
 
 	public StringVariable characterName;
 	public IntVariable characterIndex;
@@ -33,10 +33,13 @@ public class CharacterCloseup : MonoBehaviour {
 			poseRenderer.enabled = false;
 		}
 		else {
+			CharacterEntry ce = (CharacterEntry)charLib.GetEntryByIndex(characterIndex.value);
 			characterRenderer.enabled = true;
 			poseRenderer.enabled = true;
-			characterRenderer.sprite = characterLibrary.values[characterIndex.value];
-			poseRenderer.sprite = poseLibrary.values[poseIndex.value];
+			// characterRenderer.sprite = characterLibrary.values[characterIndex.value];
+			// poseRenderer.sprite = poseLibrary.values[poseIndex.value];
+			characterRenderer.sprite = ce.defaultColor;
+			poseRenderer.sprite = ce.poses[poseIndex.value];
 		}
 	}
 }

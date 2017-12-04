@@ -130,7 +130,7 @@ public class EnemyEditorWindow {
 		enemyValues.maxhp = EditorGUILayout.IntField("Max HP", enemyValues.maxhp);
 		enemyValues.speed = EditorGUILayout.Vector2Field("Movement speed", enemyValues.speed);
 
-		GUILayout.Label("AI values", EditorStyles.boldLabel);
+		// GUILayout.Label("AI values", EditorStyles.boldLabel);
 		var serializedObject = new SerializedObject(enemyValues);
         var property = serializedObject.FindProperty("waitStates");
         serializedObject.Update();
@@ -146,7 +146,7 @@ public class EnemyEditorWindow {
         enemyValues.fleeDistance = EditorGUILayout.FloatField("Flee distance", enemyValues.fleeDistance);
         enemyValues.fleeTimeLimit = EditorGUILayout.FloatField("Flee time limit", enemyValues.fleeTimeLimit);
 
-		GUILayout.Label("AI values", EditorStyles.boldLabel);
+		GUILayout.Label("Attacking", EditorStyles.boldLabel);
         enemyValues.meleeRange = EditorGUILayout.FloatField("Melee range", enemyValues.meleeRange);
         enemyValues.attackRate = EditorGUILayout.FloatField("Attack rate", enemyValues.attackRate);
         enemyValues.attacks = EditorGUILayout.IntField("Attacks", enemyValues.attacks);

@@ -29,7 +29,6 @@ public class MainControllerScript : MonoBehaviour {
 
 		DontDestroyOnLoad(transform.gameObject);
 		instance = this;
-		EnemyLibrary.Initialize();
 		storyValues = GetComponentInChildren<StoryValues>();
 		battleGUI = GetComponent<BattleGUIController>();
 		inventory = GetComponent<Inventory>();

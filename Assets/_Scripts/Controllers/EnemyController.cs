@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class EnemyController : MonoBehaviour {
 
 	public BattleValues bv;
+	public ScrObjListVariable enemyLibrary;
 	public bool initiated = false;
 
 	public static int enemyId = 0;
@@ -79,7 +80,7 @@ public class EnemyController : MonoBehaviour {
 	/// <param name="index"></param>
 	/// <returns></returns>
 	private EnemyGroup CreateGroup(int index){
-		EnemyValues values = EnemyLibrary.enemyData[enemyModelNames[index]];
+		EnemyEntry values = (EnemyEntry) enemyLibrary.GetEntryByIndex(index);
 		EnemyGroup group = new EnemyGroup(enemyId, values.maxhp);
 		enemyId++;
 		group.deadEnemy = deadEnemy;
@@ -94,7 +95,7 @@ public class EnemyController : MonoBehaviour {
 	/// <param name="values"></param>
 	/// <param name="group"></param>
 	/// <param name="index"></param>
-	private void CreateN(EnemyValues values, EnemyGroup group, int index){
+	private void CreateN(EnemyEntry values, EnemyGroup group, int index){
 		if (!spawnBottom)
 			return;
 		ggobjN = Instantiate(enemyNormalModels[index]) as Transform;
@@ -105,7 +106,7 @@ public class EnemyController : MonoBehaviour {
 		ggobjN.position = state.GetRandomLocation();
 		hurt.group = group;
 		state.enemyid = enemyId;
-		state.values = values;
+		state.values.CopyValues(values);
 
 		group.bot = hurt;
 		group.nStateController = state;
@@ -119,7 +120,7 @@ public class EnemyController : MonoBehaviour {
 	/// <param name="values"></param>
 	/// <param name="group"></param>
 	/// <param name="index"></param>
-	private void CreateS(EnemyValues values, EnemyGroup group, int index){
+	private void CreateS(EnemyEntry values, EnemyGroup group, int index){
 		if (!spawnTop)
 			return;
 		ggobjS = Instantiate(enemySpiritModels[index]) as Transform;
@@ -137,7 +138,7 @@ public class EnemyController : MonoBehaviour {
 		hurt.group = group;
 
 		state.enemyid = enemyId;
-		state.values = values;
+		state.values.CopyValues(values);
 
 		group.top = hurt;
 		group.sStateController = state;

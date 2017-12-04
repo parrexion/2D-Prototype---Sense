@@ -14,6 +14,7 @@ public class BattleEditorWindow {
 	Rect dispRect2 = new Rect();
 	Texture2D dispTex;
 	Vector2 dispScrollPos;
+	private string[] toolbarStrings = new string[] {"Overworld", "Dialogue", "Battle"};
 
 	// Selection screen
 	Rect selectRect = new Rect();
@@ -127,15 +128,19 @@ public class BattleEditorWindow {
 		EditorGUILayout.SelectableLabel("Selected Battle:   " + battleValues.uuid, EditorStyles.boldLabel);
 		battleValues.entryName = EditorGUILayout.TextField("Battle Name", battleValues.entryName);
 
+		battleValues.nextLocation = (BattleEntry.NextLocation)GUILayout.Toolbar((int)battleValues.nextLocation,toolbarStrings);
+
 		battleValues.escapeButtonEnabled = EditorGUILayout.Toggle("Escapable Battle", battleValues.escapeButtonEnabled);
 
 		//Tutorial
+		GUILayout.BeginHorizontal();
 		battleValues.isTutorial = EditorGUILayout.Toggle("Tutorial Battle", battleValues.isTutorial);
 		if (battleValues.isTutorial) {
-			GUILayout.BeginHorizontal();
-			battleValues.escapeTextReq = EditorGUILayout.Toggle("Require Escape to start", battleValues.escapeTextReq);
 			battleValues.playerInvincible = EditorGUILayout.Toggle("Player invincible", battleValues.playerInvincible);
-			GUILayout.EndHorizontal();
+		}
+		GUILayout.EndHorizontal();
+		
+		if (battleValues.isTutorial) {
 			battleValues.backgroundHintLeft = (Sprite)EditorGUILayout.ObjectField("Left side tutorial screen", battleValues.backgroundHintLeft, typeof(Sprite),false);
 			battleValues.backgroundHintRight = (Sprite)EditorGUILayout.ObjectField("Right side tutorial screen", battleValues.backgroundHintRight, typeof(Sprite),false);
 			battleValues.removeSide = (BattleEntry.RemoveSide)EditorGUILayout.EnumPopup("Battle side to remove for tutotorial screen",battleValues.removeSide);

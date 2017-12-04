@@ -39,6 +39,10 @@ public class ScrObjListVariable : ScriptableObject {
 		return list[list.Count - index - 1];
 	}
 
+	public ScrObjLibraryEntry GetRandomEntry() {
+		return list[Random.Range(0,list.Count)];
+	}
+
 	public List<string> GetKeys() {
 		return entries.Keys.ToList();
 	}

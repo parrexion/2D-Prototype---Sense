@@ -3,8 +3,9 @@ using UnityEngine;
 
 public class Character : MonoBehaviour {
 
-	public SpriteListVariable characterSprites;
-	public SpriteListVariable poseSprites;
+	public ScrObjListVariable characterLibrary;
+	// public SpriteListVariable characterSprites;
+	// public SpriteListVariable poseSprites;
 	public IntVariable characterIndex;
 	public IntVariable poseIndex;
 
@@ -23,10 +24,13 @@ public class Character : MonoBehaviour {
 			poseSprite.enabled = false;
 		}
 		else {
+			CharacterEntry ce = (CharacterEntry)characterLibrary.GetEntryByIndex(characterIndex.value);
 			characterSprite.enabled = true;
 			poseSprite.enabled = true;
-			characterSprite.sprite = characterSprites.values[characterIndex.value];
-			poseSprite.sprite = poseSprites.values[poseIndex.value];
+			// characterSprite.sprite = characterSprites.values[characterIndex.value];
+			// poseSprite.sprite = poseSprites.values[poseIndex.value];
+			characterSprite.sprite = ce.defaultColor;
+			poseSprite.sprite = ce.poses[poseIndex.value];
 		}
 
 	}

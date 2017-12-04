@@ -14,7 +14,7 @@ public class EnemyEntry : ScrObjLibraryEntry {
 	[Header("AI Values")]
 	public List<StateController.WaitStates> waitStates = new List<StateController.WaitStates>();
 	[MinMaxRangeAttribute(0.1f,10.0f)]
-	public RangedFloat waitTimeLimits = new RangedFloat(20f,30f);
+	public RangedFloat waitTimeLimits = new RangedFloat(3f,5f);
 
 	[Range(0.5f,20.0f)]
 	public float chaseTimeLimit = 30f;
@@ -32,8 +32,8 @@ public class EnemyEntry : ScrObjLibraryEntry {
 	[Range(0.1f,10.0f)]
 	public float attackRate = 1f;
 	public int attacks = 1;
-	public float meleeTimeStartup = 0f;
-	public float meleeTimeAnimation = 1f;
+	public float meleeTimeStartup = 0.5f;
+	public float meleeTimeAnimation = 0.5f;
 
 	[Space(5)]
 
@@ -52,7 +52,7 @@ public class EnemyEntry : ScrObjLibraryEntry {
 
         // AI values
         waitStates = new List<StateController.WaitStates>();
-        waitTimeLimits = new RangedFloat(20f,30f);
+        waitTimeLimits = new RangedFloat(3f,5f);
         chaseTimeLimit = 30f;
         fleeDistance = 3f;
         fleeTimeLimit = 30f;
@@ -61,8 +61,8 @@ public class EnemyEntry : ScrObjLibraryEntry {
         meleeRange = 1f;
         attackRate = 1f;
         attacks = 1;
-        meleeTimeStartup = 0f;
-        meleeTimeAnimation = 1f;
+        meleeTimeStartup = 0.5f;
+        meleeTimeAnimation = 0.5f;
 
         // Reward
         exp = 0;

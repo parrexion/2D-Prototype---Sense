@@ -42,7 +42,7 @@ public abstract class StateController : MonoBehaviour {
 
 	[Header("Enemy Values")]
 	//Most of the stats
-	public EnemyValues values;
+	public EnemyEntry values;
 	//
 
 

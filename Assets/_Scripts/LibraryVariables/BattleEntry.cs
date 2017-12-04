@@ -6,11 +6,15 @@ using UnityEngine;
 public class BattleEntry : ScrObjLibraryEntry {
 
 	public enum RemoveSide {NONE,LEFT,RIGHT};
+	public enum NextLocation {OVERWORLD,DIALOGUE,BATTLE};
 
+
+	// General battle things
+	public NextLocation nextLocation = NextLocation.OVERWORLD;
+	public bool escapeButtonEnabled = true;
 	
 	// Tutorial stuff
 	public bool isTutorial = false;
-	public bool escapeTextReq = false;
 	public Sprite backgroundHintLeft = null;
 	public Sprite backgroundHintRight = null;
 	public RemoveSide removeSide = RemoveSide.NONE;
@@ -29,9 +33,6 @@ public class BattleEntry : ScrObjLibraryEntry {
 	public bool useSpecificKanji = false;
 	public Kanji[] equippedKanji = new Kanji[BattleConstants.MAX_EQUIPPED_KANJI];
 
-	// Other
-	public bool escapeButtonEnabled = true;
-
 
 	/// <summary>
 	/// Resets all values to start values.
@@ -40,9 +41,12 @@ public class BattleEntry : ScrObjLibraryEntry {
 	public override void ResetValues() {
 		base.ResetValues();
 
+		// General battle things
+		nextLocation = NextLocation.OVERWORLD;
+		escapeButtonEnabled = true;
+
 		// Tutorial stuff
 		isTutorial = false;
-		escapeTextReq = false;
 		backgroundHintLeft = null;
 		backgroundHintRight = null;
 		removeSide = RemoveSide.NONE;
@@ -61,8 +65,6 @@ public class BattleEntry : ScrObjLibraryEntry {
 		useSpecificKanji = true;
 		equippedKanji = new Kanji[BattleConstants.MAX_EQUIPPED_KANJI];
 
-		// Other
-		escapeButtonEnabled = true;
 	}
 
 	/// <summary>
@@ -73,9 +75,12 @@ public class BattleEntry : ScrObjLibraryEntry {
 		base.CopyValues(other);
 		BattleEntry be = (BattleEntry) other;
 
+		// General battle things
+		nextLocation = be.nextLocation;
+		escapeButtonEnabled = be.escapeButtonEnabled;
+
 		// Tutorial stuff
 		isTutorial = be.isTutorial;
-		escapeTextReq = be.escapeTextReq;
 		backgroundHintLeft = be.backgroundHintLeft;
 		backgroundHintRight = be.backgroundHintRight;
 		removeSide =  be.removeSide;
@@ -99,8 +104,5 @@ public class BattleEntry : ScrObjLibraryEntry {
 		for (int i = 0; i < be.equippedKanji.Length; i++) {
 			equippedKanji[i] = be.equippedKanji[i];
 		}
-
-		// Other
-		escapeButtonEnabled = be.escapeButtonEnabled;
 	}
 }

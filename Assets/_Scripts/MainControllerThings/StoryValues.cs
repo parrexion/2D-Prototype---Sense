@@ -14,6 +14,7 @@ public class StoryValues : MonoBehaviour {
 
 	private Inventory inv;
 	private KanjiList kanjiList;
+	public ScrObjListVariable enemyLibrary;
 
 	public bool initiated = false;
 	public int storyInt = 0;
@@ -60,9 +61,6 @@ public class StoryValues : MonoBehaviour {
 	/// <param name="area"></param>
 	/// <returns></returns>
 	public IEnumerator SetupRandomBattle(string area){
-		while (!EnemyLibrary.initialized) {
-			yield return null;
-		}
 
 		RandomBattle(area);
 		RandomBattle("towerNormal");
@@ -123,13 +121,13 @@ public class StoryValues : MonoBehaviour {
 	/// <param name="quota"></param>
 	private void FillQuota(int quota) {
 		bvTower.numberOfEnemies = 0;
-		Dictionary<string,EnemyValues> enemyData = EnemyLibrary.enemyData;
-		List<string> list = enemyData.Keys.ToList();
-		int length = list.Count;
+		EnemyEntry ee;
 		int r, hp;
 		while (quota > 0) {
-			r = Random.Range(0,length);
-			hp = enemyData[list[r]].maxhp;
+			// ee = (EnemyEntry)enemyLibrary.GetRandomEntry();
+			r = Random.Range(0,3);
+			ee = (EnemyEntry)enemyLibrary.GetEntryByIndex(r);
+			hp = ee.maxhp;
 			if (hp < quota+100) {
 				// Debug.Log("Added "+r);
 				bvTower.enemyTypes.Add(r);
