@@ -5,6 +5,7 @@
 /// </summary>
 public class InventoryUI : MonoBehaviour {
 
+	public StringVariable currentArea;
 	public Transform gearEquipItemsParent;
 	public Transform gearBagItemsParent;
 	public Transform kanjiEquipItemsParent;
@@ -107,9 +108,7 @@ public class InventoryUI : MonoBehaviour {
 	}
 
 	public void GoBack() {
-		if (MainControllerScript.instance.storyValues.battleType == StoryValues.BattleType.SPECIFIC ||
-			MainControllerScript.instance.storyValues.battleType == StoryValues.BattleType.TOWER){
-
+		if (currentArea.value == "Tower"){
 			buttttton.SimpleMoveToScene("tower");
 		}
 		else {

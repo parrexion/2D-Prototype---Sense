@@ -5,13 +5,15 @@ using UnityEngine.UI;
 
 public class EnemyController : MonoBehaviour {
 
-	public BattleValues bv;
-	public ScrObjListVariable enemyLibrary;
+	// public ScrObjListVariable enemyLibrary;
+	public ScrObjListVariable battleLibrary;
+	public StringVariable battleUuid;
+	private BattleEntry be;
 	public bool initiated = false;
 
-	public static int enemyId = 0;
+	private static int enemyId = 0;
 	public int numberOfEnemies;
-	private List<int> enemySelection;
+	private List<EnemyEntry> enemySelection;
 
 	public bool spawnTop = true;
 	public bool spawnBottom = true;
@@ -21,9 +23,9 @@ public class EnemyController : MonoBehaviour {
 	private Transform ggobjS;
 
 	private List<EnemyGroup> groups;
-	public List<string> enemyModelNames;
-	public List<Transform> enemyNormalModels;
-	public List<Transform> enemySpiritModels;
+	private List<string> enemyModelNames;
+	private List<Transform> enemyNormalModels;
+	private List<Transform> enemySpiritModels;
 
 
 	// Use this for initialization
@@ -40,10 +42,11 @@ public class EnemyController : MonoBehaviour {
 			yield return null;
 		}
 
-		bv = MainControllerScript.instance.storyValues.GetBattleValues();
+		be = (BattleEntry)battleLibrary.GetEntry(battleUuid.value);
+		Debug.Log(JsonUtility.ToJson(be));
 
-		numberOfEnemies = bv.numberOfEnemies;
-		enemySelection = bv.enemyTypes;
+		numberOfEnemies = be.numberOfEnemies;
+		enemySelection = be.enemyTypes;
 
 		initiated = true;
 		Debug.Log("EnemyController is ready");
@@ -58,13 +61,12 @@ public class EnemyController : MonoBehaviour {
 		spawnBottom = enableBottom;
 		spawnTop = enableTop;
 		
-		int index, r;
-		if (MainControllerScript.instance.storyValues.battleType != StoryValues.BattleType.SPECIFIC) {
+		int r;
+		if (be.randomizeEnemies) {
 			for (int i = 0; i < numberOfEnemies; i++) {
 				r = Random.Range(0,enemySelection.Count);
-				Debug.Log("r = " + r + ", enemySelection: " + enemySelection.Count);
-				index = enemySelection[r];
-				groups.Add(CreateGroup(index));
+				// Debug.Log("r = " + r + ", enemySelection: " + enemySelection.Count);
+				groups.Add(CreateGroup(enemySelection[r]));
 			}
 		}
 		else {
@@ -79,13 +81,12 @@ public class EnemyController : MonoBehaviour {
 	/// </summary>
 	/// <param name="index"></param>
 	/// <returns></returns>
-	private EnemyGroup CreateGroup(int index){
-		EnemyEntry values = (EnemyEntry) enemyLibrary.GetEntryByIndex(index);
-		EnemyGroup group = new EnemyGroup(enemyId, values.maxhp);
+	private EnemyGroup CreateGroup(EnemyEntry ee) {
+		EnemyGroup group = new EnemyGroup(enemyId, ee.maxhp);
 		enemyId++;
 		group.deadEnemy = deadEnemy;
-		CreateN(values,group,index);
-		CreateS(values,group,index);
+		CreateN(ee,group);
+		CreateS(ee,group);
 		return group;
 	}
 
@@ -95,10 +96,10 @@ public class EnemyController : MonoBehaviour {
 	/// <param name="values"></param>
 	/// <param name="group"></param>
 	/// <param name="index"></param>
-	private void CreateN(EnemyEntry values, EnemyGroup group, int index){
+	private void CreateN(EnemyEntry values, EnemyGroup group){
 		if (!spawnBottom)
 			return;
-		ggobjN = Instantiate(enemyNormalModels[index]) as Transform;
+		ggobjN = Instantiate(values.enemyModelN) as Transform;
 		NStateController state = ggobjN.GetComponent<NStateController>();
 		HurtableEnemyScript hurt = ggobjN.GetComponent<HurtableEnemyScript>();
 		AttackScript attack = ggobjN.GetComponent<AttackScript>();
@@ -106,6 +107,7 @@ public class EnemyController : MonoBehaviour {
 		ggobjN.position = state.GetRandomLocation();
 		hurt.group = group;
 		state.enemyid = enemyId;
+		state.values = ScriptableObject.CreateInstance<EnemyEntry>();
 		state.values.CopyValues(values);
 
 		group.bot = hurt;
@@ -120,10 +122,10 @@ public class EnemyController : MonoBehaviour {
 	/// <param name="values"></param>
 	/// <param name="group"></param>
 	/// <param name="index"></param>
-	private void CreateS(EnemyEntry values, EnemyGroup group, int index){
+	private void CreateS(EnemyEntry values, EnemyGroup group){
 		if (!spawnTop)
 			return;
-		ggobjS = Instantiate(enemySpiritModels[index]) as Transform;
+		ggobjS = Instantiate(values.enemyModelS) as Transform;
 		int side = Random.Range(0,2);
 		SStateController state = ggobjS.GetComponent<SStateController>();
 		HurtableEnemyScript hurt = ggobjS.GetComponent<HurtableEnemyScript>();
@@ -138,6 +140,7 @@ public class EnemyController : MonoBehaviour {
 		hurt.group = group;
 
 		state.enemyid = enemyId;
+		state.values = ScriptableObject.CreateInstance<EnemyEntry>();
 		state.values.CopyValues(values);
 
 		group.top = hurt;

@@ -6,6 +6,8 @@ using UnityEngine;
 public class EnemyEntry : ScrObjLibraryEntry {
 
     [Header("General")]
+    public Transform enemyModelN;
+    public Transform enemyModelS;
 	public int maxhp = 1;
 	public Vector2 speed = new Vector2(0f,0f);
 
@@ -47,6 +49,8 @@ public class EnemyEntry : ScrObjLibraryEntry {
         base.ResetValues();
 
         // General
+        enemyModelN = null;
+        enemyModelS = null;
         maxhp = 1;
         speed = new Vector2(0f,0f);
 
@@ -75,6 +79,8 @@ public class EnemyEntry : ScrObjLibraryEntry {
         EnemyEntry ee = (EnemyEntry)other;
 
         // General
+        enemyModelN = ee.enemyModelN;
+        enemyModelS = ee.enemyModelS;
         maxhp = ee.maxhp;
         speed = ee.speed;
 

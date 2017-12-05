@@ -53,6 +53,7 @@ public class Inventory : MonoBehaviour {
 		destroyItem.item_type = Item.ItemType.DESTROY;
 
 		db = GetComponent<AddItemDB>();
+		FillDefault();
 		Debug.Log("Inventory initialized");
 		initialized = true;
 	}

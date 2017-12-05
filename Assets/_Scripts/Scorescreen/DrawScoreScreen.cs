@@ -6,6 +6,12 @@ using UnityEngine.SceneManagement;
 
 public class DrawScoreScreen : BasicGUIButtons {
 
+	public ScrObjListVariable battleLibrary;
+	public StringVariable battleUuid;
+	public StringVariable dialogueUuid;
+	public FloatVariable playerPosX;
+	public FloatVariable playerPosY;
+
 	public StringVariable wonBattleState;
 	public FloatVariable battleTime;
 	public FloatVariable playerMaxHealth;
@@ -65,13 +71,31 @@ public class DrawScoreScreen : BasicGUIButtons {
 
 
 	public void LeaveScoreScreen(){
-		MainControllerScript.instance.storyValues.AdvanceStory();
 		buttonClickEvent.Invoke();
 
-		if (MainControllerScript.instance.storyValues.battleType == StoryValues.BattleType.SPECIFIC)
-			SceneManager.LoadScene((int)BattleConstants.SCENE_INDEXES.BATTLETOWER);
-		else
-			SceneManager.LoadScene((int)BattleConstants.SCENE_INDEXES.TUTORIAL);
+		BattleEntry be = (BattleEntry)battleLibrary.GetEntry(battleUuid.value);
+		switch (be.nextLocation)
+		{
+			case BattleEntry.NextLocation.OVERWORLD:
+				if (be.changePosition) {
+					playerPosX.value = be.playerPosition.x;
+					playerPosY.value = be.playerPosition.y;
+				}
+				if (be.playerArea == BattleEntry.OverworldArea.TOWER)
+					SceneManager.LoadScene((int)BattleConstants.SCENE_INDEXES.BATTLETOWER);
+				else
+					SceneManager.LoadScene((int)BattleConstants.SCENE_INDEXES.TUTORIAL);
+				break;
+			case BattleEntry.NextLocation.DIALOGUE:
+				dialogueUuid.value = be.nextDialogue.name;
+				SceneManager.LoadScene((int)BattleConstants.SCENE_INDEXES.DIALOGUE);
+				break;
+			case BattleEntry.NextLocation.BATTLE:
+				battleUuid.value = be.nextBattle.uuid;
+				SceneManager.LoadScene((int)BattleConstants.SCENE_INDEXES.BATTLE);
+				break;
+		}
+
 	}
 
 }

@@ -6,6 +6,8 @@ public class WeaponSlot : MonoBehaviour {
 
 	public BoolVariable paused;
 	public ContainerKanji[] kanji;
+	public ScrObjListVariable battleLibrary;
+	public StringVariable battleUuid;
 
 	private float size;
 	private float kanjiHeight;
@@ -21,7 +23,7 @@ public class WeaponSlot : MonoBehaviour {
 		size = BattleConstants.kanjiSize*Screen.height/BattleConstants.screenHeight;
 		
 		SetupTextures();
-		StartCoroutine(SetEquippedKanji());
+		SetEquippedKanji();
 	}
 
 	/// <summary>
@@ -50,7 +52,7 @@ public class WeaponSlot : MonoBehaviour {
 			shootCooldown -= Time.deltaTime;
 		}
 
-		for (int i = 0; i < 4; i++) {
+		for (int i = 0; i < BattleConstants.MAX_EQUIPPED_KANJI; i++) {
 			kanji[i].LowerCooldown();
 		}
 	}
@@ -60,26 +62,30 @@ public class WeaponSlot : MonoBehaviour {
 	/// containerKanji in the WeaponSlot.
 	/// </summary>
 	/// <returns></returns>
-	IEnumerator SetEquippedKanji(){
+	void SetEquippedKanji(){
 		int[] kanjiIndex;
 		MainControllerScript mainController = MainControllerScript.instance;
 
-		while(mainController.storyValues.initiated == false)
-			yield return null;
-
-		kanjiIndex = mainController.storyValues.GetEquippedKanji();
-		// kanjiIndex = new int[]{1,2,3,4};
-
 		float width = BattleConstants.kanjiGuiOffsetWidth;
 		kanjiHeight = BattleConstants.kanjiGuiOffsetHeight;
-		for (int i = 0; i < 4; i++) {
-			if (i >= kanjiIndex.Length) {
-				kanji[i].kanji = mainController.kanjiList.GetKanji(0);
+		BattleEntry be = (BattleEntry)battleLibrary.GetEntry(battleUuid.value);
+
+		for (int i = 0; i < BattleConstants.MAX_EQUIPPED_KANJI; i++) {
+			if (be.useSpecificKanji) {
+				kanji[i].kanji = be.equippedKanji[i];
 			}
 			else {
-				// Debug.Log("Equipped: "+kanjiIndex[i]);
-				kanji[i].kanji = mainController.kanjiList.GetKanji(kanjiIndex[i]);
+				kanjiIndex = mainController.inventory.GetEquippedKanji();
+
+				if (i >= kanjiIndex.Length) {
+					kanji[i].kanji = mainController.kanjiList.GetKanji(0);
+				}
+				else {
+					// Debug.Log("Equipped: "+kanjiIndex[i]);
+					kanji[i].kanji = mainController.kanjiList.GetKanji(kanjiIndex[i]);
+				}
 			}
+			
 			kanji[i].Initialize(i);
 
 			//slotName = new Rect(BattleConstants.kanjiXPos+slot*80,BattleConstants.kanjiYPos-16,400,100);
@@ -95,7 +101,7 @@ public class WeaponSlot : MonoBehaviour {
 		if (paused.value)
 			return;
 
-		for (int i = 0; i < 4; i++) {
+		for (int i = 0; i < BattleConstants.MAX_EQUIPPED_KANJI; i++) {
 
 			if (kanji[i].GetValues().icon == null)
 				continue;

@@ -127,6 +127,8 @@ public class EnemyEditorWindow {
 		enemyValues.entryName = EditorGUILayout.TextField("Name", enemyValues.entryName);
 
 		GUILayout.Label("General", EditorStyles.boldLabel);
+		enemyValues.enemyModelN = (Transform)EditorGUILayout.ObjectField("Enemy normal model", enemyValues.enemyModelN, typeof(Transform),false);
+		enemyValues.enemyModelS = (Transform)EditorGUILayout.ObjectField("Enemy spirit model", enemyValues.enemyModelS, typeof(Transform),false);
 		enemyValues.maxhp = EditorGUILayout.IntField("Max HP", enemyValues.maxhp);
 		enemyValues.speed = EditorGUILayout.Vector2Field("Movement speed", enemyValues.speed);
 

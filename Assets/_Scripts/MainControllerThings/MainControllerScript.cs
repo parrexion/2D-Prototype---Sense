@@ -11,7 +11,6 @@ public class MainControllerScript : MonoBehaviour {
 	public static MainControllerScript instance { get; private set;}
 
 	public bool initiated { get; private set; }
-	public StoryValues storyValues { get; private set;}
 	public BattleGUIController battleGUI { get; private set;}
 	public Inventory inventory { get; private set;}
 	public KanjiList kanjiList { get; private set;}
@@ -29,7 +28,6 @@ public class MainControllerScript : MonoBehaviour {
 
 		DontDestroyOnLoad(transform.gameObject);
 		instance = this;
-		storyValues = GetComponentInChildren<StoryValues>();
 		battleGUI = GetComponent<BattleGUIController>();
 		inventory = GetComponent<Inventory>();
 		kanjiList = GetComponent<KanjiList>();
@@ -40,12 +38,7 @@ public class MainControllerScript : MonoBehaviour {
 	/// Waits to make sure that the necessary modules are loaded before the last modules are initiated.
 	/// </summary>
 	/// <returns></returns>
-	IEnumerator WaitForInitiate(){
-		while (!storyValues.initiated) {
-			Debug.Log("Waiting");
-			yield return null;
-		}
-		inventory.FillDefault();
+	void WaitForInitiate() {
 		SaveController.instance.Load();
 
 		initiated = true;

@@ -5,12 +5,12 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.Events;
 
-[RequireComponent(typeof(BattleValues))]
 public class BattleController : MonoBehaviour {
 
-	public BattleValues bv;
+	public ScrObjListVariable battleLibrary;
+	public StringVariable battleUuid;
+	private BattleEntry be;
 	private BackgroundChanger backchange;
-	private StoryValues storyValues;
 	private AudioController audioController;
 
 	private bool initiated = false;
@@ -33,15 +33,14 @@ public class BattleController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		storyValues = MainControllerScript.instance.storyValues;
 		audioController = AudioController.instance;
-		bv = storyValues.GetBattleValues();
+		be = (BattleEntry)battleLibrary.GetEntry(battleUuid.value);
 
-		escape = bv.escapeTextReq;
+		escape = (be.backgroundHintLeft != null || be.backgroundHintRight != null);
 		invincible.value = true;
 
 		backchange = GameObject.Find("Background Background").GetComponent<BackgroundChanger>();
-		backchange.escapeBattleButton.interactable = bv.escapeButtonEnabled;
+		backchange.escapeBattleButton.interactable = be.escapeButtonEnabled;
 		backchange.cameraNormal.enabled = false;
 		backchange.cameraSpirit.enabled = false;
 		backchange.gridController.enabled = false;
@@ -56,7 +55,7 @@ public class BattleController : MonoBehaviour {
 			Debug.Log("Waiting");
 			yield return null;
 		}
-		enemyController.CreateEnemies(bv.removeSide != BattleValues.RemoveSide.RIGHT, bv.removeSide != BattleValues.RemoveSide.LEFT);
+		enemyController.CreateEnemies(be.removeSide != BattleEntry.RemoveSide.RIGHT, be.removeSide != BattleEntry.RemoveSide.LEFT);
 		initiated = true;
 	}
 	
@@ -99,37 +98,34 @@ public class BattleController : MonoBehaviour {
 	}
 
 	private void SetupBackgrounds() {
-		if (bv.backgroundHintRight != -1 || bv.backgroundHintLeft != -1) {
-			if (bv.backgroundHintRight != -1) {
-				backchange.tutorialNormal.sprite = backchange.tutorialBackgrounds[bv.backgroundHintRight];
-				bv.backgroundHintRight = -1;
+		if (escape) {
+			if (be.backgroundHintRight != null) {
+				backchange.tutorialNormal.sprite = be.backgroundHintRight;
 			}
-			if (bv.backgroundHintLeft != -1) {
-				backchange.tutorialSpirit.sprite = backchange.tutorialBackgrounds[bv.backgroundHintLeft];
-				bv.backgroundHintLeft = -1;
+			if (be.backgroundHintLeft != null) {
+				backchange.tutorialSpirit.sprite = be.backgroundHintLeft;
 			}
 			state = -1;
+			escape = false;
 			return;
 		}
 
-		if (bv.healthEnabled) {
-			invincible.value = false;
-		}
+		invincible.value = be.playerInvincible;
 		
-		if (bv.removeSide == BattleValues.RemoveSide.RIGHT) {
-			backchange.tutorialNormal.sprite = backchange.tutorialBackgrounds[bv.backgroundRight];
+		if (be.removeSide == BattleEntry.RemoveSide.RIGHT) {
+			backchange.tutorialNormal.sprite = be.backgroundRight;
 		}
 		else {
 			backchange.tutorialNormal.enabled = false;
 			backchange.cameraNormal.enabled = true;
-			backchange.transformNormal.sprite = backchange.normalBackgrounds[bv.backgroundRight];
+			backchange.transformNormal.sprite = be.backgroundRight;
 		}
-		if (bv.removeSide == BattleValues.RemoveSide.LEFT)
-			backchange.tutorialSpirit.sprite = backchange.tutorialBackgrounds[bv.backgroundLeft];
+		if (be.removeSide == BattleEntry.RemoveSide.LEFT)
+			backchange.tutorialSpirit.sprite = be.backgroundLeft;
 		else {
 			backchange.tutorialSpirit.enabled = false;
 			backchange.cameraSpirit.enabled = true;
-			backchange.transformSpirit.sprite = backchange.spiritBackgrounds[bv.backgroundLeft];
+			backchange.transformSpirit.sprite = be.backgroundLeft;
 			backchange.gridController.enabled = true;
 		}
 		
@@ -175,7 +171,7 @@ public class BattleController : MonoBehaviour {
 		values.money.value = enemyController.GetTotalMoney();
 		// values.treasures = enemyController.GetTreasures();
 
-		if (storyValues.battleType == StoryValues.BattleType.SPECIFIC || storyValues.battleType == StoryValues.BattleType.TOWER)
+		if (be.playerArea == BattleEntry.OverworldArea.TOWER)
 			SaveController.instance.Save();
 
 		Debug.Log("Won");

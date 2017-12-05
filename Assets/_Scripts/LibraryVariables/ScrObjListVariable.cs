@@ -5,6 +5,7 @@ using UnityEngine;
 [CreateAssetMenu]
 public class ScrObjListVariable : ScriptableObject {
 
+	[System.NonSerialized] private bool initialized = false;
 	public string pathToLibrary;
 	
 	[SerializeField] private List<ScrObjLibraryEntry> list = new List<ScrObjLibraryEntry>();
@@ -21,6 +22,7 @@ public class ScrObjListVariable : ScriptableObject {
 		if (list.Count != entries.Keys.Count)
 			Debug.Log("One or more uuids are not unique!.");
 		Debug.Log("Loaded " + list.Count + " entries into the " + pathToLibrary + " library");
+		initialized = true;
 	}
 
 	public bool ContainsID(string id) {
@@ -28,7 +30,13 @@ public class ScrObjListVariable : ScriptableObject {
 	}
 
 	public ScrObjLibraryEntry GetEntry(string uuid) {
-		return entries[uuid];
+		if (!initialized)
+			GenerateDictionary();
+
+		if (entries.ContainsKey(uuid))
+			return entries[uuid];
+		Debug.Log("Could not find uuid: " + uuid);
+		return null;
 	}
 
 	public ScrObjLibraryEntry GetEntryByIndex(int index) {
@@ -41,10 +49,6 @@ public class ScrObjListVariable : ScriptableObject {
 
 	public ScrObjLibraryEntry GetRandomEntry() {
 		return list[Random.Range(0,list.Count)];
-	}
-
-	public List<string> GetKeys() {
-		return entries.Keys.ToList();
 	}
 
 	public GUIContent[] GetRepresentations() {

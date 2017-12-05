@@ -128,8 +128,25 @@ public class BattleEditorWindow {
 		EditorGUILayout.SelectableLabel("Selected Battle:   " + battleValues.uuid, EditorStyles.boldLabel);
 		battleValues.entryName = EditorGUILayout.TextField("Battle Name", battleValues.entryName);
 
+		GUILayout.Label("After battle", EditorStyles.boldLabel);
 		battleValues.nextLocation = (BattleEntry.NextLocation)GUILayout.Toolbar((int)battleValues.nextLocation,toolbarStrings);
-
+		switch (battleValues.nextLocation)
+		{
+			case BattleEntry.NextLocation.OVERWORLD:
+				battleValues.changePosition = EditorGUILayout.Toggle("Change player position", battleValues.changePosition);
+				if (battleValues.changePosition) {
+					battleValues.playerArea = (BattleEntry.OverworldArea)EditorGUILayout.EnumPopup("Overworld Area",battleValues.playerArea);
+					battleValues.playerPosition = EditorGUILayout.Vector2Field("Player Position", battleValues.playerPosition);
+				}
+				break;
+			case BattleEntry.NextLocation.DIALOGUE:
+				battleValues.nextDialogue = (DialogueLines)EditorGUILayout.ObjectField("Next Dialogue",battleValues.nextDialogue, typeof(DialogueLines),false);
+				break;
+			case BattleEntry.NextLocation.BATTLE:
+				battleValues.nextBattle = (BattleEntry)EditorGUILayout.ObjectField("Next battle", battleValues.nextBattle, typeof(BattleEntry),false);
+				break;
+		}
+		GUILayout.Label("Battle values", EditorStyles.boldLabel);
 		battleValues.escapeButtonEnabled = EditorGUILayout.Toggle("Escapable Battle", battleValues.escapeButtonEnabled);
 
 		//Tutorial

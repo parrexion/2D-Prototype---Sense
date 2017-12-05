@@ -24,11 +24,6 @@ public class MainMenuScript : BasicGUIButtons {
 	}
 
 	public void TutorialClicked(){
-		StoryValues story = MainControllerScript.instance.storyValues;
-		story.battleType = StoryValues.BattleType.STORY;
-		story.storyInt = 0;
-		story.Story();
-
 		buttonClickEvent.Invoke();
 		SceneManager.LoadScene((int)BattleConstants.SCENE_INDEXES.BATTLE);
 	}
@@ -56,9 +51,6 @@ public class MainMenuScript : BasicGUIButtons {
 		else
 			currentTowerLevel.value = bestLevel - 5;
 
-		MainControllerScript.instance.storyValues.clearedTutorial = true;
-		MainControllerScript.instance.storyValues.bv.scenarioName = "";
-		MainControllerScript.instance.storyValues.battleType = StoryValues.BattleType.TOWER;
 		buttonClickEvent.Invoke();
 		SceneManager.LoadScene((int)BattleConstants.SCENE_INDEXES.BATTLETOWER);
 	}

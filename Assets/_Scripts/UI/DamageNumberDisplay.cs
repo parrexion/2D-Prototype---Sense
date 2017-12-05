@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class DamageNumberDisplay : MonoBehaviour {
 
+	public ScrObjListVariable battleLibrary;
+	public StringVariable battleUuid;
 	public BoolVariable paused;
 	public int damage;
 	public float time = 1f;
@@ -24,9 +26,9 @@ public class DamageNumberDisplay : MonoBehaviour {
 	void Start() {
 		cam = Camera.allCameras;
 
-		BattleValues bv = MainControllerScript.instance.storyValues.GetBattleValues();
-		drawTop = (bv.removeSide != BattleValues.RemoveSide.LEFT);
-		drawBottom = (bv.removeSide != BattleValues.RemoveSide.RIGHT);
+		BattleEntry be = (BattleEntry)battleLibrary.GetEntry(battleUuid.value);
+		drawTop = (be.removeSide != BattleEntry.RemoveSide.LEFT);
+		drawBottom = (be.removeSide != BattleEntry.RemoveSide.RIGHT);
 
 		rN = new Rect(-32,-32,32,32);
 		rS = new Rect(-32,-32,32,32);

@@ -7,10 +7,10 @@ public class BattleEntry : ScrObjLibraryEntry {
 
 	public enum RemoveSide {NONE,LEFT,RIGHT};
 	public enum NextLocation {OVERWORLD,DIALOGUE,BATTLE};
+	public enum OverworldArea {DEFAULT, TOWER}
 
 
 	// General battle things
-	public NextLocation nextLocation = NextLocation.OVERWORLD;
 	public bool escapeButtonEnabled = true;
 	
 	// Tutorial stuff
@@ -33,6 +33,14 @@ public class BattleEntry : ScrObjLibraryEntry {
 	public bool useSpecificKanji = false;
 	public Kanji[] equippedKanji = new Kanji[BattleConstants.MAX_EQUIPPED_KANJI];
 
+	// After match values
+	public NextLocation nextLocation = NextLocation.OVERWORLD;
+	public bool changePosition = false;
+	public OverworldArea playerArea = OverworldArea.DEFAULT;
+	public Vector2 playerPosition = new Vector2();
+	public DialogueLines nextDialogue = null;
+	public BattleEntry nextBattle = null;
+
 
 	/// <summary>
 	/// Resets all values to start values.
@@ -42,7 +50,6 @@ public class BattleEntry : ScrObjLibraryEntry {
 		base.ResetValues();
 
 		// General battle things
-		nextLocation = NextLocation.OVERWORLD;
 		escapeButtonEnabled = true;
 
 		// Tutorial stuff
@@ -65,6 +72,13 @@ public class BattleEntry : ScrObjLibraryEntry {
 		useSpecificKanji = true;
 		equippedKanji = new Kanji[BattleConstants.MAX_EQUIPPED_KANJI];
 
+		// After match values
+		nextLocation = NextLocation.OVERWORLD;
+		changePosition = false;
+		playerArea = OverworldArea.DEFAULT;
+		playerPosition = new Vector2();
+		nextDialogue = null;
+		nextBattle = null;
 	}
 
 	/// <summary>
@@ -76,7 +90,6 @@ public class BattleEntry : ScrObjLibraryEntry {
 		BattleEntry be = (BattleEntry) other;
 
 		// General battle things
-		nextLocation = be.nextLocation;
 		escapeButtonEnabled = be.escapeButtonEnabled;
 
 		// Tutorial stuff
@@ -104,5 +117,13 @@ public class BattleEntry : ScrObjLibraryEntry {
 		for (int i = 0; i < be.equippedKanji.Length; i++) {
 			equippedKanji[i] = be.equippedKanji[i];
 		}
+		
+		// After match values
+		nextLocation = be.nextLocation;
+		changePosition = be.changePosition;
+		playerArea = be.playerArea;
+		playerPosition = be.playerPosition;
+		nextDialogue = be.nextDialogue;
+		nextBattle = be.nextBattle;
 	}
 }
