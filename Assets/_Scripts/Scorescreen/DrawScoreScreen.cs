@@ -11,6 +11,7 @@ public class DrawScoreScreen : BasicGUIButtons {
 	public StringVariable dialogueUuid;
 	public FloatVariable playerPosX;
 	public FloatVariable playerPosY;
+	public BoolVariable paused;
 
 	public StringVariable wonBattleState;
 	public FloatVariable battleTime;
@@ -77,6 +78,7 @@ public class DrawScoreScreen : BasicGUIButtons {
 		switch (be.nextLocation)
 		{
 			case BattleEntry.NextLocation.OVERWORLD:
+				paused.value = false;
 				if (be.changePosition) {
 					playerPosX.value = be.playerPosition.x;
 					playerPosY.value = be.playerPosition.y;

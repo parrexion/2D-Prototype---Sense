@@ -11,7 +11,6 @@ public class BattleController : MonoBehaviour {
 	public StringVariable battleUuid;
 	private BattleEntry be;
 	private BackgroundChanger backchange;
-	private AudioController audioController;
 
 	private bool initiated = false;
 	public BoolVariable paused;
@@ -33,7 +32,6 @@ public class BattleController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		audioController = AudioController.instance;
 		be = (BattleEntry)battleLibrary.GetEntry(battleUuid.value);
 
 		escape = (be.backgroundHintLeft != null || be.backgroundHintRight != null);
@@ -144,7 +142,6 @@ public class BattleController : MonoBehaviour {
 	public void PauseGame() {
 		paused.value = !paused.value;
 		pauseEvent.Invoke();
-		audioController.PauseBackgroundMusic();
 	}
 
 	private void BattleStart() {

@@ -7,19 +7,8 @@ using UnityEngine;
 /// </summary>
 public class AudioController : MonoBehaviour {
 	
-	#region Singleton
-	public static AudioController instance = null;
-	void Awake() {
-		if (instance != null)
-			Destroy(gameObject);
-		else {
-			instance = this;
-			// DontDestroyOnLoad(this);
-		}
-	}
-	#endregion
-
 	public AudioVariable backgroundMusic;
+	public AudioVariable sfxClip;
 	public FloatVariable musicVolume;
 	public AudioSource efxSource;
 	public AudioSource musicSource;
@@ -31,7 +20,6 @@ public class AudioController : MonoBehaviour {
 
 	public void OnEnable() {
 		musicSource.volume = Mathf.Clamp01(musicVolume.value);
-		PlayBackgroundMusic();
 	}
 
 	/// <summary>
@@ -39,6 +27,7 @@ public class AudioController : MonoBehaviour {
 	/// </summary>
 	/// <param name="clip">Clip.</param>
 	public void PlayBackgroundMusic() {
+		Debug.Log("MUSIC!!!");
 		if (backgroundMusic.value == null) {
 			musicSource.Stop();
 			playingBkg = false;
@@ -71,9 +60,20 @@ public class AudioController : MonoBehaviour {
 	/// Plays a single audio clip.
 	/// </summary>
 	/// <param name="clip">Clip.</param>
-	public void PlaySingle(AudioClip clip) {
+	private void PlaySingle(AudioClip clip) {
 		efxSource.clip = clip;
 		efxSource.Play();
+	}
+
+	/// <summary>
+	/// Plays the next sfx clip.
+	/// </summary>
+	/// <param name="clip">Clip.</param>
+	public void PlaySfx() {
+		if (sfxClip.value != null) {
+			efxSource.clip = sfxClip.value;
+			efxSource.Play();
+		}
 	}
 
 	/// <summary>

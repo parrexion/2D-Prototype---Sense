@@ -28,9 +28,9 @@ public class PhoneMenuController : MonoBehaviour {
 		locationText.text = currentLocation.value;
 		currentDate = System.DateTime.Now;
 		SetCurrentTimeDate();
-		if (Input.GetKeyDown(KeyCode.Escape)) {
-			AppHelper.Quit();
-		}
+		// if (Input.GetKeyDown(KeyCode.Escape)) {
+		// 	AppHelper.Quit();
+		// }
 	}
 
 	/// <summary>

@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 50feb5f058df02e42a9925feed880e29
-timeCreated: 1512508338
+timeCreated: 1512595607
 licenseType: Free
 MonoImporter:
   externalObjects: {}
@@ -11,6 +11,7 @@ MonoImporter:
   - dialogueUuid: {fileID: 11400000, guid: b0c12f4d7babea348b58bacebbe48f06, type: 2}
   - playerPosX: {fileID: 11400000, guid: 0eca8d82750de4c4981212018d942288, type: 2}
   - playerPosY: {fileID: 11400000, guid: 309179cbb9cd2f0458e68543f41dc12e, type: 2}
+  - paused: {fileID: 11400000, guid: a6a7974a7061e1f488dd3a55225ba7f2, type: 2}
   - wonBattleState: {fileID: 11400000, guid: 9abd4a4cc63a92443b93a4e4636f0731, type: 2}
   - battleTime: {fileID: 11400000, guid: 35c32724f44086443acf16a43ed91237, type: 2}
   - playerMaxHealth: {fileID: 11400000, guid: 982347e367ed4034d95fae5752cc869e, type: 2}

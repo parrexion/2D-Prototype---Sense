@@ -15,6 +15,7 @@ public class OutsidePlayerController : MonoBehaviour {
 		moveToPosition = GetComponent<MoveHomingNoLimit>();
 		cam = Camera.main;
 		transform.position = new Vector3(posx.value,posy.value,0);
+		moveToPosition.moveToPosition = transform.position;
 	}
 	
 	// Update is called once per frame

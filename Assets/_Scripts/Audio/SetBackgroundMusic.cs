@@ -7,11 +7,12 @@ public class SetBackgroundMusic : MonoBehaviour {
 	public AudioClip audioClip;
 	public UnityEvent backgroundMusicChanged;
 
-	void OnEnable() {
+	void Start() {
 		if (audioClip == null)
 			Debug.Log("No audio clip defined! Intended?");
 
 		backgroundMusic.value = audioClip;
 		backgroundMusicChanged.Invoke();
+		Debug.Log("MUSIC???");
 	}
 }

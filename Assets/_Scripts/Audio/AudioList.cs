@@ -8,4 +8,9 @@ using UnityEngine;
 public class AudioList : MonoBehaviour {
 
 	public AudioClip[] audioClips;
+
+
+	public AudioClip RandomClip() {
+		return audioClips[Random.Range(0,audioClips.Length)];
+	}
 }

@@ -1,13 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class FadeAwayScript : MonoBehaviour {
 
 	public float fadeDuration = 0.3f;
 	public BoolVariable paused;
+	public UnityEvent playSfx;
+	public AudioVariable sfxClip;
 
-	private AudioController audioController;
 	private SpriteRenderer rend;
 	private Color alphaColor;
 	private float colorValue;
@@ -15,13 +17,13 @@ public class FadeAwayScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		audioController = AudioController.instance;
 		rend = GetComponent<SpriteRenderer>();
 		audioList = GetComponent<AudioList>();
 
 		alphaColor = rend.color;
 		colorValue = 1.0f;
-		audioController.RandomizeSfx(audioList.audioClips);
+		sfxClip.value = audioList.RandomClip();
+		playSfx.Invoke();
 	}
 	
 	// Update is called once per frame

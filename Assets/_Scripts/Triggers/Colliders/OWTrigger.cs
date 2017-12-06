@@ -8,12 +8,20 @@ public abstract class OWTrigger : MonoBehaviour {
 	public string uuid = System.Guid.NewGuid().ToString();
 	public bool active = true;
 	public UnityEvent startEvent;
+	public SpriteRenderer sprite;
 
 
 	void OnEnable() {
-		active = TriggerController.instance.CheckActive(uuid);
+		StartCoroutine(CheckTrigger());
 	}
 
+	IEnumerator CheckTrigger() {
+		while(TriggerController.instance == null)
+			yield return null;
+
+		active = TriggerController.instance.CheckActive(uuid);
+		Startup();
+	}
 	
 	/// <summary>
 	/// When colliding with a BattleTrigger, start the battle.
@@ -35,11 +43,15 @@ public abstract class OWTrigger : MonoBehaviour {
 
 	public void Deactivate() {
 		TriggerController.instance.SetActive(uuid, false);
-		gameObject.SetActive(false);
 	}
 
 	/// <summary>
 	/// Triggers the action depending on the trigger type.
 	/// </summary>
 	protected abstract void Trigger();
+
+	protected virtual void Startup(){
+		if (!active && sprite != null)
+			sprite.enabled = false;
+	}
 }
