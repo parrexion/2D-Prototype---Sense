@@ -7,7 +7,7 @@ using UnityEngine.Events;
 
 public class BattleController : MonoBehaviour {
 
-	public ScrObjListVariable battleLibrary;
+	public ScrObjLibraryVariable battleLibrary;
 	public StringVariable battleUuid;
 	private BattleEntry be;
 	private BackgroundChanger backchange;

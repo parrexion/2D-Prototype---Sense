@@ -3,16 +3,17 @@ using System.Linq;
 using UnityEngine;
 
 [CreateAssetMenu]
-public class ScrObjListVariable : ScriptableObject {
+public class ScrObjLibraryVariable : ScriptableObject {
 
-	[System.NonSerialized] private bool initialized = false;
+	public bool initialized = false;
 	public string pathToLibrary;
 	
 	[SerializeField] private List<ScrObjLibraryEntry> list = new List<ScrObjLibraryEntry>();
-	[SerializeField] private List<GUIContent> representations = new List<GUIContent>();
+	private List<GUIContent> representations = new List<GUIContent>();
 	private Dictionary<string, ScrObjLibraryEntry> entries = new Dictionary<string, ScrObjLibraryEntry>();
 
 	public void GenerateDictionary() {
+		Debug.Log("Generating");
 		entries.Clear();
 		representations.Clear();
 		for (int i = list.Count-1; i >= 0 ; i--) {
@@ -26,6 +27,9 @@ public class ScrObjListVariable : ScriptableObject {
 	}
 
 	public bool ContainsID(string id) {
+		if (!initialized)
+			GenerateDictionary();
+
 		return entries.ContainsKey(id);
 	}
 
@@ -40,68 +44,73 @@ public class ScrObjListVariable : ScriptableObject {
 	}
 
 	public ScrObjLibraryEntry GetEntryByIndex(int index) {
+		if (!initialized)
+			GenerateDictionary();
+
 		return list[index];
 	}
 
 	public ScrObjLibraryEntry GetEntryBySelectedIndex(int index) {
+		if (!initialized)
+			GenerateDictionary();
+
 		return list[list.Count - index - 1];
 	}
 
 	public ScrObjLibraryEntry GetRandomEntry() {
+		if (!initialized)
+			GenerateDictionary();
+
 		return list[Random.Range(0,list.Count)];
 	}
 
 	public GUIContent[] GetRepresentations() {
+		if (!initialized)
+			GenerateDictionary();
+
 		return representations.ToArray();
 	}
 
+	public int Size() {
+		return list.Count;
+	}
+
 	public void AddEntry(ScrObjLibraryEntry obj) {
+		if (!initialized)
+			GenerateDictionary();
+
 		list.Add(obj);
 		entries.Add(obj.entryName, obj);
 		AddRepresentation(obj, true);
 	}
 
 	public void RemoveEntryByIndex(int index) {
+		if (!initialized)
+			GenerateDictionary();
+
 		ScrObjLibraryEntry entry = GetEntryByIndex(index);
 		list.RemoveAt(index);
 		entries.Remove(entry.uuid);
 		representations.RemoveAt(index);
 	}
 
+	public void RemoveEntryBySelectedIndex(int index) {
+		if (!initialized)
+			GenerateDictionary();
+			
+		ScrObjLibraryEntry entry = GetEntryBySelectedIndex(index);
+		list.RemoveAt(index);
+		entries.Remove(entry.uuid);
+		representations.RemoveAt(index);
+	}
+
 	private void AddRepresentation(ScrObjLibraryEntry entry, bool insert) {
-		GUIContent content = new GUIContent();
-		content.text = entry.uuid;
-		Texture2D tex;
-		if (entry.repColor.a != 0){
-			tex = GenerateColorTexture(entry.repColor);
-		}
-		else {
-			tex = GenerateRandomColor();
-		}
-		content.image = tex;
 		if (insert) {
 			Debug.Log("Inserted");
-			representations.Insert(0,content);
+			representations.Insert(0,entry.GenerateRepresentation());
 		}
 		else
-			representations.Add(content);
-	}
-
-	Texture2D GenerateRandomColor() {
-		Color c = Random.ColorHSV(0f, 1f, 1f, 1f, 0.5f, 1f);
-		return GenerateColorTexture(c);
-	}
-
-	public Texture2D GenerateColorTexture(Color c) {
-		int size = 32;
-		Texture2D tex = new Texture2D(size,size);
-		for (int i = 0; i < size; i++) {
-			for (int j = 0; j < size; j++) {
-				tex.SetPixel(i,j,c);
-			}
-		}
-		tex.Apply();
-		return tex;
+			representations.Add(entry.GenerateRepresentation());
 	}
 
 	public Sprite TextureToSprite(Texture2D tex) {

@@ -49,21 +49,21 @@ public class DialogueLines : MonoBehaviour {
 	private void CompareScenes(Frame frame) {
 		DialogueAction da;
 		DialogueJsonItem data;
-		if (scene.background.value != frame.background) {
+		if (!scene.background.IsEqual(frame.background)) {
 			da = (DASetBackground)ScriptableObject.CreateInstance("DASetBackground");
 			data = new DialogueJsonItem();
-			data.character = frame.background;
+			data.entry = frame.background;
 			da.Act(scene,data);
 			backgroundChanged.Invoke();
 		}
 		bool changed = false;
 		for (int i = 0; i < 4; i++) {
-			if (scene.characters[i].value != frame.currentCharacters[i] || scene.poses[i].value != frame.currentPoses[i]) {
+			if (!scene.characters[i].IsEqual(frame.characters[i]) || scene.poses[i].value != frame.poses[i]) {
 				da = (DAAddCharacter)ScriptableObject.CreateInstance("DAAddCharacter");
 				data = new DialogueJsonItem();
 				data.position1 = i;
-				data.character = frame.currentCharacters[i];
-				data.pose = frame.currentPoses[i];
+				data.entry = frame.characters[i];
+				data.value = frame.poses[i];
 				da.Act(scene,data);
 				changed = true;
 			}
@@ -75,19 +75,19 @@ public class DialogueLines : MonoBehaviour {
 		}
 
 		changed = false;
-		if (scene.talkingCharacter.value != frame.talkingPosition || scene.talkingPose.value != frame.currentCharacters[frame.talkingPosition]) {
+		if (scene.talkingCharacter.value != frame.talkingIndex || scene.talkingPose.value != frame.poses[frame.talkingIndex]) {
 			da = (DAChangeTalking)ScriptableObject.CreateInstance("DAChangeTalking");
 			data = new DialogueJsonItem();
-			data.character = scene.characters[frame.talkingPosition].value;
-			data.pose = scene.poses[frame.talkingPosition].value;
+			data.position1 = frame.talkingIndex;
+			data.position2 = scene.poses[frame.talkingIndex].value;
 			da.Act(scene,data);
 			changed = true;
 		}
 
-		if (scene.talkingName.value != frame.characterName) {
+		if (scene.talkingName.value != frame.talkingName) {
 			da = (DASetName)ScriptableObject.CreateInstance("DASetName");
 			data = new DialogueJsonItem();
-			data.text = frame.characterName;
+			data.text = frame.talkingName;
 			da.Act(scene,data);
 			changed = true;
 		}

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 public class CharacterEditorWindow {
 
-	public ScrObjListVariable characterLibrary;
+	public ScrObjLibraryVariable characterLibrary;
 	public CharacterEntry charValues;
 	public SpriteListVariable poseLibrary;
 
@@ -32,7 +32,7 @@ public class CharacterEditorWindow {
 	/// </summary>
 	/// <param name="entries"></param>
 	/// <param name="container"></param>
-	public CharacterEditorWindow(ScrObjListVariable entries, CharacterEntry container, SpriteListVariable poses){
+	public CharacterEditorWindow(ScrObjLibraryVariable entries, CharacterEntry container, SpriteListVariable poses){
 		characterLibrary = entries;
 		charValues = container;
 		poseLibrary = poses;
@@ -160,6 +160,7 @@ public class CharacterEditorWindow {
 		else {
 			// Something selected
 			CharacterEntry ce = (CharacterEntry)characterLibrary.GetEntryBySelectedIndex(selCharacter);
+			ce.poses = poseLibrary.values;
 			charValues.CopyValues(ce);
 		}
 	}
@@ -190,6 +191,8 @@ public class CharacterEditorWindow {
 		AssetDatabase.SaveAssets();
 		AssetDatabase.Refresh();
 
+		uuid = "";
+		selCharacter = 0;
 		SelectCharacter();
 	}
 
@@ -197,7 +200,7 @@ public class CharacterEditorWindow {
 		CharacterEntry c = (CharacterEntry)characterLibrary.GetEntryBySelectedIndex(selCharacter);
 		string path = "Assets/LibraryData/Characters/" + c.uuid + ".asset";
 
-		characterLibrary.RemoveEntryByIndex(selCharacter);
+		characterLibrary.RemoveEntryBySelectedIndex(selCharacter);
 		Undo.RecordObject(characterLibrary, "Deleted character");
 		EditorUtility.SetDirty(characterLibrary);
 		bool res = AssetDatabase.MoveAssetToTrash(path);

@@ -2,49 +2,44 @@
 using UnityEngine.SceneManagement;
 using UnityEditor;
 using UnityEditor.SceneManagement;
+using System.Collections.Generic;
 
 public class DialogueWindow : EditorWindow {
 
-	public IntVariable backgroundIndex;
+	public struct SelectedPose
+	{
+		public int index;
+		public int pose;
+	}
 
-	public IntVariable character0;
-	public IntVariable character1;
-	public IntVariable character2;
-	public IntVariable character3;
-	public IntVariable character4;
+	public ScrObjLibraryVariable dialogueLibrary;
+	public ScrObjLibraryVariable backgroundLibrary;
+	public ScrObjLibraryVariable characterLibrary;
 
-	public IntVariable pose0;
-	public IntVariable pose1;
-	public IntVariable pose2;
-	public IntVariable pose3;
-	public IntVariable pose4;
+	public DialogueEntry dialogueValues;
+	Frame frame = new Frame();
+	DialogueWindowHelpClass d = new DialogueWindowHelpClass();
 
-	public StringVariable talkingName;
-	public IntVariable talkingIndex;
-	public IntVariable talkingPose;
-	public StringVariable dialogueText;
+	Rect bkgRect;
+	Rect faceRect;
+	Rect closeupRect;
+	Rect saveRect;
 
-	public SpriteListVariable charSprites;
+	int[] indexList = new int[]{0,2,4,3,1};
+	string[] talkingLabels = new string[] { "Talking", "Talking", "Talking", "Talking", "Talking" };
+	string[] poseList = new string[] { "Normal", "Sad", "Happy", "Angry", "Dead", "Hmm", "Pleased", "Surprised", "Worried" };
 
+	// Selected things
+	int selectTalker = -1;
+	string talkName = "";
+	Vector2 frameScrollPos;
+	Vector2 dialogueScrollPos;
+	int selFrame = -1;
+	int selDialogue = -1;
 
-	IntVariable[] characters;
-	IntVariable[] poses;
-
-	Texture2D headerBackground;
-	Texture2D backgroundChars;
-	Texture2D backgroundChars2;
-	Texture2D dialogueBackground;
-
-	Color headerColor = new Color(0.25f,0.5f,0.75f);
-	Color charactersColor = new Color(0.35f, 0.75f, 0.35f);
-	Color charactersColor2 = new Color(0.15f, 0.55f, 0.15f);
-	Color dialogueColor = new Color(0.5f, 0.5f, 0.5f);
-
-	Rect headerRect = new Rect();
-	Rect[] rectChar;
-	Rect dialogueRect = new Rect();
-
-	string[] talkingLabels = new string[] { "Talk0", "Talk2", "Talk4", "Talk3", "Talk1" };
+	//Creation
+	string dialogueUuid = "";
+	Color repColor = new Color(0,0,0,0);
 
 
 	[MenuItem("Window/DialogueEditor")]
@@ -64,12 +59,16 @@ public class DialogueWindow : EditorWindow {
 	void OnGUI() {
 
 		GUILayout.Label("Character selector", EditorStyles.boldLabel);
-		EditorGUIUtility.labelWidth = 70;
-		DrawBackgrounds();
+		EditorGUIUtility.labelWidth = 100;
+		d.GenerateAreas();
+		d.DrawBackgrounds();
 
 		HeaderStuff();
-		HorizontalStuff();
-		CharacterBottomStuff();
+		CharacterStuff();
+		TalkingStuff();
+		DialogueTextStuff();
+		FrameStuff();
+		RightStuff();
 	}
 
 	void SceneOpenedCallback( Scene _scene, OpenSceneMode _mode) {
@@ -78,135 +77,267 @@ public class DialogueWindow : EditorWindow {
 	}
 
 	void InitializeWindow() {
-		rectChar = new Rect[5];
-		characters = new IntVariable[] { character0, character1, character2, character3, character4 };
-		poses = new IntVariable[] { pose0, pose1, pose2, pose3, pose4 };
-		InitTextures();
-	}
+		// backgroundLibrary.GenerateDictionary();
+		// characterLibrary.GenerateDictionary();
+		// dialogueLibrary.GenerateDictionary();
+		backgroundLibrary.initialized = false;
+		characterLibrary.initialized = false;
+		dialogueLibrary.initialized = false;
 
-	void InitTextures() {
-		headerBackground = new Texture2D(1, 1);
-		headerBackground.SetPixel(0, 0, headerColor);
-		headerBackground.Apply();
+		bkgRect = new Rect(420,4,152,72);
+		faceRect = new Rect(38,76,64,64);
+		closeupRect = new Rect(236,72,64,64);
+		saveRect = new Rect(140*5-100,4,100,72);
 
-		backgroundChars = new Texture2D(1, 1);
-		backgroundChars.SetPixel(0, 0, charactersColor);
-		backgroundChars.Apply();
-
-		backgroundChars2 = new Texture2D(1, 1);
-		backgroundChars2.SetPixel(0, 0, charactersColor2);
-		backgroundChars2.Apply();
-
-		dialogueBackground = new Texture2D(1, 1);
-		dialogueBackground.SetPixel(0, 0, dialogueColor);
-		dialogueBackground.Apply();
-	}
-
-	void DrawBackgrounds() {
-		float screenStep = Screen.width / 5f;
-		headerRect.x = 0;
-		headerRect.y = 0;
-		headerRect.width = Screen.width;
-		headerRect.height = 50;
-
-		rectChar[0].x = 0;
-		rectChar[0].y = 50;
-		rectChar[0].width = screenStep;
-		rectChar[0].height = Screen.height - (50 + 200);
-
-		rectChar[1].x = screenStep;
-		rectChar[1].y = 50;
-		rectChar[1].width = screenStep;
-		rectChar[1].height = Screen.height - (50 + 200);
-
-		rectChar[2].x = screenStep *2;
-		rectChar[2].y = 50;
-		rectChar[2].width = screenStep;
-		rectChar[2].height = Screen.height - (50 + 200);
-
-		rectChar[3].x = screenStep *3;
-		rectChar[3].y = 50;
-		rectChar[3].width = screenStep;
-		rectChar[3].height = Screen.height - (50 + 200);
-
-		rectChar[4].x = screenStep *4;
-		rectChar[4].y = 50;
-		rectChar[4].width = screenStep;
-		rectChar[4].height = Screen.height - (50 + 200);
-
-		dialogueRect.x = 0;
-		dialogueRect.y = Screen.height - (200);
-		dialogueRect.width = Screen.width;
-		dialogueRect.height = 200;
-
-		GUI.DrawTexture(headerRect, headerBackground);
-		GUI.DrawTexture(rectChar[0], backgroundChars);
-		GUI.DrawTexture(rectChar[1], backgroundChars2);
-		GUI.DrawTexture(rectChar[2], backgroundChars);
-		GUI.DrawTexture(rectChar[3], backgroundChars2);
-		GUI.DrawTexture(rectChar[4], backgroundChars);
-		GUI.DrawTexture(dialogueRect, dialogueBackground);
+		d.InitTextures();
 	}
 
 	void HeaderStuff() {
-		GUILayout.BeginArea(headerRect);
+		GUILayout.BeginArea(d.headerRect);
 
-		if (GUILayout.Button("Open Dialogue Scene")) {
-			EditorSceneManager.OpenScene("Assets/_Scenes/Dialogue.unity");
-			InitTextures();
+		EditorGUILayout.SelectableLabel("Selected Dialogue    UUID: " + 1234, EditorStyles.boldLabel, GUILayout.Height(20));
+		dialogueValues.entryName = EditorGUILayout.TextField("Dialogue name", dialogueValues.entryName, GUILayout.Width(400));
+
+		GUILayout.Space(5);
+
+		frame.background = (BackgroundEntry)EditorGUILayout.ObjectField("Background", frame.background, typeof(BackgroundEntry),false, GUILayout.Width(400));
+		if (frame.background != null){
+			GUI.DrawTexture(bkgRect, frame.background.sprite.texture);
 		}
 
-		GUILayout.Space(10);
+		GUILayout.EndArea();
+		GUILayout.BeginArea(saveRect);
+		if (GUILayout.Button("Save\nframe", GUILayout.Height(saveRect.height))){
 
-		backgroundIndex.value = EditorGUILayout.IntField("Background", backgroundIndex.value);
-
+		}
 		GUILayout.EndArea();
 	}
 
-	void HorizontalStuff() {
-		int[] indexList = new int[]{0,2,4,3,1};
-		for (int i = 0; i < 5; i++) {
-			GUILayout.BeginArea(rectChar[i]);
-			GUILayout.Label("Character " + indexList[i], EditorStyles.boldLabel);
-			GUILayout.Label("Name ");
+	void CharacterStuff() {
+		EditorGUIUtility.labelWidth = 70;
+		float fieldWidth = d.rectChar[0].width - 8;
+		for (int j = 0; j < 5; j++) {
+			GUILayout.BeginArea(d.rectChar[j]);
 
-			if (indexList[i] == 4) {
-				talkingName.value = EditorGUILayout.TextField("", talkingName.value);
+			int index = indexList[j];
+
+			if (index == 4) {
+				GUILayout.Label("Name: ", EditorStyles.boldLabel);
+				talkName = EditorGUILayout.TextField("", talkName);
 				GUILayout.EndArea();
 				continue;
 			}
 
-			characters[indexList[i]].value = EditorGUILayout.IntField("Character", characters[indexList[i]].value);
-			poses[indexList[i]].value = EditorGUILayout.IntField("Pose", poses[indexList[i]].value);
-			if (characters[indexList[i]].value != -1)
-				GUILayout.Label(charSprites.values[characters[indexList[i]].value].texture);
+			if (frame.characters[index] != null)
+				GUILayout.Label(frame.characters[index].entryName, EditorStyles.boldLabel);
+			else
+				GUILayout.Label("Name: ", EditorStyles.boldLabel);
+
+			GUILayout.Label("Character");
+			frame.characters[index] = (CharacterEntry)EditorGUILayout.ObjectField("", frame.characters[index], typeof(CharacterEntry),false, GUILayout.Width(fieldWidth));
+			if (frame.characters[index] == null){
+				frame.poses[index] = -1;
+				GUILayout.EndArea();
+				continue;
+			}
+
+			if (frame.poses[index] == -1)
+				frame.poses[index] = 0;
+
+			if (GUILayout.Button(poseList[frame.poses[index]], GUILayout.Width(fieldWidth))) {
+				GenericMenu menu = new GenericMenu();
+				SelectedPose selPose = new SelectedPose();
+				selPose.index = index;
+				for (int p = 0; p < poseList.Length; p++) {
+					selPose.pose = p;
+					menu.AddItem(new GUIContent(poseList[p]), (p == frame.poses[index]), SetPose, selPose);
+				}
+				menu.ShowAsContext();
+			}
+			GUILayout.BeginHorizontal();
+			GUI.DrawTexture(faceRect, frame.characters[index].defaultColor.texture);
+			GUILayout.FlexibleSpace();
+			GUILayout.Label(frame.characters[index].poses[frame.poses[index]].texture);
+			GUILayout.FlexibleSpace();
+			GUILayout.EndHorizontal();
 
 			GUILayout.EndArea();
 		}
+		EditorGUIUtility.labelWidth = 100;
 	}
 
-	void CharacterBottomStuff() {
-		GUILayout.BeginArea(dialogueRect);
+	void SetPose(object selectedPose) {
+		SelectedPose pose = (SelectedPose)selectedPose;
+		frame.poses[pose.index] = pose.pose;
+	}
 
-		talkingIndex.value = GUILayout.SelectionGrid(talkingIndex.value, talkingLabels, 5);
-		if (GUILayout.Button("NONE")) {
-			talkingIndex.value = -1;
+	void TalkingStuff() {
+		GUILayout.BeginArea(d.talkingRect);
+
+		selectTalker = GUILayout.SelectionGrid(selectTalker, talkingLabels, 5);
+		if (GUILayout.Button("No one is talking")) {
+			selectTalker = -1;
 		}
 
-		GUILayout.BeginHorizontal();
+		if (selectTalker == -1)
+			frame.talkingIndex = -1;
+		else {
+			frame.talkingIndex = indexList[selectTalker];
+			if (frame.characters[frame.talkingIndex] == null) {
+				selectTalker = -1;
+				frame.talkingIndex = -1;
+			}
+		}
+		GUILayout.EndArea();
+	}
 
+	void DialogueTextStuff() {
+		GUILayout.BeginArea(d.dialogueRect);
+
+		EditorStyles.textField.wordWrap = true;
+		GUILayout.Label("Dialogue Text", EditorStyles.boldLabel);
+		frame.dialogueText = EditorGUILayout.TextArea(frame.dialogueText, GUILayout.Width(300), GUILayout.Height(48));
+
+		GUILayout.BeginHorizontal();
 		GUILayout.BeginVertical();
-		GUILayout.Label(talkingName.value);
-		GUILayout.Label("Pose");
+		GUILayout.Label("Name: ", EditorStyles.boldLabel);
+		GUILayout.Label("Pose: ", EditorStyles.boldLabel);
 		GUILayout.EndVertical();
 
-		if (talkingIndex.value != -1)
-			GUILayout.Label(charSprites.values[characters[talkingIndex.value].value].texture);
+		if (frame.talkingIndex != -1) {
 
-		dialogueText.value = EditorGUILayout.TextArea(dialogueText.value, GUILayout.Height(50));
+			GUILayout.BeginVertical();
+			GUILayout.Label(frame.talkingName, EditorStyles.boldLabel);
+			GUILayout.Label("Pose", EditorStyles.boldLabel);
+			GUILayout.EndVertical();
 
+			GUILayout.BeginHorizontal();
+			GUI.DrawTexture(closeupRect, frame.characters[frame.talkingIndex].defaultColor.texture);
+			GUILayout.Label(frame.characters[frame.talkingIndex].poses[frame.poses[frame.talkingIndex]].texture);
+			GUILayout.EndHorizontal();
+			frame.talkingName = frame.characters[frame.talkingIndex].entryName;
+		}
+		else {
+			GUILayout.Label("");
+			frame.talkingName = "";
+		}
 		GUILayout.EndHorizontal();
 
+		GUILayout.Space(8);
+		if (GUILayout.Button("Open Dialogue Scene", GUILayout.Width(180))) {
+			EditorSceneManager.OpenScene("Assets/_Scenes/Dialogue.unity");
+			d.InitTextures();
+		}
+
 		GUILayout.EndArea();
+	}
+
+	void FrameStuff() {
+		GUILayout.BeginArea(d.frameRect);
+
+		if (GUILayout.Button("Delete Frame")) {
+
+		}
+		if (GUILayout.Button("Insert Frame", GUILayout.Height(48))) {
+
+		}
+
+		GUILayout.EndArea();
+	}
+
+	void RightStuff() {
+		GUILayout.BeginArea(d.rightRect);
+
+		GUILayout.Space(10);
+
+		GUILayout.Label("Frames", EditorStyles.boldLabel);
+		frameScrollPos = GUILayout.BeginScrollView(frameScrollPos, GUILayout.Width(d.rightRect.width), 
+					GUILayout.Height(d.rightRect.height * 0.35f));
+		
+		selFrame = GUILayout.SelectionGrid(selFrame, new GUIContent[0],1);
+
+		GUILayout.EndScrollView();
+
+		GUILayout.Space(10);
+
+		GUILayout.Label("Dialogues", EditorStyles.boldLabel);
+		dialogueScrollPos = GUILayout.BeginScrollView(dialogueScrollPos, GUILayout.Width(d.rightRect.width), 
+					GUILayout.Height(d.rightRect.height * 0.3f));
+		
+		int oldSelected = selDialogue;
+		selDialogue = GUILayout.SelectionGrid(selDialogue, dialogueLibrary.GetRepresentations(),2);
+
+		if (oldSelected != selDialogue)
+			SelectDialogue();
+
+		GUILayout.EndScrollView();
+
+		dialogueUuid = EditorGUILayout.TextField("Dialogue uuid", dialogueUuid);
+		if (GUILayout.Button("Create dialogue")) {
+			InstansiateDialogue();
+		}
+		if (GUILayout.Button("Delete dialogue")) {
+			DeleteDialogue();
+		}
+		GUILayout.EndArea();
+	}
+
+
+
+	// Data manipulation (Creating, saving, etc...)
+
+	
+	void SelectDialogue() {
+		// Nothing selected
+		if (selDialogue == -1) {
+			dialogueValues.ResetValues();
+		}
+		else {
+			// Something selected
+			DialogueEntry de = (DialogueEntry)dialogueLibrary.GetEntryBySelectedIndex(selDialogue);
+			dialogueValues.CopyValues(de);
+		}
+	}
+
+	void InstansiateDialogue() {
+		if (dialogueLibrary.ContainsID(dialogueUuid)) {
+			Debug.Log("uuid already exists!");
+			return;
+		}
+		DialogueEntry de = Editor.CreateInstance<DialogueEntry>();
+		de.name = dialogueUuid;
+		de.uuid = dialogueUuid;
+		de.entryName = dialogueUuid;
+		de.repColor = repColor;
+		de.frames.Add(new Frame());
+		string path = "Assets/LibraryData/Dialogues/" + dialogueUuid + ".asset";
+
+		dialogueLibrary.AddEntry(de);
+		Undo.RecordObject(dialogueLibrary, "Added dialogue");
+		EditorUtility.SetDirty(dialogueLibrary);
+		AssetDatabase.CreateAsset(de, path);
+		AssetDatabase.SaveAssets();
+		AssetDatabase.Refresh();
+
+		dialogueUuid = "";
+		selDialogue = 0;
+		SelectDialogue();
+	}
+
+	void DeleteDialogue() {
+		DialogueEntry de = (DialogueEntry)dialogueLibrary.GetEntryBySelectedIndex(selDialogue);
+		string path = "Assets/LibraryData/Dialogues/" + de.uuid + ".asset";
+
+		dialogueLibrary.RemoveEntryBySelectedIndex(selDialogue);
+		Undo.RecordObject(dialogueLibrary, "Deleted dialogue");
+		EditorUtility.SetDirty(dialogueLibrary);
+		bool res = AssetDatabase.MoveAssetToTrash(path);
+		AssetDatabase.SaveAssets();
+		AssetDatabase.Refresh();
+
+		if (res) {
+			Debug.Log("Removed dialogue: " + de.uuid);
+			selDialogue = -1;
+		}
 	}
 }

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class Background : MonoBehaviour {
 
-	public SpriteListVariable backgrounds;
+	public ScrObjLibraryVariable backgroundLibrary;
 	public IntVariable dialogueBackground;
 	private int currentBackground;
 	private Image image;
@@ -20,7 +20,8 @@ public class Background : MonoBehaviour {
 	public void UpdateBackground () {
 		if (currentBackground != dialogueBackground.value){
 			currentBackground = dialogueBackground.value;
-			image.sprite = backgrounds.values[currentBackground];
+			BackgroundEntry bke = (BackgroundEntry)backgroundLibrary.GetEntryByIndex(currentBackground);
+			image.sprite = bke.sprite;
 		}
 	}
 }

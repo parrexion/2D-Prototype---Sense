@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class EnemyController : MonoBehaviour {
 
 	// public ScrObjListVariable enemyLibrary;
-	public ScrObjListVariable battleLibrary;
+	public ScrObjLibraryVariable battleLibrary;
 	public StringVariable battleUuid;
 	private BattleEntry be;
 	public bool initiated = false;

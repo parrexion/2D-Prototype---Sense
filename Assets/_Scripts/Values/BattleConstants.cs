@@ -22,6 +22,8 @@ public static class BattleConstants {
 	public const float cameraBorderWidth = 6.0f;
 	public const float cameraBorderHeight = 2.9f;
 
+	//Dialogue
+	public const int DIALOGUE_PLAYERS_COUNT = 4;
 
 	//Spirit grid
 	public static int GRID_BRANCH = 5;

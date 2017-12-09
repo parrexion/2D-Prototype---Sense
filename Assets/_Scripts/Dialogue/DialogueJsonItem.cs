@@ -23,12 +23,12 @@ public class Dialogue {
 
 [System.Serializable]
 public class Frame {
-	public int background;
-	public int[] currentCharacters;
-	public int[] currentPoses;
-	public string characterName;
+	public BackgroundEntry background;
+	public CharacterEntry[] characters = new CharacterEntry[BattleConstants.DIALOGUE_PLAYERS_COUNT];
+	public int[] poses = new int[BattleConstants.DIALOGUE_PLAYERS_COUNT];
+	public string talkingName;
+	public int talkingIndex;
 	public string dialogueText;
-	public int talkingPosition;
 }
 
 
@@ -38,8 +38,8 @@ public class DialogueJsonItem {
 	public enum actionType {ADDCHAR,REMOVECHAR,CHANGEPOS,SETBACKGROUND,CHANGETALKING,SETNAME,SETTEXT,ENDTEXT,ENDDIALOGUE};
 
 	public actionType type;
-	public int character;
-	public int pose;
+	public ScrObjLibraryEntry entry;
+	public int value;
 	public int position1;
 	public int position2;
 	public string text;

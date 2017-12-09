@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 public class BattleEditorWindow {
 
-	public ScrObjListVariable battleLibrary;
+	public ScrObjLibraryVariable battleLibrary;
 	public BattleEntry battleValues;
 
 	// Display screen
@@ -24,12 +24,13 @@ public class BattleEditorWindow {
 	int selBattle = -1;
 
 
-	public BattleEditorWindow(ScrObjListVariable entries, BattleEntry container){
+	public BattleEditorWindow(ScrObjLibraryVariable entries, BattleEntry container){
 		battleLibrary = entries;
 		battleValues = container;
+		LoadLibrary();
 	}
 
-	public void LoadLibrary() {
+	void LoadLibrary() {
 
 		Debug.Log("Loading battle library...");
 
@@ -234,6 +235,8 @@ public class BattleEditorWindow {
 		AssetDatabase.SaveAssets();
 		AssetDatabase.Refresh();
 
+		battleUuid = "";
+		selBattle = 0;
 		SelectBattle();
 	}
 
@@ -241,7 +244,7 @@ public class BattleEditorWindow {
 		BattleEntry be = (BattleEntry)battleLibrary.GetEntryBySelectedIndex(selBattle);
 		string path = "Assets/LibraryData/Battles/" + be.uuid + ".asset";
 
-		battleLibrary.RemoveEntryByIndex(selBattle);
+		battleLibrary.RemoveEntryBySelectedIndex(selBattle);
 		Undo.RecordObject(battleLibrary, "Deleted battle");
 		EditorUtility.SetDirty(battleLibrary);
 		bool res = AssetDatabase.MoveAssetToTrash(path);

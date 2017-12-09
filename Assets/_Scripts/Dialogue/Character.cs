@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Character : MonoBehaviour {
 
-	public ScrObjListVariable characterLibrary;
+	public ScrObjLibraryVariable characterLibrary;
 	// public SpriteListVariable characterSprites;
 	// public SpriteListVariable poseSprites;
 	public IntVariable characterIndex;
@@ -27,8 +27,6 @@ public class Character : MonoBehaviour {
 			CharacterEntry ce = (CharacterEntry)characterLibrary.GetEntryByIndex(characterIndex.value);
 			characterSprite.enabled = true;
 			poseSprite.enabled = true;
-			// characterSprite.sprite = characterSprites.values[characterIndex.value];
-			// poseSprite.sprite = poseSprites.values[poseIndex.value];
 			characterSprite.sprite = ce.defaultColor;
 			poseSprite.sprite = ce.poses[poseIndex.value];
 		}

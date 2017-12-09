@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class CharacterCloseup : MonoBehaviour {
 
-	public ScrObjListVariable charLib;
+	public ScrObjLibraryVariable charLib;
 	// public SpriteListVariable characterLibrary;
 	// public SpriteListVariable poseLibrary;
 

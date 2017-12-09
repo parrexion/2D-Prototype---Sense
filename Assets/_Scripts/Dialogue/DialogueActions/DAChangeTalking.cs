@@ -7,8 +7,8 @@ public class DAChangeTalking : DialogueAction {
 
 	public override bool Act(DialogueScene scene, DialogueJsonItem data) {
 
-		scene.talkingCharacter.value = data.character;
-		scene.talkingPose.value = data.pose;
+		scene.talkingCharacter.value = data.position1;
+		scene.talkingPose.value = data.position2;
 
 		return true;
 	}

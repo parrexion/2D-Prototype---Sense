@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class DrawScoreScreen : BasicGUIButtons {
 
-	public ScrObjListVariable battleLibrary;
+	public ScrObjLibraryVariable battleLibrary;
 	public StringVariable battleUuid;
 	public StringVariable dialogueUuid;
 	public FloatVariable playerPosX;

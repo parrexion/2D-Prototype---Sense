@@ -6,7 +6,7 @@ using UnityEngine.Events;
 public class TowerTrigger : OWTrigger {
 
 	public StringVariable battleUuid;
-	public ScrObjListVariable enemyLibrary;
+	public ScrObjLibraryVariable enemyLibrary;
 	public BattleEntry towerBattle;
 	public IntVariable towerLevel;
 

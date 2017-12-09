@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class DamageNumberDisplay : MonoBehaviour {
 
-	public ScrObjListVariable battleLibrary;
+	public ScrObjLibraryVariable battleLibrary;
 	public StringVariable battleUuid;
 	public BoolVariable paused;
 	public int damage;

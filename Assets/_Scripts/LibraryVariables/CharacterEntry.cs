@@ -20,5 +20,6 @@ public class CharacterEntry : ScrObjLibraryEntry {
 		CharacterEntry ce = (CharacterEntry)other;
 
 		defaultColor = ce.defaultColor;
+		poses = ce.poses;
 	}
 }

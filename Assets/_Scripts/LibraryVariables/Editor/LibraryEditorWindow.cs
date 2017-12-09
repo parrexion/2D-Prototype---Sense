@@ -6,27 +6,31 @@ using System.Collections.Generic;
 
 public class LibraryEditorWindow : EditorWindow {
 
-	private enum State { BATTLE = 0, CHARACTER = 1, ENEMY = 2 }
+	private enum State { BATTLE = 0, CHARACTER = 1, ENEMY = 2, BACKGROUND = 3 }
 
 	// Header
 	Rect headerRect = new Rect();
 	Texture2D headerTex;
 
 	public BattleEditorWindow battleEditor;
-	public ScrObjListVariable battleLibrary;
+	public ScrObjLibraryVariable battleLibrary;
 	public BattleEntry battleContainer;
 
 	public CharacterEditorWindow characterEditor;
-	public ScrObjListVariable characterLibrary;
+	public ScrObjLibraryVariable characterLibrary;
 	public CharacterEntry charContainer;
 	public SpriteListVariable poseList;
 
 	public EnemyEditorWindow enemyEditor;
-	public ScrObjListVariable enemyLibrary;
+	public ScrObjLibraryVariable enemyLibrary;
 	public EnemyEntry enemyContainer;
 
+	public BackgroundEditorWindow backgroundEditor;
+	public ScrObjLibraryVariable backgroundLibrary;
+	public BackgroundEntry backgroundContainer;
+
 	private int currentWindow = (int)State.CHARACTER;
-	private string[] toolbarStrings = new string[] {"Battles", "Characters", "Enemies"};
+	private string[] toolbarStrings = new string[] {"Battles", "Characters", "Enemies", "Background"};
 
 
 	[MenuItem("Window/LibraryEditor")]
@@ -57,6 +61,9 @@ public class LibraryEditorWindow : EditorWindow {
 			case State.ENEMY:
 				enemyEditor.DrawWindow();
 				break;
+			case State.BACKGROUND:
+				backgroundEditor.DrawWindow();
+				break;
 		}
 	}
 
@@ -76,12 +83,12 @@ public class LibraryEditorWindow : EditorWindow {
 	/// </summary>
 	void LoadLibraries() {
 		battleEditor = new BattleEditorWindow(battleLibrary, battleContainer);
-		battleEditor.LoadLibrary();
 		
 		characterEditor = new CharacterEditorWindow(characterLibrary, charContainer, poseList);
 		
 		enemyEditor = new EnemyEditorWindow(enemyLibrary, enemyContainer);
-		enemyEditor.LoadLibrary();
+
+		backgroundEditor = new BackgroundEditorWindow(backgroundLibrary, backgroundContainer);
 
 		InitializeWindow();
 	}
@@ -97,6 +104,7 @@ public class LibraryEditorWindow : EditorWindow {
 		battleEditor.InitializeWindow();
 		characterEditor.InitializeWindow();
 		enemyEditor.InitializeWindow();
+		backgroundEditor.InitializeWindow();
 	}
 
 	void DrawHeader() {

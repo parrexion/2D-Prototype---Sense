@@ -6,7 +6,7 @@ public class WeaponSlot : MonoBehaviour {
 
 	public BoolVariable paused;
 	public ContainerKanji[] kanji;
-	public ScrObjListVariable battleLibrary;
+	public ScrObjLibraryVariable battleLibrary;
 	public StringVariable battleUuid;
 
 	private float size;

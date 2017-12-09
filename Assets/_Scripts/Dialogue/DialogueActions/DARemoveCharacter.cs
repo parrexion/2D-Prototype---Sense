@@ -7,7 +7,7 @@ public class DARemoveCharacter : DialogueAction {
 
 	public override bool Act (DialogueScene scene, DialogueJsonItem data)
 	{
-		scene.characters[data.position1].value = -1;
+		scene.characters[data.position1] = null;
 		return true;
 	}
 }

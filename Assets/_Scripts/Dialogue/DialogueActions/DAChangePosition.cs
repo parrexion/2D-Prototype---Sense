@@ -7,9 +7,9 @@ public class DAChangePosition : DialogueAction {
 
 	public override bool Act(DialogueScene scene, DialogueJsonItem data) {
 
-		int temp = scene.characters[data.position1].value;
-		scene.characters[data.position1].value = scene.characters[data.position2].value;
-		scene.characters[data.position2].value = temp;
+		CharacterEntry temp = scene.characters[data.position1];
+		scene.characters[data.position1] = scene.characters[data.position2];
+		scene.characters[data.position2] = temp;
 
 		return true;
 	}

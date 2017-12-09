@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 public class EnemyEditorWindow {
 
-	public ScrObjListVariable enemyLibrary;
+	public ScrObjLibraryVariable enemyLibrary;
 	public EnemyEntry enemyValues;
 
 	// Selection screen
@@ -26,12 +26,13 @@ public class EnemyEditorWindow {
 	Color repColor = new Color();
 
 
-	public EnemyEditorWindow(ScrObjListVariable entries, EnemyEntry container){
+	public EnemyEditorWindow(ScrObjLibraryVariable entries, EnemyEntry container){
 		enemyLibrary = entries;
 		enemyValues = container;
+		LoadLibrary();
 	}
 
-	public void LoadLibrary() {
+	void LoadLibrary() {
 
 		Debug.Log("Loading character libraries...");
 
@@ -202,6 +203,8 @@ public class EnemyEditorWindow {
 		AssetDatabase.SaveAssets();
 		AssetDatabase.Refresh();
 
+		enemyUuid = "";
+		selEnemy = 0;
 		SelectEnemy();
 	}
 
@@ -209,7 +212,7 @@ public class EnemyEditorWindow {
 		EnemyEntry ee = (EnemyEntry)enemyLibrary.GetEntryBySelectedIndex(selEnemy);
 		string path = "Assets/LibraryData/Enemies/" + ee.uuid + ".asset";
 
-		enemyLibrary.RemoveEntryByIndex(selEnemy);
+		enemyLibrary.RemoveEntryBySelectedIndex(selEnemy);
 		Undo.RecordObject(enemyLibrary, "Deleted enemy");
 		EditorUtility.SetDirty(enemyLibrary);
 		bool res = AssetDatabase.MoveAssetToTrash(path);
