@@ -57,8 +57,8 @@ public class PlayerController : MonoBehaviour {
 		coll2D.enabled = (moveToPosition.GetDashPercent() > invulFramesForDash);
 
 		transform.position = new Vector3(
-			Mathf.Clamp(transform.position.x,startX-BattleConstants.cameraBorderWidth,startX+BattleConstants.cameraBorderWidth),
-			Mathf.Clamp(transform.position.y,startY-BattleConstants.cameraBorderHeight,startY+BattleConstants.cameraBorderHeight),
+			Mathf.Clamp(transform.position.x,startX-Constants.cameraBorderWidth,startX+Constants.cameraBorderWidth),
+			Mathf.Clamp(transform.position.y,startY-Constants.cameraBorderHeight,startY+Constants.cameraBorderHeight),
 			0);
 		mouseInfo.playerPosition = transform.position;
 		Vector3 pos = screenCamera.ScreenToWorldPoint(Input.mousePosition);

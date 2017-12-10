@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-[CreateAssetMenu]
+[CreateAssetMenu(menuName="List ScrObj Variables/Sprite List Variable")]
 public class SpriteListVariable : ScriptableObject {
 	public Sprite[] values;
 }

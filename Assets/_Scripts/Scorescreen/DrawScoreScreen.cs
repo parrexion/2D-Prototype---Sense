@@ -84,17 +84,17 @@ public class DrawScoreScreen : BasicGUIButtons {
 					playerPosY.value = be.playerPosition.y;
 				}
 				if (be.playerArea == BattleEntry.OverworldArea.TOWER)
-					SceneManager.LoadScene((int)BattleConstants.SCENE_INDEXES.BATTLETOWER);
+					SceneManager.LoadScene((int)Constants.SCENE_INDEXES.BATTLETOWER);
 				else
-					SceneManager.LoadScene((int)BattleConstants.SCENE_INDEXES.TUTORIAL);
+					SceneManager.LoadScene((int)Constants.SCENE_INDEXES.TUTORIAL);
 				break;
 			case BattleEntry.NextLocation.DIALOGUE:
 				dialogueUuid.value = be.nextDialogue.name;
-				SceneManager.LoadScene((int)BattleConstants.SCENE_INDEXES.DIALOGUE);
+				SceneManager.LoadScene((int)Constants.SCENE_INDEXES.DIALOGUE);
 				break;
 			case BattleEntry.NextLocation.BATTLE:
 				battleUuid.value = be.nextBattle.uuid;
-				SceneManager.LoadScene((int)BattleConstants.SCENE_INDEXES.BATTLE);
+				SceneManager.LoadScene((int)Constants.SCENE_INDEXES.BATTLE);
 				break;
 		}
 

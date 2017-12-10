@@ -7,10 +7,11 @@ using UnityEngine.Events;
 [RequireComponent(typeof(DialogueScene))]
 public class DialogueLines : MonoBehaviour {
 
+	public ScrObjLibraryVariable dialogueLibrary;
+	public StringVariable dialogueUuid;
+	public DialogueEntry dialogueEntry;
+
 	public IntVariable currentFrame;
-	public DialogueParser parser;
-	public Dialogue dialogue;
-	public IntVariable selectedDialogue;
 	private DialogueScene scene;
 	
 	public UnityEvent backgroundChanged;
@@ -21,6 +22,7 @@ public class DialogueLines : MonoBehaviour {
 
 	void Start() {
 		scene = GetComponent<DialogueScene>();
+		dialogueLibrary.GenerateDictionary();
 		currentFrame.value = 0;
 		backgroundChanged.Invoke();
 		characterChanged.Invoke();
@@ -30,18 +32,18 @@ public class DialogueLines : MonoBehaviour {
 
 	public void NextFrame(){
 
-		if (dialogue.size == 0) {
-			dialogue = parser.dialogues.dialogues[selectedDialogue.value];
-			Debug.Log("Lines: " + dialogue.size);
+		if (dialogueEntry.size == 0) {
+			dialogueEntry = (DialogueEntry)dialogueLibrary.GetEntry(dialogueUuid.value);
+			Debug.Log("Lines: " + dialogueEntry.size);
 		}
 
-		if (currentFrame.value >= dialogue.size) {
+		if (currentFrame.value >= dialogueEntry.size) {
 			Debug.Log("Reached the end");
 			DialogueAction da = (DAEndDialogue)ScriptableObject.CreateInstance("DAEndDialogue");
 			da.Act(scene,null);
 		}
 		else {
-			CompareScenes(dialogue.frames[currentFrame.value]);
+			CompareScenes(dialogueEntry.frames[currentFrame.value]);
 			currentFrame.value++;
 		}
 	}

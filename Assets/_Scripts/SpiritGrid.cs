@@ -12,13 +12,13 @@ public class SpiritGrid : MonoBehaviour {
 	private int tempBalance;
 	public float combo;
 	public bool locked;
-	public BattleConstants.Direction attackDirection;
-	public BattleConstants.Direction lastDirection;
+	public Constants.Direction attackDirection;
+	public Constants.Direction lastDirection;
 
 	// Use this for initialization
 	void Start () {
 
-		grid = new int[BattleConstants.GRID_BRANCH,BattleConstants.GRID_WIDTH];
+		grid = new int[Constants.GRID_BRANCH,Constants.GRID_WIDTH];
 
 		branch = 2;
 		pos = 0;
@@ -26,14 +26,14 @@ public class SpiritGrid : MonoBehaviour {
 		tempBalance = 0;
 		combo = 0.6f;
 		locked = false;
-		attackDirection = BattleConstants.Direction.NEUTRAL;
-		lastDirection = BattleConstants.Direction.NEUTRAL;
+		attackDirection = Constants.Direction.NEUTRAL;
+		lastDirection = Constants.Direction.NEUTRAL;
 	}
 
-	private void GenerateGrid(BattleConstants.Direction dir) {
+	private void GenerateGrid(Constants.Direction dir) {
 
-		for (int i = 0; i < BattleConstants.GRID_WIDTH; i++) {
-			for (int j = 0; j < BattleConstants.GRID_BRANCH; j++) {
+		for (int i = 0; i < Constants.GRID_WIDTH; i++) {
+			for (int j = 0; j < Constants.GRID_BRANCH; j++) {
 				grid[j,i] = 0;
 			}
 		}
@@ -50,7 +50,7 @@ public class SpiritGrid : MonoBehaviour {
 	 * branch_width_low		lowest number of arrows after the split
 	 * branch_width_high	highest number of arrows after the split
 	 */
-	private void NormalGrid(BattleConstants.Direction dir,int diff_low, int diff_high, int branch_width_low, int branch_width_high) {
+	private void NormalGrid(Constants.Direction dir,int diff_low, int diff_high, int branch_width_low, int branch_width_high) {
 		int a, b, c, diff;
 
 		pos = 0;
@@ -62,10 +62,10 @@ public class SpiritGrid : MonoBehaviour {
 		c = 1+diff+Random.Range(branch_width_low, branch_width_high);
 
 		int arrow = 2;
-		if (dir == BattleConstants.Direction.LEFT)
+		if (dir == Constants.Direction.LEFT)
 			arrow = 1;
 
-		for (int i = 0; i < BattleConstants.GRID_WIDTH; i++) {
+		for (int i = 0; i < Constants.GRID_WIDTH; i++) {
 
 			if (i < diff) {
 				grid[2, i] = arrow;
@@ -107,16 +107,16 @@ public class SpiritGrid : MonoBehaviour {
 	}
 		
 
-	public bool MoveGrid(BattleConstants.Direction dir){
+	public bool MoveGrid(Constants.Direction dir){
 
-		if (dir == BattleConstants.Direction.RIGHT) {
+		if (dir == Constants.Direction.RIGHT) {
 
-			if (attackDirection == BattleConstants.Direction.NEUTRAL) {
-				attackDirection = BattleConstants.Direction.RIGHT;
+			if (attackDirection == Constants.Direction.NEUTRAL) {
+				attackDirection = Constants.Direction.RIGHT;
 				GenerateGrid(attackDirection);
 			}
 
-			if (attackDirection != BattleConstants.Direction.RIGHT) {
+			if (attackDirection != Constants.Direction.RIGHT) {
 				return false;
 			}
 
@@ -139,14 +139,14 @@ public class SpiritGrid : MonoBehaviour {
 				return true;
 			}
 		}
-		else if (dir == BattleConstants.Direction.LEFT) {
+		else if (dir == Constants.Direction.LEFT) {
 
-			if (attackDirection == BattleConstants.Direction.NEUTRAL) {
-				attackDirection = BattleConstants.Direction.LEFT;
+			if (attackDirection == Constants.Direction.NEUTRAL) {
+				attackDirection = Constants.Direction.LEFT;
 				GenerateGrid(attackDirection);
 			}
 
-			if (attackDirection != BattleConstants.Direction.LEFT) {
+			if (attackDirection != Constants.Direction.LEFT) {
 				return false;
 			}
 
@@ -169,7 +169,7 @@ public class SpiritGrid : MonoBehaviour {
 				return true;
 			}
 		}
-		else if (dir == BattleConstants.Direction.UP) {
+		else if (dir == Constants.Direction.UP) {
 			if (grid[branch-1,pos] == 3) {
 				grid[branch,pos] += 2;
 				grid[branch-1,pos] += 6;
@@ -183,7 +183,7 @@ public class SpiritGrid : MonoBehaviour {
 				return false;
 			}
 		}
-		else if (dir == BattleConstants.Direction.DOWN) {
+		else if (dir == Constants.Direction.DOWN) {
 			if (grid[branch+1,pos] == 4) {
 				grid[branch,pos] += 2;
 				grid[branch+1,pos] += 6;
@@ -204,7 +204,7 @@ public class SpiritGrid : MonoBehaviour {
 
 
 	public void CancelGrid(){
-		attackDirection = BattleConstants.Direction.NEUTRAL;
+		attackDirection = Constants.Direction.NEUTRAL;
 		branch = 2;
 		pos = 0;
 	}
@@ -242,11 +242,11 @@ public class SpiritGrid : MonoBehaviour {
 
 
 	private void cancelBranches(int currentBranch) {
-		for (int i = 0; i < BattleConstants.GRID_BRANCH; i++) {
+		for (int i = 0; i < Constants.GRID_BRANCH; i++) {
 			if (i == currentBranch)
 				continue;
 
-			for (int j = 0; j < BattleConstants.GRID_WIDTH; j++) {
+			for (int j = 0; j < Constants.GRID_WIDTH; j++) {
 				if (grid[i,j] != 0 && grid[i,j] < 5)
 					grid[i,j] += 6;
 			}

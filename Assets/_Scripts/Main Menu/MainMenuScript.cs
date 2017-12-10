@@ -25,7 +25,7 @@ public class MainMenuScript : BasicGUIButtons {
 
 	public void TutorialClicked(){
 		buttonClickEvent.Invoke();
-		SceneManager.LoadScene((int)BattleConstants.SCENE_INDEXES.BATTLE);
+		SceneManager.LoadScene((int)Constants.SCENE_INDEXES.BATTLE);
 	}
 
 	public void BattleClicked(){
@@ -52,7 +52,7 @@ public class MainMenuScript : BasicGUIButtons {
 			currentTowerLevel.value = bestLevel - 5;
 
 		buttonClickEvent.Invoke();
-		SceneManager.LoadScene((int)BattleConstants.SCENE_INDEXES.BATTLETOWER);
+		SceneManager.LoadScene((int)Constants.SCENE_INDEXES.BATTLETOWER);
 	}
 
 }

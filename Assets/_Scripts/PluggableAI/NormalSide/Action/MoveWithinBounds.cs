@@ -15,8 +15,8 @@ public class MoveWithinBounds : Action {
 		NStateController ncon = (NStateController)controller;
 
 		ncon.movement.Set(
-			Mathf.Clamp(ncon.thisTransform.position.x,BattleConstants.NormalStartX-BattleConstants.NormalBorderWidth,BattleConstants.NormalStartX+BattleConstants.NormalBorderWidth),
-			Mathf.Clamp(ncon.thisTransform.position.y,BattleConstants.NormalStartY-BattleConstants.NormalBorderWidth,BattleConstants.NormalStartY+BattleConstants.NormalBorderWidth));
+			Mathf.Clamp(ncon.thisTransform.position.x,Constants.NormalStartX-Constants.NormalBorderWidth,Constants.NormalStartX+Constants.NormalBorderWidth),
+			Mathf.Clamp(ncon.thisTransform.position.y,Constants.NormalStartY-Constants.NormalBorderWidth,Constants.NormalStartY+Constants.NormalBorderWidth));
 
 		ncon.rigidBody.MovePosition(ncon.movement);
 	}

@@ -23,12 +23,21 @@ public class Dialogue {
 
 [System.Serializable]
 public class Frame {
-	public BackgroundEntry background;
-	public CharacterEntry[] characters = new CharacterEntry[BattleConstants.DIALOGUE_PLAYERS_COUNT];
-	public int[] poses = new int[BattleConstants.DIALOGUE_PLAYERS_COUNT];
-	public string talkingName;
-	public int talkingIndex;
-	public string dialogueText;
+	public BackgroundEntry background = null;
+	public CharacterEntry[] characters = new CharacterEntry[Constants.DIALOGUE_PLAYERS_COUNT];
+	public int[] poses = new int[Constants.DIALOGUE_PLAYERS_COUNT];
+	public string talkingName = "";
+	public int talkingIndex = -1;
+	public string dialogueText = "";
+
+	public void CopyValues(Frame other) {
+		background = other.background;
+		characters = other.characters;
+		poses = other.poses;
+		talkingIndex = other.talkingIndex;
+		talkingName = other.talkingName;
+		dialogueText = other.dialogueText;
+	}
 }
 
 

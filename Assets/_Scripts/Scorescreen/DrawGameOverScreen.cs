@@ -31,12 +31,12 @@ public class DrawGameOverScreen : BasicGUIButtons {
 
 	public void RetryBattle(){
 		buttonClickEvent.Invoke();
-		SceneManager.LoadScene((int)BattleConstants.SCENE_INDEXES.BATTLE);
+		SceneManager.LoadScene((int)Constants.SCENE_INDEXES.BATTLE);
 	}
 
 	public void ReturnToMainScreen(){
 		buttonClickEvent.Invoke();
-		SceneManager.LoadScene((int)BattleConstants.SCENE_INDEXES.MAINMENU);
+		SceneManager.LoadScene((int)Constants.SCENE_INDEXES.MAINMENU);
 	}
 
 }

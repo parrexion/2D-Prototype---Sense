@@ -174,7 +174,7 @@ public class BattleController : MonoBehaviour {
 		Debug.Log("Won");
 
 		yield return new WaitForSeconds(time);
-		SceneManager.LoadScene((int)BattleConstants.SCENE_INDEXES.SCORE);
+		SceneManager.LoadScene((int)Constants.SCENE_INDEXES.SCORE);
 	}
 
 	public IEnumerator EscapedBattle(float time){
@@ -187,7 +187,7 @@ public class BattleController : MonoBehaviour {
 
 		winText.text = "ESCAPED!";
 		yield return new WaitForSeconds(time);
-		SceneManager.LoadScene((int)BattleConstants.SCENE_INDEXES.SCORE);
+		SceneManager.LoadScene((int)Constants.SCENE_INDEXES.SCORE);
 		yield return 0;
 	}
 
@@ -204,7 +204,7 @@ public class BattleController : MonoBehaviour {
 		values.time.value = currentTime;
 
 		yield return new WaitForSeconds(time);
-		SceneManager.LoadScene((int)BattleConstants.SCENE_INDEXES.SCORE);
+		SceneManager.LoadScene((int)Constants.SCENE_INDEXES.SCORE);
 		yield return 0;
 	}
 

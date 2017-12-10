@@ -19,8 +19,8 @@ public class FleeAction : Action {
 							direction.normalized.y * ncon.values.speed.y)*Time.fixedDeltaTime);
 
 		ncon.movement.Set(
-			Mathf.Clamp(ncon.movement.x,BattleConstants.NormalStartX-BattleConstants.NormalBorderWidth,BattleConstants.NormalStartX+BattleConstants.NormalBorderWidth),
-			Mathf.Clamp(ncon.movement.y,BattleConstants.NormalStartY-BattleConstants.NormalBorderWidth,BattleConstants.NormalStartY+BattleConstants.NormalBorderWidth));
+			Mathf.Clamp(ncon.movement.x,Constants.NormalStartX-Constants.NormalBorderWidth,Constants.NormalStartX+Constants.NormalBorderWidth),
+			Mathf.Clamp(ncon.movement.y,Constants.NormalStartY-Constants.NormalBorderWidth,Constants.NormalStartY+Constants.NormalBorderWidth));
 
 		ncon.rigidBody.MovePosition(ncon.movement);
 

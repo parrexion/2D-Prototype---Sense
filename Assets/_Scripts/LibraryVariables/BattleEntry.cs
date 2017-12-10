@@ -31,7 +31,7 @@ public class BattleEntry : ScrObjLibraryEntry {
 
 	// Player stuff
 	public bool useSpecificKanji = false;
-	public Kanji[] equippedKanji = new Kanji[BattleConstants.MAX_EQUIPPED_KANJI];
+	public Kanji[] equippedKanji = new Kanji[Constants.MAX_EQUIPPED_KANJI];
 
 	// After match values
 	public NextLocation nextLocation = NextLocation.OVERWORLD;
@@ -70,7 +70,7 @@ public class BattleEntry : ScrObjLibraryEntry {
 
 		// Player stuff
 		useSpecificKanji = true;
-		equippedKanji = new Kanji[BattleConstants.MAX_EQUIPPED_KANJI];
+		equippedKanji = new Kanji[Constants.MAX_EQUIPPED_KANJI];
 
 		// After match values
 		nextLocation = NextLocation.OVERWORLD;
@@ -113,7 +113,7 @@ public class BattleEntry : ScrObjLibraryEntry {
 
 		// Player stuff
 		useSpecificKanji = be.useSpecificKanji;
-		equippedKanji = new Kanji[BattleConstants.MAX_EQUIPPED_KANJI];
+		equippedKanji = new Kanji[Constants.MAX_EQUIPPED_KANJI];
 		for (int i = 0; i < be.equippedKanji.Length; i++) {
 			equippedKanji[i] = be.equippedKanji[i];
 		}

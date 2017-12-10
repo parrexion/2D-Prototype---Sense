@@ -20,7 +20,7 @@ public class WeaponSlot : MonoBehaviour {
 
 	void Start () {
 		shootCooldown = 0f;
-		size = BattleConstants.kanjiSize*Screen.height/BattleConstants.screenHeight;
+		size = Constants.kanjiSize*Screen.height/Constants.screenHeight;
 		
 		SetupTextures();
 		SetEquippedKanji();
@@ -52,7 +52,7 @@ public class WeaponSlot : MonoBehaviour {
 			shootCooldown -= Time.deltaTime;
 		}
 
-		for (int i = 0; i < BattleConstants.MAX_EQUIPPED_KANJI; i++) {
+		for (int i = 0; i < Constants.MAX_EQUIPPED_KANJI; i++) {
 			kanji[i].LowerCooldown();
 		}
 	}
@@ -66,11 +66,11 @@ public class WeaponSlot : MonoBehaviour {
 		int[] kanjiIndex;
 		MainControllerScript mainController = MainControllerScript.instance;
 
-		float width = BattleConstants.kanjiGuiOffsetWidth;
-		kanjiHeight = BattleConstants.kanjiGuiOffsetHeight;
+		float width = Constants.kanjiGuiOffsetWidth;
+		kanjiHeight = Constants.kanjiGuiOffsetHeight;
 		BattleEntry be = (BattleEntry)battleLibrary.GetEntry(battleUuid.value);
 
-		for (int i = 0; i < BattleConstants.MAX_EQUIPPED_KANJI; i++) {
+		for (int i = 0; i < Constants.MAX_EQUIPPED_KANJI; i++) {
 			if (be.useSpecificKanji) {
 				kanji[i].kanji = be.equippedKanji[i];
 			}
@@ -101,7 +101,7 @@ public class WeaponSlot : MonoBehaviour {
 		if (paused.value)
 			return;
 
-		for (int i = 0; i < BattleConstants.MAX_EQUIPPED_KANJI; i++) {
+		for (int i = 0; i < Constants.MAX_EQUIPPED_KANJI; i++) {
 
 			if (kanji[i].GetValues().icon == null)
 				continue;

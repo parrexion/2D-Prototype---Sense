@@ -6,20 +6,29 @@ using UnityEngine;
 public class DialogueEntry : ScrObjLibraryEntry {
 
 	public List<Frame> frames = new List<Frame>();
-	public BattleEntry.NextLocation nextLocation = BattleEntry.NextLocation.DIALOGUE;
-	public ScrObjLibraryEntry nextEntry = null;
+
 	public int size { get{ return frames.Count; } }
 	public List<Color> participantColors = new List<Color>();
+
+	public BattleEntry.NextLocation nextLocation = BattleEntry.NextLocation.OVERWORLD;
+	public ScrObjLibraryEntry nextEntry = null;
+	public bool changePosition = false;
+	public Vector2 playerPosition = new Vector2();
+	public BattleEntry.OverworldArea nextArea = BattleEntry.OverworldArea.DEFAULT;
 
 
 	public override void ResetValues() {
 		base.ResetValues();
 
 		frames = new List<Frame>();
-		frames.Add(new Frame());
-		nextLocation = BattleEntry.NextLocation.DIALOGUE;
-		nextEntry = null;
 		participantColors = new List<Color>();
+
+		frames.Add(new Frame());
+		nextLocation = BattleEntry.NextLocation.OVERWORLD;
+		nextEntry = null;
+		changePosition = false;
+		playerPosition = new Vector2();
+		nextArea = BattleEntry.OverworldArea.DEFAULT;
 	}
 
 	public override void CopyValues(ScrObjLibraryEntry other) {
@@ -27,18 +36,32 @@ public class DialogueEntry : ScrObjLibraryEntry {
 		DialogueEntry de = (DialogueEntry)other;
 
 		frames = de.frames;
+		participantColors = de.participantColors;
+
 		nextLocation = de.nextLocation;
 		nextEntry = de.nextEntry;
-		participantColors = de.participantColors;
+		changePosition = de.changePosition;
+		playerPosition = de.playerPosition;
+		nextArea = de.nextArea;
+	}
+
+	public void InsertFrame(int index, Frame f) {
+		frames.Insert(index, f);
+	}
+
+	public void RemoveFrame(int index) {
+		frames.RemoveAt(index);
 	}
 
 	public GUIContent[] GenerateFrameRepresentation() {
 		GUIContent[] list = new GUIContent[frames.Count];
 		GUIContent content;
-		for (int j = 0; j < frames.Count; j++) {
+		string str;
+		for (int i = 0; i < frames.Count; i++) {
 			content = new GUIContent();
-			content.text = uuid;
-			list[j] = content;
+			str = frames[i].dialogueText.Split('\n')[0];
+			content.text = i + ":  " + str.Substring(0,Mathf.Min(50,str.Length));
+			list[i] = content;
 		}
 		return list;
 	}

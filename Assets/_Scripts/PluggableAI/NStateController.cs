@@ -13,7 +13,7 @@ public class NStateController : StateController {
 	//
 
 	//Move to point
-	[HideInInspector] public Vector2 moveToPoint = new Vector2(-5*BattleConstants.NormalBorderWidth,-5*BattleConstants.NormalBorderHeight);
+	[HideInInspector] public Vector2 moveToPoint = new Vector2(-5*Constants.NormalBorderWidth,-5*Constants.NormalBorderHeight);
 	//
 
 
@@ -32,7 +32,7 @@ public class NStateController : StateController {
 			moveDirection = 1;
 		else
 			moveDirection = -1;
-		moveToPoint = new Vector2(-5*BattleConstants.NormalBorderWidth,-5*BattleConstants.NormalBorderHeight);
+		moveToPoint = new Vector2(-5*Constants.NormalBorderWidth,-5*Constants.NormalBorderHeight);
 	}
 
 	override protected void UpdateAnimation() {
@@ -78,6 +78,6 @@ public class NStateController : StateController {
 
 	public override Vector3 GetRandomLocation() {
 		Vector2 dist = Random.rotation * new Vector2(3,0);
-		return new Vector3(BattleConstants.NormalStartX + dist.x, BattleConstants.NormalStartY + dist.y,0);
+		return new Vector3(Constants.NormalStartX + dist.x, Constants.NormalStartY + dist.y,0);
 	}
 }

@@ -91,8 +91,8 @@ public class MoveHomingScript : MonoBehaviour {
 			}
 		}
 		movement.Set(
-			Mathf.Clamp(movement.x,BattleConstants.NormalStartX-BattleConstants.NormalBorderWidth,BattleConstants.NormalStartX+BattleConstants.NormalBorderWidth),
-			Mathf.Clamp(movement.y,BattleConstants.NormalStartY-BattleConstants.NormalBorderHeight,BattleConstants.NormalStartY+BattleConstants.NormalBorderHeight));
+			Mathf.Clamp(movement.x,Constants.NormalStartX-Constants.NormalBorderWidth,Constants.NormalStartX+Constants.NormalBorderWidth),
+			Mathf.Clamp(movement.y,Constants.NormalStartY-Constants.NormalBorderHeight,Constants.NormalStartY+Constants.NormalBorderHeight));
 		
 		rigidbodyComponent.MovePosition(movement);
 	}

@@ -60,7 +60,7 @@ public class SpiritGridController : MonoBehaviour {
 			return;
 		}
 
-		if (grid.attackDirection != BattleConstants.Direction.NEUTRAL) {
+		if (grid.attackDirection != Constants.Direction.NEUTRAL) {
 			currentAttackTimeLimit += Time.deltaTime;
 			if (currentAttackTimeLimit >= AttackTimeLimit) {
 				grid.CancelGrid();
@@ -84,7 +84,7 @@ public class SpiritGridController : MonoBehaviour {
 			// 		rigid.AddForce(new Vector2(0f,jumpForce));
 			// 	}
 			// }
-			/*else*/ if (grid.MoveGrid(BattleConstants.Direction.UP))
+			/*else*/ if (grid.MoveGrid(Constants.Direction.UP))
 				endReached = 1;
 			// else if (rigid.IsTouching(ground)) {
 			// 	rigid.AddForce(new Vector2(0f,jumpForce));
@@ -92,9 +92,9 @@ public class SpiritGridController : MonoBehaviour {
 			// }
 		}
 		else if (Input.GetKeyDown(KeyCode.S)) {
-			if (grid.attackDirection == BattleConstants.Direction.NEUTRAL)
+			if (grid.attackDirection == Constants.Direction.NEUTRAL)
 				endReached = 3;
-			else if (grid.MoveGrid(BattleConstants.Direction.DOWN))
+			else if (grid.MoveGrid(Constants.Direction.DOWN))
 				endReached = 1;
 			else {
 				endReached = 3;
@@ -102,19 +102,19 @@ public class SpiritGridController : MonoBehaviour {
 			}
 		}
 		else if (Input.GetKeyDown(KeyCode.D)) {
-			if (grid.attackDirection == BattleConstants.Direction.LEFT) {
+			if (grid.attackDirection == Constants.Direction.LEFT) {
 				endReached = 3;
 				grid.CancelGrid();
 			}
 			else if (rigid.IsTouching(ground)) {
 				if (battleController.enemyController.CheckIfEnemiesAtSide(false)) {
 					currentAttackTimeLimit = 0;
-					if (grid.MoveGrid(BattleConstants.Direction.RIGHT))
+					if (grid.MoveGrid(Constants.Direction.RIGHT))
 						endReached = 2;
 					else
 						endReached = 1;
 				}
-				else if (grid.attackDirection == BattleConstants.Direction.NEUTRAL) {
+				else if (grid.attackDirection == Constants.Direction.NEUTRAL) {
 					//endReached = 3;
 				}
 				else {
@@ -123,19 +123,19 @@ public class SpiritGridController : MonoBehaviour {
 			}
 		}
 		else if (Input.GetKeyDown(KeyCode.A)) {
-			if (grid.attackDirection == BattleConstants.Direction.RIGHT) {
+			if (grid.attackDirection == Constants.Direction.RIGHT) {
 				endReached = 3;
 				grid.CancelGrid();
 			}
 			else if (rigid.IsTouching(ground)) {
 				if (battleController.enemyController.CheckIfEnemiesAtSide(true)) {
 					currentAttackTimeLimit = 0;
-					if (grid.MoveGrid(BattleConstants.Direction.LEFT))
+					if (grid.MoveGrid(Constants.Direction.LEFT))
 						endReached = 2;
 					else
 						endReached = 1;
 				}
-				else if (grid.attackDirection == BattleConstants.Direction.NEUTRAL) {
+				else if (grid.attackDirection == Constants.Direction.NEUTRAL) {
 					//endReached = 3;
 				}
 				else {
@@ -179,9 +179,9 @@ public class SpiritGridController : MonoBehaviour {
 			animInfo.attacking = true;
 			attacking--;
 
-			if (grid.attackDirection == BattleConstants.Direction.LEFT)
+			if (grid.attackDirection == Constants.Direction.LEFT)
 				animInfo.mouseDirection = -1;
-			else if (grid.attackDirection == BattleConstants.Direction.RIGHT)
+			else if (grid.attackDirection == Constants.Direction.RIGHT)
 				animInfo.mouseDirection = 1;
 			else {
 				animInfo.mouseDirection = 0;
@@ -203,10 +203,10 @@ public class SpiritGridController : MonoBehaviour {
 	//Creates a basic attack at the given enemy
 	public void Attack(){
 		List<DamageValues> dmgs = new List<DamageValues>();
-		if (grid.attackDirection == BattleConstants.Direction.LEFT) {
+		if (grid.attackDirection == Constants.Direction.LEFT) {
 			dmgs = battleController.enemyController.GetRandomEnemies(1,5,true,true);
 		}
-		else if (grid.attackDirection == BattleConstants.Direction.RIGHT) {
+		else if (grid.attackDirection == Constants.Direction.RIGHT) {
 			dmgs = battleController.enemyController.GetRandomEnemies(1,5,true,false);
 		}
 
@@ -235,10 +235,10 @@ public class SpiritGridController : MonoBehaviour {
 	public void EndAttack(){
 		List<DamageValues> dmgs = new List<DamageValues>();
 		int combo = (int)(grid.combo);
-		if (grid.lastDirection == BattleConstants.Direction.LEFT) {
+		if (grid.lastDirection == Constants.Direction.LEFT) {
 			dmgs = battleController.enemyController.GetRandomEnemies(combo,15,true,true);
 		}
-		else if (grid.lastDirection == BattleConstants.Direction.RIGHT) {
+		else if (grid.lastDirection == Constants.Direction.RIGHT) {
 			dmgs = battleController.enemyController.GetRandomEnemies(combo,15,true,false);
 		}
 //		Debug.Log("Combo: "+combo);

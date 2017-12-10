@@ -22,25 +22,25 @@ public class BasicGUIButtons : MonoBehaviour {
 
 		switch (scene) {
 		case "battle":
-			SceneManager.LoadScene((int)BattleConstants.SCENE_INDEXES.BATTLE);
+			SceneManager.LoadScene((int)Constants.SCENE_INDEXES.BATTLE);
 			break;
 		case "dialogue":
-			SceneManager.LoadScene((int)BattleConstants.SCENE_INDEXES.DIALOGUE);
+			SceneManager.LoadScene((int)Constants.SCENE_INDEXES.DIALOGUE);
 			break;
 		case "inventory":
-			SceneManager.LoadScene((int)BattleConstants.SCENE_INDEXES.INVENTORY);
+			SceneManager.LoadScene((int)Constants.SCENE_INDEXES.INVENTORY);
 			break;
 		case "mainmenu":
-			SceneManager.LoadScene((int)BattleConstants.SCENE_INDEXES.MAINMENU);
+			SceneManager.LoadScene((int)Constants.SCENE_INDEXES.MAINMENU);
 			break;
 		case "scorescreen":
-			SceneManager.LoadScene((int)BattleConstants.SCENE_INDEXES.SCORE);
+			SceneManager.LoadScene((int)Constants.SCENE_INDEXES.SCORE);
 			break;
 		case "tower":
-			SceneManager.LoadScene((int)BattleConstants.SCENE_INDEXES.BATTLETOWER);
+			SceneManager.LoadScene((int)Constants.SCENE_INDEXES.BATTLETOWER);
 			break;
 		case "tutorial":
-			SceneManager.LoadScene((int)BattleConstants.SCENE_INDEXES.TUTORIAL);
+			SceneManager.LoadScene((int)Constants.SCENE_INDEXES.TUTORIAL);
 			break;
 		default:
 			Debug.Log("Failed to find a scene to move to");

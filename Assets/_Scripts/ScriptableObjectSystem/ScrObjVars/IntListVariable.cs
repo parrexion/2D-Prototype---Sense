@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-[CreateAssetMenu]
+[CreateAssetMenu(menuName="List ScrObj Variables/Int List Variable")]
 public class IntListVariable : ScriptableObject {
 	public int[] values;
 }

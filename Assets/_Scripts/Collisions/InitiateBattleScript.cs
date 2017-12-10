@@ -30,6 +30,6 @@ public class InitiateBattleScript : MonoBehaviour {
 		fightText.text = "FIGHT!";
 		paused.value = true;
 		yield return new WaitForSeconds(time);
-		SceneManager.LoadScene((int)BattleConstants.SCENE_INDEXES.BATTLE);
+		SceneManager.LoadScene((int)Constants.SCENE_INDEXES.BATTLE);
 	}
 }
