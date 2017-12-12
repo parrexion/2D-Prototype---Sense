@@ -1,13 +1,12 @@
 fileFormatVersion: 2
-guid: 5bb5e3004ac9dc347b90f61f98f6b6fb
-timeCreated: 1513108859
+guid: b1a016c53dcb64f4aa5fe7edb30d3ca8
+timeCreated: 1511894259
 licenseType: Free
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
   defaultReferences:
-  - battleLibrary: {fileID: 11400000, guid: 39d7402c7da68f84b988205345a2103b, type: 2}
-  - battleUuid: {fileID: 11400000, guid: d00ce14a006c9ad45ad6187df7fc9958, type: 2}
+  - fightText: {instanceID: 0}
   - paused: {fileID: 11400000, guid: a6a7974a7061e1f488dd3a55225ba7f2, type: 2}
   executionOrder: 0
   icon: {instanceID: 0}

@@ -106,7 +106,7 @@ public class DialogueEditorWindow : EditorWindow {
 
 		GUILayout.EndArea();
 		GUILayout.BeginArea(saveRect);
-		if (GUILayout.Button("Save\nframe", GUILayout.Height(saveRect.height))){
+		if (GUILayout.Button("Save\nDialogue", GUILayout.Height(saveRect.height))){
 			SaveSelectedDialogue();
 		}
 		GUILayout.EndArea();
@@ -353,7 +353,7 @@ public class DialogueEditorWindow : EditorWindow {
 
 		GUI.FocusControl(null);
 		dialogueValues.RemoveFrame(selFrame);
-		selFrame = Mathf.Min(selFrame, dialogueValues.frames.Count);
+		selFrame = Mathf.Min(selFrame, dialogueValues.frames.Count-1);
 
 		SaveSelectedDialogue();
 	}

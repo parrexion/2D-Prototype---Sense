@@ -38,7 +38,7 @@ public class BattleEntry : ScrObjLibraryEntry {
 	public bool changePosition = false;
 	public OverworldArea playerArea = OverworldArea.DEFAULT;
 	public Vector2 playerPosition = new Vector2();
-	public DialogueLines nextDialogue = null;
+	public DialogueEntry nextDialogue = null;
 	public BattleEntry nextBattle = null;
 
 

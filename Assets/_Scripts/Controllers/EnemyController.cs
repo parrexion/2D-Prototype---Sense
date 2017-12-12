@@ -42,6 +42,7 @@ public class EnemyController : MonoBehaviour {
 			yield return null;
 		}
 
+		battleLibrary.GenerateDictionary();
 		be = (BattleEntry)battleLibrary.GetEntry(battleUuid.value);
 		Debug.Log(JsonUtility.ToJson(be));
 

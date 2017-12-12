@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 /// <summary>
 /// Overworld trigger which starts a battle when colliding with battle triggers.
 /// </summary>
-public class InitiateBattleScript : MonoBehaviour {
+public class InitiateDialogueScript : MonoBehaviour {
 
 	public Text screenText;
 	public BoolVariable paused;
@@ -17,8 +17,8 @@ public class InitiateBattleScript : MonoBehaviour {
 	/// </summary>
 	/// <param name="time"></param>
 	/// <returns></returns>
-	public void StartBattle(float time) {
-		StartCoroutine(BattleDelay(time));
+	public void StartDialogue(float time) {
+		StartCoroutine(DialogueDelay(time));
 	}
 
 	/// <summary>
@@ -26,10 +26,10 @@ public class InitiateBattleScript : MonoBehaviour {
 	/// </summary>
 	/// <param name="time"></param>
 	/// <returns></returns>
-	private IEnumerator BattleDelay(float time){
-		screenText.text = "FIGHT!";
+	private IEnumerator DialogueDelay(float time){
+		screenText.text = "DIALOGUE!";
 		paused.value = true;
 		yield return new WaitForSeconds(time);
-		SceneManager.LoadScene((int)Constants.SCENE_INDEXES.BATTLE);
+		SceneManager.LoadScene((int)Constants.SCENE_INDEXES.DIALOGUE);
 	}
 }

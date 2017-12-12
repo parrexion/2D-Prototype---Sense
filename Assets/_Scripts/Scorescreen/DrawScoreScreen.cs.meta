@@ -1,12 +1,12 @@
 fileFormatVersion: 2
 guid: 50feb5f058df02e42a9925feed880e29
-timeCreated: 1512595607
+timeCreated: 1513108942
 licenseType: Free
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
   defaultReferences:
-  - battleLibrary: {fileID: 11400000, guid: 9df050c932e95ad4a8d04ba17b99fe4e, type: 2}
+  - battleLibrary: {fileID: 11400000, guid: 39d7402c7da68f84b988205345a2103b, type: 2}
   - battleUuid: {fileID: 11400000, guid: d00ce14a006c9ad45ad6187df7fc9958, type: 2}
   - dialogueUuid: {fileID: 11400000, guid: b0c12f4d7babea348b58bacebbe48f06, type: 2}
   - playerPosX: {fileID: 11400000, guid: 0eca8d82750de4c4981212018d942288, type: 2}

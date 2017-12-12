@@ -73,7 +73,7 @@ public class DrawScoreScreen : BasicGUIButtons {
 
 	public void LeaveScoreScreen(){
 		buttonClickEvent.Invoke();
-
+		battleLibrary.GenerateDictionary();
 		BattleEntry be = (BattleEntry)battleLibrary.GetEntry(battleUuid.value);
 		switch (be.nextLocation)
 		{

@@ -103,7 +103,7 @@ public class WeaponSlot : MonoBehaviour {
 
 		for (int i = 0; i < Constants.MAX_EQUIPPED_KANJI; i++) {
 
-			if (kanji[i].GetValues().icon == null)
+			if (kanji[i].kanji == null)
 				continue;
 
 			GUI.DrawTexture(kanji[i].slotPos,emptySprite);

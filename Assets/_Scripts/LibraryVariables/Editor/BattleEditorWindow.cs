@@ -141,7 +141,7 @@ public class BattleEditorWindow {
 				}
 				break;
 			case BattleEntry.NextLocation.DIALOGUE:
-				battleValues.nextDialogue = (DialogueLines)EditorGUILayout.ObjectField("Next Dialogue",battleValues.nextDialogue, typeof(DialogueLines),false);
+				battleValues.nextDialogue = (DialogueEntry)EditorGUILayout.ObjectField("Next Dialogue",battleValues.nextDialogue, typeof(DialogueEntry),false);
 				break;
 			case BattleEntry.NextLocation.BATTLE:
 				battleValues.nextBattle = (BattleEntry)EditorGUILayout.ObjectField("Next battle", battleValues.nextBattle, typeof(BattleEntry),false);

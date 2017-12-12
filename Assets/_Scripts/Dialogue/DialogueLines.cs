@@ -35,19 +35,22 @@ public class DialogueLines : MonoBehaviour {
 
 	public void NextFrame(){
 
-		if (dialogueEntry.size == 0) {
-			dialogueEntry = (DialogueEntry)dialogueLibrary.GetEntry(dialogueUuid.value);
-			Debug.Log("Lines: " + dialogueEntry.size);
-		}
+		// if (dialogueEntry.size == 0) {
+		// 	dialogueEntry = (DialogueEntry)dialogueLibrary.GetEntry(dialogueUuid.value);
+		// 	Debug.Log("Lines: " + dialogueEntry.size);
+		// }
+
+		currentFrame.value++;
 
 		if (currentFrame.value >= dialogueEntry.size) {
 			Debug.Log("Reached the end");
 			DialogueAction da = (DAEndDialogue)ScriptableObject.CreateInstance("DAEndDialogue");
-			da.Act(scene,null);
+			DialogueJsonItem data = new DialogueJsonItem();
+			data.entry = dialogueEntry;
+			da.Act(scene,data);
 		}
 		else {
 			CompareScenes(dialogueEntry.frames[currentFrame.value]);
-			currentFrame.value++;
 		}
 	}
 

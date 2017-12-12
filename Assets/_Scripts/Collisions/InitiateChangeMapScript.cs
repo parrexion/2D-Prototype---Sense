@@ -3,22 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.Events;
 
 /// <summary>
 /// Overworld trigger which starts a battle when colliding with battle triggers.
 /// </summary>
-public class InitiateBattleScript : MonoBehaviour {
+public class InitiateChangeMapScript : MonoBehaviour {
 
 	public Text screenText;
 	public BoolVariable paused;
+	public UnityEvent movePlayerEvent;
 
 	/// <summary>
 	/// Function which starts the start battle animation.
 	/// </summary>
 	/// <param name="time"></param>
 	/// <returns></returns>
-	public void StartBattle(float time) {
-		StartCoroutine(BattleDelay(time));
+	public void StartTransition(float time) {
+		StartCoroutine(TransitionDelay(time));
 	}
 
 	/// <summary>
@@ -26,10 +28,12 @@ public class InitiateBattleScript : MonoBehaviour {
 	/// </summary>
 	/// <param name="time"></param>
 	/// <returns></returns>
-	private IEnumerator BattleDelay(float time){
-		screenText.text = "FIGHT!";
+	private IEnumerator TransitionDelay(float time){
+		screenText.text = "CHANGE\nMAP!";
 		paused.value = true;
 		yield return new WaitForSeconds(time);
-		SceneManager.LoadScene((int)Constants.SCENE_INDEXES.BATTLE);
+		movePlayerEvent.Invoke();
+		screenText.text = "";
+		paused.value = false;
 	}
 }

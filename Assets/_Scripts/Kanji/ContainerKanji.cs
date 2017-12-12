@@ -16,6 +16,10 @@ public class ContainerKanji : MonoBehaviour {
 
 	// Use this for initialization
 	public void Initialize (int slot) {
+		if (kanji == null){
+			return;
+		}
+		
 		currentCharge = kanji.values.maxCharges;
 		currentCooldown = maxCooldown = kanji.values.cooldown;
 		if (kanji.values.startCooldownTime > 0){
@@ -29,6 +33,9 @@ public class ContainerKanji : MonoBehaviour {
 	}
 	
 	public void LowerCooldown() {
+		if (kanji == null){
+			return;
+		}
 		if (!active) {
 			currentCooldown -= Time.deltaTime;
 			if (currentCooldown <= 0f) {
@@ -40,7 +47,9 @@ public class ContainerKanji : MonoBehaviour {
 	}
 
 	public bool CanActivate (MouseInformation info) {
-
+		if (kanji == null){
+			return false;
+		}
 		if (!active)
 			return false;
 
@@ -77,6 +86,9 @@ public class ContainerKanji : MonoBehaviour {
 	}
 
 	public float GetCharge() {
+		if (kanji == null){
+			return 0;
+		}
 		if (active)
 			return (float)currentCharge/(float)kanji.values.maxCharges;
 		else

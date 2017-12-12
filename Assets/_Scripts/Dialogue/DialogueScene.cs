@@ -6,6 +6,7 @@ using UnityEngine.Events;
 [System.Serializable]
 public class DialogueScene : MonoBehaviour {
 
+	public StringVariable dialogueUuid;
 	public ScrObjEntryReference background;
 	[SerializeField] private ScrObjEntryReference character0;
 	[SerializeField] private ScrObjEntryReference character1;
@@ -22,6 +23,12 @@ public class DialogueScene : MonoBehaviour {
 
 	[HideInInspector] public ScrObjEntryReference[] characters;
 	[HideInInspector] public IntVariable[] poses;
+
+	//Non-dialogue references
+	public BoolVariable paused;
+	public StringVariable battleUuid;
+	public FloatVariable playerPosX;
+	public FloatVariable playerPosY;
 
 
 	void Start() {

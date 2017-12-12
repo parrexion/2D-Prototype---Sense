@@ -26,6 +26,7 @@ public class BattleController : MonoBehaviour {
 
 	public float startupTime = 3.0f;
 	public int state = 0;
+	public bool tutorial = false;
 	public bool escape = false;
 	public float currentTime = 0f;
 
@@ -34,7 +35,10 @@ public class BattleController : MonoBehaviour {
 	void Start () {
 		be = (BattleEntry)battleLibrary.GetEntry(battleUuid.value);
 
+		tutorial = false;
 		escape = (be.backgroundHintLeft != null || be.backgroundHintRight != null);
+		Debug.Log(be.backgroundHintLeft != null);
+		Debug.Log(be.backgroundHintRight != null);
 		invincible.value = true;
 
 		backchange = GameObject.Find("Background Background").GetComponent<BackgroundChanger>();
@@ -96,15 +100,16 @@ public class BattleController : MonoBehaviour {
 	}
 
 	private void SetupBackgrounds() {
-		if (escape) {
+		if (!tutorial && be.isTutorial) {
 			if (be.backgroundHintRight != null) {
 				backchange.tutorialNormal.sprite = be.backgroundHintRight;
+				tutorial = true;
 			}
 			if (be.backgroundHintLeft != null) {
 				backchange.tutorialSpirit.sprite = be.backgroundHintLeft;
+				tutorial = true;
 			}
 			state = -1;
-			escape = false;
 			return;
 		}
 

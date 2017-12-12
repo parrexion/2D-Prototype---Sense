@@ -14,8 +14,7 @@ public class OutsidePlayerController : MonoBehaviour {
 	void Start () {
 		moveToPosition = GetComponent<MoveHomingNoLimit>();
 		cam = Camera.main;
-		transform.position = new Vector3(posx.value,posy.value,0);
-		moveToPosition.moveToPosition = transform.position;
+		SetPlayerPosition();
 	}
 	
 	// Update is called once per frame
@@ -31,4 +30,10 @@ public class OutsidePlayerController : MonoBehaviour {
 		posy.value = transform.position.y;
 	}
 
+
+	public void SetPlayerPosition() {
+		transform.position = new Vector3(posx.value,posy.value,0);
+		moveToPosition.moveToPosition = transform.position;
+		Debug.Log("Position is now: " + posx.value + ", " + posy.value);
+	}
 }
