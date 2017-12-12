@@ -7,9 +7,9 @@ public class DAChangePosition : DialogueAction {
 
 	public override bool Act(DialogueScene scene, DialogueJsonItem data) {
 
-		CharacterEntry temp = scene.characters[data.position1];
-		scene.characters[data.position1] = scene.characters[data.position2];
-		scene.characters[data.position2] = temp;
+		ScrObjLibraryEntry temp = scene.characters[data.position1].value;
+		scene.characters[data.position1].value = scene.characters[data.position2].value;
+		scene.characters[data.position2].value = temp;
 
 		return true;
 	}

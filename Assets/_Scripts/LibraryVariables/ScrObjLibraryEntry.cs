@@ -64,4 +64,17 @@ public class ScrObjLibraryEntry : ScriptableObject {
 	public virtual bool IsEqual(ScrObjLibraryEntry other) {
 		return (uuid == other.uuid);
 	}
+
+	public static bool CompareEntries(ScrObjLibraryEntry obj1, ScrObjLibraryEntry obj2) {
+		if (obj1 == null) {
+			if (obj2 == null)
+				return true;
+			else
+				return false;
+		}
+		if (obj2 == null)
+			return false;
+
+		return obj1.IsEqual(obj2);
+	}
 }

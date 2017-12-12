@@ -6,7 +6,7 @@ public class DASetBackground : DialogueAction {
 
 	public override bool Act(DialogueScene scene, DialogueJsonItem data) {
 
-		scene.background = (BackgroundEntry)data.entry;
+		scene.background.value = data.entry;
 
 		return true;
 	}

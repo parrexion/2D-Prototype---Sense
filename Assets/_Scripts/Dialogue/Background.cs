@@ -5,9 +5,7 @@ using UnityEngine.UI;
 
 public class Background : MonoBehaviour {
 
-	public ScrObjLibraryVariable backgroundLibrary;
-	public IntVariable dialogueBackground;
-	private int currentBackground;
+	public ScrObjEntryReference dialogueBackground;
 	private Image image;
 
 	// Use this for initialization
@@ -18,10 +16,11 @@ public class Background : MonoBehaviour {
 	
 	// Update is called once per frame
 	public void UpdateBackground () {
-		if (currentBackground != dialogueBackground.value){
-			currentBackground = dialogueBackground.value;
-			BackgroundEntry bke = (BackgroundEntry)backgroundLibrary.GetEntryByIndex(currentBackground);
-			image.sprite = bke.sprite;
+		if (dialogueBackground.value == null) {
+			image.enabled = false;
+		}
+		else {
+			image.sprite = ((BackgroundEntry)(dialogueBackground.value)).sprite;
 		}
 	}
 }

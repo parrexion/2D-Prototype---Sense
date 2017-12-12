@@ -9,7 +9,7 @@ public class DialogueLines : MonoBehaviour {
 
 	public ScrObjLibraryVariable dialogueLibrary;
 	public StringVariable dialogueUuid;
-	public DialogueEntry dialogueEntry;
+	private DialogueEntry dialogueEntry;
 
 	public IntVariable currentFrame;
 	private DialogueScene scene;
@@ -23,7 +23,10 @@ public class DialogueLines : MonoBehaviour {
 	void Start() {
 		scene = GetComponent<DialogueScene>();
 		dialogueLibrary.GenerateDictionary();
+		dialogueEntry = (DialogueEntry)dialogueLibrary.GetEntry(dialogueUuid.value);
 		currentFrame.value = 0;
+		scene.SetFromFrame(dialogueEntry.frames[0]);
+
 		backgroundChanged.Invoke();
 		characterChanged.Invoke();
 		closeupChanged.Invoke();
@@ -51,7 +54,7 @@ public class DialogueLines : MonoBehaviour {
 	private void CompareScenes(Frame frame) {
 		DialogueAction da;
 		DialogueJsonItem data;
-		if (!scene.background.IsEqual(frame.background)) {
+		if (!ScrObjLibraryEntry.CompareEntries(scene.background.value,frame.background)) {
 			da = (DASetBackground)ScriptableObject.CreateInstance("DASetBackground");
 			data = new DialogueJsonItem();
 			data.entry = frame.background;
@@ -60,7 +63,7 @@ public class DialogueLines : MonoBehaviour {
 		}
 		bool changed = false;
 		for (int i = 0; i < 4; i++) {
-			if (!scene.characters[i].IsEqual(frame.characters[i]) || scene.poses[i].value != frame.poses[i]) {
+			if (!ScrObjLibraryEntry.CompareEntries(scene.characters[i].value,frame.characters[i]) || scene.poses[i].value != frame.poses[i]) {
 				da = (DAAddCharacter)ScriptableObject.CreateInstance("DAAddCharacter");
 				data = new DialogueJsonItem();
 				data.position1 = i;
@@ -77,7 +80,7 @@ public class DialogueLines : MonoBehaviour {
 		}
 
 		changed = false;
-		if (scene.talkingCharacter.value != frame.talkingIndex || scene.talkingPose.value != frame.poses[frame.talkingIndex]) {
+		if (scene.talkingIndex.value != frame.talkingIndex || scene.talkingPose.value != frame.talkingPose) {
 			da = (DAChangeTalking)ScriptableObject.CreateInstance("DAChangeTalking");
 			data = new DialogueJsonItem();
 			data.position1 = frame.talkingIndex;

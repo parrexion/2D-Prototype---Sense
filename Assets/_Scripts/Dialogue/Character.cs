@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Character : MonoBehaviour {
 
-	public CharacterEntry character;
+	public ScrObjEntryReference character;
 	public IntVariable poseIndex;
 
 	[SerializeField] private SpriteRenderer characterSprite = null;
@@ -16,15 +16,16 @@ public class Character : MonoBehaviour {
 	}
 
 	public void UpdateCharacter() {
-		if (character == null){
+		if (character.value == null){
 			characterSprite.enabled = false;
 			poseSprite.enabled = false;
 		}
 		else {
 			characterSprite.enabled = true;
 			poseSprite.enabled = true;
-			characterSprite.sprite = character.defaultColor;
-			poseSprite.sprite = character.poses[poseIndex.value];
+			CharacterEntry ce = (CharacterEntry)character.value;
+			characterSprite.sprite = ce.defaultColor;
+			poseSprite.sprite = ce.poses[poseIndex.value];
 		}
 
 	}

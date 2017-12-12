@@ -29,6 +29,11 @@ public class Frame {
 	public string talkingName = "";
 	public int talkingIndex = -1;
 	public string dialogueText = "";
+	public int talkingPose { get {
+			if (talkingIndex == -1 || talkingIndex == 4)
+				return -1;
+			return poses[talkingIndex];
+		} }
 
 	public void CopyValues(Frame other) {
 		background = other.background;
