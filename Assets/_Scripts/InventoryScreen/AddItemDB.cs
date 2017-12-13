@@ -8,15 +8,14 @@ using UnityEngine;
 /// </summary>
 public class AddItemDB : MonoBehaviour {
 
-	Inventory inventory;
-	KanjiList kanjiList;
-	public ItemEquip[] equipList;
+	public Inventory inventory;
+	public KanjiListVariable kanjiList;
+	public ItemListVariable itemList;
 
 
 	// Use this for initialization
 	void Start () {
 		inventory = Inventory.instance;
-		kanjiList = MainControllerScript.instance.kanjiList;
 	}
 
 	/// <summary>
@@ -25,7 +24,7 @@ public class AddItemDB : MonoBehaviour {
 	/// <param name="id"></param>
 	/// <param name="equip"></param>
 	public void AddSpecificKanji(int id, bool equip){
-		if (id >= kanjiList.ListSize()){
+		if (id >= kanjiList.values.Length){
 			Debug.LogWarning("Kanji index " + id + " does not exist!");
 			return;
 		}
@@ -40,9 +39,9 @@ public class AddItemDB : MonoBehaviour {
 	}
 
 	public void AddSpecificEquip(int id, bool equip){
-		if (id >= equipList.Length)
+		if (id >= itemList.values.Length)
 			return;
-		ItemEquip item = ScriptableObject.Instantiate(equipList[id]);
+		ItemEquip item = ScriptableObject.Instantiate(itemList.values[id]);
 		bool added;
 		if (equip)
 			added = inventory.AddEquip(item);
@@ -53,12 +52,12 @@ public class AddItemDB : MonoBehaviour {
 	}
 
 	public void AddRandomKanji() {
-		int r = Random.Range(1,kanjiList.ListSize());
+		int r = Random.Range(1,kanjiList.values.Length);
 		AddSpecificKanji(r,false);
 	}
 
 	public void AddRandomEquip() {
-		int r = Random.Range(1,equipList.Length);
+		int r = Random.Range(1,itemList.values.Length);
 		AddSpecificEquip(r, false);
 	}
 }

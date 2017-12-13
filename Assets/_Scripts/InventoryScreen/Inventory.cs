@@ -59,6 +59,7 @@ public class Inventory : MonoBehaviour {
 	}
 
 	public void FillDefault(){
+		db.inventory = this;
 		db.AddSpecificKanji(1,true);
 		db.AddSpecificKanji(2,true);
 		db.AddSpecificKanji(3,true);

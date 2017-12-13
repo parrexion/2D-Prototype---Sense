@@ -5,10 +5,11 @@ using UnityEngine;
 public class WeaponSlot : MonoBehaviour {
 
 	public BoolVariable paused;
-	public ContainerKanji[] kanji;
+	public KanjiListVariable kanjiList;
 	public ScrObjLibraryVariable battleLibrary;
 	public StringVariable battleUuid;
 
+	public ContainerKanji[] kanji;
 	private float size;
 	private float kanjiHeight;
 	private Texture2D emptySprite;
@@ -78,11 +79,11 @@ public class WeaponSlot : MonoBehaviour {
 				kanjiIndex = mainController.inventory.GetEquippedKanji();
 
 				if (i >= kanjiIndex.Length) {
-					kanji[i].kanji = mainController.kanjiList.GetKanji(0);
+					kanji[i].kanji = kanjiList.GetKanji(0);
 				}
 				else {
 					// Debug.Log("Equipped: "+kanjiIndex[i]);
-					kanji[i].kanji = mainController.kanjiList.GetKanji(kanjiIndex[i]);
+					kanji[i].kanji = kanjiList.GetKanji(kanjiIndex[i]);
 				}
 			}
 			

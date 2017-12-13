@@ -7,8 +7,10 @@ public abstract class OWTrigger : MonoBehaviour {
 
 	public string uuid = System.Guid.NewGuid().ToString();
 	public bool active = true;
+	public bool visible = false;
 	public UnityEvent startEvent;
 	public SpriteRenderer sprite;
+	public SpriteRenderer areaSprite;
 
 
 	void OnEnable() {
@@ -20,6 +22,7 @@ public abstract class OWTrigger : MonoBehaviour {
 			yield return null;
 
 		active = TriggerController.instance.CheckActive(uuid);
+		areaSprite.enabled = false;
 		Startup();
 	}
 	
@@ -52,6 +55,6 @@ public abstract class OWTrigger : MonoBehaviour {
 
 	protected virtual void Startup(){
 		if (!active && sprite != null)
-			sprite.enabled = false;
+			sprite.enabled = visible;
 	}
 }

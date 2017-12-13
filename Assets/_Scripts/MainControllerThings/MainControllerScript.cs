@@ -13,7 +13,6 @@ public class MainControllerScript : MonoBehaviour {
 	public bool initiated { get; private set; }
 	public BattleGUIController battleGUI { get; private set;}
 	public Inventory inventory { get; private set;}
-	public KanjiList kanjiList { get; private set;}
 
 	
 	/// <summary>
@@ -30,7 +29,6 @@ public class MainControllerScript : MonoBehaviour {
 		instance = this;
 		battleGUI = GetComponent<BattleGUIController>();
 		inventory = GetComponent<Inventory>();
-		kanjiList = GetComponent<KanjiList>();
 		StartCoroutine("WaitForInitiate");
 	}
 
