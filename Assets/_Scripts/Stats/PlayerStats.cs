@@ -21,6 +21,8 @@ public class PlayerStats : CharacterStats {
 	public BattleController battleController;
 	public FloatVariable spiritDamageTaken;
 	public FloatVariable normalDamageTaken;
+	public FloatVariable playerPosX;
+	public FloatVariable playerPosY;
 
 	// Use this for initialization
 	void Start () {
