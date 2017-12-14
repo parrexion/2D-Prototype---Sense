@@ -16,9 +16,9 @@ public class ScrObjLibraryVariable : ScriptableObject {
 		Debug.Log("Generating");
 		entries.Clear();
 		representations.Clear();
-		for (int i = list.Count-1; i >= 0 ; i--) {
+		for (int i = 0; i < list.Count ; i++) {
 			entries.Add(list[i].uuid, list[i]);
-			AddRepresentation(list[i], false);
+			AddRepresentation(list[i]);
 		}
 		if (list.Count != entries.Keys.Count)
 			Debug.Log("One or more uuids are not unique!.");
@@ -50,13 +50,6 @@ public class ScrObjLibraryVariable : ScriptableObject {
 		return list[index];
 	}
 
-	public ScrObjLibraryEntry GetEntryBySelectedIndex(int index) {
-		if (!initialized)
-			GenerateDictionary();
-
-		return list[list.Count - index - 1];
-	}
-
 	public ScrObjLibraryEntry GetRandomEntry() {
 		if (!initialized)
 			GenerateDictionary();
@@ -81,7 +74,16 @@ public class ScrObjLibraryVariable : ScriptableObject {
 
 		list.Add(obj);
 		entries.Add(obj.entryName, obj);
-		AddRepresentation(obj, true);
+		AddRepresentation(obj);
+	}
+
+	public void InsertEntry(ScrObjLibraryEntry obj, int pos) {
+		if (!initialized)
+			GenerateDictionary();
+
+		list.Insert(pos, obj);
+		entries.Add(obj.entryName, obj);
+		InsertRepresentation(obj, pos);
 	}
 
 	public void RemoveEntryByIndex(int index) {
@@ -94,23 +96,12 @@ public class ScrObjLibraryVariable : ScriptableObject {
 		representations.RemoveAt(index);
 	}
 
-	public void RemoveEntryBySelectedIndex(int index) {
-		if (!initialized)
-			GenerateDictionary();
-			
-		ScrObjLibraryEntry entry = GetEntryBySelectedIndex(index);
-		list.RemoveAt(index);
-		entries.Remove(entry.uuid);
-		representations.RemoveAt(index);
+	private void AddRepresentation(ScrObjLibraryEntry entry) {
+		representations.Add(entry.GenerateRepresentation());
 	}
 
-	private void AddRepresentation(ScrObjLibraryEntry entry, bool insert) {
-		if (insert) {
-			Debug.Log("Inserted");
-			representations.Insert(0,entry.GenerateRepresentation());
-		}
-		else
-			representations.Add(entry.GenerateRepresentation());
+	private void InsertRepresentation(ScrObjLibraryEntry entry, int pos) {
+		representations.Insert(pos,entry.GenerateRepresentation());
 	}
 
 	public Sprite TextureToSprite(Texture2D tex) {

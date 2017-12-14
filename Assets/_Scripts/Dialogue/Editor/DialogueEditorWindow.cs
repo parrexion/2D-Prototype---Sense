@@ -58,7 +58,7 @@ public class DialogueEditorWindow : EditorWindow {
 
 	void OnGUI() {
 
-		GUILayout.Label("Character selector", EditorStyles.boldLabel);
+		GUILayout.Label("Dialogue Editor", EditorStyles.boldLabel);
 		EditorGUIUtility.labelWidth = 100;
 		d.GenerateAreas();
 		d.DrawBackgrounds();
@@ -323,14 +323,14 @@ public class DialogueEditorWindow : EditorWindow {
 		else {
 			// Something selected
 			GUI.FocusControl(null);
-			DialogueEntry de = (DialogueEntry)dialogueLibrary.GetEntryBySelectedIndex(selDialogue);
+			DialogueEntry de = (DialogueEntry)dialogueLibrary.GetEntryByIndex(selDialogue);
 			dialogueValues.CopyValues(de);
 			selFrame = 0;
 		}
 	}
 
 	void SaveSelectedDialogue() {
-		DialogueEntry de = (DialogueEntry)dialogueLibrary.GetEntryBySelectedIndex(selDialogue);
+		DialogueEntry de = (DialogueEntry)dialogueLibrary.GetEntryByIndex(selDialogue);
 		de.CopyValues(dialogueValues);
 		Undo.RecordObject(de, "Updated dialogue");
 		EditorUtility.SetDirty(de);
@@ -372,7 +372,7 @@ public class DialogueEditorWindow : EditorWindow {
 		de.frames.Add(new Frame());
 		string path = "Assets/LibraryData/Dialogues/" + dialogueUuid + ".asset";
 
-		dialogueLibrary.AddEntry(de);
+		dialogueLibrary.InsertEntry(de,0);
 		Undo.RecordObject(dialogueLibrary, "Added dialogue");
 		EditorUtility.SetDirty(dialogueLibrary);
 		AssetDatabase.CreateAsset(de, path);
@@ -386,10 +386,10 @@ public class DialogueEditorWindow : EditorWindow {
 
 	void DeleteDialogue() {
 		GUI.FocusControl(null);
-		DialogueEntry de = (DialogueEntry)dialogueLibrary.GetEntryBySelectedIndex(selDialogue);
+		DialogueEntry de = (DialogueEntry)dialogueLibrary.GetEntryByIndex(selDialogue);
 		string path = "Assets/LibraryData/Dialogues/" + de.uuid + ".asset";
 
-		dialogueLibrary.RemoveEntryBySelectedIndex(selDialogue);
+		dialogueLibrary.RemoveEntryByIndex(selDialogue);
 		Undo.RecordObject(dialogueLibrary, "Deleted dialogue");
 		EditorUtility.SetDirty(dialogueLibrary);
 		bool res = AssetDatabase.MoveAssetToTrash(path);

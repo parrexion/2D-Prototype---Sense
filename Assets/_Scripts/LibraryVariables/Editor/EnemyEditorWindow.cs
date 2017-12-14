@@ -23,7 +23,7 @@ public class EnemyEditorWindow {
 
 	//Creation
 	string enemyUuid;
-	Color repColor = new Color();
+	Color repColor = new Color(0,0,0,1f);
 
 
 	public EnemyEditorWindow(ScrObjLibraryVariable entries, EnemyEntry container){
@@ -172,13 +172,13 @@ public class EnemyEditorWindow {
 		}
 		else {
 			// Something selected
-			EnemyEntry ee = (EnemyEntry)enemyLibrary.GetEntryBySelectedIndex(selEnemy);
+			EnemyEntry ee = (EnemyEntry)enemyLibrary.GetEntryByIndex(selEnemy);
 			enemyValues.CopyValues(ee);
 		}
 	}
 
 	void SaveSelectedEnemy() {
-		EnemyEntry ee = (EnemyEntry)enemyLibrary.GetEntryBySelectedIndex(selEnemy);
+		EnemyEntry ee = (EnemyEntry)enemyLibrary.GetEntryByIndex(selEnemy);
 		ee.CopyValues(enemyValues);
 		Undo.RecordObject(ee, "Updated enemy");
 		EditorUtility.SetDirty(ee);
@@ -196,7 +196,7 @@ public class EnemyEditorWindow {
 		ee.repColor = repColor;
 		string path = "Assets/LibraryData/Enemies/" + enemyUuid + ".asset";
 
-		enemyLibrary.AddEntry(ee);
+		enemyLibrary.InsertEntry(ee,0);
 		Undo.RecordObject(enemyLibrary, "Added enemy");
 		EditorUtility.SetDirty(enemyLibrary);
 		AssetDatabase.CreateAsset(ee, path);
@@ -209,10 +209,10 @@ public class EnemyEditorWindow {
 	}
 
 	void DeleteEnemy() {
-		EnemyEntry ee = (EnemyEntry)enemyLibrary.GetEntryBySelectedIndex(selEnemy);
+		EnemyEntry ee = (EnemyEntry)enemyLibrary.GetEntryByIndex(selEnemy);
 		string path = "Assets/LibraryData/Enemies/" + ee.uuid + ".asset";
 
-		enemyLibrary.RemoveEntryBySelectedIndex(selEnemy);
+		enemyLibrary.RemoveEntryByIndex(selEnemy);
 		Undo.RecordObject(enemyLibrary, "Deleted enemy");
 		EditorUtility.SetDirty(enemyLibrary);
 		bool res = AssetDatabase.MoveAssetToTrash(path);

@@ -24,7 +24,7 @@ public class CharacterEditorWindow {
 
 	//Creation
 	string uuid = "";
-	Color repColor = new Color();
+	Color repColor = new Color(0,0,0,1f);
 
 
 	/// <summary>
@@ -159,14 +159,14 @@ public class CharacterEditorWindow {
 		}
 		else {
 			// Something selected
-			CharacterEntry ce = (CharacterEntry)characterLibrary.GetEntryBySelectedIndex(selCharacter);
+			CharacterEntry ce = (CharacterEntry)characterLibrary.GetEntryByIndex(selCharacter);
 			ce.poses = poseLibrary.values;
 			charValues.CopyValues(ce);
 		}
 	}
 
 	void SaveSelectedCharacter() {
-		CharacterEntry ce = (CharacterEntry)characterLibrary.GetEntryBySelectedIndex(selCharacter);
+		CharacterEntry ce = (CharacterEntry)characterLibrary.GetEntryByIndex(selCharacter);
 		ce.CopyValues(charValues);
 		Undo.RecordObject(ce, "Updated character");
 		EditorUtility.SetDirty(ce);
@@ -185,7 +185,7 @@ public class CharacterEditorWindow {
 		string path = "Assets/LibraryData/Characters/" + uuid + ".asset";
 
 		AssetDatabase.CreateAsset(c, path);
-		characterLibrary.AddEntry(c);
+		characterLibrary.InsertEntry(c, 0);
 		Undo.RecordObject(characterLibrary, "Added character");
 		EditorUtility.SetDirty(characterLibrary);
 		AssetDatabase.SaveAssets();
@@ -197,10 +197,10 @@ public class CharacterEditorWindow {
 	}
 
 	void DeleteCharacter() {
-		CharacterEntry c = (CharacterEntry)characterLibrary.GetEntryBySelectedIndex(selCharacter);
+		CharacterEntry c = (CharacterEntry)characterLibrary.GetEntryByIndex(selCharacter);
 		string path = "Assets/LibraryData/Characters/" + c.uuid + ".asset";
 
-		characterLibrary.RemoveEntryBySelectedIndex(selCharacter);
+		characterLibrary.RemoveEntryByIndex(selCharacter);
 		Undo.RecordObject(characterLibrary, "Deleted character");
 		EditorUtility.SetDirty(characterLibrary);
 		bool res = AssetDatabase.MoveAssetToTrash(path);

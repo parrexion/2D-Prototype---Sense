@@ -149,13 +149,13 @@ public class BackgroundEditorWindow {
 		}
 		else {
 			// Something selected
-			BackgroundEntry bke = (BackgroundEntry)backgroundLibrary.GetEntryBySelectedIndex(selBackground);
+			BackgroundEntry bke = (BackgroundEntry)backgroundLibrary.GetEntryByIndex(selBackground);
 			backgroundValues.CopyValues(bke);
 		}
 	}
 
 	void SaveSelectedBackground() {
-		BackgroundEntry bke = (BackgroundEntry)backgroundLibrary.GetEntryBySelectedIndex(selBackground);
+		BackgroundEntry bke = (BackgroundEntry)backgroundLibrary.GetEntryByIndex(selBackground);
 		bke.CopyValues(backgroundValues);
 		Undo.RecordObject(bke, "Updated background");
 		EditorUtility.SetDirty(bke);
@@ -174,7 +174,7 @@ public class BackgroundEditorWindow {
 		string path = "Assets/LibraryData/Backgrounds/" + uuid + ".asset";
 
 		AssetDatabase.CreateAsset(bke, path);
-		backgroundLibrary.AddEntry(bke);
+		backgroundLibrary.InsertEntry(bke,0);
 		Undo.RecordObject(backgroundLibrary, "Added background");
 		EditorUtility.SetDirty(backgroundLibrary);
 		AssetDatabase.SaveAssets();
@@ -186,10 +186,10 @@ public class BackgroundEditorWindow {
 	}
 
 	void DeleteBackground() {
-		BackgroundEntry bke = (BackgroundEntry)backgroundLibrary.GetEntryBySelectedIndex(selBackground);
+		BackgroundEntry bke = (BackgroundEntry)backgroundLibrary.GetEntryByIndex(selBackground);
 		string path = "Assets/LibraryData/Backgrounds/" + bke.uuid + ".asset";
 
-		backgroundLibrary.RemoveEntryBySelectedIndex(selBackground);
+		backgroundLibrary.RemoveEntryByIndex(selBackground);
 		Undo.RecordObject(backgroundLibrary, "Deleted background");
 		EditorUtility.SetDirty(backgroundLibrary);
 		bool res = AssetDatabase.MoveAssetToTrash(path);

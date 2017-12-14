@@ -205,13 +205,13 @@ public class BattleEditorWindow {
 		}
 		else {
 			// Something selected
-			BattleEntry be = (BattleEntry)battleLibrary.GetEntryBySelectedIndex(selBattle);
+			BattleEntry be = (BattleEntry)battleLibrary.GetEntryByIndex(selBattle);
 			battleValues.CopyValues(be);
 		}
 	}
 
 	void SaveSelectedBattle() {
-		BattleEntry be = (BattleEntry)battleLibrary.GetEntryBySelectedIndex(selBattle);
+		BattleEntry be = (BattleEntry)battleLibrary.GetEntryByIndex(selBattle);
 		be.CopyValues(battleValues);
 		Undo.RecordObject(be, "Updated battle");
 		EditorUtility.SetDirty(be);
@@ -228,7 +228,7 @@ public class BattleEditorWindow {
 		be.entryName = battleUuid;
 		string path = "Assets/LibraryData/Battles/" + battleUuid + ".asset";
 
-		battleLibrary.AddEntry(be);
+		battleLibrary.InsertEntry(be,0);
 		Undo.RecordObject(battleLibrary, "Added battle");
 		EditorUtility.SetDirty(battleLibrary);
 		AssetDatabase.CreateAsset(be, path);
@@ -241,10 +241,10 @@ public class BattleEditorWindow {
 	}
 
 	void DeleteBattle() {
-		BattleEntry be = (BattleEntry)battleLibrary.GetEntryBySelectedIndex(selBattle);
+		BattleEntry be = (BattleEntry)battleLibrary.GetEntryByIndex(selBattle);
 		string path = "Assets/LibraryData/Battles/" + be.uuid + ".asset";
 
-		battleLibrary.RemoveEntryBySelectedIndex(selBattle);
+		battleLibrary.RemoveEntryByIndex(selBattle);
 		Undo.RecordObject(battleLibrary, "Deleted battle");
 		EditorUtility.SetDirty(battleLibrary);
 		bool res = AssetDatabase.MoveAssetToTrash(path);
