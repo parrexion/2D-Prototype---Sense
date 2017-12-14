@@ -8,7 +8,7 @@ public class ScoreScreenValues : MonoBehaviour {
 	public FloatVariable time;
 	public FloatVariable normalHealth;
 	public FloatVariable spiritHealth;
-	public FloatVariable maxHealth;
+	public IntVariable maxHealth;
 	public IntVariable noEnemies;
 	public IntVariable exp;
 	public IntVariable money;

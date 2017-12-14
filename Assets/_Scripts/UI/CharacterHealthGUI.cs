@@ -8,7 +8,7 @@ public class CharacterHealthGUI : MonoBehaviour {
 
 	public BoolVariable pause;
 	public BoolVariable playerImmortal;
-	public FloatVariable playerMaxHp;
+	public IntVariable playerMaxHp;
 	public FloatVariable normalDamageTaken;
 	public FloatVariable spiritDamageTaken;
 
@@ -56,8 +56,8 @@ public class CharacterHealthGUI : MonoBehaviour {
     }
 
     void UpdateHealth() {
-		float ratioTop = spiritDamageTaken.value / playerMaxHp.value;
-		float ratioBottom = 1 - (normalDamageTaken.value / playerMaxHp.value);
+		float ratioTop = spiritDamageTaken.value / (float)playerMaxHp.value;
+		float ratioBottom = 1 - (normalDamageTaken.value / (float)playerMaxHp.value);
         
 		healthRect.yMin = Screen.height * (ratioTop * bar_height + bar_ypos);
 		healthRect.yMax = Mathf.Max(Screen.height * (ratioBottom * bar_height + bar_ypos), healthRect.yMin);

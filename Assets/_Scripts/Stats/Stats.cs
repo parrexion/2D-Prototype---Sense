@@ -6,13 +6,13 @@ using UnityEngine;
 public class Stats {
 
 	[SerializeField]
-	private int baseValue;
+	public IntVariable baseValue;
 	private List<int> addModifiers = new List<int>();
 	private List<float> multiModifiers = new List<float>();
 	private int hardcapMin = 0, hardcapMax = -1;
 
 	public int GetValue(){
-		int finalValue = baseValue;
+		int finalValue = baseValue.value;
 
 		addModifiers.ForEach(x => finalValue += x);
 		multiModifiers.ForEach(x => finalValue = (int)(finalValue * x));
