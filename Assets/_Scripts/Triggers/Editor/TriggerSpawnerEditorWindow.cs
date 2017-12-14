@@ -62,6 +62,11 @@ public class TriggerSpawnerEditorWindow : EditorWindow {
 		guic.image = GenerateImage(Color.grey);
 		contentList.Add(guic);
 
+		guic = new GUIContent();
+		guic.text = "Unlock";
+		guic.image = GenerateImage(Color.grey);
+		contentList.Add(guic);
+
 		buttonList = contentList.ToArray();
 	}
 
@@ -86,6 +91,10 @@ public class TriggerSpawnerEditorWindow : EditorWindow {
 
 		if (GUILayout.Button(buttonList[4])) {
 			triggerToSpawn = "shop";
+		}
+
+		if (GUILayout.Button(buttonList[5])) {
+			triggerToSpawn = "unlock";
 		}
 
 
