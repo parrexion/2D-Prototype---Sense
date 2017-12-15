@@ -266,7 +266,14 @@ public class DialogueEditorWindow : EditorWindow {
 				dialogueValues.nextEntry = (BattleEntry)EditorGUILayout.ObjectField("Next battle", dialogueValues.nextEntry, typeof(BattleEntry),false);
 				break;
 		}
-
+		GUILayout.BeginHorizontal();
+		if (GUILayout.Button("Shave off\nBefore", GUILayout.Width(100), GUILayout.Height(48))) {
+			ShaveoffBefore();
+		}
+		if (GUILayout.Button("Shave off\nAfter", GUILayout.Width(100), GUILayout.Height(48))) {
+			ShaveoffAfter();
+		}
+		GUILayout.EndHorizontal();
 		GUILayout.EndArea();
 	}
 
@@ -280,7 +287,11 @@ public class DialogueEditorWindow : EditorWindow {
 		frameScrollPos = GUILayout.BeginScrollView(frameScrollPos, GUILayout.Width(d.rightRect.width), 
 					GUILayout.Height(d.rightRect.height * 0.35f));
 		if (selFrame != -1) {
-			selFrame = GUILayout.SelectionGrid(selFrame, dialogueValues.GenerateFrameRepresentation(),1);
+			int oldFrame = selFrame;
+			selFrame = GUILayout.SelectionGrid(selFrame, dialogueValues.GenerateFrameRepresentation(), 1);
+			if (oldFrame != selFrame) {
+				GUI.FocusControl(null);
+			}
 		}
 
 		GUILayout.EndScrollView();
@@ -295,8 +306,10 @@ public class DialogueEditorWindow : EditorWindow {
 		int oldSelected = selDialogue;
 		selDialogue = GUILayout.SelectionGrid(selDialogue, dialogueLibrary.GetRepresentations(),2);
 
-		if (oldSelected != selDialogue)
+		if (oldSelected != selDialogue) {
+			GUI.FocusControl(null);
 			SelectDialogue();
+		}
 
 		GUILayout.EndScrollView();
 
@@ -353,7 +366,34 @@ public class DialogueEditorWindow : EditorWindow {
 
 		GUI.FocusControl(null);
 		dialogueValues.RemoveFrame(selFrame);
-		selFrame = Mathf.Min(selFrame, dialogueValues.frames.Count-1);
+		selFrame = Mathf.Min(selFrame, dialogueValues.frames.Count - 1);
+
+		SaveSelectedDialogue();
+	}
+
+	void ShaveoffAfter() {
+		if (dialogueValues.frames.Count <= 1)
+			return;
+
+		GUI.FocusControl(null);
+		int shaveSize = selFrame + 1;
+		while (dialogueValues.frames.Count > shaveSize)
+			dialogueValues.RemoveFrame(shaveSize);
+		selFrame = Mathf.Min(selFrame, dialogueValues.frames.Count - 1);
+
+		SaveSelectedDialogue();
+	}
+
+	void ShaveoffBefore() {
+		if (dialogueValues.frames.Count <= 1)
+			return;
+
+		GUI.FocusControl(null);
+		int shaveSize = selFrame;
+		for (int i = 0; i < shaveSize; i++) {
+			dialogueValues.RemoveFrame(0);
+		}
+		selFrame = 0;
 
 		SaveSelectedDialogue();
 	}
