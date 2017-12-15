@@ -17,7 +17,7 @@ public class DialogueCollection {
 public class Dialogue {
 	public string name;
 	public int size;
-	public List<Frame> frames;
+	public List<OldFrame> frames;
 }
 
 
@@ -43,6 +43,16 @@ public class Frame {
 		talkingName = other.talkingName;
 		dialogueText = other.dialogueText;
 	}
+}
+
+[System.Serializable]
+public class OldFrame {
+	public int background;
+	public int[] currentCharacters;
+	public int[] currentPoses;
+	public string characterName;
+	public string dialogueText;
+	public int talkingPosition;
 }
 
 

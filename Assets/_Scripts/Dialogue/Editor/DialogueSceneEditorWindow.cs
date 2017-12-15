@@ -6,8 +6,14 @@ using System.Collections.Generic;
 
 public class DialogueSceneEditorWindow : EditorWindow {
 
-	DialogueEntry selectedDialogue = null;
 	public StringVariable dialogueUUID;
+
+	DialogueEntry selectedDialogue = null;
+
+	DialogueParser parser;
+	public ScrObjLibraryVariable backgroundLibrary;
+	public ScrObjLibraryVariable characterLibrary;
+	public DialogueEntry entry;
 
 	[MenuItem("Window/DialogueSelector")]
 	public static void ShowWindow() {
@@ -37,7 +43,10 @@ public class DialogueSceneEditorWindow : EditorWindow {
 	}
 
 	void InitializeWindow() {
-
+		parser = new DialogueParser();
+		parser.backgroudLibrary = backgroundLibrary;
+		parser.characterLibrary = characterLibrary;
+		parser.entry = entry;
 	}
 
 	void HeaderStuff() {
@@ -60,6 +69,10 @@ public class DialogueSceneEditorWindow : EditorWindow {
 				AssetDatabase.Refresh();
 			}
 		}
+
+		//if (GUILayout.Button("Parse old prologue")) {
+		//	parser.Generate();
+		//}
 	}
 
 

@@ -1,13 +1,16 @@
 fileFormatVersion: 2
 guid: fdb5b4a6deab50145838e26789305d91
-timeCreated: 1513287702
+timeCreated: 1513340931
 licenseType: Free
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
   defaultReferences:
-  - selectedDialogue: {instanceID: 0}
   - dialogueUUID: {fileID: 11400000, guid: b0c12f4d7babea348b58bacebbe48f06, type: 2}
+  - backgroundLibrary: {fileID: 11400000, guid: 891f70156dfccd8478b72770afdffb20,
+      type: 2}
+  - characterLibrary: {fileID: 11400000, guid: 2c09707494e3405449dad5b6f2623d43, type: 2}
+  - entry: {fileID: 11400000, guid: 5f1296937a325ad4f8eef2b3ec8a75be, type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

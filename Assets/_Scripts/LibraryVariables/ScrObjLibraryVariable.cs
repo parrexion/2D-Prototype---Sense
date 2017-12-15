@@ -47,6 +47,9 @@ public class ScrObjLibraryVariable : ScriptableObject {
 		if (!initialized)
 			GenerateDictionary();
 
+		if (index < 0)
+			return null;
+
 		return list[index];
 	}
 
