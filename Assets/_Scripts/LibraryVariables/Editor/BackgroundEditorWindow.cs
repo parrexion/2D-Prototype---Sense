@@ -108,8 +108,10 @@ public class BackgroundEditorWindow {
 		selBackground = GUILayout.SelectionGrid(selBackground, backgroundLibrary.GetRepresentations(),1);
 		EditorGUILayout.EndScrollView();
 
-		if (oldSelected != selBackground)
+		if (oldSelected != selBackground) {
+			GUI.FocusControl(null);
 			SelectBackground();
+		}
 
 		EditorGUIUtility.labelWidth = 110;
 		GUILayout.Label("Create new background", EditorStyles.boldLabel);
@@ -162,6 +164,7 @@ public class BackgroundEditorWindow {
 	}
 
 	void InstansiateBackground() {
+		GUI.FocusControl(null);
 		if (backgroundLibrary.ContainsID(uuid)) {
 			Debug.Log("uuid already exists!");
 			return;
@@ -186,6 +189,7 @@ public class BackgroundEditorWindow {
 	}
 
 	void DeleteBackground() {
+		GUI.FocusControl(null);
 		BackgroundEntry bke = (BackgroundEntry)backgroundLibrary.GetEntryByIndex(selBackground);
 		string path = "Assets/LibraryData/Backgrounds/" + bke.uuid + ".asset";
 

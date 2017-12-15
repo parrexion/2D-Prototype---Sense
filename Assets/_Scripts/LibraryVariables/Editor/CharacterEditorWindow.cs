@@ -153,6 +153,7 @@ public class CharacterEditorWindow {
 	}
 
 	void SelectCharacter() {
+		GUI.FocusControl(null);
 		if (selCharacter == -1) {
 			// Nothing selected
 			charValues.ResetValues();
@@ -173,6 +174,7 @@ public class CharacterEditorWindow {
 	}
 
 	void InstansiateCharacter() {
+		GUI.FocusControl(null);
 		if (characterLibrary.ContainsID(uuid)) {
 			Debug.Log("uuid already exists!");
 			return;
@@ -197,6 +199,7 @@ public class CharacterEditorWindow {
 	}
 
 	void DeleteCharacter() {
+		GUI.FocusControl(null);
 		CharacterEntry c = (CharacterEntry)characterLibrary.GetEntryByIndex(selCharacter);
 		string path = "Assets/LibraryData/Characters/" + c.uuid + ".asset";
 

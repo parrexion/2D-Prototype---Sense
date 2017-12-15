@@ -166,6 +166,7 @@ public class EnemyEditorWindow {
 	}
 	
 	void SelectEnemy() {
+		GUI.FocusControl(null);
 		// Nothing selected
 		if (selEnemy == -1) {
 			enemyValues.ResetValues();
@@ -185,6 +186,7 @@ public class EnemyEditorWindow {
 	}
 
 	void InstansiateEnemy() {
+		GUI.FocusControl(null);
 		if (enemyLibrary.ContainsID(enemyUuid)) {
 			Debug.Log("uuid already exists!");
 			return;
@@ -209,6 +211,7 @@ public class EnemyEditorWindow {
 	}
 
 	void DeleteEnemy() {
+		GUI.FocusControl(null);
 		EnemyEntry ee = (EnemyEntry)enemyLibrary.GetEntryByIndex(selEnemy);
 		string path = "Assets/LibraryData/Enemies/" + ee.uuid + ".asset";
 

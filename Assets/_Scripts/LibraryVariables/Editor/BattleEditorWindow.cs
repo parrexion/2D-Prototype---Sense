@@ -105,8 +105,10 @@ public class BattleEditorWindow {
 		selBattle = GUILayout.SelectionGrid(selBattle, battleLibrary.GetRepresentations(),1);
 		EditorGUILayout.EndScrollView();
 
-		if (oldSelected != selBattle)
+		if (oldSelected != selBattle) {
+			GUI.FocusControl(null);
 			SelectBattle();
+		}
 
 		EditorGUIUtility.labelWidth = 80;
 		battleUuid = EditorGUILayout.TextField("Battle uuid", battleUuid);
@@ -218,6 +220,7 @@ public class BattleEditorWindow {
 	}
 
 	void InstansiateBattle() {
+		GUI.FocusControl(null);
 		if (battleLibrary.ContainsID(battleUuid)) {
 			Debug.Log("uuid already exists!");
 			return;
@@ -241,6 +244,7 @@ public class BattleEditorWindow {
 	}
 
 	void DeleteBattle() {
+		GUI.FocusControl(null);
 		BattleEntry be = (BattleEntry)battleLibrary.GetEntryByIndex(selBattle);
 		string path = "Assets/LibraryData/Battles/" + be.uuid + ".asset";
 
