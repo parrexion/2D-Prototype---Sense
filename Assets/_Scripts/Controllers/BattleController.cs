@@ -15,6 +15,7 @@ public class BattleController : MonoBehaviour {
 	private bool initiated = false;
 	public BoolVariable paused;
 	public BoolVariable invincible;
+	public BoolVariable removeLeftSide;
 	public UnityEvent pauseEvent;
 
 	public Text winText;
@@ -37,9 +38,10 @@ public class BattleController : MonoBehaviour {
 
 		tutorial = false;
 		escape = (be.backgroundHintLeft != null || be.backgroundHintRight != null);
-		Debug.Log(be.backgroundHintLeft != null);
-		Debug.Log(be.backgroundHintRight != null);
+		// Debug.Log(be.backgroundHintLeft != null);
+		// Debug.Log(be.backgroundHintRight != null);
 		invincible.value = true;
+		removeLeftSide.value = (be.removeSide == BattleEntry.RemoveSide.LEFT);
 
 		backchange = GameObject.Find("Background Background").GetComponent<BackgroundChanger>();
 		backchange.escapeBattleButton.interactable = be.escapeButtonEnabled;

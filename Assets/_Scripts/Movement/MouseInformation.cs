@@ -14,7 +14,7 @@ public class MouseInformation {
     public float distY;
 
 	/// <summary>
-	/// Rotation from position1 to position2
+	/// Rotation in radians from position1 to position2
 	/// </summary>
 	public float rotationInternal;
 	/// <summary>

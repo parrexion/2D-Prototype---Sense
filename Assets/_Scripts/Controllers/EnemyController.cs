@@ -56,11 +56,11 @@ public class EnemyController : MonoBehaviour {
 	/// <summary>
 	/// Spawns all the enemies and groups them into enemy groups.
 	/// </summary>
-	/// <param name="enableBottom"></param>
-	/// <param name="enableTop"></param>
-	public void CreateEnemies(bool enableBottom, bool enableTop){
-		spawnBottom = enableBottom;
-		spawnTop = enableTop;
+	/// <param name="enableRight"></param>
+	/// <param name="enableLeft"></param>
+	public void CreateEnemies(bool enableRight, bool enableLeft){
+		spawnBottom = enableRight;
+		spawnTop = enableLeft;
 		
 		int r;
 		if (be.randomizeEnemies) {

@@ -15,7 +15,7 @@ public class DrawScoreScreen : BasicGUIButtons {
 
 	public StringVariable wonBattleState;
 	public FloatVariable battleTime;
-	public FloatVariable playerMaxHealth;
+	public IntVariable playerMaxHealth;
 	public FloatVariable playerNormalDamage;
 	public FloatVariable playerSpiritDamage;
 	public IntVariable enemiesFought;

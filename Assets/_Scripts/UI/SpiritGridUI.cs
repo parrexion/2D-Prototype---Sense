@@ -5,6 +5,7 @@ using UnityEngine;
 public class SpiritGridUI : MonoBehaviour {
 
 	public SpiritGrid grid;
+	public BoolVariable removeLeft;
 
 	public Texture2D card;
 	public Texture2D balanceMeter;
@@ -35,7 +36,7 @@ public class SpiritGridUI : MonoBehaviour {
 
 	void OnGUI() {
 
-		if (grid.paused.value)
+		if (grid.paused.value || removeLeft.value)
 			return;
 
 		Rect r = new Rect();

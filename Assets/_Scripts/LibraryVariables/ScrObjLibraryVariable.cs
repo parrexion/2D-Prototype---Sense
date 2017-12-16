@@ -2,7 +2,7 @@
 using System.Linq;
 using UnityEngine;
 
-[CreateAssetMenu]
+[CreateAssetMenu(menuName="LibraryEntries/-Library-")]
 public class ScrObjLibraryVariable : ScriptableObject {
 
 	public bool initialized = false;
