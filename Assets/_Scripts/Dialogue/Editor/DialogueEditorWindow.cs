@@ -178,13 +178,22 @@ public class DialogueEditorWindow : EditorWindow {
 			selectTalker = -1;
 		}
 
-		if (selectTalker == -1)
-			dialogueValues.frames[selFrame].talkingIndex = -1;
+		dialogueValues.frames[selFrame].talkingIndex = (selectTalker == -1) ? -1 : indexList[selectTalker];
+
+		if (selectTalker == -1) {
+			dialogueValues.frames[selFrame].talkingName = "";
+		}
+		else if (indexList[selectTalker] == 4) {
+			dialogueValues.frames[selFrame].talkingName = talkName;
+		}
 		else {
-			dialogueValues.frames[selFrame].talkingIndex = indexList[selectTalker];
-			if (dialogueValues.frames[selFrame].characters[dialogueValues.frames[selFrame].talkingIndex] == null) {
+			if (dialogueValues.frames[selFrame].characters[indexList[selectTalker]] != null) {
+				dialogueValues.frames[selFrame].talkingName = dialogueValues.frames[selFrame].characters[indexList[selectTalker]].entryName;
+			}
+			else {
 				selectTalker = -1;
 				dialogueValues.frames[selFrame].talkingIndex = -1;
+				dialogueValues.frames[selFrame].talkingName = "";
 			}
 		}
 		GUILayout.EndArea();
@@ -203,21 +212,20 @@ public class DialogueEditorWindow : EditorWindow {
 		GUILayout.Label("Pose: ", EditorStyles.boldLabel, GUILayout.Width(80));
 		GUILayout.EndVertical();
 
-		if (dialogueValues.frames[selFrame].talkingIndex != -1) {
+		if (dialogueValues.frames[selFrame].talkingChar != null) {
 			GUILayout.BeginVertical();
 			GUILayout.Label(dialogueValues.frames[selFrame].talkingName, EditorStyles.boldLabel, GUILayout.Width(80));
 			GUILayout.Label("Pose", EditorStyles.boldLabel, GUILayout.Width(80));
 			GUILayout.EndVertical();
 
 			GUILayout.BeginHorizontal();
-			GUI.DrawTexture(closeupRect, dialogueValues.frames[selFrame].characters[dialogueValues.frames[selFrame].talkingIndex].defaultColor.texture);
-			GUILayout.Label(dialogueValues.frames[selFrame].characters[dialogueValues.frames[selFrame].talkingIndex].poses[dialogueValues.frames[selFrame].poses[dialogueValues.frames[selFrame].talkingIndex]].texture);
+			GUI.DrawTexture(closeupRect, dialogueValues.frames[selFrame].talkingChar.defaultColor.texture);
+			if (dialogueValues.frames[selFrame].talkingChar != null)
+				GUILayout.Label(dialogueValues.frames[selFrame].talkingChar.poses[dialogueValues.frames[selFrame].talkingPose].texture);
 			GUILayout.EndHorizontal();
-			dialogueValues.frames[selFrame].talkingName = dialogueValues.frames[selFrame].characters[dialogueValues.frames[selFrame].talkingIndex].entryName;
 		}
-		else {
-			GUILayout.Label("");
-			dialogueValues.frames[selFrame].talkingName = "";
+		else if (dialogueValues.frames[selFrame].talkingIndex == 4) {
+			GUILayout.Label(dialogueValues.frames[selFrame].talkingName, EditorStyles.boldLabel, GUILayout.Width(80));
 		}
 
 		GUILayout.EndHorizontal();

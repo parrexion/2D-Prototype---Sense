@@ -8,6 +8,7 @@ public class DialogueParser {
 
 	public ScrObjLibraryVariable backgroudLibrary;
 	public ScrObjLibraryVariable characterLibrary;
+	public ScrObjLibraryVariable dialogueLibrary;
 
 	public DialogueCollection dialogues;
 	public DialogueEntry entry;
@@ -63,4 +64,21 @@ public class DialogueParser {
 		AssetDatabase.SaveAssets();
 		AssetDatabase.Refresh();
 	}
+
+	// public void UpdateDialogueEntry(string uuid) {
+	// 	dialogueLibrary.GenerateDictionary();
+	// 	entry = (DialogueEntry)dialogueLibrary.GetEntry(uuid);
+	// 	Frame f;
+
+	// 	for (int i = 0; i < entry.frames.Count; i++) {
+	// 		f = entry.frames[i];
+	// 		f.talkingChar = (f.talkingIndex < 0 || f.talkingIndex > 3) ? null : f.characters[f.talkingIndex];
+	// 	}
+	// 	Debug.Log("Updated entry");
+
+	// 	Undo.RecordObject(entry, "Updated dialogue entry");
+	// 	EditorUtility.SetDirty(entry);
+	// 	AssetDatabase.SaveAssets();
+	// 	AssetDatabase.Refresh();
+	// }
 }

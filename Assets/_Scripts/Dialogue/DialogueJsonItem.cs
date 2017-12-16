@@ -29,6 +29,11 @@ public class Frame {
 	public string talkingName = "";
 	public int talkingIndex = -1;
 	public string dialogueText = "";
+	public CharacterEntry talkingChar { get {
+			if (talkingIndex == -1 || talkingIndex == 4)
+				return null;
+			return characters[talkingIndex];
+		} }
 	public int talkingPose { get {
 			if (talkingIndex == -1 || talkingIndex == 4)
 				return -1;

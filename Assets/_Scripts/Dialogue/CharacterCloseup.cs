@@ -5,12 +5,8 @@ using UnityEngine.UI;
 
 public class CharacterCloseup : MonoBehaviour {
 
-	public ScrObjLibraryVariable charLib;
-	// public SpriteListVariable characterLibrary;
-	// public SpriteListVariable poseLibrary;
-
 	public StringVariable characterName;
-	public IntVariable characterIndex;
+	public ScrObjEntryReference character;
 	public IntVariable poseIndex;
 
 	public Text characterNameBox;
@@ -28,16 +24,14 @@ public class CharacterCloseup : MonoBehaviour {
 
 		characterNameBox.text = characterName.value;
 
-		if (characterIndex.value == -1 || poseIndex.value == -1){
+		if (character.value == null){
 			characterRenderer.enabled = false;
 			poseRenderer.enabled = false;
 		}
 		else {
-			CharacterEntry ce = (CharacterEntry)charLib.GetEntryByIndex(characterIndex.value);
 			characterRenderer.enabled = true;
 			poseRenderer.enabled = true;
-			// characterRenderer.sprite = characterLibrary.values[characterIndex.value];
-			// poseRenderer.sprite = poseLibrary.values[poseIndex.value];
+			CharacterEntry ce = (CharacterEntry)character.value;
 			characterRenderer.sprite = ce.defaultColor;
 			poseRenderer.sprite = ce.poses[poseIndex.value];
 		}

@@ -21,6 +21,7 @@ public class Background : MonoBehaviour {
 		}
 		else {
 			image.sprite = ((BackgroundEntry)(dialogueBackground.value)).sprite;
+			image.enabled = true;
 		}
 	}
 }

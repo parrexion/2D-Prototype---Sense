@@ -13,6 +13,7 @@ public class DialogueSceneEditorWindow : EditorWindow {
 	DialogueParser parser;
 	public ScrObjLibraryVariable backgroundLibrary;
 	public ScrObjLibraryVariable characterLibrary;
+	public ScrObjLibraryVariable dialogueLibrary;
 	public DialogueEntry entry;
 
 	[MenuItem("Window/DialogueSelector")]
@@ -46,6 +47,7 @@ public class DialogueSceneEditorWindow : EditorWindow {
 		parser = new DialogueParser();
 		parser.backgroudLibrary = backgroundLibrary;
 		parser.characterLibrary = characterLibrary;
+		parser.dialogueLibrary = dialogueLibrary;
 		parser.entry = entry;
 	}
 
@@ -70,9 +72,9 @@ public class DialogueSceneEditorWindow : EditorWindow {
 			}
 		}
 
-		//if (GUILayout.Button("Parse old prologue")) {
-		//	parser.Generate();
-		//}
+		// if (GUILayout.Button("Update dialogueEntry")) {
+		// 	parser.UpdateDialogueEntry(dialogueUUID.value);
+		// }
 	}
 
 

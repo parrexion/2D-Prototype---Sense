@@ -26,6 +26,7 @@ public class DialogueLines : MonoBehaviour {
 		dialogueEntry = (DialogueEntry)dialogueLibrary.GetEntry(dialogueUuid.value);
 		currentFrame.value = 0;
 		scene.SetFromFrame(dialogueEntry.frames[0]);
+		Debug.Log("Set frame 0 of dialogue " + dialogueUuid.value);
 
 		backgroundChanged.Invoke();
 		characterChanged.Invoke();
@@ -34,11 +35,6 @@ public class DialogueLines : MonoBehaviour {
 	}
 
 	public void NextFrame(){
-
-		// if (dialogueEntry.size == 0) {
-		// 	dialogueEntry = (DialogueEntry)dialogueLibrary.GetEntry(dialogueUuid.value);
-		// 	Debug.Log("Lines: " + dialogueEntry.size);
-		// }
 
 		currentFrame.value++;
 
@@ -83,11 +79,11 @@ public class DialogueLines : MonoBehaviour {
 		}
 
 		changed = false;
-		if (scene.talkingIndex.value != frame.talkingIndex || scene.talkingPose.value != frame.talkingPose) {
+		if (!ScrObjLibraryEntry.CompareEntries(scene.talkingChar.value, frame.talkingChar) || scene.talkingPose.value != frame.talkingPose) {
 			da = (DAChangeTalking)ScriptableObject.CreateInstance("DAChangeTalking");
 			data = new DialogueJsonItem();
-			data.position1 = frame.talkingIndex;
-			data.position2 = scene.poses[frame.talkingIndex].value;
+			data.entry = frame.talkingChar;
+			data.value = frame.talkingPose;
 			da.Act(scene,data);
 			changed = true;
 		}

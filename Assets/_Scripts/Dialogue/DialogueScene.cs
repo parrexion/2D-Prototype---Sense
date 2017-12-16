@@ -17,7 +17,7 @@ public class DialogueScene : MonoBehaviour {
 	[SerializeField] private IntVariable pose2;
 	[SerializeField] private IntVariable pose3;
 	public StringVariable talkingName;
-	public IntVariable talkingIndex;
+	public ScrObjEntryReference talkingChar;
 	public IntVariable talkingPose;
 	public StringVariable dialogueText;
 
@@ -45,7 +45,7 @@ public class DialogueScene : MonoBehaviour {
 		pose2.value = -1;
 		pose3.value = -1;
 		talkingName.value = "";
-		talkingIndex.value = -1;
+		talkingChar.value = null;
 		talkingPose.value = -1;
 		dialogueText.value = "";
 	}
@@ -61,7 +61,7 @@ public class DialogueScene : MonoBehaviour {
 		pose2.value = f.poses[2];
 		pose3.value = f.poses[3];
 		talkingName.value = f.talkingName;
-		talkingIndex.value = f.talkingIndex;
+		talkingChar.value = f.talkingChar;
 		talkingPose.value = f.talkingPose;
 		dialogueText.value = f.dialogueText;
 	}

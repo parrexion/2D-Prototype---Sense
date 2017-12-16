@@ -16,6 +16,7 @@ public class MainMenuScript : BasicGUIButtons {
 	public Button levelMinus5Button;
 	public Text levelMinus5Text;
 
+	public StringVariable dialogueUuid;
 	public IntVariable currentTowerLevel;
 
 
@@ -26,6 +27,12 @@ public class MainMenuScript : BasicGUIButtons {
 	public void TutorialClicked(){
 		buttonClickEvent.Invoke();
 		SceneManager.LoadScene((int)Constants.SCENE_INDEXES.BATTLE);
+	}
+
+	public void StoryClicked(){
+		buttonClickEvent.Invoke();
+		dialogueUuid.value = "OldPrologueComplete";
+		SceneManager.LoadScene((int)Constants.SCENE_INDEXES.DIALOGUE);
 	}
 
 	public void BattleClicked(){
