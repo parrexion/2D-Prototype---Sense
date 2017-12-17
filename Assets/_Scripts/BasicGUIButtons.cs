@@ -33,6 +33,9 @@ public class BasicGUIButtons : MonoBehaviour {
 		case "mainmenu":
 			SceneManager.LoadScene((int)Constants.SCENE_INDEXES.MAINMENU);
 			break;
+		case "options":
+			SceneManager.LoadScene((int)Constants.SCENE_INDEXES.OPTIONS);
+			break;
 		case "scorescreen":
 			SceneManager.LoadScene((int)Constants.SCENE_INDEXES.SCORE);
 			break;

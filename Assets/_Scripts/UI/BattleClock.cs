@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class BattleClock : MonoBehaviour {
 
-	public Transform arrow;
-	public float changeTime = 3f;
-
+	[Header("Game Speed")]
 	public BoolVariable paused;
 	public BoolVariable useSlowTime;
 	public BoolVariable leftSideSlow;
+	public FloatVariable changeTime;
+
+	[Header("Clock")]
+	public Transform arrow;
 
 	SpriteRenderer sprite;
 	float currentTime;
@@ -29,13 +31,13 @@ public class BattleClock : MonoBehaviour {
 
 		currentTime += Time.deltaTime;
 
-		if (currentTime >= changeTime) {
-			currentTime -= changeTime;
+		if (currentTime >= changeTime.value) {
+			currentTime -= changeTime.value;
 			leftSideSlow.value = !leftSideSlow.value;
 			sprite.color = (leftSideSlow.value) ? Color.yellow : Color.magenta;
 		}
 
-		float rotation = 180*currentTime/changeTime;
+		float rotation = 180*currentTime/changeTime.value;
 		if (leftSideSlow.value)
 			rotation += 180;
 

@@ -14,7 +14,8 @@ public class MoveStraightLine : MoveScript {
 		else {
 			movement = new Vector2(
 				speed.x*direction.x,
-				speed.y*direction.y);
+				speed.y*direction.y
+            );
 		}
     }
 

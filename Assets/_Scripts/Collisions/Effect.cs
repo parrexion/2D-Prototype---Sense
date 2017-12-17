@@ -10,7 +10,13 @@ public class Effect : MonoBehaviour {
 
 	protected MoveScript move;
 
+	[Header("Game speed")]
 	public BoolVariable paused;
+	public BoolVariable canBeSlowed;
+	public BoolVariable slowLeftSide;
+	public FloatVariable slowAmount;
+	public bool leftSideEffect;
+
 	[HideInInspector] public float lifeTime = 1f;
 	private float currentTime = 0f;
 
@@ -22,7 +28,7 @@ public class Effect : MonoBehaviour {
 		if (paused.value)
 			return;
 
-		currentTime += Time.deltaTime;
+		currentTime += (canBeSlowed.value && slowLeftSide.value == leftSideEffect) ? (Time.deltaTime * slowAmount.value) : Time.deltaTime;
 
 		if (currentTime >= lifeTime)
 			Destroy(gameObject);

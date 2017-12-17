@@ -6,15 +6,22 @@
 /// </summary>
 public class MoveHomingScript : MonoBehaviour {
 
+	[Header("Game speed")]
 	public BoolVariable paused;
+	public BoolVariable canBeSlowed;
+	public BoolVariable slowLeftSide;
+	public FloatVariable slowAmount;
+
+	[Header("Movement values")]
 	public Vector2 speed = new Vector2(5, 5);
 	public Vector2 moveToPosition = new Vector2(0, 0);
 	public Transform objectToFollow;
 	public int moveDirection = 0;
 
-	public Vector2 movement;
+	private Vector2 movement;
 	private Rigidbody2D rigidbodyComponent;
 
+	[Header("Dash")]
 	public bool dashing = false;
 	public float dashTime = 0.75f;
 	private float currentDashTime;
@@ -57,17 +64,19 @@ public class MoveHomingScript : MonoBehaviour {
 		if (paused.value)
 			return;
 
+		float time = (canBeSlowed.value && !slowLeftSide.value) ? (Time.fixedDeltaTime * slowAmount.value) : Time.deltaTime;
+
 		if (objectToFollow == null) {
 			if (dashing) {
-				movement = Vector2.MoveTowards(transform.position,moveToPosition,dashSpeed.x*Time.fixedDeltaTime);
+				movement = Vector2.MoveTowards(transform.position,moveToPosition,dashSpeed.x*time);
 				dashSpeed -= new Vector2(0.3f,0.3f);
-				currentDashTime += Time.deltaTime;
+				currentDashTime += time;
 				dashing = (currentDashTime < dashTime);
 				if (!dashing)
 					moveToPosition = transform.position;
 			}
 			else
-				movement = Vector2.MoveTowards(transform.position,moveToPosition,speed.x*Time.fixedDeltaTime);
+				movement = Vector2.MoveTowards(transform.position,moveToPosition,speed.x*time);
 			if (Vector2.Distance(transform.position,moveToPosition) > 0.35) {
 				if (moveToPosition.x < transform.position.x)
 					moveDirection = -1;
@@ -79,7 +88,7 @@ public class MoveHomingScript : MonoBehaviour {
 			}
 		}
 		else {
-			movement = Vector2.MoveTowards (transform.position, objectToFollow.position, speed.x * Time.fixedDeltaTime);
+			movement = Vector2.MoveTowards (transform.position, objectToFollow.position, speed.x * time);
 			if (Vector2.Distance(transform.position,objectToFollow.position) > 0.25) {
 				if (objectToFollow.position.x < transform.position.x)
 					moveDirection = -1;

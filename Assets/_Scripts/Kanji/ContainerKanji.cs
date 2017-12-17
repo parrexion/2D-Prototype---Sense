@@ -32,12 +32,12 @@ public class ContainerKanji : MonoBehaviour {
 		}
 	}
 	
-	public void LowerCooldown() {
+	public void LowerCooldown(float time) {
 		if (kanji == null){
 			return;
 		}
 		if (!active) {
-			currentCooldown -= Time.deltaTime;
+			currentCooldown -= time;
 			if (currentCooldown <= 0f) {
 				active = true;
 				currentCooldown = 0f;

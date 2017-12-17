@@ -43,7 +43,8 @@ public class SStateController : StateController {
 			break;
 		}
 
-		animScript.UpdateState(animInfo);
+		float speed = (canBeSlowed.value && slowLeftSide.value) ? slowAmount.value : 1f;
+		animScript.UpdateState(animInfo, speed);
 	}
 
 	public override Vector3 GetRandomLocation(){

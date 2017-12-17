@@ -10,7 +10,8 @@ public class NormalPlayerAnimationScript : AnimationScript {
 	enum State { IDLE, WALK_LEFT, WALK_RIGHT, ATTACK }
 
 
-	public override void UpdateState(AnimationInformation info) {
+	public override void UpdateState(AnimationInformation info, float speed) {
+		animator.speed = speed;
 
 		if (info.hurt) {
 			animator.Play(kHurtAnim);

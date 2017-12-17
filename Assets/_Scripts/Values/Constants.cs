@@ -47,7 +47,8 @@ public static class Constants {
 		BATTLE = 4,
 		SCORE = 5,
 		INVENTORY = 6,
-		BATTLETOWER = 7
+		BATTLETOWER = 7,
+		OPTIONS = 8
 	}
 
 }

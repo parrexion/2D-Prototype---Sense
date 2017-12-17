@@ -6,12 +6,22 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 public class SaveController : MonoBehaviour {
 
-	public int bestLevel = 0;
+	class SaveClass {
+		public int bestLevel = 0;
+		public float musicVolume = 0;
+		public float effectVolume = 0;
+	}
+
+	public IntVariable bestTowerLevel;
 	public IntVariable currentTowerLevel;
+	public FloatVariable musicVolume;
+	public FloatVariable effectVolume;
+
 	private string filePath = "";
+	private SaveClass save;
 
 
-	#region Singleton
+#region Singleton
 	public static SaveController instance;
 
 	void Awake() {
@@ -21,17 +31,20 @@ public class SaveController : MonoBehaviour {
 		else {
 			instance = this;
 			filePath = Application.persistentDataPath+"/playerInfo.dat";
+			save = new SaveClass();
 		}
 	}
-	#endregion
+#endregion
 
 	public void Save() {
 		BinaryFormatter bf = new BinaryFormatter();
 		FileStream file = File.Open(filePath,FileMode.OpenOrCreate);
 
-		bestLevel = Mathf.Max(bestLevel,currentTowerLevel.value);
+		save.bestLevel = Mathf.Max(save.bestLevel,currentTowerLevel.value);
+		save.musicVolume = musicVolume.value;
+		save.effectVolume = effectVolume.value;
 
-		bf.Serialize(file,bestLevel);
+		bf.Serialize(file,save.bestLevel);
 		file.Close();
 		Debug.Log("Successfully saved the file!");
 	}
@@ -40,10 +53,12 @@ public class SaveController : MonoBehaviour {
 		if (File.Exists(filePath)){
 			BinaryFormatter bf = new BinaryFormatter();
 			FileStream file = File.Open(filePath,FileMode.Open);
-			int data = (int)bf.Deserialize(file);
+			save = (SaveClass)bf.Deserialize(file);
 			file.Close();
 
-			bestLevel = data;
+			bestTowerLevel.value = save.bestLevel;
+			musicVolume.value = save.musicVolume;
+			effectVolume.value = save.effectVolume;
 			Debug.Log("Successfully loaded the file!");
 		}
 		else {

@@ -4,11 +4,18 @@ using UnityEngine;
 
 public class WeaponSlot : MonoBehaviour {
 
+	[Header("Game speed")]
 	public BoolVariable paused;
+	public BoolVariable canBeSlowed;
+	public BoolVariable slowLeftSide;
+	public FloatVariable slowAmount;
+
+	[Header("Libraries")]
 	public KanjiListVariable kanjiList;
 	public ScrObjLibraryVariable battleLibrary;
 	public StringVariable battleUuid;
 
+	[Header("Kanji")]
 	public ContainerKanji[] kanji;
 	private float size;
 	private float kanjiHeight;
@@ -49,12 +56,14 @@ public class WeaponSlot : MonoBehaviour {
 		if (paused.value)
 			return;
 
+		float time = (canBeSlowed.value && !slowLeftSide.value) ? (Time.deltaTime * slowAmount.value) : Time.deltaTime;
+
 		if (shootCooldown > 0) {
-			shootCooldown -= Time.deltaTime;
+			shootCooldown -= time;
 		}
 
 		for (int i = 0; i < Constants.MAX_EQUIPPED_KANJI; i++) {
-			kanji[i].LowerCooldown();
+			kanji[i].LowerCooldown(time);
 		}
 	}
 
@@ -82,7 +91,6 @@ public class WeaponSlot : MonoBehaviour {
 					kanji[i].kanji = kanjiList.GetKanji(0);
 				}
 				else {
-					// Debug.Log("Equipped: "+kanjiIndex[i]);
 					kanji[i].kanji = kanjiList.GetKanji(kanjiIndex[i]);
 				}
 			}

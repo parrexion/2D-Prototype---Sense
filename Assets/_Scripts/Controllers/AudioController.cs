@@ -7,18 +7,29 @@ using UnityEngine;
 /// </summary>
 public class AudioController : MonoBehaviour {
 	
-	public AudioVariable backgroundMusic;
+	[Header("SFX")]
 	public AudioVariable sfxClip;
-	public FloatVariable musicVolume;
+	public FloatVariable effectVolume;
 	public AudioSource efxSource;
+
+	[Header("Music")]
+	public AudioVariable backgroundMusic;
+	public FloatVariable musicVolume;
 	public AudioSource musicSource;
 
+	[Header("Variation values")]
 	[MinMaxRange(0.75f,1.5f)]
 	public RangedFloat pitchRange = new RangedFloat(0.95f,1.05f);
 	
 	private bool playingBkg = false;
 
+
 	public void OnEnable() {
+		UpdateVolume();
+	}
+
+	public void UpdateVolume() {
+		efxSource.volume = Mathf.Clamp01(effectVolume.value);
 		musicSource.volume = Mathf.Clamp01(musicVolume.value);
 	}
 

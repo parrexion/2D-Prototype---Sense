@@ -4,24 +4,33 @@ using UnityEngine;
 
 public class SpiritGridController : MonoBehaviour {
 
+	[Header("Game speed")]
 	public BoolVariable paused;
+	public BoolVariable canBeSlowed;
+	public BoolVariable slowLeftSide;
+	public FloatVariable slowAmount;
+
+	[Header("References")]
 	public SpiritGrid grid;
 	public BattleController battleController;
-	[HideInInspector] public Rigidbody2D rigid;
-	public float jumpForce = 400f;
-	private float blockTime;
-	private float currentBlockTime;
-	public Collider2D ground;
 
+	[Header("Jumping")]
+	public MoveJumpingScript moveJumping;
+	public float jumpForce = 10f;
+
+	[Header("Attack/Defend")]
 	public Transform starProjectile;
 	public Transform starEffect;
 	public Transform lightningProjectile;
 	public Transform lightningEffect;
-	public Transform barrier;
-
 	public float AttackTimeLimit = 2.0f;
 	private float currentAttackTimeLimit;
 
+	public Transform barrier;
+	private float blockTime;
+	private float currentBlockTime;
+
+	[Header("Animations")]
 	public AnimationScript animScript;
 	private AnimationInformation animInfo;
 	private int attacking = 0;
@@ -31,7 +40,6 @@ public class SpiritGridController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		rigid = GetComponent<Rigidbody2D>();
 		animInfo = new AnimationInformation();
 		blockTime = 0f;
 	}
@@ -51,8 +59,10 @@ public class SpiritGridController : MonoBehaviour {
 		if (attacking > 5)
 			return;
 
+		float time = (canBeSlowed.value && slowLeftSide.value) ? (Time.deltaTime * slowAmount.value) : Time.deltaTime;
+
 		if (blockTime != 0) {
-			currentBlockTime += Time.deltaTime;
+			currentBlockTime += time;
 			if (currentBlockTime >= blockTime) {
 				blockTime = 0;
 				hurtScript.canBeHurt = true;
@@ -61,7 +71,7 @@ public class SpiritGridController : MonoBehaviour {
 		}
 
 		if (grid.attackDirection != Constants.Direction.NEUTRAL) {
-			currentAttackTimeLimit += Time.deltaTime;
+			currentAttackTimeLimit += time;
 			if (currentAttackTimeLimit >= AttackTimeLimit) {
 				grid.CancelGrid();
 				return;
@@ -73,8 +83,8 @@ public class SpiritGridController : MonoBehaviour {
 
 		int endReached = 0;
 		if (Input.GetKeyDown(KeyCode.Space)) {
-			if (rigid.IsTouching(ground)) {
-				rigid.AddForce(new Vector2(0f,jumpForce));
+			if (moveJumping.grounded) {
+				moveJumping.setSpeed(new Vector2(0f,jumpForce), 0);
 				grid.CancelGrid();
 			}
 		}
@@ -106,7 +116,7 @@ public class SpiritGridController : MonoBehaviour {
 				endReached = 3;
 				grid.CancelGrid();
 			}
-			else if (rigid.IsTouching(ground)) {
+			else if (moveJumping.grounded) {
 				if (battleController.enemyController.CheckIfEnemiesAtSide(false)) {
 					currentAttackTimeLimit = 0;
 					if (grid.MoveGrid(Constants.Direction.RIGHT))
@@ -127,7 +137,7 @@ public class SpiritGridController : MonoBehaviour {
 				endReached = 3;
 				grid.CancelGrid();
 			}
-			else if (rigid.IsTouching(ground)) {
+			else if (moveJumping.grounded) {
 				if (battleController.enemyController.CheckIfEnemiesAtSide(true)) {
 					currentAttackTimeLimit = 0;
 					if (grid.MoveGrid(Constants.Direction.LEFT))
@@ -161,7 +171,7 @@ public class SpiritGridController : MonoBehaviour {
 	public void UpdateAnimation() {
 
 		animInfo.blocking = (blockTime != 0);
-		animInfo.jumping = !rigid.IsTouching(ground);
+		animInfo.jumping = !moveJumping.grounded;
 
 		if (hurtScript.beenHurt) {
 			hurtScript.beenHurt = false;
@@ -194,9 +204,8 @@ public class SpiritGridController : MonoBehaviour {
 			animInfo.mouseDirection = 0;
 		}
 
-//		Vector3 lastPosition = transform.position;
-		animScript.UpdateState(animInfo);
-//		transform.position = new Vector3(lastPosition.x, lastPosition.y+0.01f,lastPosition.z);
+		float speed = (canBeSlowed.value && slowLeftSide.value) ? slowAmount.value : 1f;
+		animScript.UpdateState(animInfo, speed);
 	}
 
 

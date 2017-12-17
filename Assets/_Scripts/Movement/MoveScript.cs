@@ -5,13 +5,23 @@
 /// </summary>
 public abstract class MoveScript : MonoBehaviour {
 
+	[Header("Game speed")]
 	public BoolVariable paused;
+	public BoolVariable canBeSlowed;
+	public BoolVariable slowLeftSide;
+	public FloatVariable slowAmount;
+	public bool leftSideEffect;
 
     protected Vector2 speed;
     protected Vector2 direction;
     protected Vector2 movement;
     protected Rigidbody2D rigidbodyComponent;
 
+
+    void Start() {
+		if (rigidbodyComponent == null) 
+			rigidbodyComponent = GetComponent<Rigidbody2D>();
+	}
 
     void Update() {
         CalculateMovement();
@@ -20,7 +30,13 @@ public abstract class MoveScript : MonoBehaviour {
     /// <summary>
     /// Implements how the projectile should move.
     /// </summary>
-    protected abstract void CalculateMovement();
+    protected virtual void CalculateMovement(){}
+
+    protected virtual void CalculateSpeed(){}
+
+    protected float getCurrentSlowAmount() {
+        return (canBeSlowed.value && slowLeftSide.value == leftSideEffect) ? slowAmount.value : 1;
+    }
 
     /// <summary>
     /// Updates the movement every frame.
@@ -30,7 +46,14 @@ public abstract class MoveScript : MonoBehaviour {
         if (rigidbodyComponent == null) 
 			rigidbodyComponent = GetComponent<Rigidbody2D>();
 
-		rigidbodyComponent.velocity = movement;
+        if (paused.value) {
+            rigidbodyComponent.velocity = Vector2.zero;
+            return;
+        }
+
+        CalculateSpeed();
+
+		rigidbodyComponent.velocity = movement * getCurrentSlowAmount();
     }
 
     /// <summary>

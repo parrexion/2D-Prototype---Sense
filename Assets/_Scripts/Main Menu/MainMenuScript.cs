@@ -17,11 +17,12 @@ public class MainMenuScript : BasicGUIButtons {
 	public Text levelMinus5Text;
 
 	public StringVariable dialogueUuid;
+	public IntVariable bestTowerLevel;
 	public IntVariable currentTowerLevel;
 
 
 	void Start(){
-		recordText.text = "Highest level: " + SaveController.instance.bestLevel;
+		recordText.text = "Highest level: " + bestTowerLevel.value;
 	}
 
 	public void TutorialClicked(){
@@ -38,7 +39,7 @@ public class MainMenuScript : BasicGUIButtons {
 	public void BattleClicked(){
 		mainMenuCanvas.enabled = false;
 		levelSelectCanvas.enabled = true;
-		int bestLevel = SaveController.instance.bestLevel;
+		int bestLevel = bestTowerLevel.value;
 
 		levelMaxButton.gameObject.SetActive(bestLevel > 1);
 		levelMaxText.gameObject.SetActive(bestLevel > 1);
@@ -50,7 +51,7 @@ public class MainMenuScript : BasicGUIButtons {
 	}
 
 	public void LevelSelectClicked(int levelPosition){
-		int bestLevel = SaveController.instance.bestLevel;
+		int bestLevel = bestTowerLevel.value;
 		if (levelPosition == 1) 
 			currentTowerLevel.value = 1;
 		else if (levelPosition == 3)

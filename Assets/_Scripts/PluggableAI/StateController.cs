@@ -10,6 +10,12 @@ public abstract class StateController : MonoBehaviour {
 
 	[Space(10)]
 
+	[Header("Game speed")]
+	public BoolVariable paused;
+	public BoolVariable canBeSlowed;
+	public BoolVariable slowLeftSide;
+	public FloatVariable slowAmount;
+
 	[Header("Transforms")]
 	public Transform nPlayer;
 	public Transform sPlayer;
@@ -17,8 +23,7 @@ public abstract class StateController : MonoBehaviour {
 	public Rigidbody2D rigidBody;
 	public Vector2 startPosition;
 
-	//
-	//Animation
+	[Header("Animations")]
 	public AnimationScript animScript;
 	public AnimationInformation animInfo;
 
@@ -27,7 +32,6 @@ public abstract class StateController : MonoBehaviour {
 	[Header("AI State Machine")]
 	public WaitStates currentWaitState;
 	public State currentState;
-	public BoolVariable paused;
 	public State remainState;
 	[HideInInspector] public float stateTimeElapsed = 0;
 	//Waiting
@@ -78,7 +82,7 @@ public abstract class StateController : MonoBehaviour {
 		if (paused.value)
 			return;
 
-		stateTimeElapsed += Time.deltaTime;
+		stateTimeElapsed += (canBeSlowed.value && !slowLeftSide.value) ? (Time.deltaTime * slowAmount.value) : Time.deltaTime;
 		currentState.UpdateState(this);
 		UpdateAnimation();
 	}

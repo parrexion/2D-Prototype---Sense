@@ -42,7 +42,7 @@ public abstract class AnimationScript : MonoBehaviour {
 	}
 
 
-	public abstract void UpdateState(AnimationInformation info);
+	public abstract void UpdateState(AnimationInformation info, float speed);
 
 
 	protected void Face(int direction) {

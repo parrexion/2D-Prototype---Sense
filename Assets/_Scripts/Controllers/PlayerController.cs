@@ -10,21 +10,29 @@ public class PlayerController : MonoBehaviour {
     private enum Type { NORMAL,SPIRIT };
 
 	public Camera screenCamera;
+
+	[Header("Game speed")]
 	public BoolVariable paused;
+	public BoolVariable canBeSlowed;
+	public BoolVariable slowLeftSide;
+	public FloatVariable slowAmount;
 
 	private float startX;
 	private float startY;
+
+	[Header("Animations")]
+	public AnimationScript animScript;
+	private AnimationInformation animInfo;
+	public HurtablePlayerScript hurtScript;
+	private int hurting = 0;
 
 	private MoveHomingScript moveToPosition;
 	private Rigidbody2D rigidbodyComponent;
 	private Collider2D coll2D;
     private MouseInformation mouseInfo;
-	public WeaponSlot weapon;
 
-	public AnimationScript animScript;
-	private AnimationInformation animInfo;
-	public HurtablePlayerScript hurtScript;
-	private int hurting = 0;
+	[Header("Attacks")]
+	public WeaponSlot weapon;
 
 	const int delayPlayerHurt = 20;
 	const float delayUntilCharging = 0.25f;
@@ -76,7 +84,7 @@ public class PlayerController : MonoBehaviour {
 
 		if (mouseInfo.holding) {
 			mouseInfo.setPosition2(screenCamera.ScreenToWorldPoint(Input.mousePosition));
-			mouseInfo.holdDuration += Time.deltaTime;
+			mouseInfo.holdDuration += (canBeSlowed.value && !slowLeftSide.value) ? (Time.deltaTime * slowAmount.value) : Time.deltaTime;
 		}
 	
 		if (Input.GetMouseButtonUp(0)) {
@@ -139,6 +147,7 @@ public class PlayerController : MonoBehaviour {
 			animInfo.blocking = false;
 			animInfo.mouseDirection = moveToPosition.moveDirection;
 		}
-		animScript.UpdateState(animInfo);
+		float speed = (canBeSlowed.value && !slowLeftSide.value) ? slowAmount.value : 1f;
+		animScript.UpdateState(animInfo, speed);
 	}
 }
