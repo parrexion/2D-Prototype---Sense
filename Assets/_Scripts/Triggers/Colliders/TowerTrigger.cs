@@ -18,7 +18,6 @@ public class TowerTrigger : OWTrigger {
 
 		Debug.Log("Start battle: "+ towerBattle.entryName);
 		battleUuid.value = towerBattle.uuid;
-		Deactivate();
 		startEvent.Invoke();
 	}
 

@@ -41,13 +41,13 @@ public class MainMenuScript : BasicGUIButtons {
 		levelSelectCanvas.enabled = true;
 		int bestLevel = bestTowerLevel.value;
 
-		levelMaxButton.gameObject.SetActive(bestLevel > 1);
-		levelMaxText.gameObject.SetActive(bestLevel > 1);
-		levelMaxButton.gameObject.SetActive(bestLevel > 6);
-		levelMaxText.gameObject.SetActive(bestLevel > 6);
-
 		levelMaxButton.GetComponentInChildren<Text>().text = "LEVEL " + bestLevel;
 		levelMinus5Button.GetComponentInChildren<Text>().text = "LEVEL " + (bestLevel - 5);
+
+		levelMaxButton.gameObject.SetActive(bestLevel > 1);
+		levelMaxText.gameObject.SetActive(bestLevel > 1);
+		levelMinus5Button.gameObject.SetActive(bestLevel > 6);
+		levelMinus5Text.gameObject.SetActive(bestLevel > 6);
 	}
 
 	public void LevelSelectClicked(int levelPosition){
