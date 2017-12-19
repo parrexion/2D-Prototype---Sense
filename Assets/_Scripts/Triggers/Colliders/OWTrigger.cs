@@ -39,9 +39,7 @@ public abstract class OWTrigger : MonoBehaviour {
 			return;
 		}
 
-		Debug.Log("That's a trigger!");
 		Trigger();
-
 	}
 
 	public void Deactivate() {

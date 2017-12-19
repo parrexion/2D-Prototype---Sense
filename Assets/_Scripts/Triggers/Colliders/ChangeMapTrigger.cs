@@ -13,7 +13,7 @@ public class ChangeMapTrigger : OWTrigger {
 
 	protected override void Trigger() {
 		Debug.Log("Moving to area: " + area);
-		paused.value = true;
+		// paused.value = true;
 		posx.value = position.x;
 		posy.value = position.y;
 		startEvent.Invoke();

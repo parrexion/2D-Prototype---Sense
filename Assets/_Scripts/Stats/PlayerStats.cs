@@ -18,9 +18,13 @@ public class PlayerStats : CharacterStats {
 	}
 	#endregion
 
+	[Header("Battle Values")]
 	public BattleController battleController;
 	public FloatVariable spiritDamageTaken;
 	public FloatVariable normalDamageTaken;
+
+	[Header("Overworld values")]
+	public StringVariable playerArea;
 	public FloatVariable playerPosX;
 	public FloatVariable playerPosY;
 

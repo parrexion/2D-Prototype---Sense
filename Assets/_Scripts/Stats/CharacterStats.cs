@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CharacterStats : MonoBehaviour {
 
+	[Header("Stats")]
 	public Stats maxHealth;
 	public int currentHealth { get; protected set;}
 
