@@ -9,6 +9,8 @@ public class TriggerSpawnerEditorWindow : EditorWindow {
 	public GameObject battleTrigger;
 	public GameObject dialogueTrigger;
 	public GameObject changeMapTrigger;
+	public GameObject doorTrigger;
+	public GameObject talkTrigger;
 
 	Transform triggerParent;
 	GUIContent[] buttonList;
@@ -53,8 +55,13 @@ public class TriggerSpawnerEditorWindow : EditorWindow {
 		contentList.Add(guic);
 
 		guic = new GUIContent();
-		guic.text = "Interact";
-		guic.image = GenerateImage(Color.grey);
+		guic.text = "Talk";
+		guic.image = GenerateImage(Color.cyan);
+		contentList.Add(guic);
+
+		guic = new GUIContent();
+		guic.text = "Door";
+		guic.image = GenerateImage(Color.black);
 		contentList.Add(guic);
 
 		guic = new GUIContent();
@@ -86,21 +93,27 @@ public class TriggerSpawnerEditorWindow : EditorWindow {
 		}
 
 		if (GUILayout.Button(buttonList[3])) {
-			triggerToSpawn = "interact";
+			triggerToSpawn = "talk";
 		}
 
 		if (GUILayout.Button(buttonList[4])) {
-			triggerToSpawn = "shop";
+			triggerToSpawn = "door";
 		}
 
-		if (GUILayout.Button(buttonList[5])) {
-			triggerToSpawn = "unlock";
-		}
+		// if (GUILayout.Button(buttonList[4])) {
+		// 	triggerToSpawn = "shop";
+		// }
+
+		// if (GUILayout.Button(buttonList[5])) {
+		// 	triggerToSpawn = "unlock";
+		// }
 
 
 		GameObject trigger = GetTriggerObject();
 		if (trigger != null) {
 			Debug.Log("Scene view position: " + SceneView.lastActiveSceneView.camera.transform.position);
+			OWTrigger ow = trigger.GetComponent<OWTrigger>();
+			ow.uuid = System.Guid.NewGuid().ToString();
 			trigger.transform.SetParent(triggerParent);
 			Vector3 spawnPos = new Vector3(
 				SceneView.lastActiveSceneView.camera.transform.position.x,
@@ -120,8 +133,6 @@ public class TriggerSpawnerEditorWindow : EditorWindow {
 		Debug.Log("SCENE LOADED");
 		InitGuiContent();
 	}
-
-
 
 	Texture2D GenerateImage(Color color) {
 		int size = 16;
@@ -150,6 +161,12 @@ public class TriggerSpawnerEditorWindow : EditorWindow {
 				break;
 			case "changeMap":
 				trigger = Instantiate(changeMapTrigger);
+				break;
+			case "door":
+				trigger = Instantiate(doorTrigger);
+				break;
+			case "talk":
+				trigger = Instantiate(talkTrigger);
 				break;
 		}
 
