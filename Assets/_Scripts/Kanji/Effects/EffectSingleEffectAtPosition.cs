@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu (menuName = "Kanji/Effect/Effect/SingleAtPosition")]
 public class EffectSingleEffectAtPosition : KanjiEffect {
 
-    public override bool Use(KanjiValues values, MouseInformation info) {
+    public override bool Use(KanjiValues values, int attackValue, MouseInformation info) {
 		
 		var effectTransform = Instantiate(values.effect) as Transform;
 		ProjectileEffect effect = effectTransform.GetComponent<ProjectileEffect>();

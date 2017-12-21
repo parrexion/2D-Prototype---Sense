@@ -37,8 +37,6 @@ public class MainControllerScript : MonoBehaviour {
 	/// </summary>
 	/// <returns></returns>
 	void WaitForInitiate() {
-		SaveController.instance.Load();
-
 		initiated = true;
 		Debug.Log("Maincontroller is ready");
 	}

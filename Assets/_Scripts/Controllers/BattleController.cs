@@ -17,6 +17,7 @@ public class BattleController : MonoBehaviour {
 	public BoolVariable invincible;
 	public BoolVariable removeLeftSide;
 	public UnityEvent pauseEvent;
+	public UnityEvent saveGameEvent;
 
 	public Text winText;
 	public EnemyController enemyController;
@@ -176,7 +177,7 @@ public class BattleController : MonoBehaviour {
 		// values.treasures = enemyController.GetTreasures();
 
 		if (be.playerArea == BattleEntry.OverworldArea.TOWER)
-			SaveController.instance.Save();
+			saveGameEvent.Invoke();
 
 		Debug.Log("Won");
 

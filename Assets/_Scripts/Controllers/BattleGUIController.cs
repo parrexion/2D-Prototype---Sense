@@ -14,11 +14,4 @@ public class BattleGUIController : MonoBehaviour {
 		effectList.RemoveAll(item => (item == null));
 	}
 
-	//
-	//	public bool removeNullCompare(Projectile p){
-	//		bool res = (p == null);
-	//		if (res)
-	//			Debug.Log("removed a null");
-	//		return res;
-	//	}
 }

@@ -15,6 +15,9 @@ public class WeaponSlot : MonoBehaviour {
 	public ScrObjLibraryVariable battleLibrary;
 	public StringVariable battleUuid;
 
+	[Header("Player")]
+	public IntVariable playerAttack;
+
 	[Header("Kanji")]
 	public ContainerKanji[] kanji;
 	private float size;
@@ -147,7 +150,7 @@ public class WeaponSlot : MonoBehaviour {
 			if (kanji[i].CanActivate(mouseInfo)) {
 				shootCooldown = kanji[i].GetValues().delay;
 				kanji[i].reduceCharge();
-				kanji[i].CreateEffect(mouseInfo);
+				kanji[i].CreateEffect(mouseInfo, playerAttack.value);
 				return true;
 			}
 		}

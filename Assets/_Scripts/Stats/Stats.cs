@@ -33,26 +33,4 @@ public class Stats {
 		hardcapMax = values[1];
 	}
 
-	public void AddAddModifier(int addMod){
-		if (addMod != 0) {
-			addModifiers.Add(addMod);
-		}
-	}
-
-	public void RemoveAddModifier(int addMod) {
-		if (addMod != 0)
-			addModifiers.Remove(addMod);
-	}
-
-
-	public void AddMultiModifier(float multiMod){
-		if (multiMod != 1) {
-			multiModifiers.Add(multiMod);
-		}
-	}
-
-	public void RemoveMultiModifier(float multiMod) {
-		if (multiMod != 1)
-			multiModifiers.Remove(multiMod);
-	}
 }

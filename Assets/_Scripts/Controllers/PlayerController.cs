@@ -24,7 +24,7 @@ public class PlayerController : MonoBehaviour {
 	public AnimationScript animScript;
 	private AnimationInformation animInfo;
 	public HurtablePlayerScript hurtScript;
-	private int hurting = 0;
+	private float hurting = 0;
 
 	private MoveHomingScript moveToPosition;
 	private Rigidbody2D rigidbodyComponent;
@@ -34,7 +34,7 @@ public class PlayerController : MonoBehaviour {
 	[Header("Attacks")]
 	public WeaponSlot weapon;
 
-	const int delayPlayerHurt = 20;
+	const float delayPlayerHurt = 0.5f;
 	const float delayUntilCharging = 0.25f;
 	const float invulFramesForDash = 0.25f;
 
@@ -76,6 +76,8 @@ public class PlayerController : MonoBehaviour {
 		if (moveToPosition.dashing)
 			return;
 
+		float deltaTime = (canBeSlowed.value && !slowLeftSide.value) ? (Time.deltaTime * slowAmount.value) : Time.deltaTime;
+
 		if (Input.GetMouseButtonDown(0)) {
 			mouseInfo.holding = true;
 			mouseInfo.holdDuration = 0;
@@ -84,7 +86,7 @@ public class PlayerController : MonoBehaviour {
 
 		if (mouseInfo.holding) {
 			mouseInfo.setPosition2(screenCamera.ScreenToWorldPoint(Input.mousePosition));
-			mouseInfo.holdDuration += (canBeSlowed.value && !slowLeftSide.value) ? (Time.deltaTime * slowAmount.value) : Time.deltaTime;
+			mouseInfo.holdDuration += deltaTime;
 		}
 	
 		if (Input.GetMouseButtonUp(0)) {
@@ -104,21 +106,16 @@ public class PlayerController : MonoBehaviour {
 				moveToPosition.moveToPosition = pos;
 		}
 
-		UpdateAnimation();
+		UpdateAnimation(deltaTime);
     }
 
 	/// <summary>
 	/// Updates the current information from the controller's state and sends it to the animator.
 	/// </summary>
-	public void UpdateAnimation() {
-
-		if (hurtScript.beenHurt) {
-			hurtScript.beenHurt = false;
-			hurting = 20;
-		}
+	public void UpdateAnimation(float timeStep) {
 
 		if (hurting > 0) {
-			hurting--;
+			hurting -= timeStep;
 			animInfo.hurt = true;
 		}
 		else
@@ -149,5 +146,9 @@ public class PlayerController : MonoBehaviour {
 		}
 		float speed = (canBeSlowed.value && !slowLeftSide.value) ? slowAmount.value : 1f;
 		animScript.UpdateState(animInfo, speed);
+	}
+
+	public void SetHurtAnimation() {
+		hurting = delayPlayerHurt;
 	}
 }

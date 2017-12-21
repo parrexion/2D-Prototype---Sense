@@ -16,5 +16,5 @@ public abstract class KanjiEffect : ScriptableObject {
 	/// <param name="values"></param>
 	/// <param name="info"></param>
 	/// <returns></returns>
-	abstract public bool Use(KanjiValues values, MouseInformation info);
+	abstract public bool Use(KanjiValues values, int attackValue, MouseInformation info);
 }

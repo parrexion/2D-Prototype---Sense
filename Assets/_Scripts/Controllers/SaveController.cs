@@ -26,19 +26,24 @@ public class SaveController : MonoBehaviour {
 
 
 #region Singleton
-	public static SaveController instance;
+	private static SaveController instance;
 
 	void Awake() {
 		if (instance != null) {
 			Destroy(gameObject);
 		}
 		else {
+			DontDestroyOnLoad(gameObject);
 			instance = this;
-			filePath = Application.persistentDataPath+"/saveData.xml";
-			save = new SaveClass();
 		}
 	}
 #endregion
+
+	void Initialize() {
+		filePath = Application.persistentDataPath+"/saveData.xml";
+		save = new SaveClass();
+		Load();
+	}
 
 	/// <summary>
 	/// Updates the save class and saves it to file.

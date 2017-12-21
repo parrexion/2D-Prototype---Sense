@@ -13,7 +13,10 @@ public class SelectedItemUI : MonoBehaviour {
 	private Inventory inventory;
 
 	//Player stats
-	private PlayerStats playerStats;
+	public FloatVariable playerAttack;
+	public FloatVariable playerDefense;
+	public FloatVariable playerSAttack;
+	public FloatVariable playerSDefense;
 	private Text[] names;
 	private Text[] values;
 
@@ -27,7 +30,6 @@ public class SelectedItemUI : MonoBehaviour {
 	void Start () {
 		//Set up references
 		inventory = Inventory.instance;
-		playerStats = PlayerStats.instance;
 
 		//Set up the texts showing the stats
 		Text[] t;
@@ -55,10 +57,10 @@ public class SelectedItemUI : MonoBehaviour {
 	/// Updates the information text of the currently selected item.
 	/// </summary>
 	void UpdateValues(){
-		values[0].text = playerStats.attack.GetValue().ToString();
-		values[1].text = playerStats.defense.GetValue().ToString();
-		values[2].text = playerStats.sAttack.GetValue().ToString();
-		values[3].text = playerStats.sDefense.GetValue().ToString();
+		values[0].text = playerAttack.ToString();
+		values[1].text = playerDefense.ToString();
+		values[2].text = playerAttack.ToString();
+		values[3].text = playerSDefense.ToString();
 
 		selectedGear = inventory.equippedGear;
 		if (selectedGear != null) {

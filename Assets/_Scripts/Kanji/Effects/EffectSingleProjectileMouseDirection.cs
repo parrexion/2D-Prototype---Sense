@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu (menuName = "Kanji/Effect/Projectile/SingleMouseDirection")]
 public class EffectSingleProjectileMouseDirection : KanjiEffect {
 
-    public override bool Use(KanjiValues values, MouseInformation info) {
+    public override bool Use(KanjiValues values, int attackValue, MouseInformation info) {
 		
 		var shotTransform = Instantiate(values.projectile) as Transform;
 		Projectile projectile = shotTransform.GetComponent<Projectile>();
@@ -18,7 +18,7 @@ public class EffectSingleProjectileMouseDirection : KanjiEffect {
 		}
 
 		projectile.lifeTime = values.projectileLifetime;
-		projectile.SetDamage(values.damage, PlayerStats.instance.attack.GetValue(), values.baseDamageScale);
+		projectile.SetDamage(values.damage, attackValue, values.baseDamageScale);
 		projectile.SetMovement(values.projectileSpeed, info.rotationPlayer);
 
 		return true;

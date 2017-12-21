@@ -20,9 +20,9 @@ public class Kanji : ScriptableObject {
 		return true;
 	}
 
-	public void CreateEffects(MouseInformation info){
+	public void CreateEffects(MouseInformation info, int attackValue){
 		for (int i = 0; i < effects.Length; i++) {
-			effects[i].Use(values, info);
+			effects[i].Use(values, attackValue, info);
 		}
 	}
 

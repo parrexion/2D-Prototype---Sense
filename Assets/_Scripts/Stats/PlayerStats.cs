@@ -2,24 +2,30 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerStats : CharacterStats {
+public class PlayerStats : MonoBehaviour {
 
 	#region Singleton
-	public static PlayerStats instance;
+	private static PlayerStats instance;
 
-	protected override void Awake() {
+	protected void Awake() {
 		if (instance != null) {
 			Destroy(gameObject);
 		}
 		else {
-			base.Awake();
+			DontDestroyOnLoad(gameObject);
 			instance = this;
 		}
 	}
 	#endregion
 
+	[Header("Player Stats")]
+	public IntVariable playerMaxHealth;
+	public IntVariable playerAttack;
+	public IntVariable playerDefense;
+	public IntVariable playerSAttack;
+	public IntVariable playerSDefense;
+
 	[Header("Battle Values")]
-	public BattleController battleController;
 	public FloatVariable spiritDamageTaken;
 	public FloatVariable normalDamageTaken;
 
@@ -28,45 +34,18 @@ public class PlayerStats : CharacterStats {
 	public FloatVariable playerPosX;
 	public FloatVariable playerPosY;
 
-	// Use this for initialization
-	void Start () {
-		Inventory.instance.onEquipmentChangedCallback += OnEquipmentChanged;
-	}
 
-	void OnDisable(){
-		Inventory.instance.onEquipmentChangedCallback -= OnEquipmentChanged;
-	}
+	void RecalculateStats() {
+		for (int i = 0; i < Inventory.instance.gearEquippedItems.Length; i++)
+		{
+			ItemEquip item = (ItemEquip)Inventory.instance.gearEquippedItems[i];
+			if (item == null)
+				return;
 
-	void OnEquipmentChanged(ItemEquip newItem, ItemEquip oldItem) {
-		if (newItem != null) {
-			attack.AddAddModifier(newItem.attackModifier);
-			defense.AddAddModifier(newItem.defenseModifier);
-
-			sAttack.AddAddModifier(newItem.sAttackModifier);
-			sDefense.AddAddModifier(newItem.sDefenseModifier);
+			playerAttack.value += item.attackModifier;
+			playerDefense.value += item.defenseModifier;
+			playerSAttack.value += item.sAttackModifier;
+			playerSDefense.value += item.sDefenseModifier;
 		}
-
-		if (oldItem != null) {
-			attack.RemoveAddModifier(oldItem.attackModifier);
-			defense.RemoveAddModifier(oldItem.defenseModifier);
-
-			sAttack.RemoveAddModifier(oldItem.sAttackModifier);
-			sDefense.RemoveAddModifier(oldItem.sDefenseModifier);
-		}
-	}
-
-	public override int TakeDamage(bool normal, int damage) {
-		int dmg = base.TakeDamage(normal, damage);
-		if (normal)
-			normalDamageTaken.value += dmg;
-		else
-			spiritDamageTaken.value += dmg;
-		return dmg;
-	}
-
-
-	public override void Die() {
-		base.Die();
-		battleController.GameOverTrigger();
 	}
 }

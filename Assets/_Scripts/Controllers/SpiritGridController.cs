@@ -35,7 +35,9 @@ public class SpiritGridController : MonoBehaviour {
 	private AnimationInformation animInfo;
 	private int attacking = 0;
 	public HurtablePlayerScript hurtScript;
-	private int hurting = 0;
+	private float hurting = 0;
+
+	const float delayPlayerHurt = 0.5f;
 
 
 	// Use this for initialization
@@ -48,21 +50,20 @@ public class SpiritGridController : MonoBehaviour {
 		if (paused.value)
 			return;
 		
-		UpdateInput();
-		UpdateAnimation();
+		float time = (canBeSlowed.value && slowLeftSide.value) ? (Time.deltaTime * slowAmount.value) : Time.deltaTime;
+		UpdateInput(time);
+		UpdateAnimation(time);
 	}
 
-	void UpdateInput() {
+	void UpdateInput(float timeStep) {
 		if (grid.locked)
 			return;
 
 		if (attacking > 5)
 			return;
 
-		float time = (canBeSlowed.value && slowLeftSide.value) ? (Time.deltaTime * slowAmount.value) : Time.deltaTime;
-
 		if (blockTime != 0) {
-			currentBlockTime += time;
+			currentBlockTime += timeStep;
 			if (currentBlockTime >= blockTime) {
 				blockTime = 0;
 				hurtScript.canBeHurt = true;
@@ -71,7 +72,7 @@ public class SpiritGridController : MonoBehaviour {
 		}
 
 		if (grid.attackDirection != Constants.Direction.NEUTRAL) {
-			currentAttackTimeLimit += time;
+			currentAttackTimeLimit += timeStep;
 			if (currentAttackTimeLimit >= AttackTimeLimit) {
 				grid.CancelGrid();
 				return;
@@ -168,15 +169,10 @@ public class SpiritGridController : MonoBehaviour {
 
 	}
 
-	public void UpdateAnimation() {
+	public void UpdateAnimation(float timeStep) {
 
 		animInfo.blocking = (blockTime != 0);
 		animInfo.jumping = !moveJumping.grounded;
-
-		if (hurtScript.beenHurt) {
-			hurtScript.beenHurt = false;
-			hurting = 20;
-		}
 
 		if (hurting > 0 || grid.locked) {
 			hurting--;
@@ -273,5 +269,9 @@ public class SpiritGridController : MonoBehaviour {
 		blockTime = effect.lifeTime;
 		currentBlockTime = 0;
 		hurtScript.canBeHurt = false;
+	}
+
+	public void SetHurtAnimation() {
+		hurting = delayPlayerHurt;
 	}
 }

@@ -59,8 +59,8 @@ public class ContainerKanji : MonoBehaviour {
 		return kanji.CanActivate(info);
 	}
 
-	public void CreateEffect(MouseInformation info) {
-		kanji.CreateEffects(info);
+	public void CreateEffect(MouseInformation info, int attackValue) {
+		kanji.CreateEffects(info, attackValue);
 	}
 
 	public KanjiValues GetValues(){
