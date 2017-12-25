@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class MenuScreenController : MonoBehaviour {
@@ -27,6 +29,12 @@ public class MenuScreenController : MonoBehaviour {
 	public Button journalButton;
 	public Button saveButton;
 
+	[Header("Outside values")]
+	public StringVariable playerArea;
+
+	public UnityEvent buttonClickedEvent;
+
+
 	// Use this for initialization
 	void Start () {
 #if UNITY_EDITOR
@@ -41,13 +49,10 @@ public class MenuScreenController : MonoBehaviour {
 #endif
 		UpdateCurrentScreen();
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+
 
 	public void SetCurrentScreen(int screenIndex) {
+		buttonClickedEvent.Invoke();
 		MenuScreen screen = (MenuScreen)screenIndex;
 		if (currentScreen != screen) {
 			currentScreen = screen;
@@ -75,6 +80,16 @@ public class MenuScreenController : MonoBehaviour {
 			messageButton.interactable = (currentScreen != MenuScreen.MESSAGE);
 			journalButton.interactable = (currentScreen != MenuScreen.JOURNAL);
 			saveButton.interactable = (currentScreen != MenuScreen.SAVE);
+		}
+	}
+
+	public void ReturnToGame() {
+		buttonClickedEvent.Invoke();
+		if (playerArea.value == "Tower") {
+            SceneManager.LoadScene((int)Constants.SCENE_INDEXES.BATTLETOWER);
+        }
+		else {
+			SceneManager.LoadScene((int)Constants.SCENE_INDEXES.TUTORIAL);
 		}
 	}
 }
