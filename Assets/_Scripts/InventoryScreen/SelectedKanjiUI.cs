@@ -10,10 +10,9 @@ public class SelectedKanjiUI : MonoBehaviour {
 
 	public Transform[] statsTextList;
 
-	private Inventory inventory;
-	private ItemKanji selectedKanji;
-
 	//Selected item
+	public ItemEntryReference selectedKanji;
+	private Kanji currentKanji;
 	public Text itemName;
 	public Image itemIcon;
 	private Text[] names;
@@ -21,8 +20,6 @@ public class SelectedKanjiUI : MonoBehaviour {
 
 
 	void Start () {
-		//Set up references
-		inventory = Inventory.instance;
 
 		//Set up the texts showing the stats
 		Text[] t;
@@ -37,6 +34,10 @@ public class SelectedKanjiUI : MonoBehaviour {
 
 	}
 
+	void OnEnable() {
+		selectedKanji.reference = null;
+	}
+
 	void Update () {
 		//Update values
 		UpdateValues();
@@ -48,15 +49,15 @@ public class SelectedKanjiUI : MonoBehaviour {
 	/// </summary>
 	void UpdateValues(){
 
-		selectedKanji = inventory.equippedKanji;
-		if (selectedKanji != null) {
-			itemName.text = selectedKanji.item_name;
-			itemIcon.sprite = selectedKanji.icon;
+		if (selectedKanji.reference != null) {
+			currentKanji = (Kanji)selectedKanji.reference;
+			itemName.text = currentKanji.entryName;
+			itemIcon.sprite = currentKanji.icon;
 			itemIcon.enabled = true;
-			values[0].text = selectedKanji.type.ToString();
-			values[1].text = selectedKanji.damage.ToString();
-			values[2].text = selectedKanji.charges.ToString();
-			values[3].text = (selectedKanji.rechargeTime != -1) ? selectedKanji.rechargeTime.ToString() + " s" : "-";
+			values[0].text = currentKanji.values.kanjiType.ToString();
+			values[1].text = currentKanji.values.damage.ToString();
+			values[2].text = currentKanji.values.maxCharges.ToString();
+			values[3].text = (currentKanji.values.cooldown != -1) ? currentKanji.values.cooldown.ToString() + " s" : "-";
 		}
 		else {
 			itemName.text = "";

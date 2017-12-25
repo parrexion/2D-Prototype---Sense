@@ -14,6 +14,7 @@ public class WeaponSlot : MonoBehaviour {
 	public KanjiListVariable kanjiList;
 	public ScrObjLibraryVariable battleLibrary;
 	public StringVariable battleUuid;
+	public KanjiListVariable invKanjiEquip;
 
 	[Header("Player")]
 	public IntVariable playerAttack;
@@ -76,9 +77,6 @@ public class WeaponSlot : MonoBehaviour {
 	/// </summary>
 	/// <returns></returns>
 	void SetEquippedKanji(){
-		int[] kanjiIndex;
-		MainControllerScript mainController = MainControllerScript.instance;
-
 		float width = Constants.kanjiGuiOffsetWidth;
 		kanjiHeight = Constants.kanjiGuiOffsetHeight;
 		BattleEntry be = (BattleEntry)battleLibrary.GetEntry(battleUuid.value);
@@ -88,14 +86,7 @@ public class WeaponSlot : MonoBehaviour {
 				kanji[i].kanji = be.equippedKanji[i];
 			}
 			else {
-				kanjiIndex = mainController.inventory.GetEquippedKanji();
-
-				if (i >= kanjiIndex.Length) {
-					kanji[i].kanji = kanjiList.GetKanji(0);
-				}
-				else {
-					kanji[i].kanji = kanjiList.GetKanji(kanjiIndex[i]);
-				}
+				kanji[i].kanji = invKanjiEquip.values[i];
 			}
 			
 			kanji[i].Initialize(i);

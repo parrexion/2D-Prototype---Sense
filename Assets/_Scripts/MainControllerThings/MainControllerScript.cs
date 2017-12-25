@@ -12,7 +12,6 @@ public class MainControllerScript : MonoBehaviour {
 
 	public bool initiated { get; private set; }
 	public BattleGUIController battleGUI { get; private set;}
-	public Inventory inventory { get; private set;}
 
 	
 	/// <summary>
@@ -28,7 +27,6 @@ public class MainControllerScript : MonoBehaviour {
 		DontDestroyOnLoad(transform.gameObject);
 		instance = this;
 		battleGUI = GetComponent<BattleGUIController>();
-		inventory = GetComponent<Inventory>();
 		StartCoroutine("WaitForInitiate");
 	}
 

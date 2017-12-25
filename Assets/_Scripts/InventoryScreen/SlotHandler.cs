@@ -20,13 +20,14 @@ public class SlotHandler : MonoBehaviour, IDropHandler {
 		}
 	}
 
+	public ItemEntryReference selectedItem;
+	public InventoryHandler invContainer;
+
 	private DragHandler dragHandler;
-	private Inventory inventory;
 	private InventorySlot slot;
 
 
 	void Start() {
-		inventory = Inventory.instance;
 		slot = GetComponent<InventorySlot>();
 	}
 
@@ -40,9 +41,9 @@ public class SlotHandler : MonoBehaviour, IDropHandler {
 		if (DragHandler.itemBeingDragged != null) {
 			SlotID start_id = DragHandler.itemBeingDragged.GetComponent<DragHandler>().start_id;
 			if (slot.slotID.type == SlotID.SlotType.DESTROY)
-				inventory.DeselectItem(start_id.type == SlotID.SlotType.KANJI);
+				selectedItem.reference = null;
 
-			Inventory.instance.Swap(start_id,slot.slotID);
+			invContainer.Swap(start_id,slot.slotID);
 		}
 	}
 

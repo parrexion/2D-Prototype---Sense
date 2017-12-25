@@ -10,27 +10,24 @@ public class SelectedItemUI : MonoBehaviour {
 
 	public Transform[] statsTextList;
 
-	private Inventory inventory;
-
 	//Player stats
-	public FloatVariable playerAttack;
-	public FloatVariable playerDefense;
-	public FloatVariable playerSAttack;
-	public FloatVariable playerSDefense;
+	public IntVariable playerAttack;
+	public IntVariable playerDefense;
+	public IntVariable playerSAttack;
+	public IntVariable playerSDefense;
+
 	private Text[] names;
 	private Text[] values;
 
 	//Selected item
-	private ItemEquip selectedGear;
+	public ItemEntryReference selectedItem;
+	private ItemEquip currentItem;
 	public Text itemName;
 	private Text[] changes;
 	public Image itemIcon;
 
 
 	void Start () {
-		//Set up references
-		inventory = Inventory.instance;
-
 		//Set up the texts showing the stats
 		Text[] t;
 		names = new Text[statsTextList.Length];
@@ -48,6 +45,10 @@ public class SelectedItemUI : MonoBehaviour {
 
 	}
 
+	void OnEnable() {
+		selectedItem.reference = null;
+	}
+
 	void Update () {
 		//Update values
 		UpdateValues();
@@ -57,19 +58,19 @@ public class SelectedItemUI : MonoBehaviour {
 	/// Updates the information text of the currently selected item.
 	/// </summary>
 	void UpdateValues(){
-		values[0].text = playerAttack.ToString();
-		values[1].text = playerDefense.ToString();
-		values[2].text = playerAttack.ToString();
-		values[3].text = playerSDefense.ToString();
+		values[0].text = playerAttack.value.ToString();
+		values[1].text = playerDefense.value.ToString();
+		values[2].text = playerAttack.value.ToString();
+		values[3].text = playerSDefense.value.ToString();
 
-		selectedGear = inventory.equippedGear;
-		if (selectedGear != null) {
-			itemName.text = selectedGear.item_name;
-			changes[0].text = "+" + selectedGear.attackModifier.ToString();
-			changes[1].text = "+" + selectedGear.defenseModifier.ToString();
-			changes[2].text = "+" + selectedGear.sAttackModifier.ToString();
-			changes[3].text = "+" + selectedGear.sDefenseModifier.ToString();
-			itemIcon.sprite = selectedGear.icon;
+		if (selectedItem.reference != null) {
+			currentItem = (ItemEquip)selectedItem.reference;
+			itemName.text = currentItem.entryName;
+			changes[0].text = "+" + currentItem.attackModifier.ToString();
+			changes[1].text = "+" + currentItem.defenseModifier.ToString();
+			changes[2].text = "+" + currentItem.sAttackModifier.ToString();
+			changes[3].text = "+" + currentItem.sDefenseModifier.ToString();
+			itemIcon.sprite = currentItem.icon;
 			itemIcon.enabled = true;
 		}
 		else {

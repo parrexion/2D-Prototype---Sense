@@ -19,7 +19,7 @@ public class InventorySlot : MonoBehaviour {
 	public bool moveable = true;
 	public SlotID slotID;
 	public Image icon;
-	Item item;
+	public ItemEntry item;
 
 
 	/// <summary>
@@ -37,7 +37,7 @@ public class InventorySlot : MonoBehaviour {
 	/// Adds an item to the slot, overwriting the previous item.
 	/// </summary>
 	/// <param name="newItem"></param>
-	public void AddItem(Item newItem) {
+	public void AddItem(ItemEntry newItem) {
 		item = newItem;
 
 		icon.sprite = item.icon;

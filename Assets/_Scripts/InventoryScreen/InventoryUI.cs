@@ -5,45 +5,29 @@
 /// </summary>
 public class InventoryUI : MonoBehaviour {
 
-	public StringVariable currentArea;
-	public Transform gearEquipItemsParent;
-	public Transform gearBagItemsParent;
-	public Transform kanjiEquipItemsParent;
-	public Transform kanjiBagItemsParent;
+	public Transform equipItemsParent;
+	public Transform bagItemsParent;
 	public Transform destroyTransform;
-	public BasicGUIButtons buttttton;
 
-	Inventory inventory;
-	InventorySlot[] gearEquipSlots;
-	InventorySlot[] gearBagSlots;
-	InventorySlot[] kanjiEquipSlots;
-	InventorySlot[] kanjiBagSlots;
+	InventorySlot[] equipSlots;
+	InventorySlot[] bagSlots;
 	InventorySlot destroySlot;
+
+	public InvListVariable invItemEquip;
+	public InvListVariable invItemBag;
 
 
 	// Use this for initialization
 	void Start () {
-		inventory = Inventory.instance;
-		inventory.onItemChangedCallback += UpdateUI;
 
-		//Equipment initialization
-		gearEquipSlots = gearEquipItemsParent.GetComponentsInChildren<InventorySlot>();
-		for (int i = 0; i < gearEquipSlots.Length; i++) {
-			gearEquipSlots[i].SetID(SlotID.SlotType.EQUIP,-(i+1));
+		//Slot initialization
+		equipSlots = equipItemsParent.GetComponentsInChildren<InventorySlot>();
+		for (int i = 0; i < equipSlots.Length; i++) {
+			equipSlots[i].SetID(SlotID.SlotType.EQUIP,-(i+1));
 		}
-		gearBagSlots = gearBagItemsParent.GetComponentsInChildren<InventorySlot>();
-		for (int i = 0; i < gearBagSlots.Length; i++) {
-			gearBagSlots[i].SetID(SlotID.SlotType.EQUIP,i);
-		}
-
-		//Kanji initialization
-		kanjiEquipSlots = kanjiEquipItemsParent.GetComponentsInChildren<InventorySlot>();
-		for (int i = 0; i < kanjiEquipSlots.Length; i++) {
-			kanjiEquipSlots[i].SetID(SlotID.SlotType.KANJI,-(i+1));
-		}
-		kanjiBagSlots = kanjiBagItemsParent.GetComponentsInChildren<InventorySlot>();
-		for (int i = 0; i < kanjiBagSlots.Length; i++) {
-			kanjiBagSlots[i].SetID(SlotID.SlotType.KANJI,i);
+		bagSlots = bagItemsParent.GetComponentsInChildren<InventorySlot>();
+		for (int i = 0; i < bagSlots.Length; i++) {
+			bagSlots[i].SetID(SlotID.SlotType.EQUIP,i);
 		}
 
 		destroySlot = destroyTransform.GetComponent<InventorySlot>();
@@ -54,66 +38,28 @@ public class InventoryUI : MonoBehaviour {
 	}
 
 	/// <summary>
-	/// Remove the events when leaving the screen.
-	/// </summary>
-	void OnDisable() {
-		inventory.onItemChangedCallback -= UpdateUI;
-	}
-
-	/// <summary>
 	/// Update function for the UI. Uses the inventory to update the images of all the inventory slots.
 	/// </summary>
-	void UpdateUI() {
-		if (!inventory.initialized) {
-			return;
-		}
+	public void UpdateUI() {
 
 		//Update the equipment
-		for (int i = 0; i < gearEquipSlots.Length; i++) {
-			if (inventory.gearEquippedItems[i] != null) {
-				gearEquipSlots[i].AddItem(inventory.gearEquippedItems[i]);
+		for (int i = 0; i < equipSlots.Length; i++) {
+			if (invItemEquip.values[i] != null) {
+				equipSlots[i].AddItem(invItemEquip.values[i]);
 			}
 			else {
-				gearEquipSlots[i].ClearSlot();
+				equipSlots[i].ClearSlot();
 			}
 		}
 
-		for (int i = 0; i < gearBagSlots.Length; i++) {
-			if (inventory.gearBagItems[i] != null) {
-				gearBagSlots[i].AddItem(inventory.gearBagItems[i]);
+		for (int i = 0; i < bagSlots.Length; i++) {
+			if (invItemBag.values[i] != null) {
+				bagSlots[i].AddItem(invItemBag.values[i]);
 			}
 			else {
-				gearBagSlots[i].ClearSlot();
-			}
-		}
-
-		//Update the kanji
-		for (int i = 0; i < kanjiEquipSlots.Length; i++) {
-			if (inventory.kanjiEquippedItems[i] != null) {
-				kanjiEquipSlots[i].AddItem(inventory.kanjiEquippedItems[i]);
-			}
-			else {
-				kanjiEquipSlots[i].ClearSlot();
-			}
-		}
-
-		for (int i = 0; i < kanjiBagSlots.Length; i++) {
-			if (inventory.kanjiBagItems[i] != null) {
-				kanjiBagSlots[i].AddItem(inventory.kanjiBagItems[i]);
-			}
-			else {
-				kanjiBagSlots[i].ClearSlot();
+				bagSlots[i].ClearSlot();
 			}
 		}
 	}
 
-	public void GoBack() {
-		if (currentArea.value == "Tower"){
-			buttttton.SimpleMoveToScene("tower");
-		}
-		else {
-			buttttton.SimpleMoveToScene("tutorial");
-		}
-
-	}
 }

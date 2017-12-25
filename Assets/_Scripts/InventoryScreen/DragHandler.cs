@@ -10,13 +10,12 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 
 	public InventorySlot slot;
 	public SlotID start_id;
+	public ItemEntryReference selectedItem;
 
-	private Inventory inventory;
 	private Image image;
 	private Transform invParent;
 
 	void Start() {
-		inventory = Inventory.instance;
 		image = GetComponent<Image>();
 		invParent = transform.parent.transform.parent.transform.parent.transform;
 	}
@@ -27,7 +26,7 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 			return;
 		}
 		itemBeingDragged = gameObject;
-		inventory.SelectItem(slot.slotID.type == SlotID.SlotType.KANJI,slot.slotID.id);
+		selectedItem.reference = slot.item;
 		start_id = slot.slotID;
 		image.raycastTarget = false;
 		transform.parent.transform.SetAsLastSibling();
@@ -63,7 +62,7 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 
 	public void OnPointerDown(PointerEventData eventData) {
 		if (slot.slotID.type != SlotID.SlotType.DESTROY)
-			inventory.SelectItem(slot.slotID.type == SlotID.SlotType.KANJI,slot.slotID.id);
+			selectedItem.reference = slot.item;
 	}
 
 	#endregion

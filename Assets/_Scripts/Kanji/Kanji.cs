@@ -2,14 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu (menuName = "Kanji/Kanji")]
-public class Kanji : ScriptableObject {
+/// <summary>
+/// Class which contains all information used by a kanji.
+/// Contains activation requirements, effects and stats.
+/// </summary>
+[CreateAssetMenu (menuName = "Library/Kanji")]
+public class Kanji : ItemEntry {
 
 	public KanjiActivation[] activations;
 	public KanjiEffect[] effects;
 	public KanjiValues values;
 
 
+	/// <summary>
+	/// Checks if all activation requirements are fullfilled.
+	/// </summary>
+	/// <param name="info"></param>
+	/// <returns></returns>
 	public bool CanActivate(MouseInformation info) {
 
 		for (int i = 0; i < activations.Length; i++) {
@@ -20,29 +29,15 @@ public class Kanji : ScriptableObject {
 		return true;
 	}
 
+	/// <summary>
+	/// Creates the effect of the kanji.
+	/// </summary>
+	/// <param name="info"></param>
+	/// <param name="attackValue"></param>
 	public void CreateEffects(MouseInformation info, int attackValue){
 		for (int i = 0; i < effects.Length; i++) {
 			effects[i].Use(values, attackValue, info);
 		}
 	}
 
-	/// <summary>
-	/// Create a simpler version of the values to be used in the inventory.
-	/// </summary>
-	/// <param name="id"></param>
-	/// <returns></returns>
-	public ItemKanji extractKanjiInformation(int id){
-		ItemKanji item = ScriptableObject.CreateInstance("ItemKanji") as ItemKanji;
-
-		item.charges = values.maxCharges;
-		item.damage = values.damage;
-		item.icon = values.icon;
-		item.type = values.kanjiType;
-		item.item_id = id;
-		item.item_name = values.kanjiName;
-		item.item_type = Item.ItemType.KANJI;
-		item.rechargeTime = values.cooldown;
-
-		return item;
-	}
 }

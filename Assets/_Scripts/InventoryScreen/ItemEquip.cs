@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu (menuName = "Inventory/EquipItem")]
-public class ItemEquip : Item {
+[CreateAssetMenu (menuName = "Library/Equipment")]
+public class ItemEquip : ItemEntry {
 
 	public int attackModifier;      // Increase/decrease in damage
-	public int defenseModifier;		// Increase/decrease in armor
-
+	public int defenseModifier;		// Increase/decrease in defense
 
 	public int sAttackModifier;
 	public int sDefenseModifier;
+
+	// List of additional effects
 }

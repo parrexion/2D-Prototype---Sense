@@ -1,8 +1,13 @@
 ﻿using UnityEngine;
 
-[CreateAssetMenu(menuName="List ScrObj Variables/Item List Variable")]
-public class ItemListVariable : ScriptableObject {
-	public ItemEquip[] values;
+/// <summary>
+/// Representative list of inventory items.
+/// </summary>
+[CreateAssetMenu(menuName="List ScrObj Variables/Inventory List Variable")]
+public class InvListVariable : ScriptableObject {
+
+	// public ItemEntry.ItemType listType;
+	public ItemEntry[] values;
 
 	
 	/// <summary>
@@ -11,7 +16,7 @@ public class ItemListVariable : ScriptableObject {
 	/// </summary>
 	/// <param name="index"></param>
 	/// <returns></returns>
-	public ItemEquip GetItem(int index) {
+	public ItemEntry GetItem(int index) {
 		if (index >= values.Length || index < 0) {
 			Debug.Log("Index is out of bounds! " + index);
 			return null;
@@ -26,24 +31,24 @@ public class ItemListVariable : ScriptableObject {
 	/// </summary>
 	/// <param name="index"></param>
 	/// <returns></returns>
-	public ItemEquip GetItemByUuid(string uuid) {
+	public ItemEntry GetItemByUuid(string uuid) {
 		for (int i = 0; i < values.Length; i++) {
 			if (values[i].uuid == uuid){
 				return values[i];
 			}
 		}
 
-		Debug.Log("Failed to find item with uuid: " + uuid);
+		Debug.Log("Failed to find itemEntry with uuid: " + uuid);
 		return null;
 	}
 
-	// Saving and loading
-	
+	//Saving and loading
+
 	/// <summary>
 	/// Generates a list of uuids in order to save the list to file.
 	/// </summary>
 	/// <returns></returns>
-	public SaveListUuid GenerateItemData() {
+	public SaveListUuid GenerateSaveData() {
 		SaveListUuid saveData = new SaveListUuid();
 		int length = values.Length;
 		saveData.size = length;
@@ -62,10 +67,10 @@ public class ItemListVariable : ScriptableObject {
 	/// <param name="saveData"></param>
 	public void LoadItemData(SaveListUuid saveData) {
 		if (values.Length != saveData.size)
-			Debug.LogWarning("Something is wrong with the size of the itemlist.");
+			Debug.LogWarning("Something is wrong with the size of the kanjilist.");
 		for (int i = 0; i < saveData.size; i++) {
 			values[i] = GetItemByUuid((saveData.uuids[i] != null) ? saveData.uuids[i] : null);
 		}
-		Debug.Log("Loaded the item list.");
+		Debug.Log("Loaded the kanji list.");
 	}
 }

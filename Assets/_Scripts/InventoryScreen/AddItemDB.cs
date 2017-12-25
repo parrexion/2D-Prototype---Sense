@@ -8,15 +8,10 @@ using UnityEngine;
 /// </summary>
 public class AddItemDB : MonoBehaviour {
 
-	public Inventory inventory;
-	public KanjiListVariable kanjiList;
+	public InventoryHandler inventoryHandler;
 	public ItemListVariable itemList;
+	public KanjiListVariable kanjiList;
 
-
-	// Use this for initialization
-	void Start () {
-		inventory = Inventory.instance;
-	}
 
 	/// <summary>
 	/// Add the given kanji to the first open slot to either the equip or other inventory.
@@ -28,27 +23,27 @@ public class AddItemDB : MonoBehaviour {
 			Debug.LogWarning("Kanji index " + id + " does not exist!");
 			return;
 		}
-		ItemKanji item = kanjiList.GetKanji(id).extractKanjiInformation(id);
+		Kanji kanji = kanjiList.GetKanji(id);
 		bool added;
 		if (equip)
-			added = inventory.AddEquip(item);
+			added = inventoryHandler.AddEquip(kanji);
 		else
-			added = inventory.AddBag(item);
+			added = inventoryHandler.AddBag(kanji);
 		if (!added)
-			Destroy(item);
+			Debug.Log("No room left to add kanji.");
 	}
 
 	public void AddSpecificEquip(int id, bool equip){
 		if (id >= itemList.values.Length)
 			return;
-		ItemEquip item = ScriptableObject.Instantiate(itemList.values[id]);
+		ItemEquip item = itemList.GetItem(id);
 		bool added;
 		if (equip)
-			added = inventory.AddEquip(item);
+			added = inventoryHandler.AddEquip(item);
 		else
-			added = inventory.AddBag(item);
+			added = inventoryHandler.AddBag(item);
 		if (!added)
-			Destroy(item);
+			Debug.Log("No room left to add item.");
 	}
 
 	public void AddRandomKanji() {
