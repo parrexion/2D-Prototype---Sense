@@ -11,6 +11,7 @@ public class MenuScreenController : MonoBehaviour {
 
 	public MenuScreen currentScreen = MenuScreen.KANJI;
 	public bool isEditor = false;
+	bool menuLock = true;
 
 	[Header("Screens")]
 	public GameObject kanjiScreen;
@@ -31,12 +32,15 @@ public class MenuScreenController : MonoBehaviour {
 
 	[Header("Outside values")]
 	public StringVariable playerArea;
+	public FloatVariable fadeSpeed;
 
 	public UnityEvent buttonClickedEvent;
+	public UnityEvent fadeOutEvent;
 
 
 	// Use this for initialization
 	void Start () {
+		StartCoroutine(WaitForFadeIn());
 #if UNITY_EDITOR
 		isEditor = true;
 #else
@@ -52,6 +56,9 @@ public class MenuScreenController : MonoBehaviour {
 
 
 	public void SetCurrentScreen(int screenIndex) {
+		if (menuLock)
+			return;
+
 		buttonClickedEvent.Invoke();
 		MenuScreen screen = (MenuScreen)screenIndex;
 		if (currentScreen != screen) {
@@ -84,12 +91,32 @@ public class MenuScreenController : MonoBehaviour {
 	}
 
 	public void ReturnToGame() {
+		if (menuLock)
+			return;
+		
+		menuLock = true;
 		buttonClickedEvent.Invoke();
+		fadeOutEvent.Invoke();
+		StartCoroutine(WaitForFadeOut());
+	}
+
+	IEnumerator WaitForFadeIn() {
+		yield return new WaitForSeconds(fadeSpeed.value);
+		menuLock = false;
+		yield break;
+	}
+
+	IEnumerator WaitForFadeOut() {
+
+		yield return new WaitForSeconds(fadeSpeed.value);
+
 		if (playerArea.value == "Tower") {
             SceneManager.LoadScene((int)Constants.SCENE_INDEXES.BATTLETOWER);
         }
 		else {
 			SceneManager.LoadScene((int)Constants.SCENE_INDEXES.TUTORIAL);
 		}
+
+		yield break;
 	}
 }
