@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 public class LibraryEditorWindow : EditorWindow {
 
-	private enum State { BATTLE = 0, CHARACTER = 1, ENEMY = 2, BACKGROUND = 3 }
+	private enum State { BATTLE = 0, CHARACTER = 1, ENEMY = 2, BACKGROUND = 3, ITEMEQUIP = 4 }
 
 	// Header
 	Rect headerRect = new Rect();
@@ -29,8 +29,12 @@ public class LibraryEditorWindow : EditorWindow {
 	public ScrObjLibraryVariable backgroundLibrary;
 	public BackgroundEntry backgroundContainer;
 
+	public ItemEquipEditorWindow itemEquipEditor;
+	public ScrObjLibraryVariable itemEquipLibrary;
+	public ItemEquip itemEquipContainer;
+
 	private int currentWindow = (int)State.CHARACTER;
-	private string[] toolbarStrings = new string[] {"Battles", "Characters", "Enemies", "Background"};
+	private string[] toolbarStrings = new string[] {"Battles", "Characters", "Enemies", "Background", "Items"};
 
 
 	[MenuItem("Window/LibraryEditor")]
@@ -64,6 +68,9 @@ public class LibraryEditorWindow : EditorWindow {
 			case State.BACKGROUND:
 				backgroundEditor.DrawWindow();
 				break;
+			case State.ITEMEQUIP:
+				itemEquipEditor.DrawWindow();
+				break;
 		}
 	}
 
@@ -90,6 +97,8 @@ public class LibraryEditorWindow : EditorWindow {
 
 		backgroundEditor = new BackgroundEditorWindow(backgroundLibrary, backgroundContainer);
 
+		itemEquipEditor = new ItemEquipEditorWindow(itemEquipLibrary, itemEquipContainer);
+
 		InitializeWindow();
 	}
 
@@ -105,6 +114,7 @@ public class LibraryEditorWindow : EditorWindow {
 		characterEditor.InitializeWindow();
 		enemyEditor.InitializeWindow();
 		backgroundEditor.InitializeWindow();
+		itemEquipEditor.InitializeWindow();
 	}
 
 	void DrawHeader() {

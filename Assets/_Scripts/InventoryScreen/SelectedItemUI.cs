@@ -9,6 +9,7 @@ using UnityEngine.UI;
 public class SelectedItemUI : MonoBehaviour {
 
 	public Transform[] statsTextList;
+	public Transform[] modifierTextList;
 
 	//Player stats
 	public IntVariable playerAttack;
@@ -25,6 +26,8 @@ public class SelectedItemUI : MonoBehaviour {
 	public Text itemName;
 	private Text[] changes;
 	public Image itemIcon;
+	private Text[] modifiers;
+	private int effectSize;
 
 
 	void Start () {
@@ -40,9 +43,14 @@ public class SelectedItemUI : MonoBehaviour {
 			changes[i] = t[2];
 //			names[i].text = "name";
 			values[i].text = i.ToString();
-			changes[i].text = "+0";
+			changes[i].text = "";
 		}
 
+		modifiers = new Text[modifierTextList.Length];
+		for (int i = 0; i < modifierTextList.Length; i++) {
+			modifiers[i] = modifierTextList[i].GetComponent<Text>();
+			modifiers[i].text = "";
+		}
 	}
 
 	void OnEnable() {
@@ -60,18 +68,25 @@ public class SelectedItemUI : MonoBehaviour {
 	void UpdateValues(){
 		values[0].text = playerAttack.value.ToString();
 		values[1].text = playerDefense.value.ToString();
-		values[2].text = playerAttack.value.ToString();
+		values[2].text = playerSAttack.value.ToString();
 		values[3].text = playerSDefense.value.ToString();
 
 		if (selectedItem.reference != null) {
 			currentItem = (ItemEquip)selectedItem.reference;
 			itemName.text = currentItem.entryName;
-			changes[0].text = "+" + currentItem.attackModifier.ToString();
-			changes[1].text = "+" + currentItem.defenseModifier.ToString();
-			changes[2].text = "+" + currentItem.sAttackModifier.ToString();
-			changes[3].text = "+" + currentItem.sDefenseModifier.ToString();
 			itemIcon.sprite = currentItem.icon;
+			itemIcon.color = currentItem.tintColor;
 			itemIcon.enabled = true;
+			
+			changes[0].text = (currentItem.attackModifier != 0) ? "+" + currentItem.attackModifier.ToString() : "";
+			changes[1].text = (currentItem.defenseModifier != 0) ? "+" + currentItem.defenseModifier.ToString() : "";
+			changes[2].text = (currentItem.sAttackModifier != 0) ? "+" + currentItem.sAttackModifier.ToString() : "";
+			changes[3].text = (currentItem.sDefenseModifier != 0) ? "+" + currentItem.sDefenseModifier.ToString() : "";
+
+			effectSize = Mathf.Min(3,currentItem.percentModifiers.Count);
+			for (int i = 0; i < 3; i++) {
+				modifiers[i].text = (i < effectSize) ? currentItem.percentModifiers[i].GetEffectString() : "";
+			}
 		}
 		else {
 			itemName.text = "";
@@ -80,6 +95,9 @@ public class SelectedItemUI : MonoBehaviour {
 			changes[2].text = "";
 			changes[3].text = "";
 			itemIcon.enabled = false;
+			modifiers[0].text = "";
+			modifiers[1].text = "";
+			modifiers[2].text = "";
 		}
 	}
 }

@@ -28,6 +28,11 @@ public class PlayerStats : MonoBehaviour {
 	public IntVariable playerDefense;
 	public IntVariable playerSAttack;
 	public IntVariable playerSDefense;
+	// Internal representation
+	private float _playerAttack;
+	private float _playerDefense;
+	private float _playerSAttack;
+	private float _playerSDefense;
 
 	[Header("Battle Values")]
 	public FloatVariable spiritDamageTaken;
@@ -52,10 +57,10 @@ public class PlayerStats : MonoBehaviour {
 	/// Resets the player's stats.
 	/// </summary>
 	void ResetPlayerStats() {
-		playerAttack.value = 0;
-		playerDefense.value = 0;
-		playerSAttack.value = 0;
-		playerSDefense.value = 0;
+		_playerAttack = 0;
+		_playerDefense = 0;
+		_playerSAttack = 0;
+		_playerSDefense = 0;
 	}
 
 	/// <summary>
@@ -66,16 +71,53 @@ public class PlayerStats : MonoBehaviour {
 		
 		ResetPlayerStats();
 
-		for (int i = 0; i < invItemEquip.values.Length; i++)
-		{
+		// Start by adding upp all base stats
+		for (int i = 0; i < invItemEquip.values.Length; i++) {
 			ItemEquip item = (ItemEquip)invItemEquip.values[i];
 			if (item == null)
 				continue;
 
-			playerAttack.value += item.attackModifier;
-			playerDefense.value += item.defenseModifier;
-			playerSAttack.value += item.sAttackModifier;
-			playerSDefense.value += item.sDefenseModifier;
+			_playerAttack += item.attackModifier;
+			_playerDefense += item.defenseModifier;
+			_playerSAttack += item.sAttackModifier;
+			_playerSDefense += item.sDefenseModifier;
+		}
+
+		// Add percent modifiers
+		for (int i = 0; i < invItemEquip.values.Length; i++) {
+			ItemEquip item = (ItemEquip)invItemEquip.values[i];
+			if (item == null)
+				continue;
+
+			for (int mod = 0; mod < item.percentModifiers.Count; mod++) {
+				AddPercentValue(item.percentModifiers[mod].affectedStat, item.percentModifiers[mod].percentValue);
+			}
+		}
+
+		// Apply changes
+		playerAttack.value = (int)(_playerAttack + 0.5f);
+		playerDefense.value = (int)(_playerDefense + 0.5f);
+		playerSAttack.value = (int)(_playerSAttack + 0.5f);
+		playerSDefense.value = (int)(_playerSDefense + 0.5f);
+	}
+
+	void AddPercentValue(StatsPercentModifier.Stat stat, float multiplier) {
+		switch(stat)
+		{
+			case StatsPercentModifier.Stat.ATTACK:
+				_playerAttack *= multiplier;
+				break;
+			case StatsPercentModifier.Stat.DEFENSE:
+				_playerDefense *= multiplier;
+				break;
+
+
+			case StatsPercentModifier.Stat.SATTACK:
+				_playerSAttack *= multiplier;
+				break;
+			case StatsPercentModifier.Stat.SDEFENSE:
+				_playerSDefense *= multiplier;
+				break;
 		}
 	}
 }

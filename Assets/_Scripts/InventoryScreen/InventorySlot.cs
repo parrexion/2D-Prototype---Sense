@@ -41,6 +41,7 @@ public class InventorySlot : MonoBehaviour {
 		item = newItem;
 
 		icon.sprite = item.icon;
+		icon.color = item.tintColor;
 		icon.enabled = true;
 	}
 	

@@ -53,7 +53,7 @@ public class BackgroundEditorWindow {
 		selectTex.Apply();
 
 		dispTex = new Texture2D(1, 1);
-		dispTex.SetPixel(0, 0, new Color(0.8f, 0.5f, 0.2f));
+		dispTex.SetPixel(0, 0, new Color(0.8f, 0.5f, 0.8f));
 		dispTex.Apply();
 
 		dispOffset.right = 10;
