@@ -144,10 +144,15 @@ public class ItemEquipEditorWindow {
 		itemValues.icon = (Sprite)EditorGUILayout.ObjectField("Item Icon", itemValues.icon, typeof(Sprite),false);
 		itemValues.tintColor = EditorGUILayout.ColorField("Item Tint Color", itemValues.tintColor);
 
+		GUILayout.Space(5);
+
+		itemValues.moneyValue = EditorGUILayout.IntField("Money Value", itemValues.moneyValue);
+
 		GUILayout.Space(20);
 
 		//Base Stats
 EditorGUIUtility.labelWidth = 150;
+		itemValues.healthModifier = EditorGUILayout.IntField("Health modifier", itemValues.healthModifier);
 		itemValues.attackModifier = EditorGUILayout.IntField("Attack modifier", itemValues.attackModifier);
 		itemValues.defenseModifier = EditorGUILayout.IntField("Defense modifier", itemValues.defenseModifier);
 		itemValues.sAttackModifier = EditorGUILayout.IntField("Spirit Attack modifier", itemValues.sAttackModifier);
@@ -156,12 +161,6 @@ EditorGUIUtility.labelWidth = 100;
 
 		//Percent Modifiers
 		GUILayout.Label("Percent Modifiers", EditorStyles.boldLabel);
-
-		// var serializedObject = new SerializedObject(itemValues);
-        // var property = serializedObject.FindProperty("percentModifiers");
-        // serializedObject.Update();
-        // EditorGUILayout.PropertyField(property, true);
-        // serializedObject.ApplyModifiedProperties();
 
 		if (GUILayout.Button("Add percent modifier")) {
 			itemValues.percentModifiers.Add(new StatsPercentModifier());

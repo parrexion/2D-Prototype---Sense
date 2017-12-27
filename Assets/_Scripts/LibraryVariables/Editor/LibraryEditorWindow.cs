@@ -6,11 +6,13 @@ using System.Collections.Generic;
 
 public class LibraryEditorWindow : EditorWindow {
 
-	private enum State { BATTLE = 0, CHARACTER = 1, ENEMY = 2, BACKGROUND = 3, ITEMEQUIP = 4 }
+	private enum State { BATTLE = 0, CHARACTER = 1, ENEMY = 2, BACKGROUND = 3, ITEMEQUIP = 4, KANJI = 5 }
 
 	// Header
 	Rect headerRect = new Rect();
 	Texture2D headerTex;
+
+	public IntVariable currentWindow;
 
 	public BattleEditorWindow battleEditor;
 	public ScrObjLibraryVariable battleLibrary;
@@ -33,8 +35,11 @@ public class LibraryEditorWindow : EditorWindow {
 	public ScrObjLibraryVariable itemEquipLibrary;
 	public ItemEquip itemEquipContainer;
 
-	private int currentWindow = (int)State.CHARACTER;
-	private string[] toolbarStrings = new string[] {"Battles", "Characters", "Enemies", "Background", "Items"};
+	public KanjiEditorWindow kanjiEditor;
+	public ScrObjLibraryVariable kanjiLibrary;
+	public Kanji kanjiContainer;
+
+	private string[] toolbarStrings = new string[] {"Battles", "Characters", "Enemies", "Background", "Items", "Kanji"};
 
 
 	[MenuItem("Window/LibraryEditor")]
@@ -54,7 +59,7 @@ public class LibraryEditorWindow : EditorWindow {
 	void OnGUI() {
 		DrawHeader();
 		
-		switch ((State)currentWindow)
+		switch ((State)currentWindow.value)
 		{
 			case State.BATTLE:
 				battleEditor.DrawWindow();
@@ -70,6 +75,9 @@ public class LibraryEditorWindow : EditorWindow {
 				break;
 			case State.ITEMEQUIP:
 				itemEquipEditor.DrawWindow();
+				break;
+			case State.KANJI:
+				kanjiEditor.DrawWindow();
 				break;
 		}
 	}
@@ -99,6 +107,8 @@ public class LibraryEditorWindow : EditorWindow {
 
 		itemEquipEditor = new ItemEquipEditorWindow(itemEquipLibrary, itemEquipContainer);
 
+		kanjiEditor = new KanjiEditorWindow(kanjiLibrary, kanjiContainer);
+
 		InitializeWindow();
 	}
 
@@ -115,6 +125,7 @@ public class LibraryEditorWindow : EditorWindow {
 		enemyEditor.InitializeWindow();
 		backgroundEditor.InitializeWindow();
 		itemEquipEditor.InitializeWindow();
+		kanjiEditor.InitializeWindow();
 	}
 
 	void DrawHeader() {
@@ -124,6 +135,6 @@ public class LibraryEditorWindow : EditorWindow {
 		headerRect.height = 50;
 		GUI.DrawTexture(headerRect, headerTex);
 
-		currentWindow = GUILayout.Toolbar(currentWindow, toolbarStrings);
+		currentWindow.value = GUILayout.Toolbar(currentWindow.value, toolbarStrings);
 	}
 }

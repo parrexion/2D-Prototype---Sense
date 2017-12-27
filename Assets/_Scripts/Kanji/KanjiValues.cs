@@ -9,10 +9,19 @@ public class KanjiValues {
 		CLICK,SLASH,RISE,HOLD,DOWN,OTHER
 	}
 
-	[Header("GUI graphics")]
-	public string kanjiName = "";
-	public Sprite icon;
+	[Header("Usage values")]
+	public float startCooldownTime = 0f;
+	public int maxCharges = 10;
+	public float delay = 0.1f;
+	public float cooldown = 5.0f;
+
+	[Space(10)]
+
+	[Header("Activation requirements")]
 	public KanjiType kanjiType;
+	public float area = 1.0f; 
+	public float holdMin = -1f;
+	public float holdMax = 0.5f;
 
 	[Space(10)]
 
@@ -20,22 +29,52 @@ public class KanjiValues {
 	public Transform projectile;
 	public Transform effect;
 	public Vector2 projectileSpeed;
-	public float projectileLifetime;
+	public float projectileLifetime = 1f;
 
 	[Space(10)]
 
-	[Header("Kanji values")]
-	public float startCooldownTime = 0f;
-	public int maxCharges = 10;
-	public float delay = 0.1f;
-	public float cooldown = 5.0f;
-	public int damage = 10;
+	[Header("Damage")]
+	public int damage = 0;
 	public float baseDamageScale = 1.0f;
 
-	[Space(10)]
 
-	[Header("Activation requirements")]
-	public float area = 1.0f; 
-	public float holdMin = -1f;
-	public float holdMax = 0.5f;
+	public void ResetValues() {
+		startCooldownTime = 0;
+		maxCharges = 10;
+		delay = 0.1f;
+		cooldown = 5f;
+
+		kanjiType = KanjiType.OTHER;
+		area = 1.0f;
+		holdMin = -1f;
+		holdMax = 0.5f;
+
+		projectile = null;
+		effect = null;
+		projectileSpeed = Vector2.zero;
+		projectileLifetime = 1f;
+
+		damage = 0;
+		baseDamageScale = 1f;
+	}
+
+	public void CopyValues(KanjiValues other) {
+		startCooldownTime = other.startCooldownTime;
+		maxCharges = other.maxCharges;
+		delay = other.delay;
+		cooldown = other.cooldown;
+
+		kanjiType = other.kanjiType;
+		area = other.area;
+		holdMin = other.holdMin;
+		holdMax = other.holdMax;
+
+		projectile = other.projectile;
+		effect = other.effect;
+		projectileSpeed = other.projectileSpeed;
+		projectileLifetime = other.projectileLifetime;
+
+		damage = other.damage;
+		baseDamageScale = other.baseDamageScale;
+	}
 }

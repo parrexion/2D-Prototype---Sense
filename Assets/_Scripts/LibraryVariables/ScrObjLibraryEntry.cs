@@ -44,12 +44,12 @@ public class ScrObjLibraryEntry : ScriptableObject {
 		return content;
 	}
 
-	Texture2D GenerateRandomColor() {
+	protected Texture2D GenerateRandomColor() {
 		Color c = Random.ColorHSV(0f, 1f, 1f, 1f, 0.5f, 1f);
 		return GenerateColorTexture(c);
 	}
 
-	public Texture2D GenerateColorTexture(Color c) {
+	protected Texture2D GenerateColorTexture(Color c) {
 		int size = 32;
 		Texture2D tex = new Texture2D(size,size);
 		for (int i = 0; i < size; i++) {

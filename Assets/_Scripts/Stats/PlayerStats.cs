@@ -23,12 +23,14 @@ public class PlayerStats : MonoBehaviour {
 	#endregion
 
 	[Header("Player Stats")]
+	public IntVariable playerLevel;
 	public IntVariable playerMaxHealth;
 	public IntVariable playerAttack;
 	public IntVariable playerDefense;
 	public IntVariable playerSAttack;
 	public IntVariable playerSDefense;
 	// Internal representation
+	private float _playerMaxHealth;
 	private float _playerAttack;
 	private float _playerDefense;
 	private float _playerSAttack;
@@ -57,10 +59,15 @@ public class PlayerStats : MonoBehaviour {
 	/// Resets the player's stats.
 	/// </summary>
 	void ResetPlayerStats() {
+		_playerMaxHealth = 0;
 		_playerAttack = 0;
 		_playerDefense = 0;
 		_playerSAttack = 0;
 		_playerSDefense = 0;
+	}
+
+	void CalculateBaseHealth() {
+		_playerMaxHealth = Constants.PLAYER_HEALTH_BASE + playerLevel.value * Constants.PLAYER_HEALTH_SCALE;
 	}
 
 	/// <summary>
@@ -77,6 +84,7 @@ public class PlayerStats : MonoBehaviour {
 			if (item == null)
 				continue;
 
+			_playerMaxHealth += item.healthModifier;
 			_playerAttack += item.attackModifier;
 			_playerDefense += item.defenseModifier;
 			_playerSAttack += item.sAttackModifier;
@@ -95,6 +103,7 @@ public class PlayerStats : MonoBehaviour {
 		}
 
 		// Apply changes
+		playerMaxHealth.value = (int)(_playerMaxHealth + 0.5f);
 		playerAttack.value = (int)(_playerAttack + 0.5f);
 		playerDefense.value = (int)(_playerDefense + 0.5f);
 		playerSAttack.value = (int)(_playerSAttack + 0.5f);

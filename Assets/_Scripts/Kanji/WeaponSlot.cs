@@ -11,10 +11,10 @@ public class WeaponSlot : MonoBehaviour {
 	public FloatVariable slowAmount;
 
 	[Header("Libraries")]
-	public KanjiListVariable kanjiList;
+	public ScrObjLibraryVariable kanjiLibrary;
 	public ScrObjLibraryVariable battleLibrary;
 	public StringVariable battleUuid;
-	public KanjiListVariable invKanjiEquip;
+	public InvListVariable invKanjiEquip;
 
 	[Header("Player")]
 	public IntVariable playerAttack;
@@ -86,7 +86,7 @@ public class WeaponSlot : MonoBehaviour {
 				kanji[i].kanji = be.equippedKanji[i];
 			}
 			else {
-				kanji[i].kanji = invKanjiEquip.values[i];
+				kanji[i].kanji = (Kanji)invKanjiEquip.values[i];
 			}
 			
 			kanji[i].Initialize(i);
@@ -120,7 +120,7 @@ public class WeaponSlot : MonoBehaviour {
 				kanji[i].slotFilled.y = Screen.height*kanjiHeight+size-kanji[i].slotFilled.height;
 				GUI.DrawTexture(kanji[i].slotFilled,filledSprite);
 			}
-			GUI.DrawTexture(kanji[i].slotPos,kanji[i].GetValues().icon.texture);
+			GUI.DrawTexture(kanji[i].slotPos,kanji[i].kanji.icon.texture);
 		}
 	}
 

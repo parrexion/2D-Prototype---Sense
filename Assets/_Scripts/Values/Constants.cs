@@ -38,11 +38,15 @@ public static class Constants {
 	public const float kanjiGuiOffsetWidth = 0.55f;
 	public const float kanjiGuiOffsetHeight = 0.05f;
 
-	//Inventory limits
+	//Inventory
 	public const int gearEquipSpace = 4;
 	public const int gearBagSpace = 20;
 	public const int kanjiEquipSpace = 4;
 	public const int kanjiBagSpace = 20;
+
+	//Player stats
+	public const int PLAYER_HEALTH_BASE = 100;
+	public const int PLAYER_HEALTH_SCALE = 30;
 
 	//Enum for all the scenes
 	public enum SCENE_INDEXES {
