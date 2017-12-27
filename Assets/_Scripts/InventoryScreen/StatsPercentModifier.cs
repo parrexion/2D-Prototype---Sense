@@ -5,7 +5,7 @@ using UnityEngine;
 [System.Serializable]
 public class StatsPercentModifier {
 
-	public enum Stat {ATTACK = 0, DEFENSE = 1, SATTACK = 100, SDEFENSE = 101}
+	public enum Stat {ATTACK = 0, DEFENSE = 1, MAXHEALTH = 2, SATTACK = 100, SDEFENSE = 101}
 	public Stat affectedStat = Stat.ATTACK;
 	public float percentValue = 1;
 	public float percentDiff = 0;

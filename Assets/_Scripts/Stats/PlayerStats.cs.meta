@@ -1,11 +1,12 @@
 fileFormatVersion: 2
 guid: e4fa34faef0226345b1e64f57b86d69c
-timeCreated: 1513890137
+timeCreated: 1514408794
 licenseType: Free
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
   defaultReferences:
+  - playerLevel: {fileID: 11400000, guid: 68490c0991dd89d408ac266cc145346c, type: 2}
   - playerMaxHealth: {fileID: 11400000, guid: 659da0c044e21214d80524b89c1c6bfa, type: 2}
   - playerAttack: {fileID: 11400000, guid: 347591f73a548254c98504e2242ad27c, type: 2}
   - playerDefense: {fileID: 11400000, guid: 6bff1a6c6cf74bd4a994bb9cb17ee121, type: 2}
@@ -18,6 +19,10 @@ MonoImporter:
   - playerArea: {fileID: 11400000, guid: 85d0d031c5d3fc545bf12dbe74cd1b87, type: 2}
   - playerPosX: {fileID: 11400000, guid: 0eca8d82750de4c4981212018d942288, type: 2}
   - playerPosY: {fileID: 11400000, guid: 309179cbb9cd2f0458e68543f41dc12e, type: 2}
+  - invItemEquip: {fileID: 11400000, guid: 600d6dd306190bc4588513d92b7f6797, type: 2}
+  - invItemBag: {fileID: 11400000, guid: e8837df1d61a0e4498fecb381ee003d1, type: 2}
+  - invKanjiEquip: {fileID: 11400000, guid: 6fa43164a3770fe4fbbb6e4474ee7d74, type: 2}
+  - invKanjiBag: {fileID: 11400000, guid: 0d685bba9557fe74fa982b82380bc10a, type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

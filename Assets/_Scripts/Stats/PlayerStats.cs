@@ -59,7 +59,7 @@ public class PlayerStats : MonoBehaviour {
 	/// Resets the player's stats.
 	/// </summary>
 	void ResetPlayerStats() {
-		_playerMaxHealth = 0;
+		CalculateBaseHealth();
 		_playerAttack = 0;
 		_playerDefense = 0;
 		_playerSAttack = 0;
@@ -118,6 +118,9 @@ public class PlayerStats : MonoBehaviour {
 				break;
 			case StatsPercentModifier.Stat.DEFENSE:
 				_playerDefense *= multiplier;
+				break;
+			case StatsPercentModifier.Stat.MAXHEALTH:
+				_playerMaxHealth *= multiplier;
 				break;
 
 

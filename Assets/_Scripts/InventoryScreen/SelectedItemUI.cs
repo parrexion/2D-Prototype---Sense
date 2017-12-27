@@ -12,6 +12,7 @@ public class SelectedItemUI : MonoBehaviour {
 	public Transform[] modifierTextList;
 
 	//Player stats
+	public IntVariable playerHealth;
 	public IntVariable playerAttack;
 	public IntVariable playerDefense;
 	public IntVariable playerSAttack;
@@ -66,10 +67,11 @@ public class SelectedItemUI : MonoBehaviour {
 	/// Updates the information text of the currently selected item.
 	/// </summary>
 	void UpdateValues(){
-		values[0].text = playerAttack.value.ToString();
-		values[1].text = playerDefense.value.ToString();
-		values[2].text = playerSAttack.value.ToString();
-		values[3].text = playerSDefense.value.ToString();
+		values[0].text = playerHealth.value.ToString();
+		values[1].text = playerAttack.value.ToString();
+		values[2].text = playerDefense.value.ToString();
+		values[3].text = playerSAttack.value.ToString();
+		values[4].text = playerSDefense.value.ToString();
 
 		if (selectedItem.reference != null) {
 			currentItem = (ItemEquip)selectedItem.reference;
@@ -78,10 +80,11 @@ public class SelectedItemUI : MonoBehaviour {
 			itemIcon.color = currentItem.tintColor;
 			itemIcon.enabled = true;
 			
-			changes[0].text = (currentItem.attackModifier != 0) ? "+" + currentItem.attackModifier.ToString() : "";
-			changes[1].text = (currentItem.defenseModifier != 0) ? "+" + currentItem.defenseModifier.ToString() : "";
-			changes[2].text = (currentItem.sAttackModifier != 0) ? "+" + currentItem.sAttackModifier.ToString() : "";
-			changes[3].text = (currentItem.sDefenseModifier != 0) ? "+" + currentItem.sDefenseModifier.ToString() : "";
+			changes[0].text = (currentItem.healthModifier != 0) ? "+" + currentItem.healthModifier.ToString() : "";
+			changes[1].text = (currentItem.attackModifier != 0) ? "+" + currentItem.attackModifier.ToString() : "";
+			changes[2].text = (currentItem.defenseModifier != 0) ? "+" + currentItem.defenseModifier.ToString() : "";
+			changes[3].text = (currentItem.sAttackModifier != 0) ? "+" + currentItem.sAttackModifier.ToString() : "";
+			changes[4].text = (currentItem.sDefenseModifier != 0) ? "+" + currentItem.sDefenseModifier.ToString() : "";
 
 			effectSize = Mathf.Min(3,currentItem.percentModifiers.Count);
 			for (int i = 0; i < 3; i++) {
@@ -94,6 +97,7 @@ public class SelectedItemUI : MonoBehaviour {
 			changes[1].text = "";
 			changes[2].text = "";
 			changes[3].text = "";
+			changes[4].text = "";
 			itemIcon.enabled = false;
 			modifiers[0].text = "";
 			modifiers[1].text = "";
