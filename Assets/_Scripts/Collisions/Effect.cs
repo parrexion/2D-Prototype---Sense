@@ -18,20 +18,21 @@ public class Effect : MonoBehaviour {
 	public bool leftSideEffect;
 
 	[HideInInspector] public float lifeTime = 1f;
-	private float currentTime = 0f;
+	protected float currentTime = 0f;
 
 
 	/// <summary>
 	/// Update the current lifetime of the effect.
 	/// </summary>
-	void Update() {
+	protected virtual void Update() {
 		if (paused.value)
 			return;
 
 		currentTime += (canBeSlowed.value && slowLeftSide.value == leftSideEffect) ? (Time.deltaTime * slowAmount.value) : Time.deltaTime;
 
-		if (currentTime >= lifeTime)
+		if (currentTime >= lifeTime){
 			Destroy(gameObject);
+		}
 	}
 
 	/// <summary>

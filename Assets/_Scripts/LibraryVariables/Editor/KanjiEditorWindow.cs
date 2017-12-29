@@ -210,15 +210,15 @@ EditorGUIUtility.labelWidth = 100;
 	void DrawEffectPart() {
 		//Damage
 		GUILayout.Label("Damage", EditorStyles.boldLabel);
-		kv.damage = EditorGUILayout.IntField("Base Damage", kv.damage);;
+		kv.damage = EditorGUILayout.IntField("Base Damage", kv.damage);
 		kv.baseDamageScale = EditorGUILayout.FloatField("Additional Damage Scale", kv.baseDamageScale);
+		kv.multihit = EditorGUILayout.Toggle("Multi Hit", kv.multihit);
 
 		GUILayout.Space(10);
 
 		//Projectile
 		GUILayout.Label("Projectile", EditorStyles.boldLabel);
 		kv.projectile = (Transform)EditorGUILayout.ObjectField("Projectile Object", kv.projectile, typeof(Transform),false);
-		kv.effect = (Transform)EditorGUILayout.ObjectField("Effect Object", kv.effect, typeof(Transform),false);
 		kv.projectileSpeed = EditorGUILayout.Vector2Field("Projectile Speed", kv.projectileSpeed);
 		kv.projectileLifetime = EditorGUILayout.FloatField("Projectile Lifetime", kv.projectileLifetime);
 

@@ -7,10 +7,10 @@ public class AttackScript : MonoBehaviour {
 	[HideInInspector] public BattleGUIController bgui;
 	public AttackEffect[] projectileEffect;
 	public Transform projectile;
-	public Transform effect;
 	public int damage;
 	public float lifeTime;
 	public Vector2 speed;
+	public bool multihit = true;
 
 
 	void Start() {

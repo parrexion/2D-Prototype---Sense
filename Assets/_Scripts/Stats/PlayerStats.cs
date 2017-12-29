@@ -23,7 +23,6 @@ public class PlayerStats : MonoBehaviour {
 	#endregion
 
 	[Header("Player Stats")]
-	public IntVariable playerLevel;
 	public IntVariable playerMaxHealth;
 	public IntVariable playerAttack;
 	public IntVariable playerDefense;
@@ -45,11 +44,17 @@ public class PlayerStats : MonoBehaviour {
 	public FloatVariable playerPosX;
 	public FloatVariable playerPosY;
 
+	[Header("Level")]
+	public IntVariable playerLevel;
+	public IntVariable expTotal;
+
 	[Header("Inventory")]
+	public IntVariable money;
 	public InvListVariable invItemEquip;
 	public InvListVariable invItemBag;
 	public InvListVariable invKanjiEquip;
 	public InvListVariable invKanjiBag;
+
 
 	void Start() {
 		RecalculateStats();

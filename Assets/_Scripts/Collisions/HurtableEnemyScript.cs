@@ -41,15 +41,10 @@ public class HurtableEnemyScript : MonoBehaviour {
 		if (projectile.isEnemy)
 			return;
 
-		if (projectile.hitEnemies.Contains(group.enemyId))
+		if (!projectile.AddHitID(group.enemyId))
 			return;
 
 		group.TakeDamage(projectile.damage);
-		projectile.hitEnemies.Add(group.enemyId);
-
-		if (projectile.maxHits != -1 && projectile.hitEnemies.Count >= projectile.maxHits) {
-			Destroy(projectile.gameObject);
-		}
 
 		Transform t = Instantiate(damageNumbers);
 		t.position = transform.position;

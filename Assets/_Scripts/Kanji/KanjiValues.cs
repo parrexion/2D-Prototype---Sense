@@ -27,7 +27,6 @@ public class KanjiValues {
 
 	[Header("Projectile")]
 	public Transform projectile;
-	public Transform effect;
 	public Vector2 projectileSpeed;
 	public float projectileLifetime = 1f;
 
@@ -36,6 +35,7 @@ public class KanjiValues {
 	[Header("Damage")]
 	public int damage = 0;
 	public float baseDamageScale = 1.0f;
+	public bool multihit = true;
 
 
 	public void ResetValues() {
@@ -50,12 +50,12 @@ public class KanjiValues {
 		holdMax = 0.5f;
 
 		projectile = null;
-		effect = null;
 		projectileSpeed = Vector2.zero;
 		projectileLifetime = 1f;
 
 		damage = 0;
 		baseDamageScale = 1f;
+		multihit = true;
 	}
 
 	public void CopyValues(KanjiValues other) {
@@ -70,11 +70,11 @@ public class KanjiValues {
 		holdMax = other.holdMax;
 
 		projectile = other.projectile;
-		effect = other.effect;
 		projectileSpeed = other.projectileSpeed;
 		projectileLifetime = other.projectileLifetime;
 
 		damage = other.damage;
 		baseDamageScale = other.baseDamageScale;
+		multihit = other.multihit;
 	}
 }

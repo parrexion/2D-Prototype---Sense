@@ -221,7 +221,9 @@ public class SpiritGridController : MonoBehaviour {
 				continue;
 
 			Transform shotTransform = Instantiate(starProjectile) as Transform;
-			shotTransform.GetComponent<Projectile>().damage = dv.GetDamage();
+			Projectile projectile = shotTransform.GetComponent<Projectile>();
+			projectile.damage = dv.GetDamage();
+			projectile.multiHit = true;
 			shotTransform.position = dv.entityHit.position;
 
 			shotTransform = Instantiate(starEffect) as Transform;
@@ -246,7 +248,6 @@ public class SpiritGridController : MonoBehaviour {
 		else if (grid.lastDirection == Constants.Direction.RIGHT) {
 			dmgs = battleController.enemyController.GetRandomEnemies(combo,15,true,false);
 		}
-//		Debug.Log("Combo: "+combo);
 
 		foreach (DamageValues dv in dmgs) {
 			Transform enemy = dv.entityHit;
@@ -265,7 +266,7 @@ public class SpiritGridController : MonoBehaviour {
 		var barrierTransform = Instantiate(barrier) as Transform;
 		barrierTransform.SetParent(transform.parent);
 		barrierTransform.localPosition = transform.localPosition;
-		ProjectileEffect effect = barrierTransform.GetComponent<ProjectileEffect>();
+		Projectile effect = barrierTransform.GetComponent<Projectile>();
 		blockTime = effect.lifeTime;
 		currentBlockTime = 0;
 		hurtScript.canBeHurt = false;

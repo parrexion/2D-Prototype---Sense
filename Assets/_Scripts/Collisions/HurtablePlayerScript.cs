@@ -32,7 +32,8 @@ public class HurtablePlayerScript : HurtableBaseScript {
 		}
 
 		if (projectile.isEnemy) {
-			Destroy(projectile.gameObject);
+			if (!projectile.AddHitID(0))
+				return;
 
 			if (!canBeHurt)
 				return;

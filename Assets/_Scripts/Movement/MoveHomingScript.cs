@@ -64,7 +64,7 @@ public class MoveHomingScript : MonoBehaviour {
 		if (paused.value)
 			return;
 
-		float time = (canBeSlowed.value && !slowLeftSide.value) ? (Time.fixedDeltaTime * slowAmount.value) : Time.deltaTime;
+		float time = (canBeSlowed.value && !slowLeftSide.value) ? (Time.fixedDeltaTime * slowAmount.value) : Time.fixedDeltaTime;
 
 		if (objectToFollow == null) {
 			if (dashing) {

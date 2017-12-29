@@ -18,6 +18,7 @@ public class EffectSingleProjectileMouseDirection : KanjiEffect {
 		}
 
 		projectile.lifeTime = values.projectileLifetime;
+		projectile.multiHit = values.multihit;
 		projectile.SetDamage(values.damage, attackValue, values.baseDamageScale);
 		projectile.SetMovement(values.projectileSpeed, info.rotationPlayer);
 
