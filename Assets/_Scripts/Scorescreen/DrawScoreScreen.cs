@@ -54,8 +54,8 @@ public class DrawScoreScreen : BasicGUIButtons {
 			healthText.text = "";
 		}
 		else {
-			float currentHealth = playerMaxHealth.value - (playerNormalDamage.value + playerSpiritDamage.value);
-			healthText.text = "Health left:    "+((currentHealth)/(playerMaxHealth.value) * 100) + "%";
+			float currentHealth = playerMaxHealth.value + (playerNormalDamage.value + playerSpiritDamage.value);
+			healthText.text = "Health left:    "+((currentHealth)/(playerMaxHealth.value) * 100).ToString("F2") + "%";
 		}
 		if (wonBattleState.value == "win") {
 			noEnemiesText.text = "Enemies defeated:   " + enemiesFought.value;

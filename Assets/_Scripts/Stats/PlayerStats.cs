@@ -55,9 +55,30 @@ public class PlayerStats : MonoBehaviour {
 	public InvListVariable invKanjiEquip;
 	public InvListVariable invKanjiBag;
 
+	[Header("Time")]
+	public IntVariable ingameDay;
+	public StringVariable playTime;
+	public IntVariable playedSeconds;
+	private int _seconds;
+	private int _minutes;
+	private int _hours;
+
 
 	void Start() {
+		StartCoroutine(CountPlayTime());
 		RecalculateStats();
+	}
+
+	IEnumerator CountPlayTime() {
+        while (true)
+        {
+            yield return new WaitForSeconds(1);
+            playedSeconds.value ++;
+            _seconds = (playedSeconds.value % 60);
+            _minutes = (playedSeconds.value / 60) % 60;
+            _hours = (playedSeconds.value / 3600);
+			playTime.value = string.Format("{0} : {1:D2} : {2:D2}",_hours, _minutes, _seconds);
+        }
 	}
 
 	/// <summary>

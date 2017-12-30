@@ -7,13 +7,14 @@ using UnityEngine.UI;
 
 public class MenuScreenController : MonoBehaviour {
 
-	public enum MenuScreen {KANJI,EQUIP,MAP,MESSAGE,JOURNAL,SAVE}
+	public enum MenuScreen {STATUS,KANJI,EQUIP,MAP,MESSAGE,JOURNAL,SAVE}
 
-	public MenuScreen currentScreen = MenuScreen.KANJI;
+	public MenuScreen currentScreen = MenuScreen.STATUS;
 	public bool isEditor = false;
 	bool menuLock = true;
 
 	[Header("Screens")]
+	public GameObject statusScreen;
 	public GameObject kanjiScreen;
 	public GameObject equipScreen;
 	public GameObject mapScreen;
@@ -23,6 +24,7 @@ public class MenuScreenController : MonoBehaviour {
 
 	[Space(3)]
 	[Header("Buttons")]
+	public Button statusButton;
 	public Button kanjiButton;
 	public Button equipButton;
 	public Button mapButton;
@@ -30,7 +32,7 @@ public class MenuScreenController : MonoBehaviour {
 	public Button journalButton;
 	public Button saveButton;
 
-	[Header("Outside values")]
+	[Header("Other values")]
 	public StringVariable playerArea;
 	public FloatVariable fadeSpeed;
 
@@ -44,6 +46,7 @@ public class MenuScreenController : MonoBehaviour {
 #if UNITY_EDITOR
 		isEditor = true;
 #else
+		statusButton.gameObject.SetActive(false);
 		kanjiButton.gameObject.SetActive(false);
 		equipButton.gameObject.SetActive(false);
 		mapButton.gameObject.SetActive(false);
@@ -54,7 +57,10 @@ public class MenuScreenController : MonoBehaviour {
 		UpdateCurrentScreen();
 	}
 
-
+	/// <summary>
+	/// Sets which inventory screen to show.
+	/// </summary>
+	/// <param name="screenIndex"></param>
 	public void SetCurrentScreen(int screenIndex) {
 		if (menuLock)
 			return;
@@ -70,6 +76,7 @@ public class MenuScreenController : MonoBehaviour {
 	void UpdateCurrentScreen() {
 
 		//Set current screen
+		statusScreen.SetActive(currentScreen == MenuScreen.STATUS);
 		kanjiScreen.SetActive(currentScreen == MenuScreen.KANJI);
 		equipScreen.SetActive(currentScreen == MenuScreen.EQUIP);
 		if (isEditor) {
@@ -80,16 +87,20 @@ public class MenuScreenController : MonoBehaviour {
 		}
 
 		//Set current buttons
+		statusButton.interactable = (currentScreen != MenuScreen.STATUS);
 		kanjiButton.interactable = (currentScreen != MenuScreen.KANJI);
 		equipButton.interactable = (currentScreen != MenuScreen.EQUIP);
 		if (isEditor) {
 			mapButton.interactable = (currentScreen != MenuScreen.MAP);
 			messageButton.interactable = (currentScreen != MenuScreen.MESSAGE);
 			journalButton.interactable = (currentScreen != MenuScreen.JOURNAL);
-			saveButton.interactable = (currentScreen != MenuScreen.SAVE);
+			// saveButton.interactable = (currentScreen != MenuScreen.SAVE);
 		}
 	}
 
+	/// <summary>
+	/// Returns the player to the game again.
+	/// </summary>
 	public void ReturnToGame() {
 		if (menuLock)
 			return;
@@ -100,12 +111,20 @@ public class MenuScreenController : MonoBehaviour {
 		StartCoroutine(WaitForFadeOut());
 	}
 
+	/// <summary>
+	/// Locks the menu until it has faded in.
+	/// </summary>
+	/// <returns></returns>
 	IEnumerator WaitForFadeIn() {
 		yield return new WaitForSeconds(fadeSpeed.value);
 		menuLock = false;
 		yield break;
 	}
 
+	/// <summary>
+	/// Waits for the screen to fade out before returning to the game.
+	/// </summary>
+	/// <returns></returns>
 	IEnumerator WaitForFadeOut() {
 
 		yield return new WaitForSeconds(fadeSpeed.value);

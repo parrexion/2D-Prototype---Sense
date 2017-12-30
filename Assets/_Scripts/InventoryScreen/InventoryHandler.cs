@@ -22,6 +22,7 @@ public class InventoryHandler : MonoBehaviour {
 	public bool AddBag(ItemEntry item) {
 		for (int i = 0; i < bagItems.values.Length; i++) {
 			if (bagItems.values[i] == null) {
+				Debug.Log("Placed Item at pos " + i);
 				bagItems.values[i] = item;
 				return true;
 			}
@@ -68,6 +69,7 @@ public class InventoryHandler : MonoBehaviour {
 		ItemEntry temp = GetItem(posA);
 		SetItem(posA,GetItem(posB));
 		SetItem(posB,temp);
+
 		itemsChanged.Invoke();
 	}
 

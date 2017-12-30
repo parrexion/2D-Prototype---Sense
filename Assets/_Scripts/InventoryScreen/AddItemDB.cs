@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 /// <summary>
 /// Class which is used to add items and kanji to the inventory.
@@ -11,6 +12,8 @@ public class AddItemDB : MonoBehaviour {
 	public InventoryHandler invKanjiHandler;
 	public ScrObjLibraryVariable itemLibrary;
 	public ScrObjLibraryVariable kanjiLibrary;
+
+	public UnityEvent inventoryChanged;
 
 
 	/// <summary>
@@ -56,12 +59,17 @@ public class AddItemDB : MonoBehaviour {
 	/// <param name="equip"></param>
 	void AddItem(ItemEquip item, bool equip) {
 		bool added;
+		Debug.Log("I'm Adding an item!");
 		if (equip)
-			added = invKanjiHandler.AddEquip(item);
+			added = invItemHandler.AddEquip(item);
 		else
-			added = invKanjiHandler.AddBag(item);
-		if (!added)
+			added = invItemHandler.AddBag(item);
+		if (added) {
+			inventoryChanged.Invoke();
+		}
+		else {
 			Debug.Log("No room left to add item.");
+		}
 	}
 
 	/// <summary>
@@ -75,7 +83,11 @@ public class AddItemDB : MonoBehaviour {
 			added = invKanjiHandler.AddEquip(kanji);
 		else
 			added = invKanjiHandler.AddBag(kanji);
-		if (!added)
-			Debug.Log("No room left to add item.");
+		if (added) {
+			inventoryChanged.Invoke();
+		}
+		else {
+			Debug.Log("No room left to add kanji.");
+		}
 	}
 }
