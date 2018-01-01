@@ -32,7 +32,7 @@ public class WeaponSlot : MonoBehaviour {
 
 	void Start () {
 		shootCooldown = 0f;
-		size = Constants.kanjiSize*Screen.height/Constants.screenHeight;
+		size = Constants.kanjiSize*Screen.height/Constants.SCREEN_HEIGHT;
 		
 		SetupTextures();
 		SetEquippedKanji();

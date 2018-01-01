@@ -7,22 +7,15 @@ using System.Xml.Serialization;
 
 public class SaveController : MonoBehaviour {
 
-	/// <summary>
-	/// Class containing most of the save data.
-	/// </summary>
-	public class SaveClass {
-		public int bestLevel = 0;
-		public float musicVolume = 0;
-		public float effectVolume = 0;
-	}
 
-	public IntVariable bestTowerLevel;
-	public IntVariable currentTowerLevel;
-	public FloatVariable musicVolume;
-	public FloatVariable effectVolume;
+	[Header("Save object references")]
+	public PlayerStats playerStats;
+	public SettingsValues settingsValues;
+	public TriggerController triggerController;
 
-	private string filePath = "";
-	private SaveClass save;
+	private string playerStatsPath = "";
+	private string settingsPath = "";
+	private string triggerPath = "";
 
 
 #region Singleton
@@ -35,13 +28,15 @@ public class SaveController : MonoBehaviour {
 		else {
 			DontDestroyOnLoad(gameObject);
 			instance = this;
+			Initialize();
 		}
 	}
 #endregion
 
 	void Initialize() {
-		filePath = Application.persistentDataPath+"/saveData.xml";
-		save = new SaveClass();
+		settingsPath = Application.persistentDataPath+"/settingsData.xml";
+		playerStatsPath = Application.persistentDataPath+"/playerData.xml";
+		triggerPath = Application.persistentDataPath+"/triggerData.xml";
 		Load();
 	}
 
@@ -50,38 +45,108 @@ public class SaveController : MonoBehaviour {
 	/// </summary>
 	public void Save() {
 		XmlWriterSettings xmlWriterSettings = new XmlWriterSettings() { Indent = true };
-		XmlSerializer serializer = new XmlSerializer(typeof(SaveClass));
-		// StreamWriter file = new StreamWriter(filePath);
+		XmlSerializer serializer;
 
-		save.bestLevel = Mathf.Max(save.bestLevel,currentTowerLevel.value);
-		save.musicVolume = musicVolume.value;
-		save.effectVolume = effectVolume.value;
+		if (settingsValues != null) {
+			serializer = new XmlSerializer(typeof(SettingsSaveClass));
 
-		using (XmlWriter xmlWriter = XmlWriter.Create(filePath, xmlWriterSettings)) {
-			serializer.Serialize(xmlWriter, save);
+			SettingsSaveClass settingsSave = settingsValues.SaveSettings();
+
+			using (XmlWriter xmlWriter = XmlWriter.Create(settingsPath, xmlWriterSettings)) {
+				serializer.Serialize(xmlWriter, settingsSave);
+			}
+			// file.Close();
+			Debug.Log("Successfully saved the settings!");
 		}
-		// file.Close();
-		Debug.Log("Successfully saved the file!");
+
+		if (playerStats != null) {
+			serializer = new XmlSerializer(typeof(PlayerStatsSaveClass));
+			PlayerStatsSaveClass playerSave = playerStats.SaveStats();
+			using (XmlWriter xmlWriter = XmlWriter.Create(playerStatsPath, xmlWriterSettings)) {
+				serializer.Serialize(xmlWriter, playerSave);
+			}
+			// file.Close();
+			Debug.Log("Successfully saved the player stats!");
+		}
+
+		if (triggerController != null) {
+			serializer = new XmlSerializer(typeof(TriggerSaveClass));
+			TriggerSaveClass triggerSave = triggerController.SaveTriggers();
+			using (XmlWriter xmlWriter = XmlWriter.Create(triggerPath, xmlWriterSettings)) {
+				serializer.Serialize(xmlWriter, triggerSave);
+			}
+			// file.Close();
+			Debug.Log("Successfully saved the trigger stats!");
+		}
+
 	}
 
 	/// <summary>
 	/// Reads the save file if it exists and sets the values.
 	/// </summary>
 	public void Load() {
-		if (File.Exists(filePath)){
-			XmlSerializer serializer = new XmlSerializer(typeof(SaveClass));
-			FileStream file = File.Open(filePath,FileMode.Open);
-			save = serializer.Deserialize(file) as SaveClass;
-			file.Close();
 
-			bestTowerLevel.value = save.bestLevel;
-			musicVolume.value = save.musicVolume;
-			effectVolume.value = save.effectVolume;
-			Debug.Log("Successfully loaded the file!");
+		//Settings data
+		if (settingsValues != null) {
+			if (settingsValues != null && File.Exists(settingsPath)){
+				XmlSerializer serializer = new XmlSerializer(typeof(SettingsSaveClass));
+				FileStream file = File.Open(settingsPath,FileMode.Open);
+				SettingsSaveClass settingsSave = serializer.Deserialize(file) as SettingsSaveClass;
+				file.Close();
+
+				settingsValues.LoadSettings(settingsSave);
+				
+				Debug.Log("Successfully loaded the settings!");
+			}
+			else {
+				Debug.LogWarning("Could not open the file: " + settingsPath);
+				Save();
+			}
 		}
 		else {
-			Debug.LogWarning("Could not open the file: " + filePath);
-			Save();
+			Debug.LogWarning("No settings object");
+		}
+
+		//Player data
+		if (playerStats != null) {
+			if (File.Exists(playerStatsPath)) {
+				XmlSerializer serializer = new XmlSerializer(typeof(PlayerStatsSaveClass));
+				FileStream file = File.Open(playerStatsPath,FileMode.Open);
+				PlayerStatsSaveClass playerSave = serializer.Deserialize(file) as PlayerStatsSaveClass;
+				file.Close();
+
+				playerStats.LoadStats(playerSave);
+				
+				Debug.Log("Successfully loaded the player stats!");
+			}
+			else {
+				Debug.LogWarning("Could not open the file: " + playerStatsPath);
+				Save();
+			}
+		}
+		else {
+			Debug.LogWarning("No player stats object");
+		}
+
+		//Trigger data
+		if (triggerController != null) {
+			if (File.Exists(triggerPath)){
+				XmlSerializer serializer = new XmlSerializer(typeof(TriggerSaveClass));
+				FileStream file = File.Open(triggerPath,FileMode.Open);
+				TriggerSaveClass triggerSave = serializer.Deserialize(file) as TriggerSaveClass;
+				file.Close();
+
+				triggerController.LoadTriggers(triggerSave);
+				
+				Debug.Log("Successfully loaded the triggers!");
+			}
+			else {
+				Debug.LogWarning("Could not open the file: " + triggerPath);
+				Save();
+			}
+		}
+		else {
+			Debug.LogWarning("No trigger object");
 		}
 	}
 }

@@ -10,8 +10,8 @@ public class ResolutionScaling : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		float widthScale = (float)Constants.screenWidth / (float)Screen.width;
-		float heightScale = (float)Constants.screenHeight / (float)Screen.height;
+		float widthScale = (float)Constants.SCREEN_WIDTH / (float)Screen.width;
+		float heightScale = (float)Constants.SCREEN_HEIGHT / (float)Screen.height;
 
 		Vector3 original = transform.localScale;
 		transform.localScale = new Vector3(

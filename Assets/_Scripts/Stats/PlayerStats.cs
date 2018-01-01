@@ -47,6 +47,7 @@ public class PlayerStats : MonoBehaviour {
 	[Header("Level")]
 	public IntVariable playerLevel;
 	public IntVariable expTotal;
+	public IntVariable expToNext;
 
 	[Header("Inventory")]
 	public IntVariable money;
@@ -63,9 +64,12 @@ public class PlayerStats : MonoBehaviour {
 	private int _minutes;
 	private int _hours;
 
+	[Header("Libraries")]
+	public ScrObjLibraryVariable itemLibrary;
 
 	void Start() {
 		StartCoroutine(CountPlayTime());
+		CalculateExp();
 		RecalculateStats();
 	}
 
@@ -136,6 +140,11 @@ public class PlayerStats : MonoBehaviour {
 		playerSDefense.value = (int)(_playerSDefense + 0.5f);
 	}
 
+	/// <summary>
+	/// Adds the percentage changes to the stats.
+	/// </summary>
+	/// <param name="stat"></param>
+	/// <param name="multiplier"></param>
 	void AddPercentValue(StatsPercentModifier.Stat stat, float multiplier) {
 		switch(stat)
 		{
@@ -158,4 +167,102 @@ public class PlayerStats : MonoBehaviour {
 				break;
 		}
 	}
+
+	/// <summary>
+	/// Calculates the current level where 100 exp more is required per level.
+	/// </summary>
+	public void CalculateExp() {
+		int level = 1;
+		int tempExp = 100;
+		while(tempExp <= expTotal.value) {
+			level++;
+			tempExp += level*100;
+		}
+		playerLevel.value = level;
+		expToNext.value = tempExp - expTotal.value;
+	}
+
+
+	// SAVING AND LOADING
+
+	/// <summary>
+	/// Puts the data into a save class for saving.
+	/// </summary>
+	/// <returns></returns>
+	public PlayerStatsSaveClass SaveStats() {
+		PlayerStatsSaveClass saveData = new PlayerStatsSaveClass();
+
+		//Overworld
+		saveData.playerArea = playerArea.value;
+		saveData.playerPosX = playerPosX.value;
+		saveData.playerPosY = playerPosY.value;
+
+		//Exp
+		saveData.expTotal = expTotal.value;
+
+		//Inventory
+		saveData.money = money.value;
+		saveData.invItemBag = invItemBag.GenerateSaveData();
+		saveData.invItemEquip = invItemEquip.GenerateSaveData();
+		saveData.invKanjiBag = invKanjiBag.GenerateSaveData();
+		saveData.invKanjiEquip = invKanjiEquip.GenerateSaveData();
+
+		//Time
+		saveData.ingameDay = ingameDay.value;
+		saveData.playedSeconds = playedSeconds.value;
+
+		return saveData;
+	}
+
+	/// <summary>
+	/// Loads the player stats from the save class data.
+	/// </summary>
+	/// <param name="saveData"></param>
+	public void LoadStats(PlayerStatsSaveClass saveData) {
+
+		//Overworld
+		playerArea.value = saveData.playerArea;
+		playerPosX.value = saveData.playerPosX;
+		playerPosY.value = saveData.playerPosY;
+
+		//Exp
+		expTotal.value = saveData.expTotal;
+
+		//Inventory
+		money.value = saveData.money;
+		itemLibrary.GenerateDictionary();
+		invItemBag.LoadItemData(saveData.invItemBag, itemLibrary);
+		invItemEquip.LoadItemData(saveData.invItemEquip, itemLibrary);
+		invKanjiBag.LoadItemData(saveData.invKanjiBag, itemLibrary);
+		invKanjiEquip.LoadItemData(saveData.invKanjiEquip, itemLibrary);
+
+		//Time
+		ingameDay.value = saveData.ingameDay;
+		playedSeconds.value = saveData.playedSeconds;
+	}
+}
+
+/// <summary>
+/// Save class for the player stats which extracts the ScrObj variables.
+/// </summary>
+public class PlayerStatsSaveClass {
+
+	[Header("Overworld values")]
+	public string playerArea;
+	public float playerPosX;
+	public float playerPosY;
+
+	[Header("Level")]
+	public int expTotal;
+
+	[Header("Inventory")]
+	public int money;
+	public SaveListUuid invItemEquip;
+	public SaveListUuid invItemBag;
+	public SaveListUuid invKanjiEquip;
+	public SaveListUuid invKanjiBag;
+
+	[Header("Time")]
+	public int ingameDay;
+	public int playedSeconds;
 }

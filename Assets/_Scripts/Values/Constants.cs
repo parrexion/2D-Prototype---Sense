@@ -5,8 +5,8 @@ public static class Constants {
 	public enum Direction {NEUTRAL,LEFT,RIGHT,UP,DOWN};
 
 	//Screen
-	public const int screenWidth = 1200;
-	public const int screenHeight = 525;
+	public const int SCREEN_WIDTH = 1200;
+	public const int SCREEN_HEIGHT = 525;
 
 	//Battle arena
 	public static float NormalBorderWidth = 6.0f;
@@ -45,8 +45,8 @@ public static class Constants {
 	public const int kanjiBagSpace = 20;
 
 	//Player stats
-	public const int PLAYER_HEALTH_BASE = 100;
-	public const int PLAYER_HEALTH_SCALE = 30;
+	public const int PLAYER_HEALTH_BASE = 50;
+	public const int PLAYER_HEALTH_SCALE = 50;
 
 	//Enum for all the scenes
 	public enum SCENE_INDEXES {

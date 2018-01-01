@@ -6,7 +6,6 @@
 [CreateAssetMenu(menuName="List ScrObj Variables/Inventory List Variable")]
 public class InvListVariable : ScriptableObject {
 
-	// public ItemEntry.ItemType listType;
 	public ItemEntry[] values;
 
 	
@@ -32,7 +31,9 @@ public class InvListVariable : ScriptableObject {
 	/// <param name="index"></param>
 	/// <returns></returns>
 	public ItemEntry GetItemByUuid(string uuid) {
+		Debug.Log("leangth:  " + values.Length);
 		for (int i = 0; i < values.Length; i++) {
+			Debug.Log(i + ": res:  " + values[i]);
 			if (values[i].uuid == uuid){
 				return values[i];
 			}
@@ -65,11 +66,12 @@ public class InvListVariable : ScriptableObject {
 	/// Loads a list of uuids into the kanji list.
 	/// </summary>
 	/// <param name="saveData"></param>
-	public void LoadItemData(SaveListUuid saveData) {
+	public void LoadItemData(SaveListUuid saveData, ScrObjLibraryVariable itemLibrary) {
+
 		if (values.Length != saveData.size)
 			Debug.LogWarning("Something is wrong with the size of the kanjilist.");
 		for (int i = 0; i < saveData.size; i++) {
-			values[i] = GetItemByUuid((saveData.uuids[i] != null) ? saveData.uuids[i] : null);
+			values[i] = string.IsNullOrEmpty(saveData.uuids[i]) ? null : (ItemEntry)itemLibrary.GetEntry(saveData.uuids[i]);
 		}
 		Debug.Log("Loaded the kanji list.");
 	}
