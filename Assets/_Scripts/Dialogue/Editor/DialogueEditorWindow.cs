@@ -302,6 +302,7 @@ public class DialogueEditorWindow : EditorWindow {
 				GUI.FocusControl(null);
 				int tIndex = dialogueValues.frames[selFrame].talkingIndex;
 				selectTalker = (tIndex != -1) ? reverseIndexList[dialogueValues.frames[selFrame].talkingIndex] : -1;
+				talkName = dialogueValues.frames[selFrame].talkingName;
 			}
 		}
 
@@ -352,6 +353,7 @@ public class DialogueEditorWindow : EditorWindow {
 			selFrame = 0;
 			int tIndex = dialogueValues.frames[selFrame].talkingIndex;
 			selectTalker = (tIndex != -1) ? reverseIndexList[dialogueValues.frames[selFrame].talkingIndex] : -1;
+			talkName = dialogueValues.frames[selFrame].talkingName;
 		}
 	}
 
