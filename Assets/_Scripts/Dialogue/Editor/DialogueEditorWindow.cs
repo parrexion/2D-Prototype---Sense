@@ -25,6 +25,7 @@ public class DialogueEditorWindow : EditorWindow {
 	Rect saveRect;
 
 	int[] indexList = new int[]{0,2,4,3,1};
+	int[] reverseIndexList = new int[]{0,4,1,3,2};
 	string[] nextActionStrings = new string[] { "OVERWORLD", "DIALOGUE", "BATTLE" };
 	string[] talkingLabels = new string[] { "Talking", "Talking", "Talking", "Talking", "Talking" };
 	string[] poseList = new string[] { "Normal", "Sad", "Happy", "Angry", "Dead", "Hmm", "Pleased", "Surprised", "Worried" };
@@ -299,7 +300,7 @@ public class DialogueEditorWindow : EditorWindow {
 			selFrame = GUILayout.SelectionGrid(selFrame, dialogueValues.GenerateFrameRepresentation(), 1);
 			if (oldFrame != selFrame) {
 				GUI.FocusControl(null);
-				selectTalker = dialogueValues.frames[selFrame].talkingIndex;
+				selectTalker = reverseIndexList[dialogueValues.frames[selFrame].talkingIndex];
 			}
 		}
 
@@ -348,7 +349,7 @@ public class DialogueEditorWindow : EditorWindow {
 			DialogueEntry de = (DialogueEntry)dialogueLibrary.GetEntryByIndex(selDialogue);
 			dialogueValues.CopyValues(de);
 			selFrame = 0;
-			selectTalker = dialogueValues.frames[0].talkingIndex;
+			selectTalker = reverseIndexList[dialogueValues.frames[0].talkingIndex];
 		}
 	}
 
