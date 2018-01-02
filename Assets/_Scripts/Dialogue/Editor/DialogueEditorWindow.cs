@@ -300,7 +300,8 @@ public class DialogueEditorWindow : EditorWindow {
 			selFrame = GUILayout.SelectionGrid(selFrame, dialogueValues.GenerateFrameRepresentation(), 1);
 			if (oldFrame != selFrame) {
 				GUI.FocusControl(null);
-				selectTalker = reverseIndexList[dialogueValues.frames[selFrame].talkingIndex];
+				int tIndex = dialogueValues.frames[selFrame].talkingIndex;
+				selectTalker = (tIndex != -1) ? reverseIndexList[dialogueValues.frames[selFrame].talkingIndex] : -1;
 			}
 		}
 
@@ -349,7 +350,8 @@ public class DialogueEditorWindow : EditorWindow {
 			DialogueEntry de = (DialogueEntry)dialogueLibrary.GetEntryByIndex(selDialogue);
 			dialogueValues.CopyValues(de);
 			selFrame = 0;
-			selectTalker = reverseIndexList[dialogueValues.frames[0].talkingIndex];
+			int tIndex = dialogueValues.frames[selFrame].talkingIndex;
+			selectTalker = (tIndex != -1) ? reverseIndexList[dialogueValues.frames[selFrame].talkingIndex] : -1;
 		}
 	}
 
