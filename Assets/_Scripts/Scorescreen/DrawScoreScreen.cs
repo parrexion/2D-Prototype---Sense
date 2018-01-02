@@ -86,7 +86,7 @@ public class DrawScoreScreen : BasicGUIButtons {
 				if (be.playerArea == BattleEntry.OverworldArea.TOWER)
 					SceneManager.LoadScene((int)Constants.SCENE_INDEXES.BATTLETOWER);
 				else
-					SceneManager.LoadScene((int)Constants.SCENE_INDEXES.TUTORIAL);
+					SceneManager.LoadScene((int)Constants.SCENE_INDEXES.TUTORIAL_OLD);
 				break;
 			case BattleEntry.NextLocation.DIALOGUE:
 				dialogueUuid.value = be.nextDialogue.name;

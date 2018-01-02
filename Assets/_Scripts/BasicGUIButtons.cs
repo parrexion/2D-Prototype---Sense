@@ -43,7 +43,25 @@ public class BasicGUIButtons : MonoBehaviour {
 			SceneManager.LoadScene((int)Constants.SCENE_INDEXES.BATTLETOWER);
 			break;
 		case "tutorial":
-			SceneManager.LoadScene((int)Constants.SCENE_INDEXES.TUTORIAL);
+			SceneManager.LoadScene((int)Constants.SCENE_INDEXES.TUTORIAL_OLD);
+			break;
+		case "eastSection":
+			SceneManager.LoadScene((int)Constants.SCENE_INDEXES.EAST_SECTION);
+			break;
+		case "eastSectionRooms":
+			SceneManager.LoadScene((int)Constants.SCENE_INDEXES.EAST_SECTION_ROOMS);
+			break;
+		case "centralSection":
+			SceneManager.LoadScene((int)Constants.SCENE_INDEXES.CENTRAL_SECTION);
+			break;
+		case "centralSectionRooms":
+			SceneManager.LoadScene((int)Constants.SCENE_INDEXES.CENTRAL_SECTION_ROOMS);
+			break;
+		case "westSection":
+			SceneManager.LoadScene((int)Constants.SCENE_INDEXES.WEST_SECTION);
+			break;
+		case "westSectionRooms":
+			SceneManager.LoadScene((int)Constants.SCENE_INDEXES.WEST_SECTION_ROOMS);
 			break;
 		default:
 			Debug.Log("Failed to find a scene to move to");

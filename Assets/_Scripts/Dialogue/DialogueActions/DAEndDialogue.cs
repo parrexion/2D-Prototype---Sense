@@ -20,7 +20,7 @@ public class DAEndDialogue : DialogueAction {
 				if (de.nextArea == BattleEntry.OverworldArea.TOWER)
 					SceneManager.LoadScene((int)Constants.SCENE_INDEXES.BATTLETOWER);
 				else
-					SceneManager.LoadScene((int)Constants.SCENE_INDEXES.TUTORIAL);
+					SceneManager.LoadScene((int)Constants.SCENE_INDEXES.TUTORIAL_OLD);
 				break;
 			case BattleEntry.NextLocation.DIALOGUE:
 				scene.dialogueUuid.value = de.nextEntry.name;

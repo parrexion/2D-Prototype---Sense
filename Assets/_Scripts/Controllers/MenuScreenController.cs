@@ -133,7 +133,7 @@ public class MenuScreenController : MonoBehaviour {
             SceneManager.LoadScene((int)Constants.SCENE_INDEXES.BATTLETOWER);
         }
 		else {
-			SceneManager.LoadScene((int)Constants.SCENE_INDEXES.TUTORIAL);
+			SceneManager.LoadScene((int)Constants.SCENE_INDEXES.TUTORIAL_OLD);
 		}
 
 		yield break;
