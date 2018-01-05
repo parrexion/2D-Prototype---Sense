@@ -13,22 +13,21 @@ public class DAEndDialogue : DialogueAction {
 			case BattleEntry.NextLocation.OVERWORLD:
 				scene.paused.value = false;
 				if (de.changePosition) {
+					if (de.nextArea != Constants.OverworldArea.DEFAULT)
+						scene.playerArea.value = (int)de.nextArea;
 					scene.playerPosX.value = de.playerPosition.x;
 					scene.playerPosY.value = de.playerPosition.y;
-					Debug.Log("Position is now: " + scene.playerPosX.value + ", " + scene.playerPosY.value);
 				}
-				if (de.nextArea == BattleEntry.OverworldArea.TOWER)
-					SceneManager.LoadScene((int)Constants.SCENE_INDEXES.BATTLETOWER);
-				else
-					SceneManager.LoadScene((int)Constants.SCENE_INDEXES.TUTORIAL_OLD);
+				scene.currentArea.value = scene.playerArea.value;
+				scene.mapChangeEvent.Invoke();
 				break;
 			case BattleEntry.NextLocation.DIALOGUE:
-				scene.dialogueUuid.value = de.nextEntry.name;
-				SceneManager.LoadScene((int)Constants.SCENE_INDEXES.DIALOGUE);
+				scene.currentArea.value = (int)Constants.SCENE_INDEXES.DIALOGUE;
+				scene.mapChangeEvent.Invoke();
 				break;
 			case BattleEntry.NextLocation.BATTLE:
-				scene.battleUuid.value = de.nextEntry.uuid;
-				SceneManager.LoadScene((int)Constants.SCENE_INDEXES.BATTLE);
+				scene.currentArea.value = (int)Constants.SCENE_INDEXES.BATTLE;
+				scene.mapChangeEvent.Invoke();
 				break;
 		}
 

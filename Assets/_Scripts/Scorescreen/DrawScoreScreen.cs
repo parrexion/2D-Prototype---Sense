@@ -1,14 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 
-public class DrawScoreScreen : BasicGUIButtons {
+public class DrawScoreScreen : MonoBehaviour {
 
 	public ScrObjLibraryVariable battleLibrary;
 	public StringVariable battleUuid;
 	public StringVariable dialogueUuid;
+
+	public IntVariable currentArea;
+	public IntVariable playerArea;
 	public FloatVariable playerPosX;
 	public FloatVariable playerPosY;
 	public BoolVariable paused;
@@ -28,6 +31,9 @@ public class DrawScoreScreen : BasicGUIButtons {
 	public Text noEnemiesText;
 	public Text expText;
 	public Text moneyText;
+
+	public UnityEvent buttonClickEvent;
+	public UnityEvent changeMapEvent;
 
 	// Use this for initialization
 	void Start () {
@@ -80,21 +86,21 @@ public class DrawScoreScreen : BasicGUIButtons {
 			case BattleEntry.NextLocation.OVERWORLD:
 				paused.value = false;
 				if (be.changePosition) {
+					if (be.playerArea != Constants.OverworldArea.DEFAULT)
+						playerArea.value = (int)be.playerArea;
 					playerPosX.value = be.playerPosition.x;
 					playerPosY.value = be.playerPosition.y;
 				}
-				if (be.playerArea == BattleEntry.OverworldArea.TOWER)
-					SceneManager.LoadScene((int)Constants.SCENE_INDEXES.BATTLETOWER);
-				else
-					SceneManager.LoadScene((int)Constants.SCENE_INDEXES.TUTORIAL_OLD);
+				currentArea.value = playerArea.value;
+				changeMapEvent.Invoke();
 				break;
 			case BattleEntry.NextLocation.DIALOGUE:
-				dialogueUuid.value = be.nextDialogue.name;
-				SceneManager.LoadScene((int)Constants.SCENE_INDEXES.DIALOGUE);
+				currentArea.value = (int)Constants.SCENE_INDEXES.DIALOGUE;
+				changeMapEvent.Invoke();
 				break;
 			case BattleEntry.NextLocation.BATTLE:
-				battleUuid.value = be.nextBattle.uuid;
-				SceneManager.LoadScene((int)Constants.SCENE_INDEXES.BATTLE);
+				currentArea.value = (int)Constants.SCENE_INDEXES.BATTLE;
+				changeMapEvent.Invoke();
 				break;
 		}
 

@@ -8,7 +8,7 @@ public class DoorTrigger : OWTrigger {
 	public SpriteRenderer arrowSprite;
 	public BoolVariable paused;
 	public DoorArrowTrigger arrow;
-	public BattleEntry.OverworldArea area;
+	public Constants.OverworldArea area;
 	public Vector2 position;
 	public StringVariable playerArea;
 	public FloatVariable posx, posy;

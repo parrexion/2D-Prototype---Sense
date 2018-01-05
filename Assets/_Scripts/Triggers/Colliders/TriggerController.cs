@@ -19,8 +19,15 @@ public class TriggerController : MonoBehaviour {
 
 #endregion
 
+    public BoolVariable paused;
+    public FloatVariable fadeSpeed;
+
     private Dictionary<string,bool> triggerStates = new Dictionary<string, bool>();
 
+
+    void Start() {
+        StartCoroutine(WaitForFadeIn());
+    }
 
     /// <summary>
     /// Resets the dictionary to all triggers being inactive.
@@ -55,6 +62,16 @@ public class TriggerController : MonoBehaviour {
         else
             triggerStates.Add(uuid, state);
     }
+
+    /// <summary>
+	/// Locks the menu until it has faded in.
+	/// </summary>
+	/// <returns></returns>
+	IEnumerator WaitForFadeIn() {
+		yield return new WaitForSeconds(fadeSpeed.value);
+		paused.value = false;
+		yield break;
+	}
 
 
     // SAVING AND LOADING

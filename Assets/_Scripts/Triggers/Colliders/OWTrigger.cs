@@ -8,9 +8,13 @@ public abstract class OWTrigger : MonoBehaviour {
 	public string uuid = System.Guid.NewGuid().ToString();
 	public bool active = true;
 	public bool visible = false;
-	public UnityEvent startEvent;
+	
 	public SpriteRenderer sprite;
 	public SpriteRenderer areaSprite;
+
+	public IntVariable currentArea;
+
+	public UnityEvent startEvent;
 
 
 	void OnEnable() {

@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
+using UnityEngine.Events;
 
-public class MainMenuScript : BasicGUIButtons {
+public class MainMenuScript : MonoBehaviour {
 
 	public Text recordText;
+
+	public IntVariable currentArea;
+	public IntVariable playerArea;
 
 	public Canvas mainMenuCanvas;
 	public Canvas levelSelectCanvas;
@@ -19,21 +22,20 @@ public class MainMenuScript : BasicGUIButtons {
 	public StringVariable dialogueUuid;
 	public IntVariable bestTowerLevel;
 	public IntVariable currentTowerLevel;
+	
+	public UnityEvent buttonClickEvent;
+	public UnityEvent mapChangeEvent;
 
 
 	void Start(){
 		recordText.text = "Highest level: " + bestTowerLevel.value;
 	}
 
-	public void TutorialClicked(){
-		buttonClickEvent.Invoke();
-		SceneManager.LoadScene((int)Constants.SCENE_INDEXES.BATTLE);
-	}
-
 	public void StoryClicked(){
 		buttonClickEvent.Invoke();
 		dialogueUuid.value = "OldPrologueComplete";
-		SceneManager.LoadScene((int)Constants.SCENE_INDEXES.DIALOGUE);
+		currentArea.value = (int)Constants.SCENE_INDEXES.DIALOGUE;
+		mapChangeEvent.Invoke();
 	}
 
 	public void BattleClicked(){
@@ -60,7 +62,9 @@ public class MainMenuScript : BasicGUIButtons {
 			currentTowerLevel.value = bestLevel - 5;
 
 		buttonClickEvent.Invoke();
-		SceneManager.LoadScene((int)Constants.SCENE_INDEXES.BATTLETOWER);
+		currentArea.value = (int)Constants.SCENE_INDEXES.BATTLETOWER;
+		playerArea.value = (int)Constants.SCENE_INDEXES.BATTLETOWER;
+		mapChangeEvent.Invoke();
 	}
 
 }

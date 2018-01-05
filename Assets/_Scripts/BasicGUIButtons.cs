@@ -10,63 +10,54 @@ using UnityEngine.Events;
 /// </summary>
 public class BasicGUIButtons : MonoBehaviour {
 
+	public bool useFadeOut = true;
+	public FloatVariable fadeOutTime;
+	public IntVariable currentScene;
+
 	public UnityEvent buttonClickEvent;
+	public UnityEvent fadeOutEvent;
+
+	public bool fading = false;
 
 
 	/// <summary>
-	/// Simple way to move to the next scene. Write a new method if more functionality is needed.
+	/// Moves to the next scene when the button is pressed.
 	/// </summary>
 	/// <param name="scene">Scene.</param>
-	public void SimpleMoveToScene(string scene) {
-		buttonClickEvent.Invoke();
+	public void MoveToSceneButton(int sceneIndex) {
+		if (fading)
+			return;
+		fading = true;
 
-		switch (scene) {
-		case "battle":
-			SceneManager.LoadScene((int)Constants.SCENE_INDEXES.BATTLE);
-			break;
-		case "dialogue":
-			SceneManager.LoadScene((int)Constants.SCENE_INDEXES.DIALOGUE);
-			break;
-		case "inventory":
-			SceneManager.LoadScene((int)Constants.SCENE_INDEXES.INVENTORY);
-			break;
-		case "mainmenu":
-			SceneManager.LoadScene((int)Constants.SCENE_INDEXES.MAINMENU);
-			break;
-		case "options":
-			SceneManager.LoadScene((int)Constants.SCENE_INDEXES.OPTIONS);
-			break;
-		case "scorescreen":
-			SceneManager.LoadScene((int)Constants.SCENE_INDEXES.SCORE);
-			break;
-		case "tower":
-			SceneManager.LoadScene((int)Constants.SCENE_INDEXES.BATTLETOWER);
-			break;
-		case "tutorial":
-			SceneManager.LoadScene((int)Constants.SCENE_INDEXES.TUTORIAL_OLD);
-			break;
-		case "eastSection":
-			SceneManager.LoadScene((int)Constants.SCENE_INDEXES.EAST_SECTION);
-			break;
-		case "eastSectionRooms":
-			SceneManager.LoadScene((int)Constants.SCENE_INDEXES.EAST_SECTION_ROOMS);
-			break;
-		case "centralSection":
-			SceneManager.LoadScene((int)Constants.SCENE_INDEXES.CENTRAL_SECTION);
-			break;
-		case "centralSectionRooms":
-			SceneManager.LoadScene((int)Constants.SCENE_INDEXES.CENTRAL_SECTION_ROOMS);
-			break;
-		case "westSection":
-			SceneManager.LoadScene((int)Constants.SCENE_INDEXES.WEST_SECTION);
-			break;
-		case "westSectionRooms":
-			SceneManager.LoadScene((int)Constants.SCENE_INDEXES.WEST_SECTION_ROOMS);
-			break;
-		default:
-			Debug.Log("Failed to find a scene to move to");
-			break;
-		}
+		buttonClickEvent.Invoke();
+		currentScene.value = sceneIndex;
+		StartCoroutine(WaitForFadeOut());
 	}
 
+	/// <summary>
+	/// Moves to the indicated scene when the event fires.
+	/// </summary>
+	public void MoveToSceneTrigger() {
+		if (fading)
+			return;
+		fading = true;
+
+		StartCoroutine(WaitForFadeOut());
+	}
+
+	/// <summary>
+	/// Waits for the screen to fade out before returning to the game.
+	/// </summary>
+	/// <returns></returns>
+	IEnumerator WaitForFadeOut() {
+		if (useFadeOut) {
+			fadeOutEvent.Invoke();
+			yield return new WaitForSeconds(fadeOutTime.value);
+		}
+
+		SceneManager.LoadScene(currentScene.value);
+		fading = false;
+
+		yield break;
+	}
 }

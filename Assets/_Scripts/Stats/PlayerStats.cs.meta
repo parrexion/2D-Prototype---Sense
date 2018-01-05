@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: e4fa34faef0226345b1e64f57b86d69c
-timeCreated: 1514838939
+timeCreated: 1515185613
 licenseType: Free
 MonoImporter:
   externalObjects: {}
@@ -15,7 +15,8 @@ MonoImporter:
       type: 2}
   - normalDamageTaken: {fileID: 11400000, guid: c46606cdbb46d3b44919ae0dcc12a19f,
       type: 2}
-  - playerArea: {fileID: 11400000, guid: 85d0d031c5d3fc545bf12dbe74cd1b87, type: 2}
+  - currentArea: {fileID: 11400000, guid: 9da04209f78e0594bbf7ecbc8d844dfb, type: 2}
+  - playerArea: {fileID: 11400000, guid: 9f9c1a9fcf78c6143a57ee133d6fbe44, type: 2}
   - playerPosX: {fileID: 11400000, guid: 0eca8d82750de4c4981212018d942288, type: 2}
   - playerPosY: {fileID: 11400000, guid: 309179cbb9cd2f0458e68543f41dc12e, type: 2}
   - playerLevel: {fileID: 11400000, guid: 68490c0991dd89d408ac266cc145346c, type: 2}

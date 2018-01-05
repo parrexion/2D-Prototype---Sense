@@ -258,7 +258,7 @@ public class DialogueEditorWindow : EditorWindow {
 				dialogueValues.changePosition = EditorGUILayout.Toggle("Change player position", dialogueValues.changePosition, GUILayout.Width(190));
 				if (dialogueValues.changePosition) {
 					EditorGUIUtility.labelWidth = 60;
-					dialogueValues.nextArea = (BattleEntry.OverworldArea)EditorGUILayout.EnumPopup("Area",dialogueValues.nextArea);
+					dialogueValues.nextArea = (Constants.OverworldArea)EditorGUILayout.EnumPopup("Area",dialogueValues.nextArea);
 					EditorGUIUtility.labelWidth = 100;
 					GUILayout.EndHorizontal();
 					dialogueValues.playerPosition = EditorGUILayout.Vector2Field("Player Position", dialogueValues.playerPosition, GUILayout.Width(d.frameRect.width-8));

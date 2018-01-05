@@ -7,7 +7,6 @@ public class BattleEntry : ScrObjLibraryEntry {
 
 	public enum RemoveSide {NONE,LEFT,RIGHT};
 	public enum NextLocation {OVERWORLD,DIALOGUE,BATTLE};
-	public enum OverworldArea {DEFAULT, TOWER}
 
 
 	// General battle things
@@ -36,7 +35,7 @@ public class BattleEntry : ScrObjLibraryEntry {
 	// After match values
 	public NextLocation nextLocation = NextLocation.OVERWORLD;
 	public bool changePosition = false;
-	public OverworldArea playerArea = OverworldArea.DEFAULT;
+	public Constants.OverworldArea playerArea = Constants.OverworldArea.DEFAULT;
 	public Vector2 playerPosition = new Vector2();
 	public DialogueEntry nextDialogue = null;
 	public BattleEntry nextBattle = null;
@@ -75,7 +74,7 @@ public class BattleEntry : ScrObjLibraryEntry {
 		// After match values
 		nextLocation = NextLocation.OVERWORLD;
 		changePosition = false;
-		playerArea = OverworldArea.DEFAULT;
+		playerArea = Constants.OverworldArea.DEFAULT;
 		playerPosition = new Vector2();
 		nextDialogue = null;
 		nextBattle = null;

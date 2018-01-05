@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
+using UnityEngine.Events;
 
-public class DrawGameOverScreen : BasicGUIButtons {
+public class DrawGameOverScreen : MonoBehaviour {
 
 	public Text timeText;
+	public UnityEvent buttonClickEvent;
 
 	public StringVariable wonBattleState;
 	public FloatVariable battleTime;
@@ -26,17 +27,6 @@ public class DrawGameOverScreen : BasicGUIButtons {
 	private void SetValues(){
 
 		timeText.text = "You lasted for\n"+ battleTime.value.ToString("F2") + "s";
-	}
-
-
-	public void RetryBattle(){
-		buttonClickEvent.Invoke();
-		SceneManager.LoadScene((int)Constants.SCENE_INDEXES.BATTLE);
-	}
-
-	public void ReturnToMainScreen(){
-		buttonClickEvent.Invoke();
-		SceneManager.LoadScene((int)Constants.SCENE_INDEXES.MAINMENU);
 	}
 
 }

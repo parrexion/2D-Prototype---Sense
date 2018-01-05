@@ -48,7 +48,10 @@ public static class Constants {
 	public const int PLAYER_HEALTH_BASE = 50;
 	public const int PLAYER_HEALTH_SCALE = 50;
 
-	//Enum for all the scenes
+	
+	/// <summary>
+	/// Enum for all the scenes
+	/// </summary>
 	public enum SCENE_INDEXES {
 		STARTUP = 0,
 		MAINMENU = 1,
@@ -65,6 +68,17 @@ public static class Constants {
 		CENTRAL_SECTION_ROOMS = 12,
 		WEST_SECTION = 13,
 		WEST_SECTION_ROOMS = 14
+	}
+
+	/// <summary>
+	/// Enum for all areas in the game.
+	/// </summary>
+	public enum OverworldArea {
+		DEFAULT = 0, 
+		TOWER = 1,
+		EAST_SECTION,
+		CENTRAL_SECTION,
+		WEST_SECTION
 	}
 
 }

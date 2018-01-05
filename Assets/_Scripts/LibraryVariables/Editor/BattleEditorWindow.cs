@@ -138,7 +138,7 @@ public class BattleEditorWindow {
 			case BattleEntry.NextLocation.OVERWORLD:
 				battleValues.changePosition = EditorGUILayout.Toggle("Change player position", battleValues.changePosition);
 				if (battleValues.changePosition) {
-					battleValues.playerArea = (BattleEntry.OverworldArea)EditorGUILayout.EnumPopup("Overworld Area",battleValues.playerArea);
+					battleValues.playerArea = (Constants.OverworldArea)EditorGUILayout.EnumPopup("Overworld Area",battleValues.playerArea);
 					battleValues.playerPosition = EditorGUILayout.Vector2Field("Player Position", battleValues.playerPosition);
 				}
 				break;

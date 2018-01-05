@@ -14,7 +14,7 @@ public class DialogueEntry : ScrObjLibraryEntry {
 	public ScrObjLibraryEntry nextEntry = null;
 	public bool changePosition = false;
 	public Vector2 playerPosition = new Vector2();
-	public BattleEntry.OverworldArea nextArea = BattleEntry.OverworldArea.DEFAULT;
+	public Constants.OverworldArea nextArea = Constants.OverworldArea.DEFAULT;
 
 
 	public override void ResetValues() {
@@ -28,7 +28,7 @@ public class DialogueEntry : ScrObjLibraryEntry {
 		nextEntry = null;
 		changePosition = false;
 		playerPosition = new Vector2();
-		nextArea = BattleEntry.OverworldArea.DEFAULT;
+		nextArea = Constants.OverworldArea.DEFAULT;
 	}
 
 	public override void CopyValues(ScrObjLibraryEntry other) {

@@ -27,8 +27,11 @@ public class DialogueScene : MonoBehaviour {
 	//Non-dialogue references
 	public BoolVariable paused;
 	public StringVariable battleUuid;
+	public IntVariable currentArea;
+	public IntVariable playerArea;
 	public FloatVariable playerPosX;
 	public FloatVariable playerPosY;
+	public UnityEvent mapChangeEvent;
 
 
 	void Start() {

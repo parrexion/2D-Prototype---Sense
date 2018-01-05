@@ -12,6 +12,7 @@ public class DialogueTrigger : OWTrigger {
 	protected override void Trigger() {
 		Debug.Log("Start dialogue: "+ dialogue.name);
 		dialogueUuid.value = dialogue.uuid;
+		currentArea.value = (int)Constants.SCENE_INDEXES.DIALOGUE;
 		Deactivate();
 		startEvent.Invoke();
 	}

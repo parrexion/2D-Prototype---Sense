@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class MenuScreenController : MonoBehaviour {
@@ -33,11 +32,11 @@ public class MenuScreenController : MonoBehaviour {
 	public Button saveButton;
 
 	[Header("Other values")]
-	public StringVariable playerArea;
+	public IntVariable playerArea;
 	public FloatVariable fadeSpeed;
 
 	public UnityEvent buttonClickedEvent;
-	public UnityEvent fadeOutEvent;
+	public UnityEvent changeMapEvent;
 
 
 	// Use this for initialization
@@ -107,8 +106,7 @@ public class MenuScreenController : MonoBehaviour {
 		
 		menuLock = true;
 		buttonClickedEvent.Invoke();
-		fadeOutEvent.Invoke();
-		StartCoroutine(WaitForFadeOut());
+		changeMapEvent.Invoke();
 	}
 
 	/// <summary>
@@ -118,24 +116,6 @@ public class MenuScreenController : MonoBehaviour {
 	IEnumerator WaitForFadeIn() {
 		yield return new WaitForSeconds(fadeSpeed.value);
 		menuLock = false;
-		yield break;
-	}
-
-	/// <summary>
-	/// Waits for the screen to fade out before returning to the game.
-	/// </summary>
-	/// <returns></returns>
-	IEnumerator WaitForFadeOut() {
-
-		yield return new WaitForSeconds(fadeSpeed.value);
-
-		if (playerArea.value == "Tower") {
-            SceneManager.LoadScene((int)Constants.SCENE_INDEXES.BATTLETOWER);
-        }
-		else {
-			SceneManager.LoadScene((int)Constants.SCENE_INDEXES.TUTORIAL_OLD);
-		}
-
 		yield break;
 	}
 }

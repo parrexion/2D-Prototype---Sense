@@ -176,7 +176,7 @@ public class BattleController : MonoBehaviour {
 		values.money.value = enemyController.GetTotalMoney();
 		// values.treasures = enemyController.GetTreasures();
 
-		if (be.playerArea == BattleEntry.OverworldArea.TOWER)
+		if (be.playerArea == Constants.OverworldArea.TOWER)
 			saveGameEvent.Invoke();
 
 		Debug.Log("Won");

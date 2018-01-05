@@ -40,7 +40,8 @@ public class PlayerStats : MonoBehaviour {
 	public FloatVariable normalDamageTaken;
 
 	[Header("Overworld values")]
-	public StringVariable playerArea;
+	public IntVariable currentArea;
+	public IntVariable playerArea;
 	public FloatVariable playerPosX;
 	public FloatVariable playerPosY;
 
@@ -193,6 +194,7 @@ public class PlayerStats : MonoBehaviour {
 		PlayerStatsSaveClass saveData = new PlayerStatsSaveClass();
 
 		//Overworld
+		saveData.currentArea = currentArea.value;
 		saveData.playerArea = playerArea.value;
 		saveData.playerPosX = playerPosX.value;
 		saveData.playerPosY = playerPosY.value;
@@ -221,6 +223,7 @@ public class PlayerStats : MonoBehaviour {
 	public void LoadStats(PlayerStatsSaveClass saveData) {
 
 		//Overworld
+		currentArea.value = saveData.currentArea;
 		playerArea.value = saveData.playerArea;
 		playerPosX.value = saveData.playerPosX;
 		playerPosY.value = saveData.playerPosY;
@@ -248,7 +251,8 @@ public class PlayerStats : MonoBehaviour {
 public class PlayerStatsSaveClass {
 
 	[Header("Overworld values")]
-	public string playerArea;
+	public int currentArea;
+	public int playerArea;
 	public float playerPosX;
 	public float playerPosY;
 
