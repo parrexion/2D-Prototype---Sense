@@ -11,8 +11,11 @@ public class BattleTrigger : OWTrigger {
 
 	protected override void Trigger() {
 		Debug.Log("Start battle: "+ battle.entryName);
+		paused.value = true;
 		battleUuid.value = battle.uuid;
+		// currentArea.value = (int)Constants.SCENE_INDEXES.BATTLE;
 		Deactivate();
+		TriggerOtherTriggers();
 		startEvent.Invoke();
 	}
 }

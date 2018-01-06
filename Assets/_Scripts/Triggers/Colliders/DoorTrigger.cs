@@ -6,11 +6,10 @@ using UnityEngine.Events;
 public class DoorTrigger : OWTrigger {
 
 	public SpriteRenderer arrowSprite;
-	public BoolVariable paused;
 	public DoorArrowTrigger arrow;
 	public Constants.OverworldArea area;
 	public Vector2 position;
-	public StringVariable playerArea;
+	public IntVariable playerArea;
 	public FloatVariable posx, posy;
 
 
@@ -30,7 +29,7 @@ public class DoorTrigger : OWTrigger {
 	public void EnterDoor() {
 		Debug.Log("Moving to area: " + area);
 		paused.value = true;
-		playerArea.value = area.ToString();
+		playerArea.value = (int)area;
 		posx.value = position.x;
 		posy.value = position.y;
 		startEvent.Invoke();

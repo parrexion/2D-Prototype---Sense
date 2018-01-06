@@ -7,7 +7,6 @@ public class ChangeMapTrigger : OWTrigger {
 
 	public Constants.SCENE_INDEXES area;
 	public Vector2 position;
-	public BoolVariable paused;
 	public IntVariable playerArea;
 	public FloatVariable posx, posy;
 

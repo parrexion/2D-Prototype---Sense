@@ -33,7 +33,7 @@ public class MainMenuScript : MonoBehaviour {
 
 	public void StoryClicked(){
 		buttonClickEvent.Invoke();
-		dialogueUuid.value = "OldPrologueComplete";
+		dialogueUuid.value = "TrainToClassrom";
 		currentArea.value = (int)Constants.SCENE_INDEXES.DIALOGUE;
 		mapChangeEvent.Invoke();
 	}

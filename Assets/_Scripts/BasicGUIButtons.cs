@@ -55,8 +55,8 @@ public class BasicGUIButtons : MonoBehaviour {
 			yield return new WaitForSeconds(fadeOutTime.value);
 		}
 
-		SceneManager.LoadScene(currentScene.value);
 		fading = false;
+		SceneManager.LoadScene(currentScene.value);
 
 		yield break;
 	}

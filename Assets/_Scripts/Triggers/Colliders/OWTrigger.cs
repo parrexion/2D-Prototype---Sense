@@ -5,13 +5,20 @@ using UnityEngine.Events;
 
 public abstract class OWTrigger : MonoBehaviour {
 
-	public string uuid = System.Guid.NewGuid().ToString();
+	[Header("Is trigger active?")]
 	public bool active = true;
+	[Header("Is trigger visible?")]
 	public bool visible = false;
 	
+	[Header("Deactivate/Activate triggers")]
+	public List<OWTrigger> deactivateTriggers = new List<OWTrigger>();
+	public List<OWTrigger> activateTriggers = new List<OWTrigger>();
+
+	[Header("References - don't touch")]
+	public string uuid = System.Guid.NewGuid().ToString();
 	public SpriteRenderer sprite;
 	public SpriteRenderer areaSprite;
-
+	public BoolVariable paused;
 	public IntVariable currentArea;
 
 	public UnityEvent startEvent;
@@ -56,7 +63,15 @@ public abstract class OWTrigger : MonoBehaviour {
 	protected abstract void Trigger();
 
 	protected virtual void Startup(){
-		if (!active && sprite != null)
-			sprite.enabled = visible;
+		sprite.enabled = active && visible && sprite.sprite != null;
+	}
+
+	protected void TriggerOtherTriggers() {
+		for (int i = 0; i < deactivateTriggers.Count; i++) {
+			TriggerController.instance.SetActive(deactivateTriggers[i].uuid, false);
+		}
+		for (int i = 0; i < activateTriggers.Count; i++) {
+			TriggerController.instance.SetActive(activateTriggers[i].uuid, true);
+		}
 	}
 }
