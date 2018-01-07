@@ -96,10 +96,12 @@ public class DrawScoreScreen : MonoBehaviour {
 				break;
 			case BattleEntry.NextLocation.DIALOGUE:
 				currentArea.value = (int)Constants.SCENE_INDEXES.DIALOGUE;
+				dialogueUuid.value = be.nextDialogue.uuid;
 				changeMapEvent.Invoke();
 				break;
 			case BattleEntry.NextLocation.BATTLE:
 				currentArea.value = (int)Constants.SCENE_INDEXES.BATTLE;
+				battleUuid.value = be.nextBattle.uuid;
 				changeMapEvent.Invoke();
 				break;
 		}

@@ -9,6 +9,7 @@ public class BattleController : MonoBehaviour {
 
 	public ScrObjLibraryVariable battleLibrary;
 	public StringVariable battleUuid;
+	public IntVariable currentArea;
 	private BattleEntry be;
 	private BackgroundChanger backchange;
 
@@ -182,7 +183,8 @@ public class BattleController : MonoBehaviour {
 		Debug.Log("Won");
 
 		yield return new WaitForSeconds(time);
-		SceneManager.LoadScene((int)Constants.SCENE_INDEXES.SCORE);
+		currentArea.value = (int)Constants.SCENE_INDEXES.SCORE;
+		SceneManager.LoadScene(currentArea.value);
 	}
 
 	public IEnumerator EscapedBattle(float time){
@@ -195,7 +197,8 @@ public class BattleController : MonoBehaviour {
 
 		winText.text = "ESCAPED!";
 		yield return new WaitForSeconds(time);
-		SceneManager.LoadScene((int)Constants.SCENE_INDEXES.SCORE);
+		currentArea.value = (int)Constants.SCENE_INDEXES.SCORE;
+		SceneManager.LoadScene(currentArea.value);
 		yield return 0;
 	}
 
@@ -212,7 +215,8 @@ public class BattleController : MonoBehaviour {
 		values.time.value = currentTime;
 
 		yield return new WaitForSeconds(time);
-		SceneManager.LoadScene((int)Constants.SCENE_INDEXES.SCORE);
+		currentArea.value = (int)Constants.SCENE_INDEXES.SCORE;
+		SceneManager.LoadScene(currentArea.value);
 		yield return 0;
 	}
 

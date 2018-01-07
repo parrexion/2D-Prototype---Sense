@@ -39,7 +39,8 @@ public abstract class OWTrigger : MonoBehaviour {
 			yield return null;
 
 		active = TriggerController.instance.CheckActive(uuid.uuid, alwaysActive);
-		areaSprite.enabled = false;
+		if (areaSprite != null)
+			areaSprite.enabled = false;
 		Startup();
 	}
 	
