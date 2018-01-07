@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class TriggerController : MonoBehaviour {
 
@@ -20,22 +21,32 @@ public class TriggerController : MonoBehaviour {
 #endregion
 
     public BoolVariable paused;
-    public FloatVariable fadeSpeed;
+    public StringListVariable newgameUuid;
+    public IntVariable currentScene;
 
     private Dictionary<string,bool> triggerStates = new Dictionary<string, bool>();
 
+    [Header("Sections")]
+    public GameObject eastSection;
+    public GameObject centralSection;
+    public GameObject centralSectionRooms;
+    public GameObject westSection;
 
-    void Start() {
-        StartCoroutine(WaitForFadeIn());
+
+    void OnEnable() {
+        SceneManager.sceneLoaded += OnLevelFinishedLoading;
     }
 
-    /// <summary>
-    /// Resets the dictionary to all triggers being inactive.
-    /// </summary>
-    public void ResetDictionary() {
-        foreach (KeyValuePair<string,bool> key in triggerStates) {
-            triggerStates[key.Key] = false;
-        }
+    void OnDisable() {
+        SceneManager.sceneLoaded -= OnLevelFinishedLoading;
+    }
+
+    void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode) {
+        Constants.SCENE_INDEXES index = (Constants.SCENE_INDEXES)currentScene.value;
+        eastSection.SetActive(index == Constants.SCENE_INDEXES.EAST_SECTION);
+        centralSection.SetActive(index == Constants.SCENE_INDEXES.CENTRAL_SECTION);
+        centralSectionRooms.SetActive(index == Constants.SCENE_INDEXES.CENTRAL_SECTION_ROOMS);
+        westSection.SetActive(index == Constants.SCENE_INDEXES.WEST_SECTION);
     }
 
     /// <summary>
@@ -43,12 +54,20 @@ public class TriggerController : MonoBehaviour {
     /// </summary>
     /// <param name="uuid"></param>
     /// <returns></returns>
-    public bool CheckActive(string uuid) {
+    public bool CheckActive(string uuid, bool alwaysActive) {
         if (triggerStates.ContainsKey(uuid))
             return triggerStates[uuid];
 
-        triggerStates.Add(uuid, true);
-        return true;
+        bool active = alwaysActive;
+        for (int i = 0; i < newgameUuid.values.Length; i++) {
+            if (uuid == newgameUuid.values[i]){
+                active = true;
+                break;
+            }
+        }
+        Debug.Log("Adding trigger: " + uuid + ", state: " + active);
+        triggerStates.Add(uuid, active);
+        return active;
     }
 
     /// <summary>
@@ -62,16 +81,6 @@ public class TriggerController : MonoBehaviour {
         else
             triggerStates.Add(uuid, state);
     }
-
-    /// <summary>
-	/// Locks the menu until it has faded in.
-	/// </summary>
-	/// <returns></returns>
-	IEnumerator WaitForFadeIn() {
-		yield return new WaitForSeconds(fadeSpeed.value);
-		paused.value = false;
-		yield break;
-	}
 
 
     // SAVING AND LOADING

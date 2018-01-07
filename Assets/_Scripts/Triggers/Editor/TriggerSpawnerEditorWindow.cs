@@ -7,8 +7,9 @@ using System.Collections.Generic;
 public class TriggerSpawnerEditorWindow : EditorWindow {
 
 	public GameObject battleTrigger;
-	public GameObject dialogueTrigger;
+	public GameObject blockTrigger;
 	public GameObject changeMapTrigger;
+	public GameObject dialogueTrigger;
 	public GameObject doorTrigger;
 	public GameObject talkTrigger;
 
@@ -50,18 +51,23 @@ public class TriggerSpawnerEditorWindow : EditorWindow {
 		contentList.Add(guic);
 
 		guic = new GUIContent();
-		guic.text = "Change Map";
-		guic.image = GenerateImage(Color.red);
-		contentList.Add(guic);
-
-		guic = new GUIContent();
 		guic.text = "Talk";
 		guic.image = GenerateImage(Color.cyan);
 		contentList.Add(guic);
 
 		guic = new GUIContent();
-		guic.text = "Door";
+		guic.text = "Block";
 		guic.image = GenerateImage(Color.black);
+		contentList.Add(guic);
+
+		guic = new GUIContent();
+		guic.text = "Change Map";
+		guic.image = GenerateImage(Color.red);
+		contentList.Add(guic);
+
+		guic = new GUIContent();
+		guic.text = "Door";
+		guic.image = GenerateImage(Color.blue);
 		contentList.Add(guic);
 
 		guic = new GUIContent();
@@ -89,14 +95,18 @@ public class TriggerSpawnerEditorWindow : EditorWindow {
 		}
 
 		if (GUILayout.Button(buttonList[2])) {
-			triggerToSpawn = "changeMap";
-		}
-
-		if (GUILayout.Button(buttonList[3])) {
 			triggerToSpawn = "talk";
 		}
 
+		if (GUILayout.Button(buttonList[3])) {
+			triggerToSpawn = "block";
+		}
+
 		if (GUILayout.Button(buttonList[4])) {
+			triggerToSpawn = "changeMap";
+		}
+
+		if (GUILayout.Button(buttonList[5])) {
 			triggerToSpawn = "door";
 		}
 
@@ -156,11 +166,14 @@ public class TriggerSpawnerEditorWindow : EditorWindow {
 			case "battle":
 				trigger = Instantiate(battleTrigger);
 				break;
-			case "dialogue":
-				trigger = Instantiate(dialogueTrigger);
+			case "block":
+				trigger = Instantiate(blockTrigger);
 				break;
 			case "changeMap":
 				trigger = Instantiate(changeMapTrigger);
+				break;
+			case "dialogue":
+				trigger = Instantiate(dialogueTrigger);
 				break;
 			case "door":
 				trigger = Instantiate(doorTrigger);

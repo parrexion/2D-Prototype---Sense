@@ -5,8 +5,8 @@ using UnityEngine.Events;
 
 public abstract class OWTrigger : MonoBehaviour {
 
-	[Header("Is trigger active?")]
-	public bool active = true;
+	[Header("Is trigger always active?")]
+	public bool alwaysActive = true;
 	[Header("Is trigger visible?")]
 	public bool visible = false;
 	
@@ -15,6 +15,7 @@ public abstract class OWTrigger : MonoBehaviour {
 	public List<OWTrigger> activateTriggers = new List<OWTrigger>();
 
 	[Header("References - don't touch")]
+	public bool active;
 	public string uuid = System.Guid.NewGuid().ToString();
 	public SpriteRenderer sprite;
 	public SpriteRenderer areaSprite;
@@ -32,7 +33,7 @@ public abstract class OWTrigger : MonoBehaviour {
 		while(TriggerController.instance == null)
 			yield return null;
 
-		active = TriggerController.instance.CheckActive(uuid);
+		active = TriggerController.instance.CheckActive(uuid, alwaysActive);
 		areaSprite.enabled = false;
 		Startup();
 	}
