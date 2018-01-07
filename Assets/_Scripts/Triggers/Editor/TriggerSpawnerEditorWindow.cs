@@ -123,7 +123,7 @@ public class TriggerSpawnerEditorWindow : EditorWindow {
 		if (trigger != null) {
 			Debug.Log("Scene view position: " + SceneView.lastActiveSceneView.camera.transform.position);
 			OWTrigger ow = trigger.GetComponent<OWTrigger>();
-			ow.uuid = System.Guid.NewGuid().ToString();
+			ow.uuid.uuid = System.Guid.NewGuid().ToString();
 			trigger.transform.SetParent(triggerParent);
 			Vector3 spawnPos = new Vector3(
 				SceneView.lastActiveSceneView.camera.transform.position.x,

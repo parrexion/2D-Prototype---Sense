@@ -16,7 +16,7 @@ public abstract class OWTrigger : MonoBehaviour {
 
 	[Header("References - don't touch")]
 	public bool active;
-	public string uuid = System.Guid.NewGuid().ToString();
+	public UUID uuid;
 	public SpriteRenderer sprite;
 	public SpriteRenderer areaSprite;
 	public BoolVariable paused;
@@ -29,11 +29,16 @@ public abstract class OWTrigger : MonoBehaviour {
 		StartCoroutine(CheckTrigger());
 	}
 
+	/// <summary>
+	/// Waits for the triggercontroller to initialize before adding this trigger 
+	/// to the trigger list.
+	/// </summary>
+	/// <returns></returns>
 	IEnumerator CheckTrigger() {
 		while(TriggerController.instance == null)
 			yield return null;
 
-		active = TriggerController.instance.CheckActive(uuid, alwaysActive);
+		active = TriggerController.instance.CheckActive(uuid.uuid, alwaysActive);
 		areaSprite.enabled = false;
 		Startup();
 	}
@@ -54,8 +59,11 @@ public abstract class OWTrigger : MonoBehaviour {
 		Trigger();
 	}
 
+	/// <summary>
+	/// Deactivates the trigger.
+	/// </summary>
 	public void Deactivate() {
-		TriggerController.instance.SetActive(uuid, false);
+		TriggerController.instance.SetActive(uuid.uuid, false);
 	}
 
 	/// <summary>
@@ -63,16 +71,22 @@ public abstract class OWTrigger : MonoBehaviour {
 	/// </summary>
 	protected abstract void Trigger();
 
+	/// <summary>
+	/// Run when the trigger is initialized.
+	/// </summary>
 	protected virtual void Startup(){
 		sprite.enabled = active && visible && sprite.sprite != null;
 	}
 
+	/// <summary>
+	/// Deactivates and activates the other triggers in the lists.
+	/// </summary>
 	protected void TriggerOtherTriggers() {
 		for (int i = 0; i < deactivateTriggers.Count; i++) {
-			TriggerController.instance.SetActive(deactivateTriggers[i].uuid, false);
+			TriggerController.instance.SetActive(deactivateTriggers[i].uuid.uuid, false);
 		}
 		for (int i = 0; i < activateTriggers.Count; i++) {
-			TriggerController.instance.SetActive(activateTriggers[i].uuid, true);
+			TriggerController.instance.SetActive(activateTriggers[i].uuid.uuid, true);
 		}
 	}
 }
