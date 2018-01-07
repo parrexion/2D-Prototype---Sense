@@ -10,7 +10,6 @@ public class DialogueAdvanceFrame : MonoBehaviour, IPointerClickHandler {
 	public UnityEvent dialogueClickEvent;
 
     void IPointerClickHandler.OnPointerClick(PointerEventData eventData) {
-		Debug.Log("Button: " + eventData.button);
         dialogueClickEvent.Invoke();
     }
 

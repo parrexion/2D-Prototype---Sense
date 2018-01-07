@@ -80,6 +80,7 @@ public class DrawScoreScreen : MonoBehaviour {
 	public void LeaveScoreScreen(){
 		buttonClickEvent.Invoke();
 		battleLibrary.GenerateDictionary();
+		Debug.Log("UUID is: " + battleUuid.value);
 		BattleEntry be = (BattleEntry)battleLibrary.GetEntry(battleUuid.value);
 		switch (be.nextLocation)
 		{
@@ -92,16 +93,19 @@ public class DrawScoreScreen : MonoBehaviour {
 					playerPosY.value = be.playerPosition.y;
 				}
 				currentArea.value = playerArea.value;
+				Debug.Log("Battle -> Overworld");
 				changeMapEvent.Invoke();
 				break;
 			case BattleEntry.NextLocation.DIALOGUE:
 				currentArea.value = (int)Constants.SCENE_INDEXES.DIALOGUE;
 				dialogueUuid.value = be.nextDialogue.uuid;
+				Debug.Log("Battle -> Dialogue");
 				changeMapEvent.Invoke();
 				break;
 			case BattleEntry.NextLocation.BATTLE:
 				currentArea.value = (int)Constants.SCENE_INDEXES.BATTLE;
 				battleUuid.value = be.nextBattle.uuid;
+				Debug.Log("Battle -> Battle");
 				changeMapEvent.Invoke();
 				break;
 		}

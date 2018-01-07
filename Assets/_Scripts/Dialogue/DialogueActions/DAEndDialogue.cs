@@ -20,18 +20,16 @@ public class DAEndDialogue : DialogueAction {
 				}
 				scene.currentArea.value = scene.playerArea.value;
 				scene.mapChangeEvent.Invoke();
-				Debug.Log("Moving on to overworld");
 				break;
 			case BattleEntry.NextLocation.DIALOGUE:
 				scene.currentArea.value = (int)Constants.SCENE_INDEXES.DIALOGUE;
 				scene.dialogueUuid.value = de.nextEntry.uuid;
 				scene.mapChangeEvent.Invoke();
-				Debug.Log("Moving on to dialogue");
 				break;
 			case BattleEntry.NextLocation.BATTLE:
 				scene.currentArea.value = (int)Constants.SCENE_INDEXES.BATTLE;
+				scene.battleUuid.value = de.nextEntry.uuid;
 				scene.mapChangeEvent.Invoke();
-				Debug.Log("Moving on to battle");
 				break;
 		}
 

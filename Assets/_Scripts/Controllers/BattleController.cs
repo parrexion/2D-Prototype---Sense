@@ -17,6 +17,7 @@ public class BattleController : MonoBehaviour {
 	public BoolVariable paused;
 	public BoolVariable invincible;
 	public BoolVariable removeLeftSide;
+	public BoolVariable alwaysEscapable;
 	public UnityEvent pauseEvent;
 	public UnityEvent saveGameEvent;
 
@@ -38,15 +39,16 @@ public class BattleController : MonoBehaviour {
 	void Start () {
 		be = (BattleEntry)battleLibrary.GetEntry(battleUuid.value);
 
-		tutorial = false;
-		escape = (be.backgroundHintLeft != null || be.backgroundHintRight != null);
-		// Debug.Log(be.backgroundHintLeft != null);
-		// Debug.Log(be.backgroundHintRight != null);
+		tutorial = (be.backgroundHintLeft != null || be.backgroundHintRight != null);
+		escape = tutorial;
 		invincible.value = true;
 		removeLeftSide.value = (be.removeSide == BattleEntry.RemoveSide.LEFT);
 
 		backchange = GameObject.Find("Background Background").GetComponent<BackgroundChanger>();
 		backchange.escapeBattleButton.interactable = be.escapeButtonEnabled;
+#if UNITY_EDITOR
+		backchange.escapeBattleButton.interactable = be.escapeButtonEnabled || alwaysEscapable.value;
+#endif
 		backchange.cameraNormal.enabled = false;
 		backchange.cameraSpirit.enabled = false;
 		backchange.gridController.enabled = false;
@@ -54,6 +56,7 @@ public class BattleController : MonoBehaviour {
 		SetupBackgrounds();
 		paused.value = true;
 		StartCoroutine(CreateEnemies());
+		Debug.Log("Start");
 	}
 
 	IEnumerator CreateEnemies(){
@@ -63,6 +66,7 @@ public class BattleController : MonoBehaviour {
 		}
 		enemyController.CreateEnemies(be.removeSide != BattleEntry.RemoveSide.RIGHT, be.removeSide != BattleEntry.RemoveSide.LEFT);
 		initiated = true;
+		Debug.Log("Initiated");
 	}
 	
 	// Update is called once per frame
@@ -75,6 +79,7 @@ public class BattleController : MonoBehaviour {
 			currentTime += Time.deltaTime;
 
 		if (Input.GetKeyDown(KeyCode.Escape)) {
+			Debug.Log("Press escape");
 			if (escape) {
 				escape = false;
 				StartBattle();
@@ -104,19 +109,21 @@ public class BattleController : MonoBehaviour {
 	}
 
 	private void SetupBackgrounds() {
-		if (!tutorial && be.isTutorial) {
+		if (tutorial && be.isTutorial) {
 			if (be.backgroundHintRight != null) {
 				backchange.tutorialNormal.sprite = be.backgroundHintRight;
-				tutorial = true;
+				tutorial = false;
 			}
 			if (be.backgroundHintLeft != null) {
 				backchange.tutorialSpirit.sprite = be.backgroundHintLeft;
-				tutorial = true;
+				tutorial = false;
 			}
 			state = -1;
+			Debug.Log("Tutorial screens activated");
 			return;
 		}
 
+		Debug.Log("Other stuff setupBackgrounds");
 		invincible.value = be.playerInvincible;
 		
 		if (be.removeSide == BattleEntry.RemoveSide.RIGHT) {
