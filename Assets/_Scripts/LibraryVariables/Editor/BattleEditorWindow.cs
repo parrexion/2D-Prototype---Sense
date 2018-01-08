@@ -149,14 +149,17 @@ public class BattleEditorWindow {
 				battleValues.nextBattle = (BattleEntry)EditorGUILayout.ObjectField("Next battle", battleValues.nextBattle, typeof(BattleEntry),false);
 				break;
 		}
+		GUILayout.Space(10);
 		GUILayout.Label("Battle values", EditorStyles.boldLabel);
 		battleValues.escapeButtonEnabled = EditorGUILayout.Toggle("Escapable Battle", battleValues.escapeButtonEnabled);
+		GUILayout.Space(10);
 
 		//Tutorial
-		GUILayout.BeginHorizontal();
 		battleValues.isTutorial = EditorGUILayout.Toggle("Tutorial Battle", battleValues.isTutorial);
+		GUILayout.BeginHorizontal();
 		if (battleValues.isTutorial) {
 			battleValues.playerInvincible = EditorGUILayout.Toggle("Player invincible", battleValues.playerInvincible);
+			battleValues.useSlowTime = EditorGUILayout.Toggle("Use Slow Time", battleValues.useSlowTime);
 		}
 		GUILayout.EndHorizontal();
 		

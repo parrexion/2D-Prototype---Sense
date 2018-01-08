@@ -3,7 +3,8 @@
 using UnityEngine;
 using UnityEditor;
 
-[CustomEditor(typeof(AreaIntVariable))] public class AreaIntVariableEditor : Editor {
+[CustomEditor(typeof(AreaIntVariable))]
+public class AreaIntVariableEditor : Editor {
 
     Constants.SCENE_INDEXES asdf;
 

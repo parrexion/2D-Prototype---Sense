@@ -18,6 +18,7 @@ public class BattleEntry : ScrObjLibraryEntry {
 	public Sprite backgroundHintRight = null;
 	public RemoveSide removeSide = RemoveSide.NONE;
 	public bool playerInvincible = false;
+	public bool useSlowTime = true;
 
 	// Background
 	public Sprite backgroundLeft = null;
@@ -57,6 +58,7 @@ public class BattleEntry : ScrObjLibraryEntry {
 		backgroundHintRight = null;
 		removeSide = RemoveSide.NONE;
 		playerInvincible = false;
+		useSlowTime = true;
 
 		// Background
 		backgroundLeft = null;
@@ -97,6 +99,7 @@ public class BattleEntry : ScrObjLibraryEntry {
 		backgroundHintRight = be.backgroundHintRight;
 		removeSide =  be.removeSide;
 		playerInvincible = be.playerInvincible;
+		useSlowTime = be.useSlowTime;
 
 		// Background
 		backgroundLeft = be.backgroundLeft;
