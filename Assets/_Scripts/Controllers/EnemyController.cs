@@ -44,7 +44,7 @@ public class EnemyController : MonoBehaviour {
 
 		battleLibrary.GenerateDictionary();
 		be = (BattleEntry)battleLibrary.GetEntry(battleUuid.value);
-		Debug.Log(JsonUtility.ToJson(be));
+		// Debug.Log(JsonUtility.ToJson(be));
 
 		numberOfEnemies = be.numberOfEnemies;
 		enemySelection = be.enemyTypes;

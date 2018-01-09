@@ -67,7 +67,9 @@ public static class Constants {
 		CENTRAL_SECTION = 11,
 		CENTRAL_SECTION_ROOMS = 12,
 		WEST_SECTION = 13,
-		WEST_SECTION_ROOMS = 14
+		WEST_SECTION_ROOMS = 14,
+		NORTHEAST_SECTION = 15,
+		NORTHEAST_SECTION_ROOMS = 16
 	}
 
 	/// <summary>
@@ -76,6 +78,8 @@ public static class Constants {
 	public enum OverworldArea {
 		DEFAULT = 0, 
 		TOWER = 7,
+		NORTHEAST_SECTION = 15,
+		NORTHEAST_SECTION_ROOMS = 16,
 		EAST_SECTION = 9,
 		EAST_SECTION_ROOMS = 10,
 		CENTRAL_SECTION = 11,

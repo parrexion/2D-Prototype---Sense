@@ -20,9 +20,7 @@ public class SpiritGridController : MonoBehaviour {
 
 	[Header("Attack/Defend")]
 	public Transform starProjectile;
-	public Transform starEffect;
 	public Transform lightningProjectile;
-	public Transform lightningEffect;
 	public float AttackTimeLimit = 2.0f;
 	private float currentAttackTimeLimit;
 
@@ -225,16 +223,6 @@ public class SpiritGridController : MonoBehaviour {
 			projectile.damage = dv.GetDamage();
 			projectile.multiHit = true;
 			shotTransform.position = dv.entityHit.position;
-
-			shotTransform = Instantiate(starEffect) as Transform;
-			float xpos = Random.Range(-0.35f,0.35f);
-			float ypos = Random.Range(-0.35f,0.35f);
-			shotTransform.position = new Vector3(dv.entityHit.position.x+xpos,dv.entityHit.position.y+ypos,0);
-
-			shotTransform = Instantiate(starEffect) as Transform;
-			xpos = Random.Range(-0.35f,0.35f);
-			ypos = Random.Range(-0.35f,0.35f);
-			shotTransform.position = new Vector3(dv.entityHit.position.x+xpos,dv.entityHit.position.y+ypos,0);
 		}
 	}
 
@@ -254,9 +242,6 @@ public class SpiritGridController : MonoBehaviour {
 
 			var shotTransform = Instantiate(lightningProjectile) as Transform;
 			shotTransform.GetComponent<Projectile>().damage = dv.GetDamage();
-			shotTransform.position = enemy.position;
-
-			shotTransform = Instantiate(lightningEffect) as Transform;
 			shotTransform.position = enemy.position;
 		}
 	}

@@ -24,7 +24,6 @@ public class MoveJumpingScript : MoveScript {
 		movement.y = baseSpeed.y;
 		unscaledSpeed = movement;
 		jumping = true;
-		Debug.Log("Hopp: " + unscaledSpeed);
     }
 
     protected override void CalculateSpeed() {

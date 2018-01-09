@@ -23,9 +23,10 @@ public class MoveHomingScript : MonoBehaviour {
 
 	[Header("Dash")]
 	public bool dashing = false;
+	public Vector2 dashSpeed = new Vector2(0.3f,0.3f);
 	public float dashTime = 0.75f;
 	private float currentDashTime;
-	private Vector2 dashSpeed;
+	private Vector2 currentDashSpeed;
 
 
 	void Start() {
@@ -42,7 +43,7 @@ public class MoveHomingScript : MonoBehaviour {
 		if (dashing)
 			return;
 		dashing = true;
-		dashSpeed = speed*1.5f;
+		currentDashSpeed = speed*1.5f;
 		currentDashTime = 0f;
 
 		if (moveToPosition.x < transform.position.x)
@@ -65,11 +66,12 @@ public class MoveHomingScript : MonoBehaviour {
 			return;
 
 		float time = (canBeSlowed.value && !slowLeftSide.value) ? (Time.fixedDeltaTime * slowAmount.value) : Time.fixedDeltaTime;
+		float slowed = (canBeSlowed.value && !slowLeftSide.value) ? slowAmount.value : 1f;
 
 		if (objectToFollow == null) {
 			if (dashing) {
-				movement = Vector2.MoveTowards(transform.position,moveToPosition,dashSpeed.x*time);
-				dashSpeed -= new Vector2(0.3f,0.3f);
+				movement = Vector2.MoveTowards(transform.position,moveToPosition,currentDashSpeed.x*time);
+				currentDashSpeed -= slowed * dashSpeed;
 				currentDashTime += time;
 				dashing = (currentDashTime < dashTime);
 				if (!dashing)

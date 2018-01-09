@@ -60,7 +60,7 @@ public class DrawScoreScreen : MonoBehaviour {
 			healthText.text = "";
 		}
 		else {
-			float currentHealth = playerMaxHealth.value + (playerNormalDamage.value + playerSpiritDamage.value);
+			float currentHealth = playerMaxHealth.value - (playerNormalDamage.value + playerSpiritDamage.value);
 			healthText.text = "Health left:    "+((currentHealth)/(playerMaxHealth.value) * 100).ToString("F2") + "%";
 		}
 		if (wonBattleState.value == "win") {

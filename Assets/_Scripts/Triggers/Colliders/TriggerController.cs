@@ -28,6 +28,7 @@ public class TriggerController : MonoBehaviour {
     private Dictionary<string,bool> triggerStates = new Dictionary<string, bool>();
 
     [Header("Sections")]
+    public TriggerChapter northeastSection;
     public TriggerChapter eastSection;
     public TriggerChapter centralSection;
     public TriggerChapter centralSectionRooms;
@@ -52,6 +53,7 @@ public class TriggerController : MonoBehaviour {
     }
 
     public void SetupTriggers() {
+        northeastSection.SetupTriggers();
         eastSection.SetupTriggers();
         centralSection.SetupTriggers();
         centralSectionRooms.SetupTriggers();
@@ -63,6 +65,7 @@ public class TriggerController : MonoBehaviour {
     /// </summary>
     public void ReactivateTriggers() {
         Constants.SCENE_INDEXES index = (Constants.SCENE_INDEXES)currentScene.value;
+        northeastSection.ActivateSection(currentChapter.value, index == Constants.SCENE_INDEXES.NORTHEAST_SECTION);
         eastSection.ActivateSection(currentChapter.value, index == Constants.SCENE_INDEXES.EAST_SECTION);
         centralSection.ActivateSection(currentChapter.value, index == Constants.SCENE_INDEXES.CENTRAL_SECTION);
         centralSectionRooms.ActivateSection(currentChapter.value, index == Constants.SCENE_INDEXES.CENTRAL_SECTION_ROOMS);
