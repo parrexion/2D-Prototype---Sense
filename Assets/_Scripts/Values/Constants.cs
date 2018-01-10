@@ -69,14 +69,17 @@ public static class Constants {
 		WEST_SECTION = 13,
 		WEST_SECTION_ROOMS = 14,
 		NORTHEAST_SECTION = 15,
-		NORTHEAST_SECTION_ROOMS = 16
+		NORTHEAST_SECTION_ROOMS = 16,
+		TRAINING_WEST_AREA = 17,
+		TRAINING_WEST_AREA_ROOMS = 18
 	}
 
 	/// <summary>
 	/// Enum for all areas in the game.
 	/// </summary>
 	public enum OverworldArea {
-		DEFAULT = 0, 
+		DEFAULT = 0,
+		MAINMENU = 1,
 		TOWER = 7,
 		NORTHEAST_SECTION = 15,
 		NORTHEAST_SECTION_ROOMS = 16,
@@ -86,7 +89,8 @@ public static class Constants {
 		CENTRAL_SECTION_ROOMS = 12,
 		WEST_SECTION = 13,
 		WEST_SECTION_ROOMS = 14,
-		MAINMENU = 1
+		TRAINING_WEST_AREA = 17,
+		TRAINING_WEST_AREA_ROOMS = 18
 	}
 
 }

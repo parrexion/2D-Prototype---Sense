@@ -35,12 +35,8 @@ public class BattleClock : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (paused.value)
+		if (paused.value || !useSlowTime.value)
 			return;
-
-		if (!useSlowTime.value){
-			Destroy(gameObject);
-		}
 
 		currentTime += Time.deltaTime;
 

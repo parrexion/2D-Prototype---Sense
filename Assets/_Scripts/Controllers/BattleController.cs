@@ -27,6 +27,7 @@ public class BattleController : MonoBehaviour {
 	public PlayerController playerController;
 	public SpiritGridController spiritController;
 	public CharacterHealthGUI characterHealth;
+	public BattleClock battleClock;
 	public AudioClip pauseClip;
 
 	public float startupTime = 3.0f;
@@ -45,6 +46,7 @@ public class BattleController : MonoBehaviour {
 		invincible.value = true;
 		removeLeftSide.value = (be.removeSide == BattleEntry.RemoveSide.LEFT);
 		useSlowTime.value = be.useSlowTime;
+		battleClock.gameObject.SetActive(useSlowTime.value && !tutorial);
 
 		backchange = GameObject.Find("Background Background").GetComponent<BackgroundChanger>();
 		backchange.escapeBattleButton.interactable = be.escapeButtonEnabled;
@@ -146,6 +148,7 @@ public class BattleController : MonoBehaviour {
 		}
 		
 		winText.text = "GET READY!";
+		battleClock.gameObject.SetActive(useSlowTime.value);
 		state = 0;
 	}
 
