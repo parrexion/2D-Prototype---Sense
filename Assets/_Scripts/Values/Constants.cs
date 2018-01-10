@@ -85,7 +85,8 @@ public static class Constants {
 		CENTRAL_SECTION = 11,
 		CENTRAL_SECTION_ROOMS = 12,
 		WEST_SECTION = 13,
-		WEST_SECTION_ROOMS = 14
+		WEST_SECTION_ROOMS = 14,
+		MAINMENU = 1
 	}
 
 }
