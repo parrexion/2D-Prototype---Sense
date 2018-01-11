@@ -14,7 +14,12 @@ public class ChaseAction : Action {
 
 		NStateController ncon = (NStateController)controller;
 
-		ncon.movement = Vector2.MoveTowards(ncon.thisTransform.position,ncon.nPlayer.position,ncon.values.speed.x*Time.fixedDeltaTime);
+		float speed = ncon.values.speed.x*Time.fixedDeltaTime;// * ncon.moveDirection;
+		if (ncon.canBeSlowed.value && !ncon.slowLeftSide.value) {
+			speed *= ncon.slowAmount.value;
+		}
+		
+		ncon.movement = Vector2.MoveTowards(ncon.thisTransform.position,ncon.nPlayer.position,speed);
 
 		ncon.movement.Set(
 			Mathf.Clamp(ncon.movement.x,Constants.NormalStartX-Constants.NormalBorderWidth,Constants.NormalStartX+Constants.NormalBorderWidth),

@@ -13,10 +13,14 @@ public class FleeAction : Action {
 
 		NStateController ncon = (NStateController)controller;
 
+		float speed = Time.fixedDeltaTime;// * ncon.moveDirection;
+		if (ncon.canBeSlowed.value && !ncon.slowLeftSide.value)
+			speed *= ncon.slowAmount.value;
+		
 		Vector2 direction = ncon.thisTransform.position-ncon.nPlayer.position;
 		ncon.movement = new Vector2(ncon.thisTransform.position.x,ncon.thisTransform.position.y) 
 			+ (new Vector2(direction.normalized.x * ncon.values.speed.x,
-							direction.normalized.y * ncon.values.speed.y)*Time.fixedDeltaTime);
+							direction.normalized.y * ncon.values.speed.y) * speed);
 
 		ncon.movement.Set(
 			Mathf.Clamp(ncon.movement.x,Constants.NormalStartX-Constants.NormalBorderWidth,Constants.NormalStartX+Constants.NormalBorderWidth),

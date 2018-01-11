@@ -12,6 +12,7 @@ public class BattleClock : MonoBehaviour {
 
 	[Header("Clock")]
 	public Transform arrow;
+	private SpriteRenderer arrowRenderer;
 
 	[Header("Screen Effects")]
 	public GameObject leftScreenOverlay;
@@ -24,20 +25,26 @@ public class BattleClock : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		sprite = GetComponent<SpriteRenderer>();
-		sprite.color = Color.magenta;
+		arrowRenderer = arrow.GetComponent<SpriteRenderer>();
 		currentTime = Random.Range(0f,changeTime.value*2);
 		leftSideSlow.value = (currentTime >= changeTime.value);
 		if (currentTime >= changeTime.value)
 			currentTime -= changeTime.value;
+		sprite.color = (leftSideSlow.value) ? Color.yellow : Color.magenta;
 		leftScreenOverlay.SetActive(leftSideSlow.value);
 		rightScreenOverlay.SetActive(!leftSideSlow.value);
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if (paused.value || !useSlowTime.value)
+		if (paused.value || !useSlowTime.value){
+			sprite.enabled = false;
+			arrowRenderer.enabled = false;
 			return;
+		}
 
+		sprite.enabled = true;
+		arrowRenderer.enabled = true;
 		currentTime += Time.deltaTime;
 
 		if (currentTime >= changeTime.value) {
