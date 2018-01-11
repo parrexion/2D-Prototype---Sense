@@ -84,9 +84,17 @@ public abstract class OWTrigger : MonoBehaviour {
 	/// </summary>
 	protected void TriggerOtherTriggers() {
 		for (int i = 0; i < deactivateTriggers.Count; i++) {
+			if (activateTriggers[i] == null){
+				Debug.LogError("Trigger is null in deactivation triggers");
+				continue;
+			}
 			TriggerController.instance.SetActive(deactivateTriggers[i].uuid.uuid, false);
 		}
 		for (int i = 0; i < activateTriggers.Count; i++) {
+			if (activateTriggers[i] == null){
+				Debug.LogError("Trigger is null in activation triggers");
+				continue;
+			}
 			TriggerController.instance.SetActive(activateTriggers[i].uuid.uuid, true);
 		}
 	}

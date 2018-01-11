@@ -8,6 +8,7 @@ public class MainMenuScript : MonoBehaviour {
 
 	public Text recordText;
 
+	public StringVariable currentChapter;
 	public IntVariable currentArea;
 	public IntVariable playerArea;
 
@@ -34,6 +35,7 @@ public class MainMenuScript : MonoBehaviour {
 	public void StoryClicked(){
 		buttonClickEvent.Invoke();
 		dialogueUuid.value = "TrainToClassrom";
+		currentChapter.value = "Part1";
 		currentArea.value = (int)Constants.SCENE_INDEXES.DIALOGUE;
 		mapChangeEvent.Invoke();
 	}
