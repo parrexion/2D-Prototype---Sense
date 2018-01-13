@@ -5,7 +5,7 @@ using UnityEngine.Events;
 
 public class ChangeMapTrigger : OWTrigger {
 
-	public Constants.SCENE_INDEXES area;
+	public Constants.OverworldArea area;
 	public Vector2 position;
 	public IntVariable playerArea;
 	public FloatVariable posx, posy;
