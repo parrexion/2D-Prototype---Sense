@@ -18,6 +18,7 @@ public class DialogueEditorWindow : EditorWindow {
 
 	public DialogueEntry dialogueValues;
 	DialogueWindowHelpClass d = new DialogueWindowHelpClass();
+	public Sprite noBackgroundSprite;
 
 	Rect bkgRect;
 	Rect faceRect;
@@ -104,6 +105,8 @@ public class DialogueEditorWindow : EditorWindow {
 		if (dialogueValues.frames[selFrame].background != null){
 			GUI.DrawTexture(bkgRect, dialogueValues.frames[selFrame].background.sprite.texture);
 		}
+		else
+			GUI.DrawTexture(bkgRect, noBackgroundSprite.texture);
 
 		GUILayout.EndArea();
 		GUILayout.BeginArea(saveRect);
