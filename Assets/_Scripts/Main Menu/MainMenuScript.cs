@@ -31,6 +31,7 @@ public class MainMenuScript : MonoBehaviour {
 
 	void Start(){
 		recordText.text = "Highest level: " + bestTowerLevel.value;
+		currentArea.value = (int)Constants.SCENE_INDEXES.MAINMENU;
 	}
 
 	/// <summary>

@@ -9,7 +9,7 @@ public class OutsidePlayerController : MonoBehaviour {
 	private MoveHomingNoLimit moveToPosition;
 	private Camera cam;
 	public FloatVariable posx, posy;
-	public IntVariable speedHack;
+	public FloatVariable speedHack;
 
 	// Use this for initialization
 	void Start () {

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class WeaponSlot : MonoBehaviour {
 
+	public IntVariable removeBattleSide;
+
 	[Header("Game speed")]
 	public BoolVariable paused;
 	public BoolVariable canBeSlowed;
@@ -57,7 +59,7 @@ public class WeaponSlot : MonoBehaviour {
 	/// Reduces the shotcooldown and checks if the kanji should be activated.
 	/// </summary>
 	void Update() {
-		if (paused.value)
+		if (paused.value || removeBattleSide.value == 2)
 			return;
 
 		float time = (canBeSlowed.value && !slowLeftSide.value) ? (Time.deltaTime * slowAmount.value) : Time.deltaTime;
@@ -101,7 +103,7 @@ public class WeaponSlot : MonoBehaviour {
 	/// Renders the current state of all the kanji in the weapon slot.
 	/// </summary>
 	void OnGUI(){
-		if (paused.value)
+		if (paused.value || removeBattleSide.value == 2)
 			return;
 
 		for (int i = 0; i < Constants.MAX_EQUIPPED_KANJI; i++) {

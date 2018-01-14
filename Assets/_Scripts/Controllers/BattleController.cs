@@ -16,7 +16,7 @@ public class BattleController : MonoBehaviour {
 	private bool initiated = false;
 	public BoolVariable paused;
 	public BoolVariable invincible;
-	public BoolVariable removeLeftSide;
+	public IntVariable removeBattleSide;
 	public BoolVariable alwaysEscapable;
 	public BoolVariable useSlowTime;
 	public UnityEvent pauseEvent;
@@ -44,7 +44,7 @@ public class BattleController : MonoBehaviour {
 		tutorial = (be.backgroundHintLeft != null || be.backgroundHintRight != null);
 		escape = tutorial;
 		invincible.value = true;
-		removeLeftSide.value = (be.removeSide == BattleEntry.RemoveSide.LEFT);
+		removeBattleSide.value = (int)be.removeSide;
 		useSlowTime.value = be.useSlowTime;
 		battleClock.gameObject.SetActive(useSlowTime.value && !tutorial);
 
