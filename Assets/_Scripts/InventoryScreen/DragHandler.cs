@@ -52,7 +52,7 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 			return;
 		}
 		itemBeingDragged = null;
-		GetComponent<Image>().raycastTarget = true;
+		image.raycastTarget = true;
 		transform.localPosition = Vector3.zero;
 	}
 

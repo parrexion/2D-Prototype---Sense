@@ -42,8 +42,12 @@ public class Frame {
 
 	public void CopyValues(Frame other) {
 		background = other.background;
-		characters = other.characters;
-		poses = other.poses;
+		characters = new CharacterEntry[Constants.DIALOGUE_PLAYERS_COUNT];
+		poses = new int[Constants.DIALOGUE_PLAYERS_COUNT];
+		for (int i = 0; i < Constants.DIALOGUE_PLAYERS_COUNT; i++) {
+			characters[i] = other.characters[i];
+			poses[i] = other.poses[i];
+		}
 		talkingIndex = other.talkingIndex;
 		talkingName = other.talkingName;
 		dialogueText = other.dialogueText;
