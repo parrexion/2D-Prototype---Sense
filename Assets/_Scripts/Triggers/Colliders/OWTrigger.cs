@@ -61,12 +61,19 @@ public abstract class OWTrigger : MonoBehaviour {
 	}
 
 	/// <summary>
+	/// Triggered when called from another trigger in-game.
+	/// </summary>
+	public virtual void IngameTrigger() {
+
+	}
+
+	/// <summary>
 	/// Activates the trigger.
 	/// </summary>
 	public void Activate() {
 		TriggerController.instance.SetActive(uuid.uuid, true);
 		active = true;
-		Startup();
+		IngameTrigger();
 	}
 
 	/// <summary>

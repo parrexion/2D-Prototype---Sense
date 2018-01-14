@@ -22,6 +22,12 @@ public class MusicTrigger : OWTrigger {
 		Deactivate();
 	}
 
+	/// <summary>
+	/// Triggered when called from another trigger in-game.
+	/// </summary>
+	public override void IngameTrigger() {
+		Startup();
+	}
 
     public override void Trigger() {}
 }

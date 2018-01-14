@@ -278,14 +278,14 @@ public class DialogueEditorWindow : EditorWindow {
 				dialogueValues.nextEntry = (BattleEntry)EditorGUILayout.ObjectField("Next battle", dialogueValues.nextEntry, typeof(BattleEntry),false);
 				break;
 		}
-		// GUILayout.BeginHorizontal();
-		// if (GUILayout.Button("Shave off\nBefore", GUILayout.Width(100), GUILayout.Height(48))) {
-		// 	ShaveoffBefore();
-		// }
-		// if (GUILayout.Button("Shave off\nAfter", GUILayout.Width(100), GUILayout.Height(48))) {
-		// 	ShaveoffAfter();
-		// }
-		// GUILayout.EndHorizontal();
+		GUILayout.BeginHorizontal();
+		if (GUILayout.Button("Shave off\nBefore", GUILayout.Width(100), GUILayout.Height(48))) {
+			ShaveoffBefore();
+		}
+		if (GUILayout.Button("Shave off\nAfter", GUILayout.Width(100), GUILayout.Height(48))) {
+			ShaveoffAfter();
+		}
+		GUILayout.EndHorizontal();
 		GUILayout.EndArea();
 	}
 

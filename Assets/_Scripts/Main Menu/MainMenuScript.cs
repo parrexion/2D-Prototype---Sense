@@ -34,6 +34,15 @@ public class MainMenuScript : MonoBehaviour {
 	}
 
 	/// <summary>
+	/// Options clicked
+	/// </summary>
+	public void OptionsClicked() {
+		buttonClickEvent.Invoke();
+		currentArea.value = (int)Constants.SCENE_INDEXES.OPTIONS;
+		mapChangeEvent.Invoke();
+	}
+
+	/// <summary>
 	/// Story mode selection
 	/// </summary>
 	public void StoryClicked(){
