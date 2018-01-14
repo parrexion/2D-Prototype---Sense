@@ -9,7 +9,7 @@ public class DialogueTrigger : OWTrigger {
 	public StringVariable dialogueUuid;
 
 
-	protected override void Trigger() {
+	public override void Trigger() {
 		Debug.Log("Start dialogue: "+ dialogue.name);
 		paused.value = true;
 		dialogueUuid.value = dialogue.uuid;

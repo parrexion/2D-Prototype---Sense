@@ -8,7 +8,7 @@ public class UnlockTrigger : OWTrigger {
 	public string unlockString;
 
 
-	protected override void Trigger() {
+	public override void Trigger() {
 		Debug.Log("Unlocking id: "+ unlockString);
 		startEvent.Invoke();
 	}

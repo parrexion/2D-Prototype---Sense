@@ -9,7 +9,7 @@ public class BattleTrigger : OWTrigger {
 	public StringVariable battleUuid;
 
 
-	protected override void Trigger() {
+	public override void Trigger() {
 		Debug.Log("Start battle: "+ battle.entryName);
 		paused.value = true;
 		battleUuid.value = battle.uuid;

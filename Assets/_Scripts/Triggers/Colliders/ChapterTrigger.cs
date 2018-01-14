@@ -11,11 +11,14 @@ public class ChapterTrigger : OWTrigger {
 	/// Sets up all blocks and hides them from sight.
 	/// </summary>
 	protected override void Startup(){
+		if (!active)
+			return;
+			
 		currentChapter.value = chapterString;
 		Debug.Log("Chapter is now: " + currentChapter.value);
 		Deactivate();
 	}
 
 
-    protected override void Trigger() {}
+    public override void Trigger() {}
 }

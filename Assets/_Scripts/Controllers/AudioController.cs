@@ -7,13 +7,21 @@ using UnityEngine;
 /// </summary>
 public class AudioController : MonoBehaviour {
 	
+	[Header("Other")]
+	public IntVariable currentArea;
+
 	[Header("SFX")]
 	public AudioVariable sfxClip;
 	public FloatVariable effectVolume;
 	public AudioSource efxSource;
 
 	[Header("Music")]
-	public AudioVariable backgroundMusic;
+	public AudioVariable battleMusic;
+	public AudioVariable battleTowerMusic;
+	public AudioVariable dialogueMusic;
+	public AudioVariable inventoryMusic;
+	public AudioVariable mainMenuMusic;
+	public AudioVariable overworldMusic;
 	public FloatVariable musicVolume;
 	public AudioSource musicSource;
 
@@ -39,14 +47,35 @@ public class AudioController : MonoBehaviour {
 	/// <param name="clip">Clip.</param>
 	public void PlayBackgroundMusic() {
 		Debug.Log("MUSIC!!!");
-		if (backgroundMusic.value == null) {
+		AudioClip selectedSong = GetCurrentClip();
+		
+		if (selectedSong == null) {
 			musicSource.Stop();
 			playingBkg = false;
 		}
 		else {
-			musicSource.clip = backgroundMusic.value;
+			musicSource.clip = selectedSong;
 			musicSource.Play();
 			playingBkg = true;
+		}
+	}
+
+	AudioClip GetCurrentClip(){
+		switch((Constants.SCENE_INDEXES)currentArea.value)
+		{
+			case Constants.SCENE_INDEXES.BATTLE:
+				return battleMusic.value;
+			case Constants.SCENE_INDEXES.BATTLETOWER:
+				return battleTowerMusic.value;
+			case Constants.SCENE_INDEXES.DIALOGUE:
+				return dialogueMusic.value;
+			case Constants.SCENE_INDEXES.INVENTORY:
+				return inventoryMusic.value;
+			case Constants.SCENE_INDEXES.MAINMENU:
+				return mainMenuMusic.value;
+			
+			default:
+				return overworldMusic.value;
 		}
 	}
 

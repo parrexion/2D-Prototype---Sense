@@ -11,7 +11,7 @@ public class TalkTrigger : OWTrigger {
 	public StringVariable dialogueUuid;
 
 
-	protected override void Trigger() {
+	public override void Trigger() {
 		chat.active = true;
 		talkSprite.enabled = true;
 	}

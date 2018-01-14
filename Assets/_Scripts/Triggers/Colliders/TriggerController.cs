@@ -33,6 +33,7 @@ public class TriggerController : MonoBehaviour {
     public TriggerChapter centralSection;
     public TriggerChapter centralSectionRooms;
     public TriggerChapter westSection;
+    public TriggerChapter westSectionRooms;
     public TriggerChapter trainingWestArea;
 
     [Header("Testing - Current Area")]
@@ -59,6 +60,7 @@ public class TriggerController : MonoBehaviour {
         centralSection.SetupTriggers();
         centralSectionRooms.SetupTriggers();
         westSection.SetupTriggers();
+        westSectionRooms.SetupTriggers();
         trainingWestArea.SetupTriggers();
     }
 
@@ -72,6 +74,7 @@ public class TriggerController : MonoBehaviour {
         centralSection.ActivateSection(currentChapter.value, index == Constants.SCENE_INDEXES.CENTRAL_SECTION);
         centralSectionRooms.ActivateSection(currentChapter.value, index == Constants.SCENE_INDEXES.CENTRAL_SECTION_ROOMS);
         westSection.ActivateSection(currentChapter.value, index == Constants.SCENE_INDEXES.WEST_SECTION);
+        westSectionRooms.ActivateSection(currentChapter.value, index == Constants.SCENE_INDEXES.WEST_SECTION_ROOMS);
         trainingWestArea.ActivateSection(currentChapter.value, index == Constants.SCENE_INDEXES.TRAINING_WEST_AREA);
     }
 

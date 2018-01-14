@@ -11,7 +11,7 @@ public class ChangeMapTrigger : OWTrigger {
 	public FloatVariable posx, posy;
 
 
-	protected override void Trigger() {
+	public override void Trigger() {
 		Debug.Log("Moving to area: " + area);
 		paused.value = true;
 		currentArea.value = (int)area;

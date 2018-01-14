@@ -26,20 +26,27 @@ public class MainMenuScript : MonoBehaviour {
 	
 	public UnityEvent buttonClickEvent;
 	public UnityEvent mapChangeEvent;
+	public UnityEvent dialogueEvent;
 
 
 	void Start(){
 		recordText.text = "Highest level: " + bestTowerLevel.value;
 	}
 
+	/// <summary>
+	/// Story mode selection
+	/// </summary>
 	public void StoryClicked(){
 		buttonClickEvent.Invoke();
 		dialogueUuid.value = "TrainToClassrom";
 		currentChapter.value = "Part1";
 		currentArea.value = (int)Constants.SCENE_INDEXES.DIALOGUE;
-		mapChangeEvent.Invoke();
+		dialogueEvent.Invoke();
 	}
 
+	/// <summary>
+	/// Random battles clicked
+	/// </summary>
 	public void BattleClicked(){
 		mainMenuCanvas.enabled = false;
 		levelSelectCanvas.enabled = true;
@@ -54,6 +61,10 @@ public class MainMenuScript : MonoBehaviour {
 		levelMinus5Text.gameObject.SetActive(bestLevel > 6);
 	}
 
+	/// <summary>
+	/// Battle tower clicked
+	/// </summary>
+	/// <param name="levelPosition"></param>
 	public void LevelSelectClicked(int levelPosition){
 		int bestLevel = bestTowerLevel.value;
 		if (levelPosition == 1) 

@@ -29,9 +29,11 @@ public class TriggerChapter : MonoBehaviour {
 	/// </summary>
 	/// <param name="id"></param>
 	public void ActivateSection(string id, bool state) {
-		Debug.Log("Size: " + containers.Count);
-		if (containers.Count == 0)
+
+		if (containers.Count == 0){
+			Debug.LogWarning("Empty area");
 			return;
+		}
 		containers[0].gameObject.SetActive(state);
 		for (int i = 1; i < containers.Count; i++) {
 			containers[i].gameObject.SetActive(state && id == chapterIDs[i]);

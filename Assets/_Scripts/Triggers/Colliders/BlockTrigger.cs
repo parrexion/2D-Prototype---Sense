@@ -22,5 +22,5 @@ public class BlockTrigger : OWTrigger {
 	}
 
 
-    protected override void Trigger() {}
+    public override void Trigger() {}
 }

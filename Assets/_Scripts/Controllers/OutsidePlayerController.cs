@@ -9,6 +9,7 @@ public class OutsidePlayerController : MonoBehaviour {
 	private MoveHomingNoLimit moveToPosition;
 	private Camera cam;
 	public FloatVariable posx, posy;
+	public IntVariable speedHack;
 
 	// Use this for initialization
 	void Start () {
@@ -16,6 +17,9 @@ public class OutsidePlayerController : MonoBehaviour {
 		cam = Camera.main;
 		SetPlayerPosition();
 		paused.value = false;
+#if UNITY_EDITOR
+		moveToPosition.speed *= speedHack.value;
+#endif
 	}
 	
 	// Update is called once per frame

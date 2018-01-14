@@ -61,16 +61,26 @@ public abstract class OWTrigger : MonoBehaviour {
 	}
 
 	/// <summary>
+	/// Activates the trigger.
+	/// </summary>
+	public void Activate() {
+		TriggerController.instance.SetActive(uuid.uuid, true);
+		active = true;
+		Startup();
+	}
+
+	/// <summary>
 	/// Deactivates the trigger.
 	/// </summary>
 	public void Deactivate() {
 		TriggerController.instance.SetActive(uuid.uuid, false);
+		active = false;
 	}
 
 	/// <summary>
 	/// Triggers the action depending on the trigger type.
 	/// </summary>
-	protected abstract void Trigger();
+	public abstract void Trigger();
 
 	/// <summary>
 	/// Run when the trigger is initialized.
@@ -88,14 +98,14 @@ public abstract class OWTrigger : MonoBehaviour {
 				Debug.LogError("Trigger is null in deactivation triggers");
 				continue;
 			}
-			TriggerController.instance.SetActive(deactivateTriggers[i].uuid.uuid, false);
+			deactivateTriggers[i].Deactivate();
 		}
 		for (int i = 0; i < activateTriggers.Count; i++) {
 			if (activateTriggers[i] == null){
 				Debug.LogError("Trigger is null in activation triggers");
 				continue;
 			}
-			TriggerController.instance.SetActive(activateTriggers[i].uuid.uuid, true);
+			activateTriggers[i].Activate();
 		}
 	}
 }

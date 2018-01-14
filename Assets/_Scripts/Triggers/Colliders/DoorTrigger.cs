@@ -13,7 +13,7 @@ public class DoorTrigger : OWTrigger {
 	public FloatVariable posx, posy;
 
 
-	protected override void Trigger() {
+	public override void Trigger() {
 		arrow.active = true;
 		arrowSprite.enabled = true;
 	}

@@ -11,7 +11,7 @@ public class TowerTrigger : OWTrigger {
 	public IntVariable towerLevel;
 
 
-	protected override void Trigger() {
+	public override void Trigger() {
 		towerBattle.entryName = "Level " + towerLevel;
 		FillQuota(30+30*towerLevel.value);
 		towerLevel.value++;
