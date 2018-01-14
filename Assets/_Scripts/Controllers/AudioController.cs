@@ -17,7 +17,6 @@ public class AudioController : MonoBehaviour {
 
 	[Header("Music")]
 	public AudioVariable battleMusic;
-	public AudioVariable battleTowerMusic;
 	public AudioVariable dialogueMusic;
 	public AudioVariable inventoryMusic;
 	public AudioVariable mainMenuMusic;
@@ -64,9 +63,8 @@ public class AudioController : MonoBehaviour {
 		switch((Constants.SCENE_INDEXES)currentArea.value)
 		{
 			case Constants.SCENE_INDEXES.BATTLE:
-				return battleMusic.value;
 			case Constants.SCENE_INDEXES.BATTLETOWER:
-				return battleTowerMusic.value;
+				return battleMusic.value;
 			case Constants.SCENE_INDEXES.DIALOGUE:
 				return dialogueMusic.value;
 			case Constants.SCENE_INDEXES.INVENTORY:
