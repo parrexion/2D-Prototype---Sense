@@ -6,16 +6,19 @@ using UnityEngine.UI;
 
 public class DrawScoreScreen : MonoBehaviour {
 
+	[Header("Libraries")]
 	public ScrObjLibraryVariable battleLibrary;
 	public StringVariable battleUuid;
 	public StringVariable dialogueUuid;
 
+	[Header("Player values")]
 	public IntVariable currentArea;
 	public IntVariable playerArea;
 	public FloatVariable playerPosX;
 	public FloatVariable playerPosY;
 	public BoolVariable paused;
 
+	[Header("Score values")]
 	public StringVariable wonBattleState;
 	public FloatVariable battleTime;
 	public IntVariable playerMaxHealth;
@@ -25,6 +28,7 @@ public class DrawScoreScreen : MonoBehaviour {
 	public IntVariable expGained;
 	public IntVariable moneyGained;
 
+	[Header("Texts")]
 	public Text escapedText;
 	public Text timeText;
 	public Text healthText;
@@ -32,8 +36,14 @@ public class DrawScoreScreen : MonoBehaviour {
 	public Text expText;
 	public Text moneyText;
 
+	[Header("Battle Tower")]
+	public IntVariable currentTowerLevel;
+	public UnityEvent saveGame;
+
+	[Header("Events")]
 	public UnityEvent buttonClickEvent;
 	public UnityEvent changeMapEvent;
+
 
 	// Use this for initialization
 	void Start () {
@@ -86,6 +96,10 @@ public class DrawScoreScreen : MonoBehaviour {
 		{
 			case BattleEntry.NextLocation.OVERWORLD:
 				paused.value = false;
+				if (be.playerArea == Constants.OverworldArea.TOWER){
+					currentArea.value++;
+					saveGame.Invoke();
+				}
 				if (be.changePosition) {
 					if (be.playerArea != Constants.OverworldArea.DEFAULT)
 						playerArea.value = (int)be.playerArea;

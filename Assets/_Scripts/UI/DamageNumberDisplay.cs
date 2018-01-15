@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class DamageNumberDisplay : MonoBehaviour {
 
+	private static int id = 0;
+
 	public IntVariable removeBattleSide;
 	public BoolVariable paused;
 	public int damage;
@@ -30,6 +32,7 @@ public class DamageNumberDisplay : MonoBehaviour {
 
 		rN = new Rect(-32,-32,32,32);
 		rS = new Rect(-32,-32,32,32);
+		SetupPositions();
 
 		style = new GUIStyle();
 		style.fontSize = (int)(25 * Screen.height / 512f);
@@ -51,11 +54,14 @@ public class DamageNumberDisplay : MonoBehaviour {
 		currentTime += Time.deltaTime;
 		if (currentTime > time)
 			Destroy(gameObject,time);
+	}
+
+	void SetupPositions() {
 
 		float size = 16*Screen.height/512;
 
 		if (drawBottom) {
-			rN = new Rect(cam[1].WorldToScreenPoint(transform.position),new Vector2(size,size));
+			rN = new Rect(cam[2].WorldToScreenPoint(transform.position),new Vector2(size,size));
 			rN.yMin = Screen.height-rN.yMin;
 			rN.yMax = Screen.height-rN.yMax;
 			rN.xMin -= size*0.5f;
@@ -63,10 +69,15 @@ public class DamageNumberDisplay : MonoBehaviour {
 		}
 
 		if (drawTop) {
-			if (drawBottom)
-				rS = new Rect(cam[2].WorldToScreenPoint(transform.position),new Vector2(size,size));
+			if (drawBottom){
+				// Debug.Log("Cam0: " + cam[0].name);
+				// Debug.Log("Cam1: " + cam[1].name);
+				// Debug.Log("Cam2: " + cam[2].name);
+				// Debug.Log("Cam3: " + cam[3].name);
+				rS = new Rect(cam[3].WorldToScreenPoint(transform.position),new Vector2(size,size));
+			}
 			else
-				rS = new Rect(cam[1].WorldToScreenPoint(transform.position),new Vector2(size,size));
+				rS = new Rect(cam[2].WorldToScreenPoint(transform.position),new Vector2(size,size));
 
 			rS.yMin = Screen.height-rS.yMin;
 			rS.yMax = Screen.height-rS.yMax;

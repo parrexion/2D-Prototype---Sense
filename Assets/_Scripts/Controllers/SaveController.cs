@@ -7,6 +7,7 @@ using System.Xml.Serialization;
 
 public class SaveController : MonoBehaviour {
 
+	public bool loadGame = true;
 
 	[Header("Save object references")]
 	public PlayerStats playerStats;
@@ -85,7 +86,9 @@ public class SaveController : MonoBehaviour {
 	/// Reads the save file if it exists and sets the values.
 	/// </summary>
 	public void Load() {
-
+		if (!loadGame)
+			return;
+			
 		//Settings data
 		if (settingsValues != null) {
 			if (settingsValues != null && File.Exists(settingsPath)){

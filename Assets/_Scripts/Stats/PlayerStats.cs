@@ -69,6 +69,7 @@ public class PlayerStats : MonoBehaviour {
 	[Header("Libraries")]
 	public ScrObjLibraryVariable itemLibrary;
 
+
 	void Start() {
 		StartCoroutine(CountPlayTime());
 		CalculateExp();

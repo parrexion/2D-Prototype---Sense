@@ -9,6 +9,8 @@ using UnityEngine;
 [RequireComponent(typeof(SpriteRenderer),typeof(Rigidbody2D))]
 public class HurtableEnemyScript : MonoBehaviour {
 
+	private static int id = 0;
+
 	public EnemyGroup group;
 	public Transform damageNumbers;
 
@@ -51,6 +53,8 @@ public class HurtableEnemyScript : MonoBehaviour {
 		DamageNumberDisplay dnd = t.GetComponent<DamageNumberDisplay>();
 		dnd.damage = projectile.damage;
 		battleGUI.damages.Add(dnd);
+		Debug.Log("Ouch  " + id);
+		id++;
 	}
 
 	/// <summary>

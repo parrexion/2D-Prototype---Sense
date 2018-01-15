@@ -63,7 +63,6 @@ public class AudioController : MonoBehaviour {
 		switch((Constants.SCENE_INDEXES)currentArea.value)
 		{
 			case Constants.SCENE_INDEXES.BATTLE:
-			case Constants.SCENE_INDEXES.BATTLETOWER:
 				return battleMusic.value;
 			case Constants.SCENE_INDEXES.DIALOGUE:
 				return dialogueMusic.value;
