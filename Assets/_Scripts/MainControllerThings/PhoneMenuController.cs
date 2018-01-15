@@ -14,10 +14,12 @@ public class PhoneMenuController : MonoBehaviour {
 
 	public Button equipButton;
 	public BoolVariable equipButtonAvailable;
-	public StringVariable currentLocation;
+
+	public IntVariable currentArea;
+	public StringVariable dialogueUUID;
 
 
-	void Start() {
+	void Awake() {
 		equipButton.interactable = equipButtonAvailable.value;
 	}
 
@@ -25,12 +27,24 @@ public class PhoneMenuController : MonoBehaviour {
 	/// Updates the phone's clock to current time.
 	/// </summary>
 	void Update() {
-		locationText.text = currentLocation.value;
+		SetCurrentLocationText();
 		currentDate = System.DateTime.Now;
 		SetCurrentTimeDate();
 		// if (Input.GetKeyDown(KeyCode.Escape)) {
 		// 	AppHelper.Quit();
 		// }
+	}
+
+	/// <summary>
+	/// Updates the name of the current location.
+	/// </summary>
+	void SetCurrentLocationText(){
+		if (currentArea.value == (int)Constants.SCENE_INDEXES.DIALOGUE){
+			locationText.text = dialogueUUID.value;
+		}
+		else {
+			locationText.text = ((Constants.SCENE_INDEXES)currentArea.value).ToString();
+		}
 	}
 
 	/// <summary>

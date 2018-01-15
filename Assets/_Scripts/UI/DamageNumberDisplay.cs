@@ -5,8 +5,6 @@ using UnityEngine.UI;
 
 public class DamageNumberDisplay : MonoBehaviour {
 
-	private static int id = 0;
-
 	public IntVariable removeBattleSide;
 	public BoolVariable paused;
 	public int damage;
@@ -19,10 +17,6 @@ public class DamageNumberDisplay : MonoBehaviour {
 	Camera[] cam;
 	private bool drawTop;
 	private bool drawBottom;
-
-	// public float number_width = 1f;
-	// public float number_height = 1f;
-
 
 	void Start() {
 		cam = Camera.allCameras;
@@ -70,10 +64,6 @@ public class DamageNumberDisplay : MonoBehaviour {
 
 		if (drawTop) {
 			if (drawBottom){
-				// Debug.Log("Cam0: " + cam[0].name);
-				// Debug.Log("Cam1: " + cam[1].name);
-				// Debug.Log("Cam2: " + cam[2].name);
-				// Debug.Log("Cam3: " + cam[3].name);
 				rS = new Rect(cam[3].WorldToScreenPoint(transform.position),new Vector2(size,size));
 			}
 			else
