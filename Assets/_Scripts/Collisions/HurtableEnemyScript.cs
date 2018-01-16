@@ -53,7 +53,6 @@ public class HurtableEnemyScript : MonoBehaviour {
 		DamageNumberDisplay dnd = t.GetComponent<DamageNumberDisplay>();
 		dnd.damage = projectile.damage;
 		battleGUI.damages.Add(dnd);
-		Debug.Log("Ouch  " + id);
 		id++;
 	}
 

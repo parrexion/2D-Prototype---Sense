@@ -29,7 +29,7 @@ public class DialogueEditorWindow : EditorWindow {
 	int[] reverseIndexList = new int[]{0,4,1,3,2};
 	string[] nextActionStrings = new string[] { "OVERWORLD", "DIALOGUE", "BATTLE" };
 	string[] talkingLabels = new string[] { "Talking", "Talking", "Talking", "Talking", "Talking" };
-	string[] poseList = new string[] { "Normal", "Sad", "Happy", "Angry", "Dead", "Hmm", "Pleased", "Surprised", "Worried" };
+	string[] poseList = new string[] { "Normal", "Sad", "Happy", "Angry", "Dead", "Hmm", "Pleased", "Surprised", "Worried", "Grumpy" };
 
 	// Selected things
 	int selectTalker = -1;

@@ -11,7 +11,6 @@ public abstract class HurtableBaseScript : MonoBehaviour {
 	public virtual int TakeDamage(int damage) {
 
 		if (invincible.value){
-			Debug.Log("I'm invincible!!");
 			return 0;
 		}
 

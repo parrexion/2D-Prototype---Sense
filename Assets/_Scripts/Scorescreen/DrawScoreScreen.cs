@@ -20,6 +20,7 @@ public class DrawScoreScreen : MonoBehaviour {
 
 	[Header("Score values")]
 	public StringVariable wonBattleState;
+	public BoolVariable playerInvincible;
 	public FloatVariable battleTime;
 	public IntVariable playerMaxHealth;
 	public FloatVariable playerNormalDamage;
@@ -66,7 +67,7 @@ public class DrawScoreScreen : MonoBehaviour {
 			moneyGained.value = 0;
 		}
 		timeText.text = "Time:    "+ battleTime.value.ToString("F2") + "s";
-		if (playerMaxHealth.value == 0) {
+		if (playerMaxHealth.value == 0 || playerInvincible.value) {
 			healthText.text = "";
 		}
 		else {
