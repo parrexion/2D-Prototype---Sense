@@ -10,10 +10,13 @@ public class CheatMenu : EditorWindow {
 	[Header("Battle values")]
 	public BoolVariable invinciblePlayers;
 	public BoolVariable invincibleEnemies;
-	public BoolVariable alwaysEscape;
+	public BoolVariable alwaysEscapeBattle;
 
 	[Header("Overworld values")]
 	public FloatVariable speedHack;
+
+	[Header("Dialogue values")]
+	public BoolVariable alwaysSkippableDialogue;
 
 	// Private stuff
 	private bool useSpeedHack = false;
@@ -58,14 +61,15 @@ public class CheatMenu : EditorWindow {
 		GUILayout.Space(20);
 
 		GUILayout.Label("Battle cheats", EditorStyles.boldLabel);
-		alwaysEscape.value = GUILayout.Toggle(alwaysEscape.value, "Enable escape from all battles");
+
+		alwaysEscapeBattle.value = GUILayout.Toggle(alwaysEscapeBattle.value, "Enable escape from all battles");
 		invinciblePlayers.value = GUILayout.Toggle(invinciblePlayers.value, "Invincible players");
 		invincibleEnemies.value = GUILayout.Toggle(invincibleEnemies.value, "Invincible enemies");
 
 		GUILayout.Space(10);
 
 		GUILayout.Label("Overworld cheats", EditorStyles.boldLabel);
-		
+
 		GUILayout.BeginHorizontal();
 		useSpeedHack = GUILayout.Toggle(useSpeedHack, "Speed hack");
 		if (!useSpeedHack)
@@ -76,5 +80,11 @@ public class CheatMenu : EditorWindow {
 		speedHack.value = EditorGUILayout.FloatField("Speed", speedHack.value);
 		EditorGUI.EndDisabledGroup();
 		GUILayout.EndHorizontal();
+
+		GUILayout.Space(10);
+
+		GUILayout.Label("Dialogue cheats", EditorStyles.boldLabel);
+
+		GUILayout.Toggle(alwaysSkippableDialogue, "Skippable dialogue");
 	}
 }
