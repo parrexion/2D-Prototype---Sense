@@ -57,17 +57,26 @@ public class CheatMenu : EditorWindow {
 	/// Renders the window.
 	/// </summary>
 	void OnGUI() {
+		// Hotkeys();
+
 		GUILayout.Label("Cheat Menu", EditorStyles.boldLabel);
 		GUILayout.Space(20);
+		DrawBattleCheats();
+		GUILayout.Space(10);
+		DrawOverworldCheats();
+		GUILayout.Space(10);
+		DrawDialogueCheats();
+	}
 
+	void DrawBattleCheats() {
 		GUILayout.Label("Battle cheats", EditorStyles.boldLabel);
 
 		alwaysEscapeBattle.value = GUILayout.Toggle(alwaysEscapeBattle.value, "Enable escape from all battles");
 		invinciblePlayers.value = GUILayout.Toggle(invinciblePlayers.value, "Invincible players");
 		invincibleEnemies.value = GUILayout.Toggle(invincibleEnemies.value, "Invincible enemies");
+	}
 
-		GUILayout.Space(10);
-
+	void DrawOverworldCheats() {
 		GUILayout.Label("Overworld cheats", EditorStyles.boldLabel);
 
 		GUILayout.BeginHorizontal();
@@ -80,11 +89,33 @@ public class CheatMenu : EditorWindow {
 		speedHack.value = EditorGUILayout.FloatField("Speed", speedHack.value);
 		EditorGUI.EndDisabledGroup();
 		GUILayout.EndHorizontal();
+	}
 
-		GUILayout.Space(10);
-
+	void DrawDialogueCheats() {
 		GUILayout.Label("Dialogue cheats", EditorStyles.boldLabel);
 
-		GUILayout.Toggle(alwaysSkippableDialogue, "Skippable dialogue");
+		alwaysSkippableDialogue.value = GUILayout.Toggle(alwaysSkippableDialogue.value, "Skippable dialogue");
 	}
+
+	// void Hotkeys() {
+	// 	Event e = Event.current;
+	// 	switch (e.type) {
+	// 		case EventType.KeyDown:
+	// 			if (e.keyCode == KeyCode.LeftControl) {
+	// 				Debug.Log("A");
+	// 				Debug.Log("SSS: " + alwaysSkippableDialogue.value);
+	// 				alwaysSkippableDialogue.value = false;
+	// 				Debug.Log("SSS: " + alwaysSkippableDialogue.value);
+	// 			}
+	// 			if (e.keyCode == KeyCode.RightControl) {
+	// 				Debug.Log("S");
+	// 				Debug.Log("SSS: " + alwaysSkippableDialogue.value);
+	// 				alwaysSkippableDialogue.value = true;
+	// 				Debug.Log("SSS: " + alwaysSkippableDialogue.value);
+	// 			}
+	// 			Repaint();
+	// 			break;
+	// 	}
+	// }
+
 }

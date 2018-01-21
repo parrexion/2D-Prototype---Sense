@@ -28,17 +28,7 @@ public class TriggerController : MonoBehaviour {
     private Dictionary<string,bool> triggerStates = new Dictionary<string, bool>();
 
     [Header("Sections")]
-    public TriggerChapter northeastSection;
-    public TriggerChapter eastSection;
-    public TriggerChapter centralSection;
-    public TriggerChapter centralSectionRooms;
-    public TriggerChapter westSection;
-    public TriggerChapter westSectionRooms;
-    public TriggerChapter trainingWestArea;
-
-    [Header("Testing - Current Area")]
-    public AreaIntVariable currentArea;
-    public AreaIntVariable playerArea;
+    public TriggerChapter[] sectionList;
 
 
     void OnEnable() {
@@ -55,27 +45,19 @@ public class TriggerController : MonoBehaviour {
     }
 
     public void SetupTriggers() {
-        northeastSection.SetupTriggers();
-        eastSection.SetupTriggers();
-        centralSection.SetupTriggers();
-        centralSectionRooms.SetupTriggers();
-        westSection.SetupTriggers();
-        westSectionRooms.SetupTriggers();
-        trainingWestArea.SetupTriggers();
+        for (int i = 0; i < sectionList.Length; i++) {
+            sectionList[i].SetupTriggers(false);
+        }
     }
 
     /// <summary>
     /// Goes through all sections and activates the current section.
     /// </summary>
     public void ReactivateTriggers() {
-        Constants.SCENE_INDEXES index = (Constants.SCENE_INDEXES)currentScene.value;
-        northeastSection.ActivateSection(currentChapter.value, index == Constants.SCENE_INDEXES.NORTHEAST_SECTION);
-        eastSection.ActivateSection(currentChapter.value, index == Constants.SCENE_INDEXES.EAST_SECTION);
-        centralSection.ActivateSection(currentChapter.value, index == Constants.SCENE_INDEXES.CENTRAL_SECTION);
-        centralSectionRooms.ActivateSection(currentChapter.value, index == Constants.SCENE_INDEXES.CENTRAL_SECTION_ROOMS);
-        westSection.ActivateSection(currentChapter.value, index == Constants.SCENE_INDEXES.WEST_SECTION);
-        westSectionRooms.ActivateSection(currentChapter.value, index == Constants.SCENE_INDEXES.WEST_SECTION_ROOMS);
-        trainingWestArea.ActivateSection(currentChapter.value, index == Constants.SCENE_INDEXES.TRAINING_WEST_AREA);
+        Constants.OverworldArea index = (Constants.OverworldArea)currentScene.value;
+        for (int i = 0; i < sectionList.Length; i++) {
+            sectionList[i].ActivateSection(currentChapter.value, index);
+        }
     }
 
     /// <summary>

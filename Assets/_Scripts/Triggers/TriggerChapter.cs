@@ -4,16 +4,26 @@ using UnityEngine;
 
 public class TriggerChapter : MonoBehaviour {
 
+	public Constants.OverworldArea activeArea;
+
+	public List<Transform> containers = new List<Transform>();
 	List<string> chapterIDs = new List<string>();
-	List<Transform> containers = new List<Transform>();
 
 
 	// Use this for initialization
 	void Awake () {
-		SetupTriggers();
+		SetupTriggers(false);
 	}
 
-	public void SetupTriggers() {
+	public bool SetupTriggers(bool editorCall) {
+		if (!editorCall && transform.childCount == containers.Count){
+			Debug.Log("Nothing to update for " + activeArea.ToString());
+			return false;
+		}
+
+		containers = new List<Transform>();
+		chapterIDs = new List<string>();
+
 		Transform child;
 		for (int i = 0; i < transform.childCount; i++) {
 			child = transform.GetChild(i);
@@ -22,21 +32,24 @@ public class TriggerChapter : MonoBehaviour {
 		}
 		if (chapterIDs.Count > 0 && chapterIDs[0] != "ChangeMap")
 			Debug.LogError("This section does not contain a ChangeMap object at the top!");
+
+		return true;
 	}
 
 	/// <summary>
 	/// Activates the chapter with the given id and deactivates the rest.
 	/// </summary>
-	/// <param name="id"></param>
-	public void ActivateSection(string id, bool state) {
+	/// <param name="chapterID"></param>
+	public void ActivateSection(string chapterID, Constants.OverworldArea sceneIndex) {
 
 		if (containers.Count == 0){
 			Debug.LogWarning("Empty area");
 			return;
 		}
+		bool state = (sceneIndex == activeArea);
 		containers[0].gameObject.SetActive(state);
 		for (int i = 1; i < containers.Count; i++) {
-			containers[i].gameObject.SetActive(state && id == chapterIDs[i]);
+			containers[i].gameObject.SetActive(state && chapterID == chapterIDs[i]);
 		}
 	}
 }
