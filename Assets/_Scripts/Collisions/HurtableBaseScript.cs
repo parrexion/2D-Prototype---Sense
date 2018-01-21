@@ -16,12 +16,6 @@ public abstract class HurtableBaseScript : MonoBehaviour {
 
 		damage -= defense;
 
-		// currentHealth -= damage;
-		// // Debug.Log("Took "+damage+" damage. HP left: " + currentHealth);
-
-		// if (currentHealth <= 0) {
-		// 	Die();
-		// }
 		return damage;
 	}
 	

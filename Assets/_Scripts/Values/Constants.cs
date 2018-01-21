@@ -27,7 +27,7 @@ public static class Constants {
 
 	//Spirit grid
 	public static int GRID_BRANCH = 5;
-	public static int GRID_WIDTH = 7;
+	public const int GRID_WIDTH = 7;
 	public static float SPIRIT_SIZE = 32.0f;
 	public static int SPIRIT_IMAGES = 18;
 	public static int BALANCE_IMAGES = 9;
@@ -36,7 +36,7 @@ public static class Constants {
 	public const int MAX_EQUIPPED_KANJI = 4;
 	public const int kanjiSize = 64;
 	public const float kanjiGuiOffsetWidth = 0.55f;
-	public const float kanjiGuiOffsetHeight = 0.05f;
+	public const float kanjiGuiOffsetHeight = 0.04f;
 
 	//Inventory
 	public const int gearEquipSpace = 4;

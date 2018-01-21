@@ -9,6 +9,7 @@ public class StatusController : MonoBehaviour {
 	public IntVariable ingameDay;
 	public IntVariable playerLevel;
 	public IntVariable totalExp;
+	public IntVariable nextLevelTotalExp;
 	public IntVariable money;
 	public StringVariable playTime;
 

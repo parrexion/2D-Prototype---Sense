@@ -14,10 +14,6 @@ public class BattleClock : MonoBehaviour {
 	public Transform arrow;
 	private SpriteRenderer arrowRenderer;
 
-	[Header("Screen Effects")]
-	public GameObject leftScreenOverlay;
-	public GameObject rightScreenOverlay;
-
 	SpriteRenderer sprite;
 	float currentTime;
 
@@ -31,8 +27,6 @@ public class BattleClock : MonoBehaviour {
 		if (currentTime >= changeTime.value)
 			currentTime -= changeTime.value;
 		sprite.color = (leftSideSlow.value) ? Color.yellow : Color.magenta;
-		leftScreenOverlay.SetActive(leftSideSlow.value);
-		rightScreenOverlay.SetActive(!leftSideSlow.value);
 	}
 	
 	// Update is called once per frame
@@ -51,8 +45,6 @@ public class BattleClock : MonoBehaviour {
 			currentTime -= changeTime.value;
 			leftSideSlow.value = !leftSideSlow.value;
 			sprite.color = (leftSideSlow.value) ? Color.yellow : Color.magenta;
-			leftScreenOverlay.SetActive(leftSideSlow.value);
-			rightScreenOverlay.SetActive(!leftSideSlow.value);
 		}
 
 		float rotation = 180*currentTime/changeTime.value;

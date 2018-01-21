@@ -24,6 +24,7 @@ public class WeaponSlot : MonoBehaviour {
 	[Header("Kanji")]
 	public ContainerKanji[] kanji;
 	private float size;
+	private float kanjiWidth;
 	private float kanjiHeight;
 	private Texture2D emptySprite;
 	private Texture2D filledSprite;
@@ -34,8 +35,8 @@ public class WeaponSlot : MonoBehaviour {
 
 	void Start () {
 		shootCooldown = 0f;
-		size = Constants.kanjiSize*Screen.height/Constants.SCREEN_HEIGHT;
 		
+		CalculateHeightDifference();
 		SetupTextures();
 		SetEquippedKanji();
 	}
@@ -53,6 +54,20 @@ public class WeaponSlot : MonoBehaviour {
 		chargingSprite = new Texture2D(1,1);
 		chargingSprite.SetPixel(0,0,Color.yellow);
 		chargingSprite.Apply();
+	}
+
+	/// <summary>
+	/// Updates the size of the UI to fit the current screen resolution.
+	/// </summary>
+	void CalculateHeightDifference() {
+		float p2 = (float)Constants.SCREEN_HEIGHT * (float)Screen.width/(float)Constants.SCREEN_WIDTH;
+		float borderAdd = ((float)Screen.height - p2) * 0.5f / Screen.height;
+		float resize = (1 - 2*borderAdd);
+		float widthDiff = (float)Screen.width / (float)Constants.SCREEN_WIDTH;
+
+		size = Constants.kanjiSize*widthDiff;
+		kanjiWidth = Constants.kanjiGuiOffsetWidth;
+		kanjiHeight = borderAdd + Constants.kanjiGuiOffsetHeight * resize;
 	}
 
 	/// <summary>
@@ -79,8 +94,6 @@ public class WeaponSlot : MonoBehaviour {
 	/// </summary>
 	/// <returns></returns>
 	void SetEquippedKanji(){
-		float width = Constants.kanjiGuiOffsetWidth;
-		kanjiHeight = Constants.kanjiGuiOffsetHeight;
 		BattleEntry be = (BattleEntry)battleLibrary.GetEntry(battleUuid.value);
 
 		for (int i = 0; i < Constants.MAX_EQUIPPED_KANJI; i++) {
@@ -94,8 +107,8 @@ public class WeaponSlot : MonoBehaviour {
 			kanji[i].Initialize(i);
 
 			//slotName = new Rect(BattleConstants.kanjiXPos+slot*80,BattleConstants.kanjiYPos-16,400,100);
-			kanji[i].slotPos = new Rect(Screen.width*width+i*size*1.25f,Screen.height*kanjiHeight,size,size);
-			kanji[i].slotFilled = new Rect(Screen.width*width+i*size*1.25f,Screen.height*kanjiHeight+size,size,size);
+			kanji[i].slotPos = new Rect(Screen.width*kanjiWidth+i*size*1.25f,Screen.height*kanjiHeight,size,size);
+			kanji[i].slotFilled = new Rect(Screen.width*kanjiWidth+i*size*1.25f,Screen.height*kanjiHeight,size,size);
 		}
 	}
 
@@ -134,6 +147,11 @@ public class WeaponSlot : MonoBehaviour {
 		return (shootCooldown > 0);
 	}
 
+	/// <summary>
+	/// Checks each kanji equipped if they can be activated.
+	/// </summary>
+	/// <param name="mouseInfo"></param>
+	/// <returns></returns>
 	public bool Activate(MouseInformation mouseInfo) {
 		if (shootCooldown > 0f){
 			return false;

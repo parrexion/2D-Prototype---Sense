@@ -5,6 +5,10 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.Events;
 
+/// <summary>
+/// Main controller for the battles which handles most of the initialization
+/// and keeps track of objects in the battle.
+/// </summary>
 public class BattleController : MonoBehaviour {
 
 	public ScrObjLibraryVariable battleLibrary;
@@ -63,6 +67,10 @@ public class BattleController : MonoBehaviour {
 		Debug.Log("Start");
 	}
 
+	/// <summary>
+	/// Once the enemy controller is ready, create the enemies.
+	/// </summary>
+	/// <returns></returns>
 	IEnumerator CreateEnemies(){
 		while (!enemyController.initiated) {
 			Debug.Log("Waiting");
@@ -112,6 +120,9 @@ public class BattleController : MonoBehaviour {
 		}
 	}
 
+	/// <summary>
+	/// Sets up the backgrounds. 
+	/// </summary>
 	private void SetupBackgrounds() {
 		if (tutorial && be.isTutorial) {
 			if (be.backgroundHintRight != null) {
@@ -123,11 +134,9 @@ public class BattleController : MonoBehaviour {
 				tutorial = false;
 			}
 			state = -1;
-			Debug.Log("Tutorial screens activated");
 			return;
 		}
 
-		Debug.Log("Other stuff setupBackgrounds");
 		invincible.value = be.playerInvincible;
 		
 		if (be.removeSide == BattleEntry.RemoveSide.RIGHT) {
@@ -152,19 +161,31 @@ public class BattleController : MonoBehaviour {
 		state = 0;
 	}
 
+	/// <summary>
+	/// Called when entering the battle scene.
+	/// </summary>
 	private void StartBattle() {
 		SetupBackgrounds();
 	}
 
+	/// <summary>
+	/// Called when the battle almost have started.
+	/// </summary>
 	private void AlmostStart() {
 		winText.text = "FIGHT!";
 	}
-		
+	
+	/// <summary>
+	/// Pauses or unpauses the game when called.
+	/// </summary>
 	public void PauseGame() {
 		paused.value = !paused.value;
 		pauseEvent.Invoke();
 	}
 
+	/// <summary>
+	/// Called when the battle starts.
+	/// </summary>
 	private void BattleStart() {
 		winText.text = "";
 		paused.value = false;

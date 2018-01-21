@@ -13,10 +13,11 @@ public class HurtablePlayerScript : HurtableBaseScript {
 	public FloatVariable otherDamageTaken;
 	public IntVariable playerDefense;
 
+	public BoolVariable invinciblePlayer;
+	public bool canBeHurt = true;
+
 	public UnityEvent playerDiedEvent;
 	public UnityEvent takenDamageEvent;
-
-	public bool canBeHurt = true;
 
 
 	/// <summary>
@@ -27,26 +28,26 @@ public class HurtablePlayerScript : HurtableBaseScript {
 
 		Projectile projectile = otherCollider.gameObject.GetComponent<Projectile>();
 		if (projectile == null) {
-			Debug.Log("Null");
 			return;
 		}
 
-		if (projectile.isEnemy) {
-			if (!projectile.AddHitID(0))
-				return;
+		if (!projectile.isEnemy)
+			return;
 
-			if (!canBeHurt)
-				return;
+		if (!projectile.AddHitID(0))
+			return;
 
-			defense = playerDefense.value;
-			int dmg = TakeDamage(projectile.damage);
-			damageTaken.value += dmg;
-			if (dmg > 0)
-				takenDamageEvent.Invoke();
+		if (!canBeHurt || invinciblePlayer.value)
+			return;
 
-			if (damageTaken.value + otherDamageTaken.value >= playerMaxHealth.value)
-				Die();
-		}
+		defense = playerDefense.value;
+		int dmg = TakeDamage(projectile.damage);
+		damageTaken.value += dmg;
+		if (dmg > 0)
+			takenDamageEvent.Invoke();
+
+		if (damageTaken.value + otherDamageTaken.value >= playerMaxHealth.value)
+			Die();
 	}
 
 	public override void Die() {

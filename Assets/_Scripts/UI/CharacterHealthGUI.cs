@@ -2,6 +2,10 @@
 using System.Collections;
 using UnityEngine.UI;
 
+/// <summary>
+/// Class which handles converting the damage taken into a health bar
+/// and renders it to the screen.
+/// </summary>
 public class CharacterHealthGUI : MonoBehaviour {
     
 	private enum Side {TOP,BOTTOM};
@@ -13,9 +17,9 @@ public class CharacterHealthGUI : MonoBehaviour {
 	public FloatVariable spiritDamageTaken;
 
 	public float bar_xpos = 0.04f;
-	public float bar_ypos = 0.2f;
+	public float bar_ypos = 0.25f;
 	public float bar_width = 0.1f;
-	public float bar_height = 0.6f;
+	public float bar_height = 0.5f;
 	public float bar_borderx = 0.05f;
 	public float bar_bordery = 0.05f;
 
@@ -26,8 +30,11 @@ public class CharacterHealthGUI : MonoBehaviour {
 	[HideInInspector] public Texture2D healthTexture;
 	[HideInInspector] public Texture2D emptyTexture;
 	
+
 	// Use this for initialization
 	void Start () {
+		CalculateRatioDifference();
+
 		normalDamageTaken.value = 0;
 		spiritDamageTaken.value = 0;
 
@@ -41,12 +48,28 @@ public class CharacterHealthGUI : MonoBehaviour {
         emptyTexture.SetPixel(0,0,Color.black);
         emptyTexture.Apply();
 	}
+
+	/// <summary>
+	/// Updates the size of the UI to fit the current screen resolution.
+	/// </summary>
+	void CalculateRatioDifference() {
+		float p2 = (float)Constants.SCREEN_HEIGHT * (float)Screen.width/(float)Constants.SCREEN_WIDTH;
+		float borderAdd = ((float)Screen.height - p2) * 0.5f / Screen.height;
+		float resize = (1 - 2*borderAdd);
+
+		bar_ypos = borderAdd + bar_ypos * resize;
+		bar_height *= resize;
+		bar_bordery *= resize;
+	}
 	
 	// Update is called once per frame
 	void Update () {
 		UpdateHealth();
 	}
 
+	/// <summary>
+	/// Renders the health bar.
+	/// </summary>
     void OnGUI() {
 		if (pause.value || playerImmortal.value)
 			return;
@@ -55,6 +78,9 @@ public class CharacterHealthGUI : MonoBehaviour {
         GUI.DrawTexture(healthRect,healthTexture);
     }
 
+	/// <summary>
+	/// Updates the value of the health bar.
+	/// </summary>
     void UpdateHealth() {
 		float ratioTop = spiritDamageTaken.value / (float)playerMaxHp.value;
 		float ratioBottom = 1 - (normalDamageTaken.value / (float)playerMaxHp.value);

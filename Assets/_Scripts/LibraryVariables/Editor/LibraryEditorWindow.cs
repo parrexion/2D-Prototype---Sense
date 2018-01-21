@@ -56,6 +56,9 @@ public class LibraryEditorWindow : EditorWindow {
 		EditorSceneManager.sceneOpened -= SceneOpenedCallback;
 	}
 
+	/// <summary>
+	/// Renders the selected window.
+	/// </summary>
 	void OnGUI() {
 		DrawHeader();
 		
@@ -98,15 +101,10 @@ public class LibraryEditorWindow : EditorWindow {
 	/// </summary>
 	void LoadLibraries() {
 		battleEditor = new BattleEditorWindow(battleLibrary, battleContainer);
-		
 		characterEditor = new CharacterEditorWindow(characterLibrary, charContainer, poseList);
-		
 		enemyEditor = new EnemyEditorWindow(enemyLibrary, enemyContainer);
-
 		backgroundEditor = new BackgroundEditorWindow(backgroundLibrary, backgroundContainer);
-
 		itemEquipEditor = new ItemEquipEditorWindow(itemEquipLibrary, itemEquipContainer);
-
 		kanjiEditor = new KanjiEditorWindow(kanjiLibrary, kanjiContainer);
 
 		InitializeWindow();
@@ -128,6 +126,9 @@ public class LibraryEditorWindow : EditorWindow {
 		kanjiEditor.InitializeWindow();
 	}
 
+	/// <summary>
+	/// Draws the header for the editor.
+	/// </summary>
 	void DrawHeader() {
 		headerRect.x = 0;
 		headerRect.y = 0;

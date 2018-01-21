@@ -13,6 +13,7 @@ public class HurtableEnemyScript : MonoBehaviour {
 
 	public EnemyGroup group;
 	public Transform damageNumbers;
+	public BoolVariable invincibleEnemy;
 
 	private BattleGUIController battleGUI;
 	private SpriteRenderer spriteRenderer;
@@ -44,6 +45,9 @@ public class HurtableEnemyScript : MonoBehaviour {
 			return;
 
 		if (!projectile.AddHitID(group.enemyId))
+			return;
+
+		if (invincibleEnemy.value)
 			return;
 
 		group.TakeDamage(projectile.damage);
