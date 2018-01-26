@@ -50,7 +50,7 @@ public class ScrObjLibraryEntry : ScriptableObject {
 	}
 
 	protected Texture2D GenerateColorTexture(Color c) {
-		int size = 32;
+		int size = 16;
 		Texture2D tex = new Texture2D(size,size);
 		for (int i = 0; i < size; i++) {
 			for (int j = 0; j < size; j++) {

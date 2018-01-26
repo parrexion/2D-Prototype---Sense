@@ -8,6 +8,8 @@ public class DialogueWindowHelpClass {
 	public Texture2D talkingBackground;
 	public Texture2D dialogueBackground;
 	public Texture2D frameBackground;
+	public Texture2D nextBackground;
+	public Texture2D soundBackground;
 	public Texture2D rightBackground;
 
 	public Color headerColor = new Color(0.25f,0.5f,0.75f);
@@ -16,6 +18,8 @@ public class DialogueWindowHelpClass {
 	public Color talkingColor = new Color(0.7f, 0.7f, 0.7f);
 	public Color dialogueColor = new Color(0.5f, 0.5f, 0.5f);
 	public Color frameColor = new Color(0.6f, 0.4f, 0.3f);
+	public Color nextColor = new Color(0.4f, 0.3f, 0.6f);
+	public Color soundColor = new Color(0.8f, 0.8f, 0.2f);
 	public Color rightColor = new Color(0.4f, 0.6f, 0f);
 
 	public Rect headerRect = new Rect();
@@ -23,6 +27,8 @@ public class DialogueWindowHelpClass {
 	public Rect talkingRect = new Rect();
 	public Rect dialogueRect = new Rect();
 	public Rect frameRect = new Rect();
+	public Rect nextRect = new Rect();
+	public Rect soundRect = new Rect();
 	public Rect rightRect = new Rect();
 
 
@@ -55,6 +61,14 @@ public class DialogueWindowHelpClass {
 		frameBackground.SetPixel(0, 0, frameColor);
 		frameBackground.Apply();
 
+		nextBackground = new Texture2D(1, 1);
+		nextBackground.SetPixel(0, 0, nextColor);
+		nextBackground.Apply();
+
+		soundBackground = new Texture2D(1, 1);
+		soundBackground.SetPixel(0, 0, soundColor);
+		soundBackground.Apply();
+
 		rightBackground = new Texture2D(1, 1);
 		rightBackground.SetPixel(0, 0, rightColor);
 		rightBackground.Apply();
@@ -65,8 +79,10 @@ public class DialogueWindowHelpClass {
 		int characterWidth = 140;
 		int characterHeight = 148;
 		int talkingHeight = 44;
-		int bottomPartHeight = 168;
 		int dialoguePartWidth = 320;
+		int dialoguePartHeight = 140;
+		int bottomPartHeight = 168;
+		int soundPartHeight = 80;
 		int screenStep = characterWidth; //(Screen.width - rightPartWidth) / 5f;
 
 		headerRect.x = 0;
@@ -107,12 +123,22 @@ public class DialogueWindowHelpClass {
 		dialogueRect.x = 0;
 		dialogueRect.y = topPartHeight + characterHeight + talkingHeight;
 		dialogueRect.width = dialoguePartWidth;
-		dialogueRect.height = bottomPartHeight;
+		dialogueRect.height = dialoguePartHeight;
 
-		frameRect.x = dialoguePartWidth;
-		frameRect.y = topPartHeight + characterHeight + talkingHeight;
-		frameRect.width = characterWidth * 5 - dialoguePartWidth;
+		frameRect.x = 0;
+		frameRect.y = topPartHeight + characterHeight + talkingHeight + dialoguePartHeight;
+		frameRect.width = dialoguePartWidth;
 		frameRect.height = bottomPartHeight;
+
+		nextRect.x = dialoguePartWidth;
+		nextRect.y = topPartHeight + characterHeight + talkingHeight;
+		nextRect.width = characterWidth * 5 - dialoguePartWidth;
+		nextRect.height = dialoguePartHeight;
+
+		soundRect.x = dialoguePartWidth;
+		soundRect.y = topPartHeight + characterHeight + talkingHeight + dialoguePartHeight;
+		soundRect.width = characterWidth * 5 - dialoguePartWidth;
+		soundRect.height = soundPartHeight;
 
 		rightRect.x = characterWidth * 5;
 		rightRect.y = 0;
@@ -130,6 +156,8 @@ public class DialogueWindowHelpClass {
 		GUI.DrawTexture(talkingRect, talkingBackground);
 		GUI.DrawTexture(dialogueRect, dialogueBackground);
 		GUI.DrawTexture(frameRect, frameBackground);
+		GUI.DrawTexture(nextRect, nextBackground);
+		GUI.DrawTexture(soundRect, soundBackground);
 		GUI.DrawTexture(rightRect, rightBackground);
 	}
 }

@@ -70,16 +70,26 @@ public class DialogueEditorWindow : EditorWindow {
 			CharacterStuff();
 			TalkingStuff();
 			DialogueTextStuff();
+			NextAreaStuff();
+			SoundStuff();
 			FrameStuff();
 		}
 		RightStuff();
 	}
 
+	/// <summary>
+	/// Re-initializes the editor when a new scene is loaded.
+	/// </summary>
+	/// <param name="_scene"></param>
+	/// <param name="_mode"></param>
 	void SceneOpenedCallback( Scene _scene, OpenSceneMode _mode) {
 		Debug.Log("SCENE LOADED");
 		InitializeWindow();
 	}
 
+	/// <summary>
+	/// Initializes the variables needed by the editor.
+	/// </summary>
 	void InitializeWindow() {
 		backgroundLibrary.initialized = false;
 		characterLibrary.initialized = false;
@@ -93,6 +103,9 @@ public class DialogueEditorWindow : EditorWindow {
 		d.InitTextures();
 	}
 
+	/// <summary>
+	/// Renders the header part with the background selection.
+	/// </summary>
 	void HeaderStuff() {
 		GUILayout.BeginArea(d.headerRect);
 
@@ -116,6 +129,9 @@ public class DialogueEditorWindow : EditorWindow {
 		GUILayout.EndArea();
 	}
 
+	/// <summary>
+	/// Renders the characters and talking part.
+	/// </summary>
 	void CharacterStuff() {
 		EditorGUIUtility.labelWidth = 70;
 		float fieldWidth = d.rectChar[0].width - 8;
@@ -169,11 +185,18 @@ public class DialogueEditorWindow : EditorWindow {
 		EditorGUIUtility.labelWidth = 100;
 	}
 
+	/// <summary>
+	/// Sets the pose of the character.
+	/// </summary>
+	/// <param name="selectedPose"></param>
 	void SetPose(object selectedPose) {
 		SelectedPose pose = (SelectedPose)selectedPose;
 		dialogueValues.frames[selFrame].poses[pose.index] = pose.pose;
 	}
 
+	/// <summary>
+	/// Renders the talking buttons.
+	/// </summary>
 	void TalkingStuff() {
 		GUILayout.BeginArea(d.talkingRect);
 
@@ -203,6 +226,9 @@ public class DialogueEditorWindow : EditorWindow {
 		GUILayout.EndArea();
 	}
 
+	/// <summary>
+	/// Renders the dialogue text area.
+	/// </summary>
 	void DialogueTextStuff() {
 		GUILayout.BeginArea(d.dialogueRect);
 
@@ -237,8 +263,12 @@ public class DialogueEditorWindow : EditorWindow {
 		GUILayout.EndArea();
 	}
 
+	/// <summary>
+	/// Renders the frame adjustment button.
+	/// </summary>
 	void FrameStuff() {
 		GUILayout.BeginArea(d.frameRect);
+		GUILayout.Label("Frame Tools", EditorStyles.boldLabel);
 
 		GUILayout.BeginHorizontal();
 		if (GUILayout.Button("Delete\nFrame", GUILayout.Width(100), GUILayout.Height(48))) {
@@ -250,7 +280,23 @@ public class DialogueEditorWindow : EditorWindow {
 		GUILayout.EndHorizontal();
 
 		GUILayout.Space(4);
+		
+		GUILayout.BeginHorizontal();
+		if (GUILayout.Button("Shave off\nBefore", GUILayout.Width(100), GUILayout.Height(48))) {
+			ShaveoffBefore();
+		}
+		if (GUILayout.Button("Shave off\nAfter", GUILayout.Width(100), GUILayout.Height(48))) {
+			ShaveoffAfter();
+		}
+		GUILayout.EndHorizontal();
+		GUILayout.EndArea();
+	}
 
+	/// <summary>
+	/// Renders the next area values.
+	/// </summary>
+	void NextAreaStuff() {
+		GUILayout.BeginArea(d.nextRect);
 		GUILayout.Label("Next Action", EditorStyles.boldLabel);
 		dialogueValues.nextLocation = (BattleEntry.NextLocation)GUILayout.Toolbar((int)dialogueValues.nextLocation, nextActionStrings);
 		switch (dialogueValues.nextLocation)
@@ -278,21 +324,42 @@ public class DialogueEditorWindow : EditorWindow {
 				dialogueValues.nextEntry = (BattleEntry)EditorGUILayout.ObjectField("Next battle", dialogueValues.nextEntry, typeof(BattleEntry),false);
 				break;
 		}
-		// GUILayout.BeginHorizontal();
-		// if (GUILayout.Button("Shave off\nBefore", GUILayout.Width(100), GUILayout.Height(48))) {
-		// 	ShaveoffBefore();
-		// }
-		// if (GUILayout.Button("Shave off\nAfter", GUILayout.Width(100), GUILayout.Height(48))) {
-		// 	ShaveoffAfter();
-		// }
-		// GUILayout.EndHorizontal();
 		GUILayout.EndArea();
 	}
 
+	/// <summary>
+	/// Renders the sounds used in the dialogues.
+	/// </summary>
+	void SoundStuff() {
+		GUILayout.BeginArea(d.soundRect);
+		EditorGUIUtility.labelWidth = 130;
+		GUILayout.Label("Background Music", EditorStyles.boldLabel);
+		dialogueValues.frames[selFrame].changeBkgMusic = EditorGUILayout.Toggle("Change Bkg Music", dialogueValues.frames[selFrame].changeBkgMusic);
+		EditorGUIUtility.labelWidth = 100;
+		if (dialogueValues.frames[selFrame].changeBkgMusic) {
+			dialogueValues.frames[selFrame].bkgMusic = (AudioClip)EditorGUILayout.ObjectField("Bkg Music", dialogueValues.frames[selFrame].bkgMusic, typeof(AudioClip), false);
+		}
+		else {
+			dialogueValues.frames[selFrame].bkgMusic = null;
+			int lastIndex = selFrame -1;
+			while (lastIndex >= 0) {
+				if (dialogueValues.frames[lastIndex].changeBkgMusic)
+					break;
+				lastIndex--;
+			}
+			if (lastIndex < 0)
+				lastIndex = selFrame;
+			GUILayout.Label("Selected Music: " + dialogueValues.frames[lastIndex].bkgMusic);
+			
+		}
+		GUILayout.EndArea();
+	}
+
+	/// <summary>
+	/// Renders the frames and dialogues available and dialogue creation.
+	/// </summary>
 	void RightStuff() {
 		GUILayout.BeginArea(d.rightRect);
-
-		GUILayout.Space(10);
 
 		// Frame scroll
 		GUILayout.Label("Frames", EditorStyles.boldLabel);

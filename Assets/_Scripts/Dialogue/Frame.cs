@@ -1,4 +1,4 @@
-
+using UnityEngine;
 
 [System.Serializable]
 public class Frame {
@@ -18,6 +18,9 @@ public class Frame {
 				return -1;
 			return poses[talkingIndex];
 		} }
+	public bool changeBkgMusic = false;
+	public AudioClip bkgMusic = null;
+
 
 	public void CopyValues(Frame other) {
 		background = other.background;
@@ -30,5 +33,7 @@ public class Frame {
 		talkingIndex = other.talkingIndex;
 		talkingName = other.talkingName;
 		dialogueText = other.dialogueText;
+		changeBkgMusic = other.changeBkgMusic;
+		bkgMusic = other.bkgMusic;
 	}
 }
