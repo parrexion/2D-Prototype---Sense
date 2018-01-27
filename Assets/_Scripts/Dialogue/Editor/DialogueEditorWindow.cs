@@ -334,24 +334,21 @@ public class DialogueEditorWindow : EditorWindow {
 		GUILayout.BeginArea(d.soundRect);
 		EditorGUIUtility.labelWidth = 130;
 		GUILayout.Label("Background Music", EditorStyles.boldLabel);
-		dialogueValues.frames[selFrame].changeBkgMusic = EditorGUILayout.Toggle("Change Bkg Music", dialogueValues.frames[selFrame].changeBkgMusic);
 		EditorGUIUtility.labelWidth = 100;
-		if (dialogueValues.frames[selFrame].changeBkgMusic) {
-			dialogueValues.frames[selFrame].bkgMusic = (AudioClip)EditorGUILayout.ObjectField("Bkg Music", dialogueValues.frames[selFrame].bkgMusic, typeof(AudioClip), false);
+		dialogueValues.frames[selFrame].bkgMusic = (MusicEntry)EditorGUILayout.ObjectField("Bkg Music", dialogueValues.frames[selFrame].bkgMusic, typeof(MusicEntry), false);
+		
+		//Show selected music
+		int lastIndex = selFrame;
+		while (lastIndex >= 0) {
+			if (dialogueValues.frames[lastIndex].bkgMusic != null)
+				break;
+			lastIndex--;
 		}
-		else {
-			dialogueValues.frames[selFrame].bkgMusic = null;
-			int lastIndex = selFrame -1;
-			while (lastIndex >= 0) {
-				if (dialogueValues.frames[lastIndex].changeBkgMusic)
-					break;
-				lastIndex--;
-			}
-			if (lastIndex < 0)
-				lastIndex = selFrame;
-			GUILayout.Label("Selected Music: " + dialogueValues.frames[lastIndex].bkgMusic);
+		if (lastIndex >= 0)
+			GUILayout.Label("Selected Music: " + dialogueValues.frames[lastIndex].bkgMusic.name);
+		else
+			GUILayout.Label("Selected Music: NONE");
 			
-		}
 		GUILayout.EndArea();
 	}
 

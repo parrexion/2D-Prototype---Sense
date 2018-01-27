@@ -15,6 +15,7 @@ public class DialogueLines : MonoBehaviour {
 	private DialogueScene scene;
 	
 	public UnityEvent backgroundChanged;
+	public UnityEvent bkgMusicChanged;
 	public UnityEvent characterChanged;
 	public UnityEvent closeupChanged;
 	public UnityEvent dialogueTextChanged;
@@ -29,6 +30,7 @@ public class DialogueLines : MonoBehaviour {
 		Debug.Log("Set frame 0 of dialogue " + dialogueUuid.value);
 
 		backgroundChanged.Invoke();
+		bkgMusicChanged.Invoke();
 		characterChanged.Invoke();
 		closeupChanged.Invoke();
 		dialogueTextChanged.Invoke();
@@ -105,6 +107,14 @@ public class DialogueLines : MonoBehaviour {
 			data.text = frame.dialogueText;
 			da.Act(scene,data);
 			dialogueTextChanged.Invoke();
+		}
+
+		if (frame.bkgMusic != null) {
+			da = (DASetBkgMusic)ScriptableObject.CreateInstance("DASetBkgMusic");
+			data = new DialogueJsonItem();
+			data.entry = frame.bkgMusic;
+			da.Act(scene,data);
+			bkgMusicChanged.Invoke();
 		}
 	}
 }

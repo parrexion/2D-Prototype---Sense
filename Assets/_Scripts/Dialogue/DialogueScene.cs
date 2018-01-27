@@ -20,11 +20,12 @@ public class DialogueScene : MonoBehaviour {
 	public ScrObjEntryReference talkingChar;
 	public IntVariable talkingPose;
 	public StringVariable dialogueText;
+	public AudioVariable bkgMusic;
 
 	[HideInInspector] public ScrObjEntryReference[] characters;
 	[HideInInspector] public IntVariable[] poses;
 
-	//Non-dialogue references
+	[Header("Non-dialogue references")]
 	public BoolVariable paused;
 	public StringVariable battleUuid;
 	public IntVariable currentArea;
@@ -67,6 +68,7 @@ public class DialogueScene : MonoBehaviour {
 		talkingChar.value = f.talkingChar;
 		talkingPose.value = f.talkingPose;
 		dialogueText.value = f.dialogueText;
+		bkgMusic.value = (f.bkgMusic) ? f.bkgMusic.clip : null;
 	}
 
 }

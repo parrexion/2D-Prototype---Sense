@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: a017a9e970e2a9440b5da2e89cdc9b3d
-timeCreated: 1514388007
+timeCreated: 1517078636
 licenseType: Free
 MonoImporter:
   externalObjects: {}
@@ -23,6 +23,8 @@ MonoImporter:
       type: 2}
   - kanjiLibrary: {fileID: 11400000, guid: f99acadaefd21504499443c33a37a308, type: 2}
   - kanjiContainer: {fileID: 11400000, guid: 26d1e377fb0103040b9eb0f418317d9e, type: 2}
+  - musicLibrary: {fileID: 11400000, guid: 3fadf3e8c88ef1440832f31cc781af3c, type: 2}
+  - musicContainer: {fileID: 11400000, guid: 9a34080fc0cc0b849af7f76ecc91a694, type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

@@ -18,8 +18,7 @@ public class Frame {
 				return -1;
 			return poses[talkingIndex];
 		} }
-	public bool changeBkgMusic = false;
-	public AudioClip bkgMusic = null;
+	public MusicEntry bkgMusic = null;
 
 
 	public void CopyValues(Frame other) {
@@ -33,7 +32,6 @@ public class Frame {
 		talkingIndex = other.talkingIndex;
 		talkingName = other.talkingName;
 		dialogueText = other.dialogueText;
-		changeBkgMusic = other.changeBkgMusic;
 		bkgMusic = other.bkgMusic;
 	}
 }

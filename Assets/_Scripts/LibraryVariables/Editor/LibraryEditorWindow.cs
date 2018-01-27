@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 public class LibraryEditorWindow : EditorWindow {
 
-	private enum State { BATTLE = 0, CHARACTER = 1, ENEMY = 2, BACKGROUND = 3, ITEMEQUIP = 4, KANJI = 5 }
+	private enum State { BATTLE = 0, CHARACTER = 1, ENEMY = 2, BACKGROUND = 3, ITEMEQUIP = 4, KANJI = 5, MUSIC = 6 }
 
 	// Header
 	Rect headerRect = new Rect();
@@ -39,7 +39,11 @@ public class LibraryEditorWindow : EditorWindow {
 	public ScrObjLibraryVariable kanjiLibrary;
 	public Kanji kanjiContainer;
 
-	private string[] toolbarStrings = new string[] {"Battles", "Characters", "Enemies", "Background", "Items", "Kanji"};
+	public MusicEditorWindow musicEditor;
+	public ScrObjLibraryVariable musicLibrary;
+	public MusicEntry musicContainer;
+
+	private string[] toolbarStrings = new string[] {"Battles", "Characters", "Enemies", "Background", "Items", "Kanji", "Music"};
 
 
 	[MenuItem("Window/LibraryEditor")]
@@ -82,6 +86,9 @@ public class LibraryEditorWindow : EditorWindow {
 			case State.KANJI:
 				kanjiEditor.DrawWindow();
 				break;
+			case State.MUSIC:
+				musicEditor.DrawWindow();
+				break;
 		}
 	}
 
@@ -106,6 +113,7 @@ public class LibraryEditorWindow : EditorWindow {
 		backgroundEditor = new BackgroundEditorWindow(backgroundLibrary, backgroundContainer);
 		itemEquipEditor = new ItemEquipEditorWindow(itemEquipLibrary, itemEquipContainer);
 		kanjiEditor = new KanjiEditorWindow(kanjiLibrary, kanjiContainer);
+		musicEditor = new MusicEditorWindow(musicLibrary, musicContainer);
 
 		InitializeWindow();
 	}
@@ -124,6 +132,7 @@ public class LibraryEditorWindow : EditorWindow {
 		backgroundEditor.InitializeWindow();
 		itemEquipEditor.InitializeWindow();
 		kanjiEditor.InitializeWindow();
+		musicEditor.InitializeWindow();
 	}
 
 	/// <summary>

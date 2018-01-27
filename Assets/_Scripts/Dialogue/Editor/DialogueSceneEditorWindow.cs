@@ -11,6 +11,8 @@ public class DialogueSceneEditorWindow : EditorWindow {
 	DialogueEntry selectedDialogue = null;
 
 	DialogueParser parser;
+	public AreaIntVariable currentArea;
+	public AreaIntVariable playerArea;
 	public ScrObjLibraryVariable backgroundLibrary;
 	public ScrObjLibraryVariable characterLibrary;
 	public ScrObjLibraryVariable dialogueLibrary;
@@ -55,6 +57,8 @@ public class DialogueSceneEditorWindow : EditorWindow {
 		EditorGUILayout.SelectableLabel("Selected Dialogue    UUID: " + dialogueUUID.value, EditorStyles.boldLabel);
 
 		if (GUILayout.Button("Open Dialogue Scene")) {
+			currentArea.value = (int)Constants.SCENE_INDEXES.DIALOGUE;
+			playerArea.value = (int)Constants.SCENE_INDEXES.EAST_SECTION;
 			EditorSceneManager.OpenScene("Assets/_Scenes/Dialogue.unity");
 		}
 
