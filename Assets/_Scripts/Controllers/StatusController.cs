@@ -7,10 +7,9 @@ public class StatusController : MonoBehaviour {
 
 	[Header("Values - left side")]
 	public IntVariable ingameDay;
-	public IntVariable playerLevel;
+	// public IntVariable playerLevel;
 	public IntVariable totalExp;
-	public IntVariable nextLevelTotalExp;
-	public IntVariable money;
+	public IntVariable totalMoney;
 	public StringVariable playTime;
 
 	[Header("Values - right side")]
@@ -47,10 +46,13 @@ public class StatusController : MonoBehaviour {
 	}
 
 	void SetAllStats() {
+		ExpLevel expLevel = new ExpLevel(totalExp.value);
+
 		dayText.text = ingameDay.value.ToString();
-		levelText.text = playerLevel.value.ToString();
-		expText.text = totalExp.value.ToString();
-		moneyText.text = money.value.ToString();
+		// levelText.text = playerLevel.value.ToString();
+		levelText.text = expLevel.level.ToString();
+		expText.text = expLevel.restExp.ToString();
+		moneyText.text = totalMoney.value.ToString();
 		playtimeText.text = playTime.value;
 
 		healthText.text = maxHealth.value.ToString();

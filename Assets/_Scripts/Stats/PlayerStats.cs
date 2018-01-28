@@ -48,11 +48,11 @@ public class PlayerStats : MonoBehaviour {
 
 	[Header("Level")]
 	public IntVariable playerLevel;
-	public IntVariable expTotal;
-	public IntVariable expToNext;
+	public IntVariable totalExp;
+	// public IntVariable expToNext;
 
 	[Header("Inventory")]
-	public IntVariable money;
+	public IntVariable totalMoney;
 	public InvListVariable invItemEquip;
 	public InvListVariable invItemBag;
 	public InvListVariable invKanjiEquip;
@@ -175,14 +175,8 @@ public class PlayerStats : MonoBehaviour {
 	/// Calculates the current level where 100 exp more is required per level.
 	/// </summary>
 	public void CalculateExp() {
-		int level = 1;
-		int tempExp = 100;
-		while(tempExp <= expTotal.value) {
-			level++;
-			tempExp += level*100;
-		}
-		playerLevel.value = level;
-		expToNext.value = tempExp - expTotal.value;
+		ExpLevel expLevel = new ExpLevel(totalExp.value);
+		playerLevel.value = expLevel.level;
 	}
 
 
@@ -203,10 +197,10 @@ public class PlayerStats : MonoBehaviour {
 		saveData.playerPosY = playerPosY.value;
 
 		//Exp
-		saveData.expTotal = expTotal.value;
+		saveData.expTotal = totalExp.value;
 
 		//Inventory
-		saveData.money = money.value;
+		saveData.money = totalMoney.value;
 		saveData.invItemBag = invItemBag.GenerateSaveData();
 		saveData.invItemEquip = invItemEquip.GenerateSaveData();
 		saveData.invKanjiBag = invKanjiBag.GenerateSaveData();
@@ -232,10 +226,10 @@ public class PlayerStats : MonoBehaviour {
 		playerPosY.value = saveData.playerPosY;
 
 		//Exp
-		expTotal.value = saveData.expTotal;
+		totalExp.value = saveData.expTotal;
 
 		//Inventory
-		money.value = saveData.money;
+		totalMoney.value = saveData.money;
 		itemLibrary.GenerateDictionary();
 		invItemBag.LoadItemData(saveData.invItemBag, itemLibrary);
 		invItemEquip.LoadItemData(saveData.invItemEquip, itemLibrary);

@@ -93,5 +93,17 @@ public static class Constants {
 		TRAINING_WEST_AREA_ROOMS = 18
 	}
 
+	public enum CHAPTER {
+		DEFAULT = 0,
+		PART1,
+		PART2,
+		PART3,
+		CHAPTER1,
+		CHAPTER2,
+		CHAPTER3,
+		CHAPTER4,
+		CHPATER5,
+		EPILOGUE
+	}
 }
 

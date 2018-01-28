@@ -19,6 +19,7 @@ public class DialogueEditorWindow : EditorWindow {
 	public DialogueEntry dialogueValues;
 	DialogueWindowHelpClass d = new DialogueWindowHelpClass();
 	public Sprite noBackgroundSprite;
+	Frame backupFrame = new Frame();
 
 	Rect bkgRect;
 	Rect faceRect;
@@ -271,8 +272,8 @@ public class DialogueEditorWindow : EditorWindow {
 		GUILayout.Label("Frame Tools", EditorStyles.boldLabel);
 
 		GUILayout.BeginHorizontal();
-		if (GUILayout.Button("Delete\nFrame", GUILayout.Width(100), GUILayout.Height(48))) {
-			DeleteFrame();
+		if (GUILayout.Button("Revert\nFrame", GUILayout.Width(100), GUILayout.Height(48))) {
+			RevertFrame();
 		}
 		if (GUILayout.Button("Insert\nFrame", GUILayout.Height(48))) {
 			InsertFrame();
@@ -282,6 +283,9 @@ public class DialogueEditorWindow : EditorWindow {
 		GUILayout.Space(4);
 		
 		GUILayout.BeginHorizontal();
+		if (GUILayout.Button("Delete\nFrame", GUILayout.Height(48))) {
+			DeleteFrame();
+		}
 		if (GUILayout.Button("Shave off\nBefore", GUILayout.Width(100), GUILayout.Height(48))) {
 			ShaveoffBefore();
 		}
@@ -370,6 +374,7 @@ public class DialogueEditorWindow : EditorWindow {
 				int tIndex = dialogueValues.frames[selFrame].talkingIndex;
 				selectTalker = (tIndex != -1) ? reverseIndexList[dialogueValues.frames[selFrame].talkingIndex] : -1;
 				talkName = dialogueValues.frames[selFrame].talkingName;
+				backupFrame.CopyValues(dialogueValues.frames[selFrame]);
 			}
 		}
 
@@ -451,6 +456,14 @@ public class DialogueEditorWindow : EditorWindow {
 		selFrame = Mathf.Min(selFrame, dialogueValues.frames.Count - 1);
 
 		SaveSelectedDialogue();
+	}
+
+	void RevertFrame() {
+		GUI.FocusControl(null);
+		dialogueValues.frames[selFrame].CopyValues(backupFrame);
+		int tIndex = dialogueValues.frames[selFrame].talkingIndex;
+		selectTalker = (tIndex != -1) ? reverseIndexList[dialogueValues.frames[selFrame].talkingIndex] : -1;
+		talkName = dialogueValues.frames[selFrame].talkingName;
 	}
 
 	void ShaveoffAfter() {

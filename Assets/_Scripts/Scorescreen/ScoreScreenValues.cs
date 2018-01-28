@@ -10,6 +10,8 @@ public class ScoreScreenValues : MonoBehaviour {
 	public FloatVariable spiritHealth;
 	public IntVariable maxHealth;
 	public IntVariable noEnemies;
+
+	[Header("Loot")]
 	public IntVariable exp;
 	public IntVariable money;
 }

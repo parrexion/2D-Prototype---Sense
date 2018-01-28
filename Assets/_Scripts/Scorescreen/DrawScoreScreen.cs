@@ -17,6 +17,8 @@ public class DrawScoreScreen : MonoBehaviour {
 	public FloatVariable playerPosX;
 	public FloatVariable playerPosY;
 	public BoolVariable paused;
+	public IntVariable totalExp;
+	public IntVariable totalMoney;
 
 	[Header("Score values")]
 	public StringVariable wonBattleState;
@@ -47,16 +49,20 @@ public class DrawScoreScreen : MonoBehaviour {
 
 
 	// Use this for initialization
-	void Start () {
+	void Awake () {
 		if (wonBattleState.value == "lose") {
 			gameObject.SetActive(false);
 			return;
 		}
 
+		totalExp.value += expGained.value;
+		totalMoney.value += moneyGained.value;
 		SetValues();
 	}
 
-
+	/// <summary>
+	/// Sets the values for all the texts in the score screen.
+	/// </summary>
 	private void SetValues(){
 
 		if (wonBattleState.value == "win") {
