@@ -24,7 +24,6 @@ public class ExpMeterUI : MonoBehaviour {
 	void Start () {
 		StartCoroutine(FillExpBar());
 	}
-	
 
 	IEnumerator FillExpBar() {
 
