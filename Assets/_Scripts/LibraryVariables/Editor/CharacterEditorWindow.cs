@@ -108,7 +108,7 @@ public class CharacterEditorWindow {
 						GUILayout.Height(selectRect.height-130));
 
 		int oldSelected = selCharacter;
-		selCharacter = GUILayout.SelectionGrid(selCharacter, characterLibrary.GetRepresentations(),1);
+		selCharacter = GUILayout.SelectionGrid(selCharacter, characterLibrary.GetRepresentations("",""),1);
 		EditorGUILayout.EndScrollView();
 
 		if (oldSelected != selCharacter)

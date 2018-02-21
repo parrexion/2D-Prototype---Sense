@@ -105,7 +105,7 @@ public class BackgroundEditorWindow {
 						GUILayout.Height(selectRect.height-130));
 
 		int oldSelected = selBackground;
-		selBackground = GUILayout.SelectionGrid(selBackground, backgroundLibrary.GetRepresentations(),1);
+		selBackground = GUILayout.SelectionGrid(selBackground, backgroundLibrary.GetRepresentations("",""),1);
 		EditorGUILayout.EndScrollView();
 
 		if (oldSelected != selBackground) {

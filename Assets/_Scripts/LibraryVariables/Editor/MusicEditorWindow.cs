@@ -105,7 +105,7 @@ public class MusicEditorWindow {
 						GUILayout.Height(selectRect.height-130));
 
 		int oldSelected = selMusic;
-		selMusic = GUILayout.SelectionGrid(selMusic, musicLibrary.GetRepresentations(),1);
+		selMusic = GUILayout.SelectionGrid(selMusic, musicLibrary.GetRepresentations("",""),1);
 		EditorGUILayout.EndScrollView();
 
 		if (oldSelected != selMusic) {

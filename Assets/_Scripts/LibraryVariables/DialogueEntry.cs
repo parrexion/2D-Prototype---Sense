@@ -5,8 +5,6 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "LibraryEntries/Dialogue")]
 public class DialogueEntry : ScrObjLibraryEntry {
 
-	public List<Frame> frames = new List<Frame>();
-
 	public int size { get{ return frames.Count; } }
 	public List<Color> participantColors = new List<Color>();
 
@@ -15,6 +13,13 @@ public class DialogueEntry : ScrObjLibraryEntry {
 	public bool changePosition = false;
 	public Vector2 playerPosition = new Vector2();
 	public Constants.OverworldArea nextArea = Constants.OverworldArea.DEFAULT;
+	public Constants.CHAPTER TagEnum { 
+		get { if (tag == "") return Constants.CHAPTER.DEFAULT;
+				return (Constants.CHAPTER)System.Enum.Parse(typeof(Constants.CHAPTER),tag); } 
+		set { tag = (value == Constants.CHAPTER.DEFAULT) ? "" : value.ToString(); } 
+	}
+
+	public List<Frame> frames = new List<Frame>();
 
 
 	public override void ResetValues() {

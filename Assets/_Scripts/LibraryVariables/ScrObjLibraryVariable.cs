@@ -60,11 +60,23 @@ public class ScrObjLibraryVariable : ScriptableObject {
 		return list[Random.Range(0,list.Count)];
 	}
 
-	public GUIContent[] GetRepresentations() {
+	public GUIContent[] GetRepresentations(string filter, string search) {
 		if (!initialized)
 			GenerateDictionary();
 
-		return representations.ToArray();
+		bool useFilter = !string.IsNullOrEmpty(filter);
+		bool useSearch = !string.IsNullOrEmpty(search);
+
+		if (!useFilter && !useSearch) {
+			return representations.ToArray();
+		}
+		List<GUIContent> filteredList = new List<GUIContent>();
+		for (int i = 0; i < list.Count; i++) {
+			if ((!useFilter || list[i].tag == filter) &&
+				(!useSearch || list[i].name.ToLowerInvariant().Contains(search.ToLowerInvariant())))
+				filteredList.Add(representations[i]);
+		}
+		return filteredList.ToArray();
 	}
 
 	public int Size() {

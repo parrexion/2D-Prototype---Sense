@@ -102,7 +102,7 @@ public class BattleEditorWindow {
 							GUILayout.Height(selectRect.height-90));
 
 		int oldSelected = selBattle;
-		selBattle = GUILayout.SelectionGrid(selBattle, battleLibrary.GetRepresentations(),1);
+		selBattle = GUILayout.SelectionGrid(selBattle, battleLibrary.GetRepresentations("",""),1);
 		EditorGUILayout.EndScrollView();
 
 		if (oldSelected != selBattle) {

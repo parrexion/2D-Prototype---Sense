@@ -107,7 +107,7 @@ public class ItemEquipEditorWindow {
 						GUILayout.Height(selectRect.height-130));
 
 		int oldSelected = selItem;
-		selItem = GUILayout.SelectionGrid(selItem, itemLibrary.GetRepresentations(),1);
+		selItem = GUILayout.SelectionGrid(selItem, itemLibrary.GetRepresentations("",""),1);
 		EditorGUILayout.EndScrollView();
 
 		if (oldSelected != selItem)

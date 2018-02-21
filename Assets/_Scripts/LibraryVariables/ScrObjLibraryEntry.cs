@@ -9,6 +9,7 @@ public class ScrObjLibraryEntry : ScriptableObject {
 	public string uuid;
 	public string entryName;
 	public Color repColor;
+	public string tag;
 
 
 	/// <summary>
@@ -18,6 +19,7 @@ public class ScrObjLibraryEntry : ScriptableObject {
 		uuid = "";
 		entryName = "";
 		repColor = new Color();
+		tag = "";
 	}
 
 	/// <summary>
@@ -28,6 +30,7 @@ public class ScrObjLibraryEntry : ScriptableObject {
 		uuid = other.uuid;
 		entryName = other.entryName;
 		repColor = other.repColor;
+		tag = other.tag;
 	}
 
 	public virtual GUIContent GenerateRepresentation() {

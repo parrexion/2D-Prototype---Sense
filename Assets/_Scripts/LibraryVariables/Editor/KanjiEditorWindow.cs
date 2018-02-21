@@ -111,7 +111,7 @@ public class KanjiEditorWindow {
 						GUILayout.Height(selectRect.height-110));
 
 		int oldSelected = selKanji;
-		selKanji = GUILayout.SelectionGrid(selKanji, kanjiLibrary.GetRepresentations(),1);
+		selKanji = GUILayout.SelectionGrid(selKanji, kanjiLibrary.GetRepresentations("",""),1);
 		EditorGUILayout.EndScrollView();
 
 		if (oldSelected != selKanji)

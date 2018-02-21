@@ -39,6 +39,9 @@ public class DialogueEditorWindow : EditorWindow {
 	Vector2 dialogueScrollPos;
 	int selFrame = -1;
 	int selDialogue = -1;
+	string filterEnum;
+	string filterString;
+	Constants.CHAPTER filter = Constants.CHAPTER.DEFAULT;
 
 	//Creation
 	string dialogueUuid = "";
@@ -109,11 +112,6 @@ public class DialogueEditorWindow : EditorWindow {
 	/// </summary>
 	void HeaderStuff() {
 		GUILayout.BeginArea(d.headerRect);
-
-		EditorGUILayout.SelectableLabel("Selected Dialogue    UUID: " + 1234, EditorStyles.boldLabel, GUILayout.Height(20));
-		dialogueValues.entryName = EditorGUILayout.TextField("Dialogue name", dialogueValues.entryName, GUILayout.Width(400));
-
-		GUILayout.Space(5);
 
 		dialogueValues.frames[selFrame].background = (BackgroundEntry)EditorGUILayout.ObjectField("Background", dialogueValues.frames[selFrame].background, typeof(BackgroundEntry),false, GUILayout.Width(400));
 		if (dialogueValues.frames[selFrame].background != null){
@@ -293,6 +291,7 @@ public class DialogueEditorWindow : EditorWindow {
 			ShaveoffAfter();
 		}
 		GUILayout.EndHorizontal();
+
 		GUILayout.EndArea();
 	}
 
@@ -362,6 +361,14 @@ public class DialogueEditorWindow : EditorWindow {
 	void RightStuff() {
 		GUILayout.BeginArea(d.rightRect);
 
+		//Dialogue Info
+		EditorGUILayout.SelectableLabel("Selected Dialogue    UUID: " + 1234, EditorStyles.boldLabel, GUILayout.Height(20));
+		if (selFrame != -1) {
+			dialogueValues.entryName = EditorGUILayout.TextField("Dialogue name", dialogueValues.entryName, GUILayout.Width(400));
+			dialogueValues.TagEnum = (Constants.CHAPTER)EditorGUILayout.EnumPopup("Tag",dialogueValues.TagEnum);
+		}
+		GUILayout.Space(5);
+
 		// Frame scroll
 		GUILayout.Label("Frames", EditorStyles.boldLabel);
 		frameScrollPos = GUILayout.BeginScrollView(frameScrollPos, GUILayout.Width(d.rightRect.width), 
@@ -384,11 +391,17 @@ public class DialogueEditorWindow : EditorWindow {
 
 		// Dialogue scroll
 		GUILayout.Label("Dialogues", EditorStyles.boldLabel);
+		GUILayout.BeginHorizontal();
+		filter = (Constants.CHAPTER)EditorGUILayout.EnumPopup("Filter",filter);
+		filterEnum = (filter == Constants.CHAPTER.DEFAULT) ? "" : filter.ToString();
+		filterString = EditorGUILayout.TextField("Search", filterString, GUILayout.Width(d.rightRect.width/2));
+		GUILayout.EndHorizontal();
+
 		dialogueScrollPos = GUILayout.BeginScrollView(dialogueScrollPos, GUILayout.Width(d.rightRect.width), 
 					GUILayout.Height(d.rightRect.height * 0.3f));
 		
 		int oldSelected = selDialogue;
-		selDialogue = GUILayout.SelectionGrid(selDialogue, dialogueLibrary.GetRepresentations(),2);
+		selDialogue = GUILayout.SelectionGrid(selDialogue, dialogueLibrary.GetRepresentations(filterEnum, filterString),2);
 
 		if (oldSelected != selDialogue) {
 			GUI.FocusControl(null);
