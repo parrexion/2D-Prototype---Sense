@@ -11,6 +11,7 @@ public class OutsidePlayerController : MonoBehaviour {
 	public FloatVariable posx, posy;
 	public FloatVariable speedHack;
 
+
 	// Use this for initialization
 	void Start () {
 		moveToPosition = GetComponent<MoveHomingNoLimit>();

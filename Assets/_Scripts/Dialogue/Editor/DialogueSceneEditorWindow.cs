@@ -58,7 +58,7 @@ public class DialogueSceneEditorWindow : EditorWindow {
 
 		if (GUILayout.Button("Open Dialogue Scene")) {
 			currentArea.value = (int)Constants.SCENE_INDEXES.DIALOGUE;
-			playerArea.value = (int)Constants.SCENE_INDEXES.EAST_SECTION;
+			playerArea.value = (int)Constants.SCENE_INDEXES.ANDROID_BAY;
 			EditorSceneManager.OpenScene("Assets/_Scenes/Dialogue.unity");
 		}
 
