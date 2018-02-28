@@ -7,13 +7,14 @@ public class OverworldCamera : MonoBehaviour {
 	public CameraConstants constants;
 	public Camera followCamera;
 	public Camera lockCamera;
+	public OutsidePlayerController playerController;
 	public AreaIntVariable playerArea;
+	public IntVariable playerRoomNumber;
 
 
 	// Use this for initialization
 	void Start () {
-		
-		SetCameraInfo(constants.GetValues((Constants.OverworldArea)playerArea.value));
+		SetCameraInfo(constants.GetValues((Constants.OverworldArea)playerArea.value, (Constants.RoomNumber)playerRoomNumber.value));
 	}
 
 
@@ -40,6 +41,6 @@ public class OverworldCamera : MonoBehaviour {
 			Debug.Log("SET THE FOLLOW CAMERA");
 		}
 
-
+		playerController.cam = cam;
 	}
 }

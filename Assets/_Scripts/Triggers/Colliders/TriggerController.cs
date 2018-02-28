@@ -23,6 +23,7 @@ public class TriggerController : MonoBehaviour {
     public BoolVariable paused;
     public StringListVariable newgameUuid;
     public IntVariable currentScene;
+    public IntVariable currentRoomNumber;
     public StringVariable currentChapter;
 
     private Dictionary<string,bool> triggerStates = new Dictionary<string, bool>();
@@ -55,8 +56,9 @@ public class TriggerController : MonoBehaviour {
     /// </summary>
     public void ReactivateTriggers() {
         Constants.OverworldArea index = (Constants.OverworldArea)currentScene.value;
+        Constants.RoomNumber roomNumber = (Constants.RoomNumber)currentRoomNumber.value;
         for (int i = 0; i < sectionList.Length; i++) {
-            sectionList[i].ActivateSection(currentChapter.value, index);
+            sectionList[i].ActivateSection(currentChapter.value, index, roomNumber);
         }
     }
 

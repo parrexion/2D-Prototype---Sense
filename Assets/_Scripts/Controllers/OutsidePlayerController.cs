@@ -7,7 +7,7 @@ public class OutsidePlayerController : MonoBehaviour {
 
 	public BoolVariable paused;
 	private MoveHomingNoLimit moveToPosition;
-	private Camera cam;
+	[HideInInspector] public Camera cam;
 	public FloatVariable posx, posy;
 	public FloatVariable speedHack;
 
@@ -15,7 +15,6 @@ public class OutsidePlayerController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		moveToPosition = GetComponent<MoveHomingNoLimit>();
-		cam = Camera.main;
 		SetPlayerPosition();
 		paused.value = false;
 #if UNITY_EDITOR
@@ -29,7 +28,7 @@ public class OutsidePlayerController : MonoBehaviour {
 		if (paused.value)
 			return;
 
-		if (Input.GetMouseButton(1)) {
+		if (Input.GetMouseButton(1) && cam != null) {
 			moveToPosition.moveToPosition = cam.ScreenToWorldPoint(Input.mousePosition);
 		}
 		posx.value = transform.position.x;

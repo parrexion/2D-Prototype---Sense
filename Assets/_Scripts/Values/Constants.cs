@@ -55,7 +55,6 @@ public static class Constants {
 	public enum SCENE_INDEXES {
 		STARTUP = 0,
 		MAINMENU = 1,
-		TUTORIAL_OLD = 2,
 		DIALOGUE = 3,
 		BATTLE = 4,
 		SCORE = 5,
@@ -63,12 +62,18 @@ public static class Constants {
 		BATTLETOWER = 7,
 		OPTIONS = 8,
 		ANDROID_BAY = 9,
-		CORRIDORS_1 = 10,
-		CORRIDORS_2 = 11,
+		CORRIDORS = 10,
 		SOUTH_GATE = 12,
 		SOUTHEAST_GATE = 13,
 		OUTSIDE_CORRIDORS_1 = 14,
 		SHIELD_GENERATOR = 15
+	}
+
+	public enum RoomNumber {
+		ROOM_A = 0,
+		ROOM_B = 1,
+		ROOM_C = 2,
+		ROOM_D = 3
 	}
 
 	/// <summary>
@@ -79,8 +84,7 @@ public static class Constants {
 		MAINMENU = 1,
 		TOWER = 7,
 		ANDROID_BAY = 9,
-		CORRIDORS_1 = 10,
-		CORRIDORS_2 = 11,
+		CORRIDORS = 10,
 		SOUTH_GATE = 12,
 		SOUTHEAST_GATE = 13,
 		OUTSIDE_CORRIDORS_1 = 14,

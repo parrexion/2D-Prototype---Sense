@@ -5,6 +5,7 @@ using UnityEngine;
 public class TriggerChapter : MonoBehaviour {
 
 	public Constants.OverworldArea activeArea;
+	public Constants.RoomNumber roomNumber = 0;
 
 	public List<Transform> containers = new List<Transform>();
 	List<string> chapterIDs = new List<string>();
@@ -40,13 +41,13 @@ public class TriggerChapter : MonoBehaviour {
 	/// Activates the chapter with the given id and deactivates the rest.
 	/// </summary>
 	/// <param name="chapterID"></param>
-	public void ActivateSection(string chapterID, Constants.OverworldArea sceneIndex) {
+	public void ActivateSection(string chapterID, Constants.OverworldArea sceneIndex, Constants.RoomNumber number) {
 
 		if (containers.Count == 0){
 			Debug.LogWarning("Empty area");
 			return;
 		}
-		bool state = (sceneIndex == activeArea);
+		bool state = (sceneIndex == activeArea && roomNumber == number);
 		containers[0].gameObject.SetActive(state);
 		for (int i = 1; i < containers.Count; i++) {
 			containers[i].gameObject.SetActive(state && chapterID == chapterIDs[i]);
